@@ -64,6 +64,26 @@ Deno.serve(async (req) => {
           throw updateError;
         }
 
+        // Fetch client user_id for notification
+        const { data: projFull } = await supabase
+          .from("projects")
+          .select("name, clients(user_id)")
+          .eq("id", project.id)
+          .single();
+
+        if (projFull) {
+          const clientUserId = (projFull.clients as any)?.user_id;
+          if (clientUserId) {
+            await supabase.from("notifications").insert({
+              user_id: clientUserId,
+              title: "Atualização do projeto",
+              message: `Seu projeto "${projFull.name}" avançou para: ${statusUpdate}`,
+              type: "status_change",
+              link: "/dashboard/projects",
+            });
+          }
+        }
+
         console.log(`Project ${project.id} status updated to ${statusUpdate}`);
       } else {
         console.log(`No project found for repo: ${repoFullName}`);
