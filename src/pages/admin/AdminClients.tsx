@@ -11,11 +11,30 @@ const AdminClients = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await supabase
+      // Fetch clients
+      const { data: clientsData } = await supabase
         .from("clients")
-        .select("*, profiles:user_id(full_name, phone, avatar_url)")
+        .select("*")
         .order("created_at", { ascending: false });
-      setClients(data || []);
+
+      // Fetch profiles for each client's user_id
+      const userIds = (clientsData || []).map((c: any) => c.user_id).filter(Boolean);
+      let profilesMap: Record<string, any> = {};
+      if (userIds.length > 0) {
+        const { data: profilesData } = await supabase
+          .from("profiles")
+          .select("user_id, full_name, phone, avatar_url")
+          .in("user_id", userIds);
+        (profilesData || []).forEach((p: any) => {
+          profilesMap[p.user_id] = p;
+        });
+      }
+
+      const enriched = (clientsData || []).map((c: any) => ({
+        ...c,
+        profiles: profilesMap[c.user_id] || null,
+      }));
+      setClients(enriched);
       setLoading(false);
     };
     fetch();
