@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ const verticals = [
 
 const PromptGenerator = () => {
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
   const [vertical, setVertical] = useState("psicologo");
   const [projects, setProjects] = useState<any[]>([]);
   const [selectedProject, setSelectedProject] = useState("");
@@ -35,12 +37,18 @@ const PromptGenerator = () => {
         .select("id, name, clients(business_name, vertical)")
         .order("created_at", { ascending: false });
       setProjects(p || []);
+
+      // Auto-select project from URL param
+      const projectParam = searchParams.get("project");
+      if (projectParam && p?.some((proj: any) => proj.id === projectParam)) {
+        loadIntakeData(projectParam, p || []);
+      }
     };
     fetchProjects();
   }, []);
 
   // Load intake data when project is selected
-  const loadIntakeData = async (projectId: string) => {
+  const loadIntakeData = async (projectId: string, projectsList?: any[]) => {
     setSelectedProject(projectId);
     if (!projectId) return;
 
@@ -56,9 +64,9 @@ const PromptGenerator = () => {
       const svd = (intake.services_data as any) || {};
 
       setData({
-        business_name: bd.name || "",
+        business_name: bd.business_name || bd.name || "",
         description: bd.description || "",
-        city: sd.city || sd.main_city || "",
+        city: sd.main_city || sd.city || "",
         phone: bd.phone || "",
         services: svd.services_tags || "",
         differentials: svd.differentials || "",
@@ -67,11 +75,11 @@ const PromptGenerator = () => {
         main_category: svd.main_category || "",
       });
 
-      // Set vertical from client
-      const project = projects.find((p) => p.id === projectId);
-      if ((project?.clients as any)?.vertical) {
-        setVertical((project.clients as any).vertical);
-      }
+      // Set vertical from client or intake
+      const list = projectsList || projects;
+      const project = list.find((p: any) => p.id === projectId);
+      const v = bd.vertical || (project?.clients as any)?.vertical;
+      if (v) setVertical(v);
     }
     toast({ title: "Dados do onboarding carregados!" });
   };
