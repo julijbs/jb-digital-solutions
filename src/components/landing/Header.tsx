@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import jbLogo from "@/assets/jb-logo.jpg";
 
 const navItems = [
   { label: "Como funciona", href: "#como-funciona" },
@@ -16,10 +17,7 @@ export const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between md:h-20">
         <a href="#" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg gold-gradient-bg">
-            <span className="text-sm font-bold text-primary-foreground">JB</span>
-          </div>
-          <span className="font-serif text-lg text-foreground">JB Digital</span>
+          <img src={jbLogo} alt="JB Digital Consulting" className="h-9 w-auto rounded-lg" />
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">

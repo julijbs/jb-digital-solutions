@@ -15,6 +15,7 @@ import {
   Plug,
   Sparkles,
 } from "lucide-react";
+import jbLogo from "@/assets/jb-logo.jpg";
 
 const clientLinks = [
   { href: "/dashboard", label: "Painel", icon: LayoutDashboard },
@@ -51,10 +52,7 @@ export const DashboardLayout = ({ children }: { children: ReactNode }) => {
       >
         <div className="flex h-16 items-center justify-between border-b border-border px-4">
           <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg gold-gradient-bg">
-              <span className="text-xs font-bold text-primary-foreground">JB</span>
-            </div>
-            <span className="font-serif text-foreground">JB Digital</span>
+            <img src={jbLogo} alt="JB Digital Consulting" className="h-8 w-auto rounded-lg" />
           </Link>
           <button className="text-muted-foreground lg:hidden" onClick={() => setSidebarOpen(false)}>
             <X size={20} />
