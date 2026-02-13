@@ -22,6 +22,7 @@ import AdminBilling from "./pages/admin/AdminBilling";
 import AdminReports from "./pages/admin/AdminReports";
 import AdminIntegrations from "./pages/admin/AdminIntegrations";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminGBP from "./pages/admin/AdminGBP";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ const App = () => (
             <Route path="/admin" element={<ProtectedRoute requiredRole="admin_jb"><AdminDashboard /></ProtectedRoute>} />
             <Route path="/admin/clients" element={<ProtectedRoute requiredRole="admin_jb"><AdminClients /></ProtectedRoute>} />
             <Route path="/admin/pipeline" element={<ProtectedRoute requiredRole="admin_jb"><AdminPipeline /></ProtectedRoute>} />
+            <Route path="/admin/gbp" element={<ProtectedRoute requiredRole="admin_jb"><AdminGBP /></ProtectedRoute>} />
             <Route path="/admin/prompt-generator" element={<ProtectedRoute requiredRole="admin_jb"><PromptGenerator /></ProtectedRoute>} />
             <Route path="/admin/billing" element={<ProtectedRoute requiredRole="admin_jb"><AdminBilling /></ProtectedRoute>} />
             <Route path="/admin/reports" element={<ProtectedRoute requiredRole="admin_jb"><AdminReports /></ProtectedRoute>} />
