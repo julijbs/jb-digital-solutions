@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star } from "lucide-react";
 
@@ -52,6 +53,7 @@ const plans = [
 ];
 
 export const PricingSection = () => {
+  const navigate = useNavigate();
   return (
     <section id="planos" className="py-20 md:py-28">
       <div className="section-divider mx-auto mb-20 max-w-xl" />
@@ -111,6 +113,7 @@ export const PricingSection = () => {
               <Button
                 variant={plan.featured ? "hero" : "heroOutline"}
                 className="mt-6 w-full gap-2"
+                onClick={() => navigate("/signup")}
               >
                 {plan.cta} <ArrowRight size={16} />
               </Button>

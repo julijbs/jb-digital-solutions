@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, Shield, BarChart3 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import dashboardMockup from "@/assets/dashboard-mockup.png";
 
 const highlights = [
@@ -11,6 +12,7 @@ const highlights = [
 ];
 
 export const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <section className="relative overflow-hidden pt-28 pb-12 md:pt-36 md:pb-20">
       {/* Ambient glow */}
@@ -34,10 +36,10 @@ export const HeroSection = () => {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Button variant="hero" size="lg" className="gap-2">
+              <Button variant="hero" size="lg" className="gap-2" onClick={() => navigate("/signup")}>
                 Começar agora <ArrowRight size={18} />
               </Button>
-              <Button variant="heroOutline" size="lg">
+              <Button variant="heroOutline" size="lg" onClick={() => document.getElementById("como-funciona")?.scrollIntoView({ behavior: "smooth" })}>
                 Ver como funciona
               </Button>
             </div>

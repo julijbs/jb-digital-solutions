@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import jbLogo from "@/assets/jb-logo.jpg";
@@ -12,6 +13,7 @@ const navItems = [
 
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
@@ -33,8 +35,8 @@ export const Header = () => {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Button variant="heroOutline" size="sm">Ver planos</Button>
-          <Button variant="hero" size="sm">Começar agora</Button>
+          <Button variant="heroOutline" size="sm" onClick={() => document.getElementById("planos")?.scrollIntoView({ behavior: "smooth" })}>Ver planos</Button>
+          <Button variant="hero" size="sm" onClick={() => navigate("/signup")}>Começar agora</Button>
         </div>
 
         <button
@@ -59,7 +61,7 @@ export const Header = () => {
                 {item.label}
               </a>
             ))}
-            <Button variant="hero" className="mt-2 w-full">Começar agora</Button>
+            <Button variant="hero" className="mt-2 w-full" onClick={() => { setMobileOpen(false); navigate("/signup"); }}>Começar agora</Button>
           </div>
         </div>
       )}
