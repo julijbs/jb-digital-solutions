@@ -16,9 +16,9 @@ const AdminDashboard = () => {
       ]);
 
       const projects = projectsRes.data || [];
-      const activeCount = projects.filter((p) => p.status === "monthly_active").length;
-      const alertCount = projects.filter((p) =>
-        ["onboarding_in_progress", "client_review"].includes(p.status)
+      const activeCount = projects.filter((p: any) => p.status === "active").length;
+      const alertCount = projects.filter((p: any) =>
+        ["intake"].includes(p.status)
       ).length;
 
       setStats({
@@ -39,22 +39,6 @@ const AdminDashboard = () => {
     { label: "Alertas", value: stats.alerts, icon: AlertTriangle, color: "text-destructive" },
     { label: "Mensais ativos", value: stats.active, icon: TrendingUp, color: "text-green-400" },
   ];
-
-  const statusLabels: Record<string, string> = {
-    lead_created: "Lead",
-    onboarding_in_progress: "Onboarding",
-    content_ready: "Conteúdo",
-    lovable_prompt_ready: "Prompt",
-    lovable_site_generated: "Site",
-    repo_created: "Repo",
-    vercel_deployed_preview: "Preview",
-    qa_passed: "QA",
-    client_review: "Revisão",
-    vercel_deployed_prod: "Prod",
-    handoff_ready: "Handoff",
-    handoff_done: "Entregue",
-    monthly_active: "Mensal",
-  };
 
   return (
     <DashboardLayout>
@@ -92,20 +76,20 @@ const AdminDashboard = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="px-4 py-3 text-left text-muted-foreground font-medium">ID</th>
-                  <th className="px-4 py-3 text-left text-muted-foreground font-medium">Vertical</th>
+                  <th className="px-4 py-3 text-left text-muted-foreground font-medium">Nome</th>
+                  <th className="px-4 py-3 text-left text-muted-foreground font-medium">Plano</th>
                   <th className="px-4 py-3 text-left text-muted-foreground font-medium">Status</th>
                   <th className="px-4 py-3 text-left text-muted-foreground font-medium">Atualizado</th>
                 </tr>
               </thead>
               <tbody>
-                {recentProjects.map((p) => (
+                {recentProjects.map((p: any) => (
                   <tr key={p.id} className="border-b border-border/50 last:border-0 hover:bg-secondary/30">
-                    <td className="px-4 py-3 font-mono text-xs text-foreground">{p.id.slice(0, 8)}</td>
-                    <td className="px-4 py-3 capitalize text-foreground">{p.vertical}</td>
+                    <td className="px-4 py-3 text-foreground">{p.name}</td>
+                    <td className="px-4 py-3 capitalize text-foreground">{p.plan}</td>
                     <td className="px-4 py-3">
                       <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
-                        {statusLabels[p.status] || p.status}
+                        {p.status}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">

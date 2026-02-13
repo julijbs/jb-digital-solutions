@@ -21,6 +21,8 @@ const NewProject = () => {
   const { toast } = useToast();
   const [businessName, setBusinessName] = useState("");
   const [vertical, setVertical] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleCreate = async (e: React.FormEvent) => {
@@ -33,7 +35,7 @@ const NewProject = () => {
     const { data: existingClient } = await supabase
       .from("clients")
       .select("id")
-      .eq("owner_user_id", user.id)
+      .eq("user_id", user.id)
       .maybeSingle();
 
     if (existingClient) {
@@ -41,7 +43,7 @@ const NewProject = () => {
     } else {
       const { data: newClient, error: clientError } = await supabase
         .from("clients")
-        .insert({ owner_user_id: user.id, business_name: businessName })
+        .insert({ user_id: user.id, business_name: businessName, vertical, city, state })
         .select("id")
         .single();
       if (clientError || !newClient) {
@@ -57,8 +59,8 @@ const NewProject = () => {
       .from("projects")
       .insert({
         client_id: clientId,
-        vertical,
-        status: "lead_created",
+        name: businessName,
+        status: "intake",
       })
       .select("id")
       .single();
@@ -72,8 +74,8 @@ const NewProject = () => {
     // Create intake record
     await supabase.from("client_intake").insert({
       project_id: project.id,
-      onboarding_status: "not_started",
-      business_json: { business_name: businessName },
+      step_current: 1,
+      business_data: { business_name: businessName, vertical, city, state },
     });
 
     toast({ title: "Projeto criado!", description: "Vamos começar o onboarding." });
@@ -97,6 +99,17 @@ const NewProject = () => {
               onChange={(e) => setBusinessName(e.target.value)}
               required
             />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Cidade</Label>
+              <Input placeholder="São Paulo" value={city} onChange={(e) => setCity(e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label>Estado</Label>
+              <Input placeholder="SP" value={state} onChange={(e) => setState(e.target.value)} maxLength={2} />
+            </div>
           </div>
 
           <div className="space-y-3">
