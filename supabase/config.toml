@@ -1,1 +1,7 @@
 project_id = "ardvuxqpmwrmawdeyxqm"
+
+[functions.webhook-github]
+verify_jwt = false
+
+[functions.webhook-vercel]
+verify_jwt = false
