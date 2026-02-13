@@ -52,16 +52,18 @@ const Onboarding = () => {
 
       if (data) {
         setIntake(data);
-        if (data.has_gbp !== null) setHasGbp(data.has_gbp ? "yes" : "no");
-        if (data.business_json) setBusiness((prev) => ({ ...prev, ...data.business_json }));
-        if (data.location_json) setLocation((prev) => ({ ...prev, ...data.location_json }));
-        if (data.services_json) setServices((prev) => ({ ...prev, ...data.services_json }));
+        const bd = data.business_data as any;
+        const sd = data.schedule_data as any;
+        const svd = data.services_data as any;
+        const gd = data.google_data as any;
 
-        const statusMap: Record<string, number> = {
-          not_started: 0, step_1: 1, step_2: 2, step_3: 3, step_4: 4, step_5: 5, completed: 5,
-        };
-        if (data.onboarding_status && statusMap[data.onboarding_status] !== undefined) {
-          setCurrentStep(statusMap[data.onboarding_status]);
+        if (gd?.has_gbp !== undefined) setHasGbp(gd.has_gbp ? "yes" : "no");
+        if (bd) setBusiness((prev) => ({ ...prev, ...bd }));
+        if (sd) setLocation((prev) => ({ ...prev, ...sd }));
+        if (svd) setServices((prev) => ({ ...prev, ...svd }));
+
+        if (data.step_current) {
+          setCurrentStep(Math.max(0, data.step_current - 1));
         }
       }
       setLoading(false);
@@ -72,25 +74,19 @@ const Onboarding = () => {
   const saveProgress = async (nextStep?: number) => {
     if (!projectId) return;
     setSaving(true);
-    const stepLabel = `step_${(nextStep ?? currentStep) + 1}`;
+    const stepNum = (nextStep ?? currentStep) + 1;
 
     await supabase
       .from("client_intake")
       .update({
-        has_gbp: hasGbp === "yes" ? true : hasGbp === "no" ? false : null,
-        business_json: business,
-        location_json: location,
-        services_json: services,
-        onboarding_status: nextStep === 5 ? "completed" : stepLabel,
+        google_data: { has_gbp: hasGbp === "yes" },
+        business_data: business as any,
+        schedule_data: location as any,
+        services_data: services as any,
+        step_current: stepNum,
+        completed: nextStep === 5,
       })
       .eq("project_id", projectId);
-
-    if (nextStep === 5) {
-      await supabase
-        .from("projects")
-        .update({ status: "onboarding_in_progress", updated_at: new Date().toISOString() })
-        .eq("id", projectId);
-    }
 
     setSaving(false);
     toast({ title: "Progresso salvo!" });
@@ -108,7 +104,7 @@ const Onboarding = () => {
     await saveProgress(5);
     await supabase
       .from("projects")
-      .update({ status: "content_ready", updated_at: new Date().toISOString() })
+      .update({ status: "intake" })
       .eq("id", projectId);
     toast({ title: "Onboarding completo!", description: "Seus dados foram enviados para análise." });
     navigate("/dashboard");

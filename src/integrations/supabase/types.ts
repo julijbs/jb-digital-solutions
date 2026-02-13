@@ -14,16 +14,201 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      client_intake: {
+        Row: {
+          business_data: Json | null
+          completed: boolean
+          created_at: string
+          google_data: Json | null
+          id: string
+          photos_data: Json | null
+          project_id: string
+          schedule_data: Json | null
+          services_data: Json | null
+          step_current: number
+          updated_at: string
+        }
+        Insert: {
+          business_data?: Json | null
+          completed?: boolean
+          created_at?: string
+          google_data?: Json | null
+          id?: string
+          photos_data?: Json | null
+          project_id: string
+          schedule_data?: Json | null
+          services_data?: Json | null
+          step_current?: number
+          updated_at?: string
+        }
+        Update: {
+          business_data?: Json | null
+          completed?: boolean
+          created_at?: string
+          google_data?: Json | null
+          id?: string
+          photos_data?: Json | null
+          project_id?: string
+          schedule_data?: Json | null
+          services_data?: Json | null
+          step_current?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_intake_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: true
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clients: {
+        Row: {
+          business_name: string
+          city: string | null
+          created_at: string
+          id: string
+          state: string | null
+          status: string
+          updated_at: string
+          user_id: string
+          vertical: string | null
+        }
+        Insert: {
+          business_name: string
+          city?: string | null
+          created_at?: string
+          id?: string
+          state?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+          vertical?: string | null
+        }
+        Update: {
+          business_name?: string
+          city?: string | null
+          created_at?: string
+          id?: string
+          state?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+          vertical?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          client_id: string
+          created_at: string
+          gbp_url: string | null
+          id: string
+          name: string
+          plan: string
+          site_url: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          gbp_url?: string | null
+          id?: string
+          name: string
+          plan?: string
+          site_url?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          gbp_url?: string | null
+          id?: string
+          name?: string
+          plan?: string
+          site_url?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_client_user_id: { Args: { _client_id: string }; Returns: string }
+      get_project_user_id: { Args: { _project_id: string }; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin_jb" | "client"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +335,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin_jb", "client"],
+    },
   },
 } as const

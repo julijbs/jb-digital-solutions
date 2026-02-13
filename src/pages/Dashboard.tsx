@@ -7,19 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Plus, FolderKanban, ExternalLink } from "lucide-react";
 
 const statusLabels: Record<string, string> = {
-  lead_created: "Lead criado",
-  onboarding_in_progress: "Onboarding",
-  content_ready: "Conteúdo pronto",
-  lovable_prompt_ready: "Prompt pronto",
-  lovable_site_generated: "Site gerado",
-  repo_created: "Repositório criado",
-  vercel_deployed_preview: "Preview no ar",
-  qa_passed: "QA aprovado",
-  client_review: "Em revisão",
-  vercel_deployed_prod: "Publicado",
-  handoff_ready: "Handoff pronto",
-  handoff_done: "Entregue",
-  monthly_active: "Mensal ativo",
+  intake: "Onboarding",
+  in_progress: "Em andamento",
+  review: "Em revisão",
+  published: "Publicado",
+  active: "Ativo",
 };
 
 const Dashboard = () => {
@@ -30,17 +22,17 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       if (!user) return;
-      const { data: clients } = await supabase
+      const { data: client } = await supabase
         .from("clients")
         .select("id")
-        .eq("owner_user_id", user.id);
+        .eq("user_id", user.id)
+        .maybeSingle();
 
-      if (clients && clients.length > 0) {
-        const clientIds = clients.map((c) => c.id);
+      if (client) {
         const { data: projectsData } = await supabase
           .from("projects")
           .select("*")
-          .in("client_id", clientIds)
+          .eq("client_id", client.id)
           .order("created_at", { ascending: false });
         setProjects(projectsData || []);
       }
@@ -87,27 +79,26 @@ const Dashboard = () => {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
-            <Link
+            <div
               key={project.id}
-              to={`/dashboard/projects/${project.id}`}
               className="glass-card-hover rounded-xl p-6 block"
             >
               <div className="flex items-start justify-between mb-3">
                 <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary capitalize">
-                  {project.vertical}
+                  {project.plan}
                 </span>
                 <ExternalLink size={14} className="text-muted-foreground" />
               </div>
               <h3 className="font-serif text-lg text-foreground mb-1">
-                Projeto #{project.id.slice(0, 8)}
+                {project.name}
               </h3>
               <p className="text-sm text-muted-foreground">
                 {statusLabels[project.status] || project.status}
               </p>
-              {project.preview_url && (
-                <p className="mt-3 text-xs text-primary truncate">{project.preview_url}</p>
+              {project.site_url && (
+                <p className="mt-3 text-xs text-primary truncate">{project.site_url}</p>
               )}
-            </Link>
+            </div>
           ))}
         </div>
       )}

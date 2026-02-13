@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, EyeOff } from "lucide-react";
+import jbLogo from "@/assets/jb-logo.jpg";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -33,10 +34,7 @@ const Login = () => {
       <div className="glass-card w-full max-w-md rounded-xl p-8">
         <div className="mb-8 text-center">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg gold-gradient-bg">
-              <span className="text-sm font-bold text-primary-foreground">JB</span>
-            </div>
-            <span className="font-serif text-xl text-foreground">JB Digital</span>
+            <img src={jbLogo} alt="JB Digital Consulting" className="h-10 w-auto rounded-lg" />
           </Link>
           <h1 className="font-serif text-2xl text-foreground">Entrar na plataforma</h1>
           <p className="mt-2 text-sm text-muted-foreground">Acesse seu painel e acompanhe tudo</p>
