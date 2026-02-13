@@ -1,3 +1,5 @@
+import jbLogo from "@/assets/jb-logo.jpg";
+
 const links = [
   { label: "Como funciona", href: "#como-funciona" },
   { label: "O que entregamos", href: "#entregaveis" },
@@ -11,10 +13,7 @@ export const Footer = () => {
       <div className="container">
         <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg gold-gradient-bg">
-              <span className="text-xs font-bold text-primary-foreground">JB</span>
-            </div>
-            <span className="font-serif text-foreground">JB Digital Consulting</span>
+            <img src={jbLogo} alt="JB Digital Consulting" className="h-8 w-auto rounded-lg" />
           </div>
 
           <nav className="flex flex-wrap items-center justify-center gap-6">
