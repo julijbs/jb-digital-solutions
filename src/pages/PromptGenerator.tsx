@@ -108,6 +108,14 @@ const PromptGenerator = () => {
         toast({ title: "Erro", description: result.error, variant: "destructive" });
       } else {
         setPrompt(result.content);
+        // Auto-advance pipeline to lovable_prompt_ready
+        if (selectedProject) {
+          await supabase
+            .from("projects")
+            .update({ status: "lovable_prompt_ready" })
+            .eq("id", selectedProject);
+          toast({ title: "Pipeline atualizado", description: "Projeto movido para 'Prompt pronto'" });
+        }
       }
     } catch (err: any) {
       toast({ title: "Erro ao gerar prompt", description: err.message, variant: "destructive" });
@@ -133,6 +141,21 @@ const PromptGenerator = () => {
         toast({ title: "Erro", description: result.error, variant: "destructive" });
       } else {
         setContentPack(result.content);
+        // Auto-advance pipeline to content_ready if still in intake/onboarding
+        if (selectedProject) {
+          const { data: proj } = await supabase
+            .from("projects")
+            .select("status")
+            .eq("id", selectedProject)
+            .single();
+          if (proj && (proj.status === "intake" || proj.status === "onboarding_in_progress")) {
+            await supabase
+              .from("projects")
+              .update({ status: "content_ready" })
+              .eq("id", selectedProject);
+            toast({ title: "Pipeline atualizado", description: "Projeto movido para 'Conteúdo pronto'" });
+          }
+        }
       }
     } catch (err: any) {
       toast({ title: "Erro ao gerar content pack", description: err.message, variant: "destructive" });
