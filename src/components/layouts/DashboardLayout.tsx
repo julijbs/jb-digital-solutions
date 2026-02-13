@@ -14,6 +14,7 @@ import {
   FileText,
   Plug,
   Sparkles,
+  MapPin,
 } from "lucide-react";
 import jbLogo from "@/assets/jb-logo.jpg";
 
@@ -28,6 +29,7 @@ const adminLinks = [
   { href: "/admin", label: "Painel Admin", icon: LayoutDashboard },
   { href: "/admin/clients", label: "Clientes", icon: Users },
   { href: "/admin/pipeline", label: "Pipeline", icon: FolderKanban },
+  { href: "/admin/gbp", label: "Google Business", icon: MapPin },
   { href: "/admin/prompt-generator", label: "Gerador de Prompt", icon: Sparkles },
   { href: "/admin/billing", label: "Cobrança", icon: CreditCard },
   { href: "/admin/reports", label: "Relatórios", icon: FileText },
