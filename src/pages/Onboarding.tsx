@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Check, ChevronRight, ChevronLeft, Save } from "lucide-react";
+import { Check, ChevronRight, ChevronLeft, Save, Upload, X, Image as ImageIcon } from "lucide-react";
 
 const steps = [
   { id: 0, label: "Google Meu Negócio" },
@@ -21,6 +22,7 @@ const Onboarding = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user } = useAuth();
   const [currentStep, setCurrentStep] = useState(0);
   const [intake, setIntake] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -41,6 +43,15 @@ const Onboarding = () => {
     pain_points: "", differentials: "", approach: "",
   });
 
+  // Photos state
+  const [photos, setPhotos] = useState<{ name: string; url: string }[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Google connect state
+  const [googleConnecting, setGoogleConnecting] = useState(false);
+  const [googleConnected, setGoogleConnected] = useState(false);
+
   useEffect(() => {
     const fetchIntake = async () => {
       if (!projectId) return;
@@ -56,11 +67,14 @@ const Onboarding = () => {
         const sd = data.schedule_data as any;
         const svd = data.services_data as any;
         const gd = data.google_data as any;
+        const pd = data.photos_data as any;
 
         if (gd?.has_gbp !== undefined) setHasGbp(gd.has_gbp ? "yes" : "no");
+        if (gd?.google_connected) setGoogleConnected(true);
         if (bd) setBusiness((prev) => ({ ...prev, ...bd }));
         if (sd) setLocation((prev) => ({ ...prev, ...sd }));
         if (svd) setServices((prev) => ({ ...prev, ...svd }));
+        if (pd?.photos) setPhotos(pd.photos);
 
         if (data.step_current) {
           setCurrentStep(Math.max(0, data.step_current - 1));
@@ -79,10 +93,11 @@ const Onboarding = () => {
     await supabase
       .from("client_intake")
       .update({
-        google_data: { has_gbp: hasGbp === "yes" },
+        google_data: { has_gbp: hasGbp === "yes", google_connected: googleConnected },
         business_data: business as any,
         schedule_data: location as any,
         services_data: services as any,
+        photos_data: { photos } as any,
         step_current: stepNum,
         completed: nextStep === 5,
       })
@@ -108,6 +123,60 @@ const Onboarding = () => {
       .eq("id", projectId);
     toast({ title: "Onboarding completo!", description: "Seus dados foram enviados para análise." });
     navigate("/dashboard");
+  };
+
+  // Photo upload
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || !user) return;
+    setUploading(true);
+
+    const newPhotos: { name: string; url: string }[] = [];
+    for (const file of Array.from(files)) {
+      const ext = file.name.split(".").pop();
+      const path = `${user.id}/${projectId}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error } = await supabase.storage.from("client-photos").upload(path, file);
+      if (!error) {
+        const { data: urlData } = supabase.storage.from("client-photos").getPublicUrl(path);
+        newPhotos.push({ name: file.name, url: urlData.publicUrl });
+      }
+    }
+
+    setPhotos((prev) => [...prev, ...newPhotos]);
+    setUploading(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+    toast({ title: `${newPhotos.length} foto(s) enviada(s)!` });
+  };
+
+  const removePhoto = async (index: number) => {
+    const photo = photos[index];
+    // Extract path from URL
+    const urlParts = photo.url.split("/client-photos/");
+    if (urlParts[1]) {
+      await supabase.storage.from("client-photos").remove([decodeURIComponent(urlParts[1])]);
+    }
+    setPhotos((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // Google OAuth connect
+  const handleGoogleConnect = async () => {
+    setGoogleConnecting(true);
+    try {
+      const { lovable } = await import("@/integrations/lovable/index");
+      const { error } = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin,
+        extraParams: { prompt: "select_account" },
+      });
+      if (error) {
+        toast({ title: "Erro ao conectar", description: String(error), variant: "destructive" });
+      } else {
+        setGoogleConnected(true);
+        toast({ title: "Google conectado com sucesso!" });
+      }
+    } catch (err) {
+      toast({ title: "Erro ao conectar Google", variant: "destructive" });
+    }
+    setGoogleConnecting(false);
   };
 
   if (loading) {
@@ -303,26 +372,63 @@ const Onboarding = () => {
             </div>
           )}
 
-          {/* Step 4: Photos */}
+          {/* Step 4: Photos - NOW WITH UPLOAD */}
           {currentStep === 4 && (
             <div className="space-y-6">
               <div>
                 <h2 className="font-serif text-xl text-foreground">Fotos e identidade</h2>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Upload de logo e fotos do seu negócio. Recomendamos 5 a 20 fotos.
+                  Envie logo e fotos do seu negócio. Recomendamos 5 a 20 fotos.
                 </p>
               </div>
-              <div className="rounded-lg border-2 border-dashed border-border p-8 text-center">
-                <p className="text-sm text-muted-foreground">Upload de fotos em breve</p>
-                <p className="mt-2 text-xs text-muted-foreground">Funcionalidade de upload será ativada com Storage</p>
+
+              {/* Upload area */}
+              <div
+                className="cursor-pointer rounded-lg border-2 border-dashed border-border p-8 text-center transition-colors hover:border-primary/40"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Upload size={32} className="mx-auto mb-3 text-muted-foreground" />
+                <p className="text-sm text-muted-foreground">
+                  {uploading ? "Enviando…" : "Clique para selecionar ou arraste fotos aqui"}
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">JPG, PNG ou WebP • Máx 5MB cada</p>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={handlePhotoUpload}
+                />
               </div>
-              <Button variant="ghost" className="text-muted-foreground" onClick={goNext}>
-                Pular por enquanto
-              </Button>
+
+              {/* Photo grid */}
+              {photos.length > 0 && (
+                <div className="grid grid-cols-3 gap-3">
+                  {photos.map((photo, i) => (
+                    <div key={i} className="group relative aspect-square overflow-hidden rounded-lg border border-border">
+                      <img src={photo.url} alt={photo.name} className="h-full w-full object-cover" />
+                      <button
+                        onClick={() => removePhoto(i)}
+                        className="absolute right-1 top-1 rounded-full bg-destructive/80 p-1 text-destructive-foreground opacity-0 transition-opacity group-hover:opacity-100"
+                      >
+                        <X size={12} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {photos.length === 0 && (
+                <div className="flex items-center gap-3 rounded-lg bg-secondary/30 p-3">
+                  <ImageIcon size={18} className="text-muted-foreground" />
+                  <p className="text-xs text-muted-foreground">Nenhuma foto enviada ainda</p>
+                </div>
+              )}
             </div>
           )}
 
-          {/* Step 5: Connect Google */}
+          {/* Step 5: Connect Google - NOW FUNCTIONAL */}
           {currentStep === 5 && (
             <div className="space-y-6">
               <div>
@@ -332,13 +438,31 @@ const Onboarding = () => {
                 </p>
               </div>
               <div className="glass-card rounded-lg p-6 text-center">
-                <div className="mb-4 text-4xl">🔗</div>
-                <p className="text-sm text-muted-foreground mb-4">
-                  A conexão com Google será ativada em breve.
-                </p>
-                <Button variant="heroOutline" disabled>
-                  Conectar Google (em breve)
-                </Button>
+                {googleConnected ? (
+                  <>
+                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-500/10">
+                      <Check size={32} className="text-green-400" />
+                    </div>
+                    <p className="text-sm font-medium text-foreground mb-2">Google conectado!</p>
+                    <p className="text-xs text-muted-foreground">
+                      Sua conta Google foi vinculada com sucesso.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div className="mb-4 text-4xl">🔗</div>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Vincule sua conta Google para que possamos gerenciar seu perfil no Google Meu Negócio.
+                    </p>
+                    <Button
+                      variant="hero"
+                      onClick={handleGoogleConnect}
+                      disabled={googleConnecting}
+                    >
+                      {googleConnecting ? "Conectando…" : "Conectar com Google"}
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           )}
