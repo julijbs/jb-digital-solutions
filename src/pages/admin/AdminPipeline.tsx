@@ -9,7 +9,8 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const pipelineStages = [
-  { key: "intake", label: "Onboarding", color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" },
+  { key: "intake", label: "Intake", color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" },
+  { key: "onboarding_in_progress", label: "Onboarding", color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" },
   { key: "content_ready", label: "Conteúdo pronto", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
   { key: "lovable_prompt_ready", label: "Prompt pronto", color: "bg-purple-500/10 text-purple-400 border-purple-500/20" },
   { key: "lovable_site_generated", label: "Site gerado", color: "bg-purple-500/10 text-purple-400 border-purple-500/20" },
