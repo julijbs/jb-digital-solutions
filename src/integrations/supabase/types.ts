@@ -135,34 +135,40 @@ export type Database = {
           client_id: string
           created_at: string
           gbp_url: string | null
+          github_repo: string | null
           id: string
           name: string
           plan: string
           site_url: string | null
           status: string
           updated_at: string
+          vercel_project_id: string | null
         }
         Insert: {
           client_id: string
           created_at?: string
           gbp_url?: string | null
+          github_repo?: string | null
           id?: string
           name: string
           plan?: string
           site_url?: string | null
           status?: string
           updated_at?: string
+          vercel_project_id?: string | null
         }
         Update: {
           client_id?: string
           created_at?: string
           gbp_url?: string | null
+          github_repo?: string | null
           id?: string
           name?: string
           plan?: string
           site_url?: string | null
           status?: string
           updated_at?: string
+          vercel_project_id?: string | null
         }
         Relationships: [
           {
