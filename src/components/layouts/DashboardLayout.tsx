@@ -15,12 +15,15 @@ import {
   Plug,
   Sparkles,
   MapPin,
+  CheckCircle2,
 } from "lucide-react";
+import { NotificationBell } from "@/components/NotificationBell";
 import jbLogo from "@/assets/jb-logo.jpg";
 
 const clientLinks = [
   { href: "/dashboard", label: "Painel", icon: LayoutDashboard },
   { href: "/dashboard/projects", label: "Projetos", icon: FolderKanban },
+  { href: "/dashboard/review", label: "Revisão", icon: CheckCircle2 },
   { href: "/dashboard/reports", label: "Relatórios", icon: FileText },
   { href: "/dashboard/billing", label: "Cobrança", icon: CreditCard },
 ];
@@ -111,6 +114,7 @@ export const DashboardLayout = ({ children }: { children: ReactNode }) => {
             <Menu size={20} />
           </button>
           <div className="flex-1" />
+          <NotificationBell />
           <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary capitalize">
             {role === "admin_jb" ? "Admin" : "Cliente"}
           </span>

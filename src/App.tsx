@@ -16,6 +16,7 @@ import PromptGenerator from "./pages/PromptGenerator";
 import ClientProjects from "./pages/ClientProjects";
 import ClientReports from "./pages/ClientReports";
 import ClientBilling from "./pages/ClientBilling";
+import ClientReview from "./pages/ClientReview";
 import AdminClients from "./pages/admin/AdminClients";
 import AdminPipeline from "./pages/admin/AdminPipeline";
 import AdminBilling from "./pages/admin/AdminBilling";
@@ -23,6 +24,7 @@ import AdminReports from "./pages/admin/AdminReports";
 import AdminIntegrations from "./pages/admin/AdminIntegrations";
 import AdminSettings from "./pages/admin/AdminSettings";
 import AdminGBP from "./pages/admin/AdminGBP";
+import AdminProjectDetail from "./pages/admin/AdminProjectDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,11 +48,13 @@ const App = () => (
             <Route path="/dashboard/onboarding/:projectId" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
             <Route path="/dashboard/reports" element={<ProtectedRoute><ClientReports /></ProtectedRoute>} />
             <Route path="/dashboard/billing" element={<ProtectedRoute><ClientBilling /></ProtectedRoute>} />
+            <Route path="/dashboard/review" element={<ProtectedRoute><ClientReview /></ProtectedRoute>} />
 
             {/* Admin routes */}
             <Route path="/admin" element={<ProtectedRoute requiredRole="admin_jb"><AdminDashboard /></ProtectedRoute>} />
             <Route path="/admin/clients" element={<ProtectedRoute requiredRole="admin_jb"><AdminClients /></ProtectedRoute>} />
             <Route path="/admin/pipeline" element={<ProtectedRoute requiredRole="admin_jb"><AdminPipeline /></ProtectedRoute>} />
+            <Route path="/admin/projects/:projectId" element={<ProtectedRoute requiredRole="admin_jb"><AdminProjectDetail /></ProtectedRoute>} />
             <Route path="/admin/gbp" element={<ProtectedRoute requiredRole="admin_jb"><AdminGBP /></ProtectedRoute>} />
             <Route path="/admin/prompt-generator" element={<ProtectedRoute requiredRole="admin_jb"><PromptGenerator /></ProtectedRoute>} />
             <Route path="/admin/billing" element={<ProtectedRoute requiredRole="admin_jb"><AdminBilling /></ProtectedRoute>} />

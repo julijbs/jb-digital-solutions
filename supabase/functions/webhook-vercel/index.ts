@@ -61,6 +61,26 @@ Deno.serve(async (req) => {
           throw updateError;
         }
 
+        // Fetch client user_id for notification
+        const { data: projFull } = await supabase
+          .from("projects")
+          .select("name, clients(user_id)")
+          .eq("id", project.id)
+          .single();
+
+        if (projFull) {
+          const clientUserId = (projFull.clients as any)?.user_id;
+          if (clientUserId) {
+            await supabase.from("notifications").insert({
+              user_id: clientUserId,
+              title: "Deploy atualizado",
+              message: `O deploy do projeto "${projFull.name}" foi atualizado: ${statusUpdate}`,
+              type: "deploy",
+              link: "/dashboard/projects",
+            });
+          }
+        }
+
         console.log(`Project ${project.id} status updated to ${statusUpdate}`);
       } else {
         console.log(`No project found for vercel_project_id: ${vercelProjectId}`);
