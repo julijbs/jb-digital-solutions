@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { Globe, Search, Calendar, RefreshCw, ExternalLink } from "lucide-react";
+import { Globe, Search, Calendar, RefreshCw, ExternalLink, RotateCcw, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const AdminDomains = () => {
   const [projects, setProjects] = useState<any[]>([]);
   const [renewals, setRenewals] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [retrying, setRetrying] = useState<string | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
       const [projRes, renewalRes] = await Promise.all([
         supabase
           .from("projects")
-          .select("id, name, custom_domain, domain_status, domain_renewal_date, domain_auto_renew, clients(business_name)")
+          .select("id, name, custom_domain, domain_status, domain_renewal_date, domain_auto_renew, domain_payment_id, clients(business_name)")
           .not("custom_domain", "is", null)
           .order("updated_at", { ascending: false }),
         supabase
@@ -40,16 +43,58 @@ const AdminDomains = () => {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
+      case "domain_ready":
       case "active":
         return "bg-green-500/10 text-green-400";
       case "pending":
       case "pending_dns":
+      case "dns_configuring":
+      case "ssl_activating":
+      case "registering":
+      case "payment_processing":
         return "bg-yellow-500/10 text-yellow-400";
       case "expired":
+      case "payment_pending":
         return "bg-destructive/10 text-destructive";
       default:
         return "bg-secondary text-muted-foreground";
     }
+  };
+
+  const isFailedStatus = (status: string) =>
+    ["payment_pending", "registering", "dns_configuring", "ssl_activating"].includes(status);
+
+  const handleRetry = async (project: any) => {
+    if (!project.custom_domain && !project.domain_payment_id) {
+      toast({ title: "Sem dados de domínio para retry", variant: "destructive" });
+      return;
+    }
+    setRetrying(project.id);
+    try {
+      const { data, error } = await supabase.functions.invoke("domain-register", {
+        body: {
+          domain: project.custom_domain,
+          projectId: project.id,
+          sessionId: project.domain_payment_id || "retry",
+        },
+      });
+      if (error) throw error;
+      if (data.success) {
+        toast({ title: "Domínio registrado com sucesso! 🎉" });
+        // Refresh data
+        const { data: updated } = await supabase
+          .from("projects")
+          .select("id, name, custom_domain, domain_status, domain_renewal_date, domain_auto_renew, domain_payment_id, clients(business_name)")
+          .not("custom_domain", "is", null)
+          .order("updated_at", { ascending: false });
+        setProjects(updated || []);
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (err: any) {
+      toast({ title: "Erro no retry", description: err.message, variant: "destructive" });
+    }
+    setRetrying(null);
   };
 
   const stats = [
@@ -136,7 +181,23 @@ const AdminDomains = () => {
                       {p.domain_auto_renew ? "Sim" : "Não"}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-right">
+                  <td className="px-4 py-3 text-right flex items-center justify-end gap-1">
+                    {isFailedStatus(p.domain_status) && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-7 text-xs text-yellow-400 hover:text-yellow-300"
+                        disabled={retrying === p.id}
+                        onClick={() => handleRetry(p)}
+                      >
+                        {retrying === p.id ? (
+                          <Loader2 size={12} className="animate-spin" />
+                        ) : (
+                          <RotateCcw size={12} />
+                        )}
+                        Retry
+                      </Button>
+                    )}
                     {p.custom_domain && (
                       <a href={`https://${p.custom_domain}`} target="_blank" rel="noopener noreferrer">
                         <Button variant="ghost" size="sm" className="h-7 text-xs">
