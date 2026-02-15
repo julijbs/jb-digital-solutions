@@ -9,7 +9,7 @@ const steps = [
   },
   {
     icon: Paintbrush,
-    title: "Criamos sua presença digital (3–5 dias)",
+    title: "Criamos sua presença digital (até 7 dias)",
     text: "Site profissional + Perfil da Empresa no Google configurado e otimizado.",
   },
   {
