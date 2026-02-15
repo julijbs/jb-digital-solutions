@@ -1,42 +1,53 @@
 import { motion } from "framer-motion";
-import { AlertCircle } from "lucide-react";
+import { Search, Smartphone, DollarSign } from "lucide-react";
 
 const pains = [
-  "Você até é bom — mas não aparece quando procuram no Google.",
-  "Seu site não passa confiança ou nem existe.",
-  "Seu Google Meu Negócio está incompleto (ou nem foi criado).",
-  "Você perde pedidos por falta de avaliações e consistência.",
+  {
+    icon: Search,
+    title: '"Ninguém me encontra no Google"',
+    text: "Você investe tempo criando conteúdo, mas quando alguém procura pelo seu serviço na sua região, você simplesmente não aparece. É como se você não existisse.",
+  },
+  {
+    icon: Smartphone,
+    title: '"Dependo das redes sociais"',
+    text: "Você sente que precisa postar todo dia para existir profissionalmente. Se parar de alimentar o algoritmo, desaparece. É exaustivo.",
+  },
+  {
+    icon: DollarSign,
+    title: '"Não tenho verba para marketing"',
+    text: "Agências cobram mensalidades altas, sites prontos são genéricos e você não sabe por onde começar para ter uma presença digital profissional e acessível.",
+  },
 ];
 
 export const PainPoints = () => {
   return (
-    <section className="py-20 md:py-28">
+    <section id="problema" className="py-20 md:py-28">
       <div className="section-divider mx-auto mb-20 max-w-xl" />
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto max-w-2xl text-center"
+          className="mx-auto mb-14 max-w-2xl text-center"
         >
           <h2 className="font-serif text-3xl md:text-4xl">
-            Se você depende do Instagram…
+            Talvez você reconheça esses sinais...
           </h2>
         </motion.div>
 
-        <div className="mx-auto mt-12 max-w-xl space-y-4">
+        <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
           {pains.map((pain, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="glass-card flex items-start gap-4 rounded-xl px-6 py-4"
+              transition={{ delay: i * 0.1 }}
+              className="glass-card rounded-xl p-6"
             >
-              <AlertCircle size={20} className="mt-0.5 shrink-0 text-primary" />
-              <p className="text-muted-foreground">{pain}</p>
+              <pain.icon size={28} className="mb-4 text-primary" />
+              <h3 className="font-serif text-lg text-foreground">{pain.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{pain.text}</p>
             </motion.div>
           ))}
         </div>
@@ -45,10 +56,10 @@ export const PainPoints = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="mx-auto mt-10 max-w-xl text-center text-sm text-primary"
+          transition={{ delay: 0.4 }}
+          className="mx-auto mt-12 max-w-xl text-center text-lg text-primary"
         >
-          JB Digital OS organiza isso como sistema — não como improviso.
+          E se existisse um caminho mais simples, ético e sustentável?
         </motion.p>
       </div>
     </section>

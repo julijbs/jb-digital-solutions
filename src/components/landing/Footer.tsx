@@ -2,7 +2,6 @@ import jbLogo from "@/assets/jb-logo.jpg";
 
 const links = [
   { label: "Como funciona", href: "#como-funciona" },
-  { label: "O que entregamos", href: "#entregaveis" },
   { label: "Planos", href: "#planos" },
   { label: "FAQ", href: "#faq" },
 ];
@@ -12,8 +11,11 @@ export const Footer = () => {
     <footer className="border-t border-border/50 py-12">
       <div className="container">
         <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <img src={jbLogo} alt="JB Digital Consulting" className="h-8 w-auto rounded-lg" />
+            <span className="text-sm text-muted-foreground">
+              Construindo presença digital ética e sustentável para profissionais liberais.
+            </span>
           </div>
 
           <nav className="flex flex-wrap items-center justify-center gap-6">
@@ -27,17 +29,12 @@ export const Footer = () => {
               </a>
             ))}
           </nav>
-
-          <div className="flex flex-col items-center gap-1 text-xs text-muted-foreground/60 md:items-end">
-            <span>contato@jbdigital.com</span>
-            <span>(11) 99999-9999</span>
-          </div>
         </div>
 
         <div className="section-divider mx-auto my-8 max-w-full" />
 
         <p className="text-center text-xs leading-relaxed text-muted-foreground/50">
-          A JB Digital Consulting não promete resultados garantidos — entregamos estrutura, processo e execução técnica.
+          © 2026 JB Digital Consulting. Todos os direitos reservados.
         </p>
       </div>
     </footer>

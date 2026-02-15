@@ -1,55 +1,58 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight, Star, CreditCard, Gift, ShieldCheck } from "lucide-react";
 
 const plans = [
   {
-    name: "Essencial",
-    tag: "Setup",
+    name: "Site Profissional",
+    tag: "Site Otimizado para Google",
+    price: "R$ 597",
+    featured: false,
+    features: [
+      "Site institucional one-page",
+      "Otimização básica para SEO",
+      "Hospedagem inclusa (sem mensalidade)",
+      "Mobile-first e carregamento rápido",
+      "Entrega em até 7 dias",
+    ],
+    cta: "Escolher Site",
+  },
+  {
+    name: "Google Meu Negócio",
+    tag: "Perfil no Google",
+    price: "R$ 597",
+    featured: false,
+    features: [
+      "Criação/otimização do perfil GMB",
+      "Categorização estratégica",
+      "Integração de dados (NAP)",
+      "Configuração de horários e serviços",
+      "Entrega em até 7 dias",
+    ],
+    cta: "Escolher GMB",
+  },
+  {
+    name: "Presença Google Essencial",
+    tag: "Pacote Completo — Site + Google Meu Negócio",
     price: "R$ 997",
-    period: "único",
+    savings: "economize R$ 197",
     featured: true,
     features: [
-      "Site one-page leve com SEO local",
-      "Google Business Profile (criar/otimizar)",
-      "Checklist técnico completo",
-      "Dashboard do cliente",
-      "Entrega organizada (handoff pack)",
+      "Tudo do Site Profissional",
+      "Tudo do Google Meu Negócio",
+      "Conexão técnica entre site e GMB",
+      "Dados sincronizados e consistentes",
+      "Presença digital completa e profissional",
     ],
-    cta: "Quero o Essencial",
-    note: "Prazo: poucos dias (após onboarding)",
+    cta: "Começar Agora — Pacote Completo",
   },
-  {
-    name: "Crescimento",
-    tag: "Mensal",
-    price: "R$ 297",
-    period: "/mês",
-    featured: false,
-    features: [
-      "Relatório mensal de performance",
-      "Rotina de avaliações (pedido + respostas)",
-      "Pequenas atualizações (limite mensal)",
-      "Suporte por painel",
-    ],
-    cta: "Ativar Crescimento",
-    note: "Requer plano Essencial",
-  },
-  {
-    name: "Premium SEO",
-    tag: "Local",
-    price: "A partir de R$ 12.000",
-    period: "",
-    featured: false,
-    features: [
-      "Para nichos disputados",
-      "Negócios estruturados",
-      "Estratégia personalizada",
-      "Consultoria dedicada",
-    ],
-    cta: "Aplicar para o Premium",
-    note: "Análise prévia obrigatória",
-  },
+];
+
+const badges = [
+  { icon: CreditCard, text: "Pagamento via PIX ou Cartão (até 12x)" },
+  { icon: Gift, text: "Hospedagem gratuita permanente incluída" },
+  { icon: ShieldCheck, text: "Garantia de 7 dias: não gostou? Devolvemos 100%" },
 ];
 
 export const PricingSection = () => {
@@ -64,10 +67,9 @@ export const PricingSection = () => {
           viewport={{ once: true }}
           className="mx-auto mb-16 max-w-2xl text-center"
         >
-          <h2 className="font-serif text-3xl md:text-4xl">Planos</h2>
-          <p className="mt-4 text-muted-foreground">
-            Escolha o que faz sentido para o seu momento.
-          </p>
+          <h2 className="font-serif text-3xl md:text-4xl">
+            Escolha o que faz sentido para você agora
+          </h2>
         </motion.div>
 
         <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-3">
@@ -86,7 +88,7 @@ export const PricingSection = () => {
             >
               {plan.featured && (
                 <div className="absolute -top-3 left-6 flex items-center gap-1 rounded-full gold-gradient-bg px-3 py-1 text-xs font-semibold text-primary-foreground">
-                  <Star size={12} /> Mais popular
+                  <Star size={12} /> Mais escolhido
                 </div>
               )}
 
@@ -94,10 +96,12 @@ export const PricingSection = () => {
                 {plan.tag}
               </div>
               <h3 className="font-serif text-2xl text-foreground">{plan.name}</h3>
-              <div className="mt-3 flex items-baseline gap-1">
+              <div className="mt-3 flex items-baseline gap-2">
                 <span className="font-serif text-3xl text-primary">{plan.price}</span>
-                {plan.period && (
-                  <span className="text-sm text-muted-foreground">{plan.period}</span>
+                {plan.savings && (
+                  <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                    {plan.savings}
+                  </span>
                 )}
               </div>
 
@@ -117,14 +121,18 @@ export const PricingSection = () => {
               >
                 {plan.cta} <ArrowRight size={16} />
               </Button>
-              <p className="mt-3 text-center text-xs text-muted-foreground/60">{plan.note}</p>
             </motion.div>
           ))}
         </div>
 
-        <p className="mx-auto mt-10 max-w-xl text-center text-xs text-muted-foreground/70">
-          Resultados variam conforme nicho, concorrência e consistência. A JB entrega estrutura e processo.
-        </p>
+        <div className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-3">
+          {badges.map((b, i) => (
+            <span key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
+              <b.icon size={16} className="text-primary" />
+              {b.text}
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   );
