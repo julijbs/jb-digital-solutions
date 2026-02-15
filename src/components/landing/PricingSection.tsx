@@ -19,29 +19,29 @@ const plans = [
     cta: "Escolher Site",
   },
   {
-    name: "Google Meu Negócio",
+    name: "Perfil da Empresa no Google",
     tag: "Perfil no Google",
     price: "R$ 597",
     featured: false,
     features: [
-      "Criação/otimização do perfil GMB",
+      "Criação/otimização do Perfil no Google",
       "Categorização estratégica",
       "Integração de dados (NAP)",
       "Configuração de horários e serviços",
       "Entrega em até 7 dias",
     ],
-    cta: "Escolher GMB",
+    cta: "Escolher Perfil no Google",
   },
   {
     name: "Presença Google Essencial",
-    tag: "Pacote Completo — Site + Google Meu Negócio",
+    tag: "Pacote Completo — Site + Perfil no Google",
     price: "R$ 997",
     savings: "economize R$ 197",
     featured: true,
     features: [
       "Tudo do Site Profissional",
-      "Tudo do Google Meu Negócio",
-      "Conexão técnica entre site e GMB",
+      "Tudo do Perfil no Google",
+      "Conexão técnica entre site e perfil",
       "Dados sincronizados e consistentes",
       "Presença digital completa e profissional",
     ],
@@ -52,7 +52,7 @@ const plans = [
 const badges = [
   { icon: CreditCard, text: "Pagamento via PIX ou Cartão (até 12x)" },
   { icon: Gift, text: "Hospedagem gratuita permanente incluída" },
-  { icon: ShieldCheck, text: "Garantia de 7 dias: não gostou? Devolvemos 100%" },
+  { icon: ShieldCheck, text: "Processo de aprovação em etapas — revisões incluídas" },
 ];
 
 export const PricingSection = () => {

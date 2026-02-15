@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Check } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -32,10 +33,34 @@ const faqs = [
     a: "Sim! Você pode comprar seu domínio personalizado (ex: psicologamaria.com.br) e nós configuramos. Custo adicional de R$ 100 (setup único).",
   },
   {
-    q: "Tem garantia?",
-    a: "Sim! 7 dias de garantia incondicional. Se não gostar, devolvemos 100% do valor.",
+    q: "E se eu não gostar do resultado?",
+    a: "guarantee",
   },
 ];
+
+const GuaranteeAnswer = () => (
+  <div className="space-y-4">
+    <p className="text-sm leading-relaxed text-muted-foreground">
+      Trabalhamos com processo de aprovação em etapas. Você acompanha e aprova cada fase antes de seguirmos adiante:
+    </p>
+    <div className="space-y-2 border-l-2 border-primary/20 pl-4">
+      {["Você aprova o layout e estrutura", "Você aprova textos e conteúdo", "Você aprova o site final"].map((step, i) => (
+        <div key={i} className="flex items-start gap-2">
+          <Check size={16} className="mt-0.5 shrink-0 text-primary" />
+          <span className="text-sm text-muted-foreground">
+            <strong className="text-foreground">Etapa {i + 1}:</strong> {step}
+          </span>
+        </div>
+      ))}
+    </div>
+    <p className="text-sm leading-relaxed text-muted-foreground">
+      Só publicamos quando você estiver <strong className="text-foreground">100% satisfeito</strong>. Revisões estão incluídas no processo.
+    </p>
+    <p className="text-sm leading-relaxed text-muted-foreground">
+      Se por algum motivo o trabalho não atender às especificações combinadas, ajustamos até ficar perfeito — <strong className="text-foreground">sem custo adicional</strong>.
+    </p>
+  </div>
+);
 
 export const FAQSection = () => {
   return (
@@ -62,8 +87,10 @@ export const FAQSection = () => {
                 <AccordionTrigger className="py-4 text-left text-sm font-medium text-foreground hover:text-primary hover:no-underline">
                   {faq.q}
                 </AccordionTrigger>
-                <AccordionContent className="pb-4 text-sm leading-relaxed text-muted-foreground">
-                  {faq.a}
+                <AccordionContent className="pb-4">
+                  {faq.a === "guarantee" ? <GuaranteeAnswer /> : (
+                    <p className="text-sm leading-relaxed text-muted-foreground">{faq.a}</p>
+                  )}
                 </AccordionContent>
               </AccordionItem>
             ))}
