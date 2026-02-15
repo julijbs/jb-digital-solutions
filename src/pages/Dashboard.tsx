@@ -4,7 +4,8 @@ import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Plus, FolderKanban, ExternalLink } from "lucide-react";
+import { Plus, FolderKanban, ExternalLink, Globe } from "lucide-react";
+import { DomainPurchaseFlow } from "@/components/domain/DomainPurchaseFlow";
 
 const statusLabels: Record<string, string> = {
   intake: "Onboarding",
@@ -77,30 +78,47 @@ const Dashboard = () => {
           </Link>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="glass-card-hover rounded-xl p-6 block"
-            >
-              <div className="flex items-start justify-between mb-3">
-                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary capitalize">
-                  {project.plan}
-                </span>
-                <ExternalLink size={14} className="text-muted-foreground" />
+        <>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project) => (
+              <div
+                key={project.id}
+                className="glass-card-hover rounded-xl p-6 block"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary capitalize">
+                    {project.plan}
+                  </span>
+                  <ExternalLink size={14} className="text-muted-foreground" />
+                </div>
+                <h3 className="font-serif text-lg text-foreground mb-1">
+                  {project.name}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {statusLabels[project.status] || project.status}
+                </p>
+                {project.site_url && (
+                  <p className="mt-3 text-xs text-primary truncate">{project.site_url}</p>
+                )}
+                {project.domain_status === "domain_ready" && project.custom_domain && (
+                  <div className="mt-2 flex items-center gap-1 text-xs text-accent">
+                    <Globe size={12} />
+                    <span>{project.custom_domain}</span>
+                  </div>
+                )}
               </div>
-              <h3 className="font-serif text-lg text-foreground mb-1">
-                {project.name}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {statusLabels[project.status] || project.status}
-              </p>
-              {project.site_url && (
-                <p className="mt-3 text-xs text-primary truncate">{project.site_url}</p>
-              )}
+            ))}
+          </div>
+
+          {projects.some((p: any) => p.domain_status === "not_configured") && (
+            <div className="mt-8">
+              <DomainPurchaseFlow
+                projectId={projects.find((p: any) => p.domain_status === "not_configured")?.id}
+                onComplete={() => window.location.reload()}
+              />
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </DashboardLayout>
   );

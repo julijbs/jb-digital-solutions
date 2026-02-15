@@ -5,3 +5,12 @@ verify_jwt = false
 
 [functions.webhook-vercel]
 verify_jwt = false
+
+[functions.domain-check]
+verify_jwt = false
+
+[functions.domain-create-checkout]
+verify_jwt = false
+
+[functions.domain-register]
+verify_jwt = false

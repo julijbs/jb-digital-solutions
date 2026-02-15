@@ -138,6 +138,94 @@ export type Database = {
         }
         Relationships: []
       }
+      domain_renewals: {
+        Row: {
+          auto_renew: boolean | null
+          created_at: string
+          domain: string
+          id: string
+          notified: boolean | null
+          project_id: string
+          renewal_date: string
+        }
+        Insert: {
+          auto_renew?: boolean | null
+          created_at?: string
+          domain: string
+          id?: string
+          notified?: boolean | null
+          project_id: string
+          renewal_date: string
+        }
+        Update: {
+          auto_renew?: boolean | null
+          created_at?: string
+          domain?: string
+          id?: string
+          notified?: boolean | null
+          project_id?: string
+          renewal_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "domain_renewals_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      domain_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          domain: string
+          id: string
+          metadata: Json | null
+          payment_id: string
+          payment_provider: string
+          project_id: string
+          status: string
+          transaction_type: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          domain: string
+          id?: string
+          metadata?: Json | null
+          payment_id: string
+          payment_provider?: string
+          project_id: string
+          status: string
+          transaction_type: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          domain?: string
+          id?: string
+          metadata?: Json | null
+          payment_id?: string
+          payment_provider?: string
+          project_id?: string
+          status?: string
+          transaction_type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "domain_transactions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notifications: {
         Row: {
           created_at: string
@@ -204,7 +292,15 @@ export type Database = {
       projects: {
         Row: {
           client_id: string
+          cloudflare_zone_id: string | null
           created_at: string
+          custom_domain: string | null
+          domain_auto_renew: boolean | null
+          domain_ownership: string | null
+          domain_payment_id: string | null
+          domain_registrar: string | null
+          domain_renewal_date: string | null
+          domain_status: string | null
           gbp_url: string | null
           github_repo: string | null
           id: string
@@ -217,7 +313,15 @@ export type Database = {
         }
         Insert: {
           client_id: string
+          cloudflare_zone_id?: string | null
           created_at?: string
+          custom_domain?: string | null
+          domain_auto_renew?: boolean | null
+          domain_ownership?: string | null
+          domain_payment_id?: string | null
+          domain_registrar?: string | null
+          domain_renewal_date?: string | null
+          domain_status?: string | null
           gbp_url?: string | null
           github_repo?: string | null
           id?: string
@@ -230,7 +334,15 @@ export type Database = {
         }
         Update: {
           client_id?: string
+          cloudflare_zone_id?: string | null
           created_at?: string
+          custom_domain?: string | null
+          domain_auto_renew?: boolean | null
+          domain_ownership?: string | null
+          domain_payment_id?: string | null
+          domain_registrar?: string | null
+          domain_renewal_date?: string | null
+          domain_status?: string | null
           gbp_url?: string | null
           github_repo?: string | null
           id?: string
