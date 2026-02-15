@@ -35,3 +35,15 @@ verify_jwt = false
 
 [functions.cs-ai-analysis]
 verify_jwt = false
+
+[functions.project-status-webhook]
+verify_jwt = false
+
+[functions.stripe-maintenance-webhook]
+verify_jwt = false
+
+[functions.create-maintenance-checkout]
+verify_jwt = false
+
+[functions.submit-feedback]
+verify_jwt = false

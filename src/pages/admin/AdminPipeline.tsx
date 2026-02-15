@@ -44,8 +44,19 @@ const AdminPipeline = () => {
   useEffect(() => { fetchProjects(); }, []);
 
   const moveProject = async (projectId: string, newStatus: string) => {
+    const oldStatus = projects.find(p => p.id === projectId)?.status;
     await supabase.from("projects").update({ status: newStatus }).eq("id", projectId);
     toast({ title: `Projeto movido para: ${pipelineStages.find(s => s.key === newStatus)?.label}` });
+
+    // Trigger lifecycle email for milestone statuses
+    try {
+      await supabase.functions.invoke("project-status-webhook", {
+        body: { project_id: projectId, new_status: newStatus, old_status: oldStatus },
+      });
+    } catch (e) {
+      console.error("Email trigger failed:", e);
+    }
+
     fetchProjects();
   };
 

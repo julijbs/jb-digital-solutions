@@ -77,8 +77,8 @@ const App = () => (
             <Route path="/admin/feedback" element={<ProtectedRoute requiredRole="admin_jb"><AdminFeedback /></ProtectedRoute>} />
             <Route path="/admin/churn-alerts" element={<ProtectedRoute requiredRole="admin_jb"><AdminChurnAlerts /></ProtectedRoute>} />
 
-            {/* Public feedback page */}
-            <Route path="/feedback" element={<ProtectedRoute><ClientFeedback /></ProtectedRoute>} />
+            {/* Public feedback page - no auth required */}
+            <Route path="/feedback" element={<ClientFeedback />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
