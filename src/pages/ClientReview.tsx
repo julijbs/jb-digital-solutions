@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
@@ -6,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import {
-  CheckCircle2, MessageSquare, Globe, ExternalLink, Clock, Send,
+  CheckCircle2, MessageSquare, Globe, ExternalLink, Clock, Send, Shield, Loader2,
 } from "lucide-react";
 
 const statusLabels: Record<string, { label: string; color: string }> = {
@@ -18,11 +19,15 @@ const statusLabels: Record<string, { label: string; color: string }> = {
 const ClientReview = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
   const [projects, setProjects] = useState<any[]>([]);
   const [reviews, setReviews] = useState<Record<string, any>>({});
   const [feedbackText, setFeedbackText] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState<string | null>(null);
+  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
+
+  const subscribedSuccess = searchParams.get("subscribed") === "true";
 
   useEffect(() => {
     const fetch = async () => {
@@ -74,7 +79,6 @@ const ClientReview = () => {
     }).eq("id", reviewId);
     toast({ title: "Projeto aprovado! 🎉", description: "Vamos preparar o deploy final." });
     setSubmitting(null);
-    // Refresh
     window.location.reload();
   };
 
@@ -93,12 +97,35 @@ const ClientReview = () => {
     window.location.reload();
   };
 
+  const handleMaintenanceCheckout = async (projectId: string) => {
+    setCheckoutLoading(projectId);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-maintenance-checkout", {
+        body: { project_id: projectId },
+      });
+      if (error) throw error;
+      if (data?.url) {
+        window.open(data.url, "_blank");
+      }
+    } catch (err) {
+      toast({ title: "Erro", description: "Não foi possível iniciar o checkout.", variant: "destructive" });
+    }
+    setCheckoutLoading(null);
+  };
+
   return (
     <DashboardLayout>
       <div className="mb-8">
         <h1 className="font-serif text-2xl text-foreground">Revisão de Projetos</h1>
         <p className="mt-1 text-sm text-muted-foreground">Revise e aprove seus sites antes do lançamento</p>
       </div>
+
+      {subscribedSuccess && (
+        <div className="mb-6 flex items-center gap-2 rounded-lg border border-green-500/30 bg-green-500/5 p-4">
+          <CheckCircle2 size={16} className="text-green-400" />
+          <span className="text-sm text-foreground">Assinatura de acompanhamento ativada com sucesso! 🎉</span>
+        </div>
+      )}
 
       {loading ? (
         <div className="space-y-4">
@@ -186,6 +213,37 @@ const ClientReview = () => {
                         onClick={() => requestChanges(project.id, review.id)}
                       >
                         <Send size={14} /> Solicitar ajustes
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Maintenance upsell - shown after approval */}
+                {review?.status === "approved" && (
+                  <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-5 space-y-3">
+                    <div className="flex items-center gap-2">
+                      <Shield size={18} className="text-primary" />
+                      <h4 className="font-serif text-base text-foreground">Acompanhamento e Manutenção</h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Mantenha seu site e perfil Google sempre atualizados e otimizados. 
+                      Inclui suporte prioritário, atualizações de conteúdo e monitoramento contínuo.
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="font-serif text-xl text-foreground">
+                        R$ 397<span className="text-sm text-muted-foreground font-sans">/mês</span>
+                      </span>
+                      <Button
+                        variant="hero"
+                        size="sm"
+                        disabled={checkoutLoading === project.id}
+                        onClick={() => handleMaintenanceCheckout(project.id)}
+                      >
+                        {checkoutLoading === project.id ? (
+                          <><Loader2 size={14} className="animate-spin" /> Processando...</>
+                        ) : (
+                          <><Shield size={14} /> Assinar acompanhamento</>
+                        )}
                       </Button>
                     </div>
                   </div>
