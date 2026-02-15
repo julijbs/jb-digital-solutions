@@ -121,8 +121,8 @@ serve(async (req) => {
 
     const clientName = profile?.full_name || client.business_name;
     
-    // Use the origin URL from the request or fallback
-    const dashboardUrl = origin_url || "https://jbdigitalsystem.com";
+    // Use the origin URL from the request, or the preview URL, or production URL
+    const dashboardUrl = origin_url || Deno.env.get("APP_URL") || "https://id-preview--b1bbd5ec-f6d3-4448-a1bf-92ebf61c21db.lovable.app";
 
     // Send email
     const sendRes = await fetch(`${baseUrl}/functions/v1/send-lifecycle-email`, {
