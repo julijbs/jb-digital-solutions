@@ -4,16 +4,9 @@ import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Plus, FolderKanban, ExternalLink, Globe } from "lucide-react";
+import { Plus, FolderKanban, ExternalLink, Globe, Eye } from "lucide-react";
 import { DomainPurchaseFlow } from "@/components/domain/DomainPurchaseFlow";
-
-const statusLabels: Record<string, string> = {
-  intake: "Onboarding",
-  in_progress: "Em andamento",
-  review: "Em revisão",
-  published: "Publicado",
-  active: "Ativo",
-};
+import { ProjectTimeline } from "@/components/client/ProjectTimeline";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -79,33 +72,51 @@ const Dashboard = () => {
         </div>
       ) : (
         <>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="space-y-6">
             {projects.map((project) => (
-              <div
-                key={project.id}
-                className="glass-card-hover rounded-xl p-6 block"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary capitalize">
-                    {project.plan}
-                  </span>
-                  <ExternalLink size={14} className="text-muted-foreground" />
-                </div>
-                <h3 className="font-serif text-lg text-foreground mb-1">
-                  {project.name}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {statusLabels[project.status] || project.status}
-                </p>
-                {project.site_url && (
-                  <p className="mt-3 text-xs text-primary truncate">{project.site_url}</p>
-                )}
-                {project.domain_status === "domain_ready" && project.custom_domain && (
-                  <div className="mt-2 flex items-center gap-1 text-xs text-accent">
-                    <Globe size={12} />
-                    <span>{project.custom_domain}</span>
+              <div key={project.id} className="glass-card rounded-xl p-6 space-y-5">
+                {/* Header */}
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="flex items-center gap-3 mb-1">
+                      <h3 className="font-serif text-lg text-foreground">{project.name}</h3>
+                      <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary capitalize">
+                        {project.plan}
+                      </span>
+                    </div>
+                    {project.custom_domain && project.domain_status === "domain_ready" && (
+                      <div className="flex items-center gap-1 text-xs text-accent">
+                        <Globe size={12} />
+                        <span>{project.custom_domain}</span>
+                      </div>
+                    )}
                   </div>
-                )}
+                  <div className="flex items-center gap-2">
+                    {project.site_url && (
+                      <a
+                        href={project.site_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 rounded-lg border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs text-primary hover:bg-primary/10 transition-colors"
+                      >
+                        <Eye size={12} /> Ver site <ExternalLink size={10} />
+                      </a>
+                    )}
+                    {project.status === "intake" && (
+                      <Link to={`/dashboard/onboarding/${project.id}`}>
+                        <Button variant="hero" size="sm">Continuar onboarding</Button>
+                      </Link>
+                    )}
+                    {project.status === "client_review" && (
+                      <Link to="/dashboard/review">
+                        <Button variant="hero" size="sm">Revisar site</Button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+
+                {/* Timeline */}
+                <ProjectTimeline currentStatus={project.status} />
               </div>
             ))}
           </div>
