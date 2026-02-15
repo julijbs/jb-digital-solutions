@@ -22,6 +22,7 @@ import {
   BarChart3,
   Globe,
   Palette,
+  Shield,
 } from "lucide-react";
 import { NotificationBell } from "@/components/NotificationBell";
 import jbLogo from "@/assets/jb-logo.jpg";
@@ -54,6 +55,7 @@ const adminSections = [
     items: [
       { href: "/admin/clients", label: "Clientes", icon: Users },
       { href: "/admin/gbp", label: "Perfil no Google", icon: MapPin },
+      { href: "/admin/maintenance", label: "Acompanhamento", icon: Shield },
     ],
   },
   {

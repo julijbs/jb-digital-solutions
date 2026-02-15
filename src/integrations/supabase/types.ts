@@ -74,6 +74,54 @@ export type Database = {
           },
         ]
       }
+      client_feedback: {
+        Row: {
+          client_id: string
+          comment: string | null
+          created_at: string
+          id: string
+          is_public: boolean
+          nps_score: number | null
+          project_id: string
+          type: string
+        }
+        Insert: {
+          client_id: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          is_public?: boolean
+          nps_score?: number | null
+          project_id: string
+          type: string
+        }
+        Update: {
+          client_id?: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          is_public?: boolean
+          nps_score?: number | null
+          project_id?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_feedback_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_feedback_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       client_intake: {
         Row: {
           business_data: Json | null
@@ -279,6 +327,117 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "domain_transactions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_logs: {
+        Row: {
+          client_id: string | null
+          created_at: string
+          id: string
+          metadata: Json | null
+          project_id: string | null
+          resend_id: string | null
+          status: string
+          subject: string
+          template: string
+          to_email: string
+        }
+        Insert: {
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          project_id?: string | null
+          resend_id?: string | null
+          status?: string
+          subject: string
+          template: string
+          to_email: string
+        }
+        Update: {
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          project_id?: string | null
+          resend_id?: string | null
+          status?: string
+          subject?: string
+          template?: string
+          to_email?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_logs_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_logs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      maintenance_subscriptions: {
+        Row: {
+          canceled_at: string | null
+          client_id: string
+          created_at: string
+          current_period_end: string | null
+          id: string
+          project_id: string
+          started_at: string
+          status: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          canceled_at?: string | null
+          client_id: string
+          created_at?: string
+          current_period_end?: string | null
+          id?: string
+          project_id: string
+          started_at?: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          canceled_at?: string | null
+          client_id?: string
+          created_at?: string
+          current_period_end?: string | null
+          id?: string
+          project_id?: string
+          started_at?: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "maintenance_subscriptions_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "maintenance_subscriptions_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
