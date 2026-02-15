@@ -16,6 +16,7 @@ export function DomainPurchaseFlow({ projectId, onComplete }: DomainPurchaseFlow
   const [searchTerm, setSearchTerm] = useState("");
   const [searching, setSearching] = useState(false);
   const [results, setResults] = useState<DomainSearchResult[]>([]);
+  const [suggestions, setSuggestions] = useState<DomainSearchResult[]>([]);
   const [purchasing, setPurchasing] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -34,6 +35,7 @@ export function DomainPurchaseFlow({ projectId, onComplete }: DomainPurchaseFlow
       if (error) throw error;
       if (data.success) {
         setResults(data.domains);
+        setSuggestions(data.suggestions || []);
       } else {
         throw new Error(data.error);
       }
@@ -147,6 +149,56 @@ export function DomainPurchaseFlow({ projectId, onComplete }: DomainPurchaseFlow
                   ) : (
                     <span className="text-xs text-muted-foreground">Indisponível</span>
                   )}
+                </div>
+              );
+            })}
+          </CardContent>
+        </Card>
+      )}
+
+      {suggestions.length > 0 && (
+        <Card className="glass-card border-primary/20">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Search size={18} className="text-primary" />
+              <CardTitle className="text-base">Sugestões disponíveis</CardTitle>
+            </div>
+            <CardDescription>
+              O domínio buscado não está disponível. Veja alternativas semelhantes:
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            {suggestions.map((result) => {
+              const priceInBRL = Math.ceil(result.price * 5);
+              const totalPrice = priceInBRL + 50;
+              return (
+                <div
+                  key={result.name}
+                  className="flex items-center justify-between rounded-lg border border-primary/20 bg-primary/5 hover:border-primary/40 p-3 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <Check size={16} className="text-green-500" />
+                    <span className="font-medium text-foreground">{result.name}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-right">
+                      <p className="text-sm font-semibold text-primary">R$ {totalPrice}</p>
+                      <p className="text-xs text-muted-foreground">Renovação: R$ {priceInBRL}/ano</p>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="hero"
+                      disabled={purchasing !== null}
+                      onClick={() => handlePurchase(result.name, result.price)}
+                    >
+                      {purchasing === result.name ? (
+                        <Loader2 size={14} className="animate-spin" />
+                      ) : (
+                        <CreditCard size={14} />
+                      )}
+                      Comprar
+                    </Button>
+                  </div>
                 </div>
               );
             })}
