@@ -5,62 +5,46 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
-import { SectionRegenerator } from "@/components/admin/SectionRegenerator";
+import { templates as htmlTemplates } from "@/lib/templates";
+import { applyTextsToTemplate } from "@/lib/siteGenerator";
 import {
-  Sparkles, Eye, Code, Loader2, Monitor, Check, PenLine,
+  Sparkles, Eye, Code, Loader2, Monitor, Check,
 } from "lucide-react";
 
-const templates = [
+const templateOptions = [
   { value: "elegant-minimal", label: "🎨 Elegante Minimalista" },
   { value: "modern-clean", label: "✨ Moderno Clean" },
   { value: "warm-soft", label: "🌿 Acolhedor Suave" },
 ];
 
-const colorSchemes = [
-  { value: "blue-professional", label: "Azul Profissional", colors: ["#0A1128", "#C8A882", "#f8f9fa"] },
-  { value: "green-therapeutic", label: "Verde Terapêutico", colors: ["#2D6A4F", "#40916C", "#f0fdf4"] },
-  { value: "purple-transformer", label: "Roxo Transformador", colors: ["#5A189A", "#9D4EDD", "#faf5ff"] },
-];
-
 const generationSteps = [
   "Carregando dados do onboarding…",
-  "Fase 1: Gerando conteúdo estruturado…",
-  "Fase 2: Montando HTML com template…",
-  "Finalizando site…",
+  "Gerando textos com IA…",
+  "Substituindo placeholders no template…",
+  "Site pronto!",
 ];
-
-const SECTION_LABELS: Record<string, string> = {
-  hero: "Hero",
-  pain_section: "Dores",
-  about: "Sobre",
-  services: "Serviços",
-  process: "Processo",
-  testimonials: "Depoimentos",
-  cta_final: "CTA Final",
-};
 
 const SiteGenerator = () => {
   const [projects, setProjects] = useState<any[]>([]);
   const [selectedProject, setSelectedProject] = useState<string>("");
   const [template, setTemplate] = useState("elegant-minimal");
-  const [colorScheme, setColorScheme] = useState("blue-professional");
+  const [customInstructions, setCustomInstructions] = useState("");
   const [generating, setGenerating] = useState(false);
   const [generationStep, setGenerationStep] = useState(0);
   const [generatedHtml, setGeneratedHtml] = useState<string | null>(null);
-  const [generatedContent, setGeneratedContent] = useState<any>(null);
+  const [generatedTexts, setGeneratedTexts] = useState<any>(null);
   const [showCode, setShowCode] = useState(false);
   const [projectData, setProjectData] = useState<any>(null);
-  const [editingSection, setEditingSection] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
     const fetchProjects = async () => {
       const { data } = await supabase
         .from("projects")
-        .select("id, name, plan, status, clients(business_name, vertical, city, state)")
+        .select("id, name, plan, status, custom_domain, clients(business_name, vertical, city, state)")
         .order("updated_at", { ascending: false });
       setProjects(data || []);
     };
@@ -88,64 +72,61 @@ const SiteGenerator = () => {
 
     setGenerating(true);
     setGeneratedHtml(null);
-    setGeneratedContent(null);
+    setGeneratedTexts(null);
     setGenerationStep(0);
-    setEditingSection(null);
-
-    const stepInterval = setInterval(() => {
-      setGenerationStep((prev) => Math.min(prev + 1, generationSteps.length - 1));
-    }, 4000);
 
     try {
-      const { data, error } = await supabase.functions.invoke("generate-site-ai", {
-        body: { projectId: selectedProject, template, colorScheme },
+      // Step 1: Call edge function to generate texts
+      setGenerationStep(1);
+      const { data: result, error } = await supabase.functions.invoke("generate-site-texts", {
+        body: { projectId: selectedProject, customInstructions },
       });
 
-      clearInterval(stepInterval);
-
       if (error) throw error;
-      if (data?.html) {
-        setGeneratedHtml(data.html);
-        setGeneratedContent(data.content || null);
-        setGenerationStep(generationSteps.length - 1);
-        toast({ title: "Site gerado com sucesso! (2 fases)" });
-      } else {
-        throw new Error(data?.error || "Falha na geração");
-      }
+      if (!result?.texts) throw new Error(result?.error || "Falha ao gerar textos");
+
+      setGeneratedTexts(result.texts);
+
+      // Step 2: Get project data for template substitution
+      setGenerationStep(2);
+      const project = projects.find((p) => p.id === selectedProject);
+      const client = project?.clients as any;
+      const bd = (projectData?.business_data as any) || {};
+      const svd = (projectData?.services_data as any) || {};
+      const sd = (projectData?.schedule_data as any) || {};
+
+      const projInfo = {
+        businessName: bd.name || client?.business_name || "Profissional",
+        specialty: svd.main_category || client?.vertical || "",
+        city: sd.city || client?.city || "",
+        state: sd.state || client?.state || "",
+        phone: bd.phone || "",
+        email: bd.email || "",
+        instagram: bd.instagram || "",
+        vertical: client?.vertical || "",
+        slug: project?.name?.toLowerCase().replace(/\s+/g, "-"),
+        customDomain: project?.custom_domain || undefined,
+      };
+
+      // Step 3: Apply texts to template
+      const templateHTML = htmlTemplates[template as keyof typeof htmlTemplates];
+      const finalHTML = applyTextsToTemplate(templateHTML, result.texts, projInfo);
+
+      setGeneratedHtml(finalHTML);
+      setGenerationStep(3);
+      toast({ title: "Site gerado com sucesso!" });
+
+      // Update project status
+      await supabase
+        .from("projects")
+        .update({ status: "site_generated" })
+        .eq("id", selectedProject);
     } catch (err: any) {
-      clearInterval(stepInterval);
       toast({
         title: "Erro na geração",
         description: err.message || "Tente novamente",
         variant: "destructive",
       });
-    } finally {
-      setGenerating(false);
-    }
-  };
-
-  const handleSectionRegenerate = async (section: string, newContent: any) => {
-    if (!generatedContent) return;
-    const updatedContent = { ...generatedContent, [section]: newContent };
-    setGeneratedContent(updatedContent);
-
-    // Re-generate HTML with updated content
-    setGenerating(true);
-    setGenerationStep(2);
-
-    try {
-      const { data, error } = await supabase.functions.invoke("generate-site-ai", {
-        body: { projectId: selectedProject, template, colorScheme },
-      });
-
-      if (error) throw error;
-      if (data?.html) {
-        setGeneratedHtml(data.html);
-        setGeneratedContent(data.content || updatedContent);
-        toast({ title: "Site atualizado com seção refinada!" });
-      }
-    } catch (err: any) {
-      toast({ title: "Erro ao atualizar", description: err.message, variant: "destructive" });
     } finally {
       setGenerating(false);
     }
@@ -160,7 +141,7 @@ const SiteGenerator = () => {
       <div className="mb-8">
         <h1 className="font-serif text-2xl text-foreground">Gerador de Sites com IA</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Geração em 2 fases: conteúdo estruturado → HTML com template
+          IA gera textos → substitui placeholders no template → HTML final
         </p>
       </div>
 
@@ -197,31 +178,23 @@ const SiteGenerator = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {templates.map((t) => (
+                    {templateOptions.map((t) => (
                       <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
 
-              {/* Color Scheme */}
+              {/* Custom Instructions */}
               <div className="space-y-2">
-                <Label className="text-xs">Paleta de Cores</Label>
-                <RadioGroup value={colorScheme} onValueChange={setColorScheme} className="space-y-2">
-                  {colorSchemes.map((cs) => (
-                    <div key={cs.value} className="flex items-center gap-3">
-                      <RadioGroupItem value={cs.value} id={cs.value} />
-                      <Label htmlFor={cs.value} className="flex items-center gap-2 text-sm cursor-pointer">
-                        <div className="flex -space-x-1">
-                          {cs.colors.map((c, i) => (
-                            <div key={i} className="h-4 w-4 rounded-full border border-border" style={{ backgroundColor: c }} />
-                          ))}
-                        </div>
-                        {cs.label}
-                      </Label>
-                    </div>
-                  ))}
-                </RadioGroup>
+                <Label className="text-xs">Instruções personalizadas (opcional)</Label>
+                <Textarea
+                  placeholder="Ex: Use tom mais informal, destaque atendimento online..."
+                  value={customInstructions}
+                  onChange={(e) => setCustomInstructions(e.target.value)}
+                  rows={3}
+                  className="text-xs"
+                />
               </div>
 
               {/* Project Data Preview */}
@@ -277,45 +250,6 @@ const SiteGenerator = () => {
               )}
             </CardContent>
           </Card>
-
-          {/* Section Refinement Panel */}
-          {generatedContent && !generating && (
-            <Card className="glass-card border-border">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <PenLine size={14} />
-                  Refinar Seções
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {Object.keys(SECTION_LABELS).map((key) => {
-                  if (!generatedContent[key]) return null;
-                  return (
-                    <div key={key}>
-                      {editingSection === key ? (
-                        <SectionRegenerator
-                          section={key}
-                          currentContent={generatedContent[key]}
-                          onRegenerate={handleSectionRegenerate}
-                          onClose={() => setEditingSection(null)}
-                        />
-                      ) : (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="w-full justify-start h-8 text-xs"
-                          onClick={() => setEditingSection(key)}
-                        >
-                          <Sparkles size={10} className="mr-2 text-primary" />
-                          {SECTION_LABELS[key]}
-                        </Button>
-                      )}
-                    </div>
-                  );
-                })}
-              </CardContent>
-            </Card>
-          )}
         </div>
 
         {/* Preview Panel */}
@@ -396,13 +330,33 @@ const SiteGenerator = () => {
                     size="sm"
                     className="text-xs"
                     onClick={() => {
-                      const idx = colorSchemes.findIndex((c) => c.value === colorScheme);
-                      const next = colorSchemes[(idx + 1) % colorSchemes.length];
-                      setColorScheme(next.value);
-                      toast({ title: `Paleta alterada para ${next.label}` });
+                      const keys = Object.keys(htmlTemplates);
+                      const idx = keys.indexOf(template);
+                      const next = keys[(idx + 1) % keys.length];
+                      setTemplate(next);
+                      // Re-apply texts to new template
+                      if (generatedTexts) {
+                        const project = projects.find((p) => p.id === selectedProject);
+                        const client = project?.clients as any;
+                        const projInfo = {
+                          businessName: bd.name || client?.business_name || "",
+                          specialty: svd.main_category || client?.vertical || "",
+                          city: sd.city || client?.city || "",
+                          state: sd.state || client?.state || "",
+                          phone: bd.phone || "",
+                          email: bd.email || "",
+                          instagram: bd.instagram || "",
+                          vertical: client?.vertical || "",
+                          slug: project?.name?.toLowerCase().replace(/\s+/g, "-"),
+                          customDomain: project?.custom_domain || undefined,
+                        };
+                        const newHTML = applyTextsToTemplate(htmlTemplates[next as keyof typeof htmlTemplates], generatedTexts, projInfo);
+                        setGeneratedHtml(newHTML);
+                        toast({ title: `Template alterado para ${templateOptions.find(t => t.value === next)?.label}` });
+                      }
                     }}
                   >
-                    Trocar Cores
+                    Trocar Template
                   </Button>
                   <Button
                     variant="outline"

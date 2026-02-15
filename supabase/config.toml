@@ -18,6 +18,9 @@ verify_jwt = false
 [functions.generate-site-ai]
 verify_jwt = false
 
+[functions.generate-site-texts]
+verify_jwt = false
+
 [functions.gbp-reports]
 verify_jwt = false
 
