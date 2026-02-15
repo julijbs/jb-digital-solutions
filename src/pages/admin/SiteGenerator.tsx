@@ -17,7 +17,7 @@ import {
 const templateOptions = [
   { value: "elegant-minimal", label: "🎨 Elegante Minimalista" },
   { value: "modern-clean", label: "✨ Moderno Clean" },
-  { value: "warm-soft", label: "🌿 Acolhedor Suave" },
+  { value: "warm-welcoming", label: "🌿 Acolhedor Suave" },
 ];
 
 const generationSteps = [
@@ -119,7 +119,7 @@ const SiteGenerator = () => {
       // Update project status
       await supabase
         .from("projects")
-        .update({ status: "site_generated" })
+        .update({ status: "lovable_site_generated" })
         .eq("id", selectedProject);
     } catch (err: any) {
       toast({
