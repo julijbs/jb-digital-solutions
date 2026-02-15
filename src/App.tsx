@@ -30,6 +30,8 @@ import AdminDomains from "./pages/admin/AdminDomains";
 import AdminTemplates from "./pages/admin/AdminTemplates";
 import SiteGenerator from "./pages/admin/SiteGenerator";
 import AdminMaintenance from "./pages/admin/AdminMaintenance";
+import AdminFeedback from "./pages/admin/AdminFeedback";
+import ClientFeedback from "./pages/ClientFeedback";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -71,6 +73,10 @@ const App = () => (
             <Route path="/admin/templates" element={<ProtectedRoute requiredRole="admin_jb"><AdminTemplates /></ProtectedRoute>} />
             <Route path="/admin/site-generator" element={<ProtectedRoute requiredRole="admin_jb"><SiteGenerator /></ProtectedRoute>} />
             <Route path="/admin/maintenance" element={<ProtectedRoute requiredRole="admin_jb"><AdminMaintenance /></ProtectedRoute>} />
+            <Route path="/admin/feedback" element={<ProtectedRoute requiredRole="admin_jb"><AdminFeedback /></ProtectedRoute>} />
+
+            {/* Public feedback page */}
+            <Route path="/feedback" element={<ProtectedRoute><ClientFeedback /></ProtectedRoute>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

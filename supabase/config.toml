@@ -29,3 +29,6 @@ verify_jwt = false
 
 [functions.publish-site]
 verify_jwt = false
+
+[functions.trigger-nps-emails]
+verify_jwt = false
