@@ -29,6 +29,7 @@ import AdminProjectDetail from "./pages/admin/AdminProjectDetail";
 import AdminDomains from "./pages/admin/AdminDomains";
 import AdminTemplates from "./pages/admin/AdminTemplates";
 import SiteGenerator from "./pages/admin/SiteGenerator";
+import AdminMaintenance from "./pages/admin/AdminMaintenance";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -69,6 +70,7 @@ const App = () => (
             <Route path="/admin/domains" element={<ProtectedRoute requiredRole="admin_jb"><AdminDomains /></ProtectedRoute>} />
             <Route path="/admin/templates" element={<ProtectedRoute requiredRole="admin_jb"><AdminTemplates /></ProtectedRoute>} />
             <Route path="/admin/site-generator" element={<ProtectedRoute requiredRole="admin_jb"><SiteGenerator /></ProtectedRoute>} />
+            <Route path="/admin/maintenance" element={<ProtectedRoute requiredRole="admin_jb"><AdminMaintenance /></ProtectedRoute>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
