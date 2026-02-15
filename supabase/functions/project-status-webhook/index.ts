@@ -8,9 +8,20 @@ const corsHeaders = {
 
 // Map project status to email template
 const STATUS_EMAIL_MAP: Record<string, string> = {
+  content_ready: "onboarding_complete",
+  lovable_site_generated: "site_ready_review",
   client_review: "site_ready_review",
   vercel_deployed_prod: "site_published",
   handoff_done: "site_published",
+};
+
+// Statuses that create a notification for the client
+const NOTIFICATION_MAP: Record<string, { title: string; message: string }> = {
+  content_ready: { title: "Conteúdo pronto!", message: "O conteúdo do seu projeto está pronto. Estamos criando seu site." },
+  lovable_site_generated: { title: "Site gerado!", message: "Seu site foi gerado com sucesso. Em breve estará disponível para revisão." },
+  client_review: { title: "Site pronto para revisão!", message: "Seu site está pronto! Acesse a página de Revisão para aprovar ou solicitar ajustes." },
+  vercel_deployed_prod: { title: "Site publicado! 🎉", message: "Seu site foi publicado e está no ar!" },
+  handoff_done: { title: "Projeto entregue! 🎉", message: "Seu projeto foi entregue com sucesso. Obrigado pela confiança!" },
 };
 
 serve(async (req) => {
@@ -24,12 +35,55 @@ serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
-    const { project_id, new_status, old_status } = await req.json();
+    const { project_id, new_status, old_status, origin_url } = await req.json();
     if (!project_id || !new_status) throw new Error("Missing project_id or new_status");
 
+    // Get project + client info
+    const { data: project } = await supabaseAdmin
+      .from("projects")
+      .select("*, clients(id, user_id, business_name)")
+      .eq("id", project_id)
+      .single();
+
+    if (!project || !project.clients) throw new Error("Project or client not found");
+
+    const client = project.clients as any;
+
+    // ===== AUTO-CREATE CLIENT REVIEW =====
+    if (new_status === "client_review") {
+      const { data: existingReview } = await supabaseAdmin
+        .from("client_reviews")
+        .select("id")
+        .eq("project_id", project_id)
+        .eq("status", "pending")
+        .limit(1);
+
+      if (!existingReview || existingReview.length === 0) {
+        await supabaseAdmin.from("client_reviews").insert({
+          project_id,
+          status: "pending",
+        });
+        console.log(`[WEBHOOK] Auto-created client_review for project ${project_id}`);
+      }
+    }
+
+    // ===== CREATE NOTIFICATION =====
+    const notif = NOTIFICATION_MAP[new_status];
+    if (notif) {
+      await supabaseAdmin.from("notifications").insert({
+        user_id: client.user_id,
+        title: notif.title,
+        message: notif.message,
+        type: "project_update",
+        link: new_status === "client_review" ? "/dashboard/review" : "/dashboard/projects",
+      });
+      console.log(`[WEBHOOK] Notification created for user ${client.user_id}`);
+    }
+
+    // ===== SEND EMAIL =====
     const template = STATUS_EMAIL_MAP[new_status];
     if (!template) {
-      return new Response(JSON.stringify({ skipped: true, message: `No email for status: ${new_status}` }), {
+      return new Response(JSON.stringify({ skipped: true, message: `No email for status: ${new_status}`, reviewCreated: new_status === "client_review" }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
@@ -47,17 +101,6 @@ serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-
-    // Get project + client info
-    const { data: project } = await supabaseAdmin
-      .from("projects")
-      .select("*, clients(id, user_id, business_name)")
-      .eq("id", project_id)
-      .single();
-
-    if (!project || !project.clients) throw new Error("Project or client not found");
-
-    const client = project.clients as any;
 
     // Get user email
     const baseUrl = Deno.env.get("SUPABASE_URL") ?? "";
@@ -77,7 +120,9 @@ serve(async (req) => {
       .maybeSingle();
 
     const clientName = profile?.full_name || client.business_name;
-    const dashboardUrl = `${baseUrl.replace(".supabase.co", "")}`;
+    
+    // Use the origin URL from the request or fallback
+    const dashboardUrl = origin_url || "https://jbdigitalsystem.com";
 
     // Send email
     const sendRes = await fetch(`${baseUrl}/functions/v1/send-lifecycle-email`, {
@@ -103,7 +148,7 @@ serve(async (req) => {
 
     const result = await sendRes.json();
 
-    return new Response(JSON.stringify({ sent: true, template, result }), {
+    return new Response(JSON.stringify({ sent: true, template, result, reviewCreated: new_status === "client_review" }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {

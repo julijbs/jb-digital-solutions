@@ -48,13 +48,18 @@ const AdminPipeline = () => {
     await supabase.from("projects").update({ status: newStatus }).eq("id", projectId);
     toast({ title: `Projeto movido para: ${pipelineStages.find(s => s.key === newStatus)?.label}` });
 
-    // Trigger lifecycle email for milestone statuses
+    // Trigger lifecycle webhook (emails, notifications, auto-create review)
     try {
       await supabase.functions.invoke("project-status-webhook", {
-        body: { project_id: projectId, new_status: newStatus, old_status: oldStatus },
+        body: {
+          project_id: projectId,
+          new_status: newStatus,
+          old_status: oldStatus,
+          origin_url: window.location.origin,
+        },
       });
     } catch (e) {
-      console.error("Email trigger failed:", e);
+      console.error("Webhook trigger failed:", e);
     }
 
     fetchProjects();
