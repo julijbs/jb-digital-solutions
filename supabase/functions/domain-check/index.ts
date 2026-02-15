@@ -18,8 +18,8 @@ serve(async (req) => {
     const baseDomain = domain.replace(/\.(com|net|org|co|br|io|dev|ai)$/i, "");
     const extensions = [".com", ".net", ".org", ".co"];
 
-    const checks = extensions.map(async (ext) => {
-      const fullDomain = baseDomain + ext;
+    const checkDomain = async (name: string, ext: string) => {
+      const fullDomain = name + ext;
       try {
         const response = await fetch(
           `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/registrar/domains/${fullDomain}`,
@@ -39,20 +39,35 @@ serve(async (req) => {
           extension: ext,
         };
       } catch {
-        return {
-          name: fullDomain,
-          available: false,
-          price: 0,
-          currency: "USD",
-          extension: ext,
-        };
+        return { name: fullDomain, available: false, price: 0, currency: "USD", extension: ext };
       }
-    });
+    };
 
+    const checks = extensions.map((ext) => checkDomain(baseDomain, ext));
     const results = await Promise.all(checks);
 
+    const anyAvailable = results.some((r) => r.available);
+
+    let suggestions: typeof results = [];
+    if (!anyAvailable) {
+      // Generate alternative names
+      const short = baseDomain.length > 12 ? baseDomain.slice(0, 12) : baseDomain;
+      const alts = [
+        short + "site",
+        short + "web",
+        short + "app",
+        short + "online",
+        "get" + short,
+        "go" + short,
+      ];
+      const unique = [...new Set(alts)].filter((a) => a !== baseDomain).slice(0, 4);
+      const suggChecks = unique.flatMap((alt) => [".com", ".net"].map((ext) => checkDomain(alt, ext)));
+      const suggResults = await Promise.all(suggChecks);
+      suggestions = suggResults.filter((r) => r.available);
+    }
+
     return new Response(
-      JSON.stringify({ success: true, domains: results }),
+      JSON.stringify({ success: true, domains: results, suggestions }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {
