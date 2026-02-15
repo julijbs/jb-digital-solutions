@@ -306,6 +306,8 @@ export type Database = {
           id: string
           name: string
           plan: string
+          published_url: string | null
+          site_html_path: string | null
           site_url: string | null
           status: string
           updated_at: string
@@ -327,6 +329,8 @@ export type Database = {
           id?: string
           name: string
           plan?: string
+          published_url?: string | null
+          site_html_path?: string | null
           site_url?: string | null
           status?: string
           updated_at?: string
@@ -348,6 +352,8 @@ export type Database = {
           id?: string
           name?: string
           plan?: string
+          published_url?: string | null
+          site_html_path?: string | null
           site_url?: string | null
           status?: string
           updated_at?: string
