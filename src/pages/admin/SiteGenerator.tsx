@@ -11,7 +11,7 @@ import { Progress } from "@/components/ui/progress";
 import { templates as htmlTemplates } from "@/lib/templates";
 import { applyTextsToTemplate } from "@/lib/siteGenerator";
 import {
-  Sparkles, Eye, Code, Loader2, Monitor, Check,
+  Sparkles, Eye, Code, Loader2, Monitor, Check, Upload, ExternalLink,
 } from "lucide-react";
 
 const templateOptions = [
@@ -38,6 +38,8 @@ const SiteGenerator = () => {
   const [generatedTexts, setGeneratedTexts] = useState<any>(null);
   const [showCode, setShowCode] = useState(false);
   const [projectData, setProjectData] = useState<any>(null);
+  const [publishing, setPublishing] = useState(false);
+  const [publishedUrl, setPublishedUrl] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -129,6 +131,36 @@ const SiteGenerator = () => {
       });
     } finally {
       setGenerating(false);
+    }
+  };
+
+  const handlePublish = async () => {
+    if (!generatedHtml || !selectedProject) return;
+    setPublishing(true);
+    try {
+      const project = projects.find((p) => p.id === selectedProject);
+      const slug = project?.name?.toLowerCase().replace(/\s+/g, "-") || selectedProject;
+
+      const { data, error } = await supabase.functions.invoke("publish-site", {
+        body: { projectId: selectedProject, html: generatedHtml, projectSlug: slug },
+      });
+
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+
+      setPublishedUrl(data.publishedUrl);
+      toast({
+        title: "Site publicado com sucesso!",
+        description: `URL: ${data.publishedUrl}`,
+      });
+    } catch (err: any) {
+      toast({
+        title: "Erro ao publicar",
+        description: err.message || "Tente novamente",
+        variant: "destructive",
+      });
+    } finally {
+      setPublishing(false);
     }
   };
 
@@ -370,7 +402,43 @@ const SiteGenerator = () => {
                     Copiar HTML
                   </Button>
                 </div>
-              </div>
+
+                {/* Publish Button */}
+                {generatedHtml && (
+                  <div className="space-y-3 pt-2 border-t border-border">
+                    <Button
+                      className="w-full gap-2"
+                      onClick={handlePublish}
+                      disabled={publishing}
+                    >
+                      {publishing ? (
+                        <>
+                          <Loader2 size={16} className="animate-spin" />
+                          Publicando…
+                        </>
+                      ) : (
+                        <>
+                          <Upload size={16} />
+                          Publicar Site
+                        </>
+                      )}
+                    </Button>
+                    {publishedUrl && (
+                      <div className="flex items-center gap-2 rounded-lg bg-primary/10 p-3">
+                        <ExternalLink size={14} className="text-primary flex-shrink-0" />
+                        <a
+                          href={publishedUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-primary underline break-all"
+                        >
+                          {publishedUrl}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                )}
+                </div>
             )}
           </CardContent>
         </Card>
