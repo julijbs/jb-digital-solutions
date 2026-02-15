@@ -10,7 +10,7 @@ const cards = [
   },
   {
     icon: MapPin,
-    title: "Google Meu Negócio",
+    title: "Perfil da Empresa no Google",
     subtitle: "Visibilidade local no Google",
     text: "Quando alguém procurar pelo seu serviço na sua cidade, você aparece no mapa, com foto, telefone, endereço e avaliações. Tudo organizado e conectado ao seu site.",
   },
