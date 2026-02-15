@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      billing: {
+        Row: {
+          amount: number
+          client_id: string
+          created_at: string
+          currency: string
+          id: string
+          paid_at: string | null
+          product_type: string
+          project_id: string
+          status: string
+          stripe_checkout_session_id: string | null
+          stripe_payment_intent_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          client_id: string
+          created_at?: string
+          currency?: string
+          id?: string
+          paid_at?: string | null
+          product_type: string
+          project_id: string
+          status?: string
+          stripe_checkout_session_id?: string | null
+          stripe_payment_intent_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          client_id?: string
+          created_at?: string
+          currency?: string
+          id?: string
+          paid_at?: string | null
+          product_type?: string
+          project_id?: string
+          status?: string
+          stripe_checkout_session_id?: string | null
+          stripe_payment_intent_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "billing_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "billing_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       client_intake: {
         Row: {
           business_data: Json | null
