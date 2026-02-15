@@ -31,6 +31,7 @@ import AdminTemplates from "./pages/admin/AdminTemplates";
 import SiteGenerator from "./pages/admin/SiteGenerator";
 import AdminMaintenance from "./pages/admin/AdminMaintenance";
 import AdminFeedback from "./pages/admin/AdminFeedback";
+import AdminChurnAlerts from "./pages/admin/AdminChurnAlerts";
 import ClientFeedback from "./pages/ClientFeedback";
 import NotFound from "./pages/NotFound";
 
@@ -74,6 +75,7 @@ const App = () => (
             <Route path="/admin/site-generator" element={<ProtectedRoute requiredRole="admin_jb"><SiteGenerator /></ProtectedRoute>} />
             <Route path="/admin/maintenance" element={<ProtectedRoute requiredRole="admin_jb"><AdminMaintenance /></ProtectedRoute>} />
             <Route path="/admin/feedback" element={<ProtectedRoute requiredRole="admin_jb"><AdminFeedback /></ProtectedRoute>} />
+            <Route path="/admin/churn-alerts" element={<ProtectedRoute requiredRole="admin_jb"><AdminChurnAlerts /></ProtectedRoute>} />
 
             {/* Public feedback page */}
             <Route path="/feedback" element={<ProtectedRoute><ClientFeedback /></ProtectedRoute>} />

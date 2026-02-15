@@ -32,3 +32,6 @@ verify_jwt = false
 
 [functions.trigger-nps-emails]
 verify_jwt = false
+
+[functions.cs-ai-analysis]
+verify_jwt = false
