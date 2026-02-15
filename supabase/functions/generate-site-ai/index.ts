@@ -7,34 +7,58 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const CLOUDFLARE_ACCOUNT_ID = Deno.env.get("CLOUDFLARE_ACCOUNT_ID")!;
-const CLOUDFLARE_API_TOKEN = Deno.env.get("CLOUDFLARE_API_TOKEN")!;
+const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY")!;
+const AI_GATEWAY = "https://ai.gateway.lovable.dev/v1/chat/completions";
 
-function getTemplateInstructions(template: string): string {
-  switch (template) {
-    case "elegant-minimal":
-      return "Estilo minimalista e elegante. Muito espaço em branco, tipografia serif refinada para títulos, layout limpo e sofisticado. Use gradientes sutis.";
-    case "modern-clean":
-      return "Estilo moderno e clean. Linhas retas, cantos arredondados, ícones modernos, layout em grid. Aparência tech-forward mas acessível.";
-    case "warm-soft":
-      return "Estilo acolhedor e suave. Cores pastéis, formas orgânicas, bordas arredondadas suaves, fontes humanistas. Transmite calma e confiança.";
-    default:
-      return "Estilo profissional e elegante.";
-  }
-}
+// ─── Template HTML base structures ───────────────────────────────────
 
-function getColorSchemeCSS(scheme: string): string {
-  switch (scheme) {
-    case "blue-professional":
-      return "Cores: azul escuro (#1e3a5f) como primário, azul médio (#3b82f6) como accent, branco e cinza claro como background. Tom corporativo e confiável.";
-    case "green-therapeutic":
-      return "Cores: verde escuro (#166534) como primário, verde médio (#22c55e) como accent, tons de creme e verde claro. Tom natural e terapêutico.";
-    case "purple-transformer":
-      return "Cores: roxo escuro (#6b21a8) como primário, roxo médio (#a855f7) como accent, lavanda e branco. Tom transformador e criativo.";
-    default:
-      return "Cores profissionais e harmoniosas.";
-  }
-}
+const TEMPLATES: Record<string, { fonts: string; style: string; description: string }> = {
+  "elegant-minimal": {
+    fonts: "DM+Serif+Display&family=Inter:wght@400;500;600",
+    style: `
+      .font-display { font-family: 'DM Serif Display', serif; }
+      .font-body { font-family: 'Inter', sans-serif; }
+    `,
+    description: "Minimalista e elegante. Muito espaço em branco, tipografia serif refinada para títulos, layout limpo e sofisticado. Use gradientes sutis entre primary e accent.",
+  },
+  "modern-clean": {
+    fonts: "Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600",
+    style: `
+      .font-display { font-family: 'Poppins', sans-serif; }
+      .font-body { font-family: 'Inter', sans-serif; }
+    `,
+    description: "Moderno e clean. Linhas retas, cantos arredondados, ícones modernos, layout em grid. Aparência tech-forward mas acessível. Energético e contemporâneo.",
+  },
+  "warm-soft": {
+    fonts: "Playfair+Display:wght@400;700&family=Open+Sans:wght@400;500;600",
+    style: `
+      .font-display { font-family: 'Playfair Display', serif; }
+      .font-body { font-family: 'Open Sans', sans-serif; }
+    `,
+    description: "Acolhedor e suave. Cores pastéis, formas orgânicas, bordas arredondadas suaves, fontes humanistas. Transmite calma, empatia e confiança.",
+  },
+};
+
+const COLOR_SCHEMES: Record<string, { primary: string; accent: string; bg: string; description: string }> = {
+  "blue-professional": {
+    primary: "#0A1128",
+    accent: "#C8A882",
+    bg: "#f8f9fa",
+    description: "Azul escuro (#0A1128) primário, dourado (#C8A882) como accent, branco e cinza claro como background. Tom corporativo, sofisticado e confiável.",
+  },
+  "green-therapeutic": {
+    primary: "#2D6A4F",
+    accent: "#40916C",
+    bg: "#f0fdf4",
+    description: "Verde escuro (#2D6A4F) primário, verde médio (#40916C) accent, tons de creme e verde claro. Tom natural e terapêutico.",
+  },
+  "purple-transformer": {
+    primary: "#5A189A",
+    accent: "#9D4EDD",
+    bg: "#faf5ff",
+    description: "Roxo escuro (#5A189A) primário, roxo médio (#9D4EDD) accent, lavanda e branco. Tom transformador e criativo.",
+  },
+};
 
 function getCopyTone(vertical: string): string {
   const v = (vertical || "").toLowerCase();
@@ -45,6 +69,31 @@ function getCopyTone(vertical: string): string {
   return "Profissional, acolhedor, ético. Respeitar diretrizes do conselho profissional.";
 }
 
+async function callAI(messages: any[], maxTokens = 8192): Promise<string> {
+  const resp = await fetch(AI_GATEWAY, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${LOVABLE_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "google/gemini-2.5-flash",
+      messages,
+      max_tokens: maxTokens,
+      temperature: 0.7,
+    }),
+  });
+
+  if (!resp.ok) {
+    const errText = await resp.text();
+    console.error("AI error:", resp.status, errText);
+    throw new Error(`AI error: ${resp.status}`);
+  }
+
+  const data = await resp.json();
+  return data.choices?.[0]?.message?.content || "";
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -53,7 +102,6 @@ serve(async (req) => {
   try {
     const { projectId, template, colorScheme } = await req.json();
 
-    // Fetch project data
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const sb = createClient(supabaseUrl, supabaseKey);
@@ -77,14 +125,19 @@ serve(async (req) => {
     const svd = (intake?.services_data as any) || {};
     const sd = (intake?.schedule_data as any) || {};
 
-    const prompt = `
-Você é um expert em criar sites one-page elegantes e persuasivos para profissionais liberais.
+    const tmpl = TEMPLATES[template] || TEMPLATES["elegant-minimal"];
+    const colors = COLOR_SCHEMES[colorScheme] || COLOR_SCHEMES["blue-professional"];
+    const vertical = client?.vertical || svd.main_category || "";
 
-CRIE UM SITE COMPLETO EM HTML + TAILWIND CSS (via CDN) com as seguintes especificações:
+    // ─── PHASE 1: Generate structured content ──────────────────
+    const phase1Prompt = `
+Você é um copywriter expert especializado em sites para profissionais liberais (${vertical}).
 
-## DADOS DO PROFISSIONAL
+TAREFA: Criar a estrutura de conteúdo do site. Retorne APENAS um JSON válido, sem markdown.
+
+DADOS DO CLIENTE:
 - Nome do negócio: ${client?.business_name || bd.name || "Profissional"}
-- Especialidade: ${svd.main_category || client?.vertical || "Profissional liberal"}
+- Especialidade: ${svd.main_category || vertical || "Profissional liberal"}
 - Cidade: ${sd.city || client?.city || ""}/${sd.state || client?.state || ""}
 - Descrição: ${bd.description || ""}
 - Serviços: ${svd.services_tags || ""}
@@ -94,95 +147,150 @@ CRIE UM SITE COMPLETO EM HTML + TAILWIND CSS (via CDN) com as seguintes especifi
 - Instagram: ${bd.instagram || ""}
 - Email: ${bd.email || ""}
 
-## TEMPLATE: ${template}
-${getTemplateInstructions(template)}
+GERE este JSON exato:
+{
+  "hero": {
+    "headline": "headline emocional de 8-12 palavras",
+    "subheadline": "promessa de transformação (20-30 palavras)",
+    "cta_text": "texto do botão principal"
+  },
+  "pain_section": {
+    "headline": "título que identifica a dor do público",
+    "pain_points": ["dor 1", "dor 2", "dor 3"]
+  },
+  "about": {
+    "intro": "parágrafo pessoal (50-80 palavras) sobre o profissional",
+    "credentials": ["formação 1", "formação 2", "experiência relevante"]
+  },
+  "services": [
+    { "name": "nome do serviço", "description": "benefício emocional + resultado (30-40 palavras)" }
+  ],
+  "process": [
+    { "title": "nome da etapa", "description": "o que acontece (20-30 palavras)" }
+  ],
+  "testimonials": [
+    { "text": "depoimento fictício realista", "name": "Nome do Cliente" }
+  ],
+  "cta_final": {
+    "headline": "chamada final forte",
+    "subheadline": "reforço da transformação"
+  }
+}
 
-## PALETA DE CORES: ${colorScheme}
-${getColorSchemeCSS(colorScheme)}
-
-## ESTRUTURA OBRIGATÓRIA DO SITE
-
-1. **Hero** - Headline emocional, subheadline com promessa de transformação, CTA WhatsApp, placeholder para foto
-2. **Sobre** - História breve, credenciais, motivação
-3. **Serviços** - Lista com descrição e para quem é indicado
-4. **Como Funciona** - Passo a passo do atendimento em timeline visual
-5. **Depoimentos** - 2-3 placeholders para depoimentos
-6. **CTA Final** - Reforço da transformação, botão WhatsApp grande
-7. **Rodapé** - Contatos, links, disclaimers éticos
-
-## REQUISITOS TÉCNICOS
-- Use APENAS Tailwind CSS via CDN: <script src="https://cdn.tailwindcss.com"></script>
-- Mobile-first obrigatório
-- HTML5 semântico completo
-- Ícones inline SVG quando necessário
-- Performance otimizada
-- Use placeholder images de https://placehold.co
-
-## COPYWRITING
-- Tom: ${getCopyTone(client?.vertical || svd.main_category || "")}
+DIRETRIZES:
+- Tom: ${getCopyTone(vertical)}
 - Foco: benefícios emocionais antes de técnicos
 - Linguagem: simples, acolhedora, profissional
 - Evite: jargões técnicos, promessas exageradas
+- Gere pelo menos 3 serviços e 4 etapas de processo
+- Gere 2-3 depoimentos fictícios realistas`;
 
-## OUTPUT
-Retorne APENAS o código HTML completo do site (<!DOCTYPE html> até </html>).
-Não adicione explicações, apenas o código HTML puro.
-O site deve estar 100% funcional e visualmente perfeito.
-`;
+    const contentRaw = await callAI([
+      { role: "system", content: "Você é um copywriter expert. Retorne APENAS JSON válido, sem markdown ou explicações." },
+      { role: "user", content: phase1Prompt },
+    ], 4096);
 
-    // Call Cloudflare Workers AI
-    const aiResponse = await fetch(
-      `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-70b-instruct`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${CLOUDFLARE_API_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: [
-            { role: "system", content: "You are a professional web developer. Return only clean HTML code." },
-            { role: "user", content: prompt },
-          ],
-          max_tokens: 8192,
-          temperature: 0.7,
-        }),
+    let content: any;
+    try {
+      // Extract JSON from potential markdown wrapping
+      let jsonStr = contentRaw.trim();
+      if (jsonStr.includes("```json")) {
+        jsonStr = jsonStr.split("```json")[1].split("```")[0].trim();
+      } else if (jsonStr.includes("```")) {
+        jsonStr = jsonStr.split("```")[1].split("```")[0].trim();
       }
-    );
-
-    if (!aiResponse.ok) {
-      const errText = await aiResponse.text();
-      console.error("Cloudflare AI error:", aiResponse.status, errText);
-      return new Response(
-        JSON.stringify({ error: `Cloudflare AI error: ${aiResponse.status}` }),
-        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+      content = JSON.parse(jsonStr);
+    } catch (e) {
+      console.error("Phase 1 parse error:", e, contentRaw);
+      throw new Error("Falha ao gerar conteúdo estruturado");
     }
 
-    const aiData = await aiResponse.json();
-    let htmlContent = aiData.result?.response || "";
+    // ─── PHASE 2: Generate HTML using template + content ──────
+    const businessName = client?.business_name || bd.name || "Profissional";
+    const phone = bd.phone || "";
+    const email = bd.email || "";
+    const instagram = bd.instagram || "";
+    const city = sd.city || client?.city || "";
+    const state = sd.state || client?.state || "";
 
-    // Clean up the response - extract HTML if wrapped in markdown
+    const phase2Prompt = `
+Você é um desenvolvedor frontend expert. Crie um site one-page completo em HTML + Tailwind CSS.
+
+## ESTILO DO TEMPLATE
+${tmpl.description}
+
+## PALETA DE CORES
+${colors.description}
+- Primary: ${colors.primary}
+- Accent: ${colors.accent}
+- Background: ${colors.bg}
+
+## FONTES
+Use Google Fonts: ${tmpl.fonts}
+${tmpl.style}
+
+## DADOS DO PROFISSIONAL
+- Nome: ${businessName}
+- Especialidade: ${svd.main_category || vertical}
+- Cidade: ${city}/${state}
+- WhatsApp: ${phone}
+- Email: ${email}
+- Instagram: ${instagram}
+
+## CONTEÚDO GERADO (use exatamente este conteúdo)
+${JSON.stringify(content, null, 2)}
+
+## ESTRUTURA OBRIGATÓRIA
+1. **Navbar** fixo com links âncora e botão CTA
+2. **Hero** com headline, subheadline, CTA WhatsApp e credenciais
+3. **Dores** (pain_section) com os pain_points em cards
+4. **Sobre** com intro e credenciais em lista
+5. **Serviços** em grid de cards
+6. **Como Funciona** em timeline/steps visual
+7. **Depoimentos** com cards e aspas visuais
+8. **CTA Final** com fundo colorido, headline e botão WhatsApp grande
+9. **Rodapé** com contatos, redes sociais e disclaimers
+
+## REQUISITOS TÉCNICOS
+- Use APENAS Tailwind CSS via CDN: <script src="https://cdn.tailwindcss.com"></script>
+- Google Fonts via link
+- Mobile-first responsivo
+- HTML5 semântico
+- Ícones inline SVG
+- Animações CSS suaves (fadeInUp)
+- Schema.org LocalBusiness em JSON-LD
+- Botão WhatsApp flutuante no canto inferior direito
+- Links WhatsApp: https://wa.me/55${phone.replace(/\D/g, "")}
+
+## MARQUE CADA SEÇÃO COM DATA ATTRIBUTES
+Cada seção deve ter data-section="hero|pain|about|services|process|testimonials|cta|footer"
+
+## OUTPUT
+Retorne APENAS o código HTML completo (<!DOCTYPE html> até </html>). Sem explicações.`;
+
+    const htmlRaw = await callAI([
+      { role: "system", content: "Você é um desenvolvedor frontend expert. Retorne APENAS código HTML limpo e completo." },
+      { role: "user", content: phase2Prompt },
+    ], 16384);
+
+    // Clean up HTML
+    let htmlContent = htmlRaw.trim();
     if (htmlContent.includes("```html")) {
       htmlContent = htmlContent.split("```html")[1].split("```")[0].trim();
     } else if (htmlContent.includes("```")) {
       htmlContent = htmlContent.split("```")[1].split("```")[0].trim();
     }
 
-    // Ensure it starts with DOCTYPE
     if (!htmlContent.toLowerCase().startsWith("<!doctype")) {
-      htmlContent = `<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>${client?.business_name || "Site Profissional"}</title>\n<script src="https://cdn.tailwindcss.com"></script>\n</head>\n<body>\n${htmlContent}\n</body>\n</html>`;
+      htmlContent = `<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>${businessName}</title>\n<script src="https://cdn.tailwindcss.com"><\/script>\n</head>\n<body>\n${htmlContent}\n</body>\n</html>`;
     }
 
     return new Response(
       JSON.stringify({
         success: true,
         html: htmlContent,
-        metadata: {
-          title: client?.business_name || "Site Profissional",
-          template,
-          colorScheme,
-        },
+        content, // structured content for section editing
+        metadata: { title: businessName, template, colorScheme },
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );

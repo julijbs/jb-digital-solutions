@@ -8,8 +8,9 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
+import { SectionRegenerator } from "@/components/admin/SectionRegenerator";
 import {
-  Sparkles, Eye, Code, Rocket, Loader2, Monitor, Check,
+  Sparkles, Eye, Code, Loader2, Monitor, Check, PenLine,
 } from "lucide-react";
 
 const templates = [
@@ -19,17 +20,27 @@ const templates = [
 ];
 
 const colorSchemes = [
-  { value: "blue-professional", label: "Azul Profissional", colors: ["#1e40af", "#3b82f6", "#dbeafe"] },
-  { value: "green-therapeutic", label: "Verde Terapêutico", colors: ["#166534", "#22c55e", "#dcfce7"] },
-  { value: "purple-transformer", label: "Roxo Transformador", colors: ["#6b21a8", "#a855f7", "#f3e8ff"] },
+  { value: "blue-professional", label: "Azul Profissional", colors: ["#0A1128", "#C8A882", "#f8f9fa"] },
+  { value: "green-therapeutic", label: "Verde Terapêutico", colors: ["#2D6A4F", "#40916C", "#f0fdf4"] },
+  { value: "purple-transformer", label: "Roxo Transformador", colors: ["#5A189A", "#9D4EDD", "#faf5ff"] },
 ];
 
 const generationSteps = [
   "Carregando dados do onboarding…",
-  "Construindo prompt de geração…",
-  "Gerando HTML com IA…",
+  "Fase 1: Gerando conteúdo estruturado…",
+  "Fase 2: Montando HTML com template…",
   "Finalizando site…",
 ];
+
+const SECTION_LABELS: Record<string, string> = {
+  hero: "Hero",
+  pain_section: "Dores",
+  about: "Sobre",
+  services: "Serviços",
+  process: "Processo",
+  testimonials: "Depoimentos",
+  cta_final: "CTA Final",
+};
 
 const SiteGenerator = () => {
   const [projects, setProjects] = useState<any[]>([]);
@@ -39,8 +50,10 @@ const SiteGenerator = () => {
   const [generating, setGenerating] = useState(false);
   const [generationStep, setGenerationStep] = useState(0);
   const [generatedHtml, setGeneratedHtml] = useState<string | null>(null);
+  const [generatedContent, setGeneratedContent] = useState<any>(null);
   const [showCode, setShowCode] = useState(false);
   const [projectData, setProjectData] = useState<any>(null);
+  const [editingSection, setEditingSection] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -55,10 +68,7 @@ const SiteGenerator = () => {
   }, []);
 
   useEffect(() => {
-    if (!selectedProject) {
-      setProjectData(null);
-      return;
-    }
+    if (!selectedProject) { setProjectData(null); return; }
     const fetchIntake = async () => {
       const { data } = await supabase
         .from("client_intake")
@@ -78,30 +88,27 @@ const SiteGenerator = () => {
 
     setGenerating(true);
     setGeneratedHtml(null);
+    setGeneratedContent(null);
     setGenerationStep(0);
+    setEditingSection(null);
 
-    // Simulate progress while waiting for AI
     const stepInterval = setInterval(() => {
       setGenerationStep((prev) => Math.min(prev + 1, generationSteps.length - 1));
-    }, 3000);
+    }, 4000);
 
     try {
       const { data, error } = await supabase.functions.invoke("generate-site-ai", {
-        body: {
-          projectId: selectedProject,
-          template,
-          colorScheme,
-        },
+        body: { projectId: selectedProject, template, colorScheme },
       });
 
       clearInterval(stepInterval);
 
       if (error) throw error;
-
       if (data?.html) {
         setGeneratedHtml(data.html);
+        setGeneratedContent(data.content || null);
         setGenerationStep(generationSteps.length - 1);
-        toast({ title: "Site gerado com sucesso!" });
+        toast({ title: "Site gerado com sucesso! (2 fases)" });
       } else {
         throw new Error(data?.error || "Falha na geração");
       }
@@ -117,7 +124,33 @@ const SiteGenerator = () => {
     }
   };
 
-  const selectedProjectInfo = projects.find((p) => p.id === selectedProject);
+  const handleSectionRegenerate = async (section: string, newContent: any) => {
+    if (!generatedContent) return;
+    const updatedContent = { ...generatedContent, [section]: newContent };
+    setGeneratedContent(updatedContent);
+
+    // Re-generate HTML with updated content
+    setGenerating(true);
+    setGenerationStep(2);
+
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-site-ai", {
+        body: { projectId: selectedProject, template, colorScheme },
+      });
+
+      if (error) throw error;
+      if (data?.html) {
+        setGeneratedHtml(data.html);
+        setGeneratedContent(data.content || updatedContent);
+        toast({ title: "Site atualizado com seção refinada!" });
+      }
+    } catch (err: any) {
+      toast({ title: "Erro ao atualizar", description: err.message, variant: "destructive" });
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   const bd = (projectData?.business_data as any) || {};
   const svd = (projectData?.services_data as any) || {};
   const sd = (projectData?.schedule_data as any) || {};
@@ -127,7 +160,7 @@ const SiteGenerator = () => {
       <div className="mb-8">
         <h1 className="font-serif text-2xl text-foreground">Gerador de Sites com IA</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Crie sites profissionais automaticamente a partir dos dados do onboarding
+          Geração em 2 fases: conteúdo estruturado → HTML com template
         </p>
       </div>
 
@@ -244,6 +277,45 @@ const SiteGenerator = () => {
               )}
             </CardContent>
           </Card>
+
+          {/* Section Refinement Panel */}
+          {generatedContent && !generating && (
+            <Card className="glass-card border-border">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <PenLine size={14} />
+                  Refinar Seções
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {Object.keys(SECTION_LABELS).map((key) => {
+                  if (!generatedContent[key]) return null;
+                  return (
+                    <div key={key}>
+                      {editingSection === key ? (
+                        <SectionRegenerator
+                          section={key}
+                          currentContent={generatedContent[key]}
+                          onRegenerate={handleSectionRegenerate}
+                          onClose={() => setEditingSection(null)}
+                        />
+                      ) : (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="w-full justify-start h-8 text-xs"
+                          onClick={() => setEditingSection(key)}
+                        >
+                          <Sparkles size={10} className="mr-2 text-primary" />
+                          {SECTION_LABELS[key]}
+                        </Button>
+                      )}
+                    </div>
+                  );
+                })}
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         {/* Preview Panel */}
@@ -337,8 +409,8 @@ const SiteGenerator = () => {
                     size="sm"
                     className="text-xs"
                     onClick={() => {
-                      navigator.clipboard.writeText(generatedHtml);
-                      toast({ title: "HTML copiado para a área de transferência!" });
+                      navigator.clipboard.writeText(generatedHtml!);
+                      toast({ title: "HTML copiado!" });
                     }}
                   >
                     Copiar HTML
