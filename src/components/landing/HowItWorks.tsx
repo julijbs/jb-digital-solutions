@@ -1,26 +1,33 @@
 import { motion } from "framer-motion";
+import { ClipboardList, Paintbrush, ThumbsUp, Rocket, Check } from "lucide-react";
 
 const steps = [
   {
-    num: "01",
-    title: "Onboarding guiado",
-    desc: "Preencha um formulário rápido (espelho do Google). Em 3 minutos você tem o mínimo; o resto é opcional.",
+    icon: ClipboardList,
+    title: "Você responde um formulário simples",
+    text: "Informações sobre você, seu trabalho, sua forma de atender.",
   },
   {
-    num: "02",
-    title: "Implementação",
-    desc: "Criamos seu site leve + perfil no Google Maps otimizado com estrutura de SEO local.",
+    icon: Paintbrush,
+    title: "Criamos sua presença digital (3–5 dias)",
+    text: "Site profissional + Google Meu Negócio configurado e otimizado.",
   },
   {
-    num: "03",
-    title: "Validação técnica",
-    desc: "Checklist completo: headings, schema, performance, metas, NAP no rodapé, imagens otimizadas.",
+    icon: ThumbsUp,
+    title: "Você aprova e ajusta (se necessário)",
+    text: "Garantimos que tudo esteja do jeito que você precisa.",
   },
   {
-    num: "04",
-    title: "Rotina de crescimento",
-    desc: "Relatórios mensais, gestão de avaliações e atualizações — para quem quer consistência.",
+    icon: Rocket,
+    title: "Você recebe tudo pronto para usar",
+    text: "Site no ar, Google configurado, você sendo encontrado.",
   },
+];
+
+const notes = [
+  "Prazo: até 7 dias após o onboarding",
+  "Comunicação: via WhatsApp e painel do cliente",
+  "Revisões: incluídas no processo",
 ];
 
 export const HowItWorks = () => {
@@ -32,30 +39,38 @@ export const HowItWorks = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-16 max-w-2xl text-center"
+          className="mx-auto mb-14 max-w-2xl text-center"
         >
-          <h2 className="font-serif text-3xl md:text-4xl">
-            Como funciona
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            Método em 4 passos. Sem burocracia.
-          </p>
+          <h2 className="font-serif text-3xl md:text-4xl">Como funciona na prática?</h2>
         </motion.div>
 
-        <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
+        <div className="mx-auto max-w-2xl space-y-6">
           {steps.map((step, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="glass-card-hover rounded-xl p-6"
+              className="glass-card flex items-start gap-5 rounded-xl px-6 py-5"
             >
-              <span className="font-serif text-2xl text-primary">{step.num}</span>
-              <h3 className="mt-2 font-serif text-xl text-foreground">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.desc}</p>
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full gold-gradient-bg text-sm font-bold text-primary-foreground">
+                {i + 1}
+              </div>
+              <div>
+                <h3 className="font-serif text-lg text-foreground">{step.title}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{step.text}</p>
+              </div>
             </motion.div>
+          ))}
+        </div>
+
+        <div className="mx-auto mt-10 flex max-w-2xl flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          {notes.map((note) => (
+            <span key={note} className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <Check size={14} className="text-primary" />
+              {note}
+            </span>
           ))}
         </div>
       </div>

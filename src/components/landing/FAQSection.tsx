@@ -8,32 +8,32 @@ import {
 
 const faqs = [
   {
-    q: "Preciso ter Google Meu Negócio?",
-    a: "Não. Se você ainda não tem, a JB cria e otimiza o perfil para você durante o processo.",
+    q: "Preciso pagar hospedagem todo mês?",
+    a: "Não! A hospedagem já está inclusa no serviço e é gratuita para sempre. Zero mensalidade.",
   },
   {
-    q: "Vocês criam do zero?",
-    a: "Sim. Tanto o site quanto o perfil no Google podem ser criados do zero ou otimizados, se já existirem.",
+    q: "Quanto tempo leva para ficar pronto?",
+    a: "Até 7 dias após você preencher o formulário de onboarding com suas informações.",
   },
   {
-    q: "Isso inclui domínio?",
-    a: "O plano Essencial entrega em subdomínio JB (cliente.jbdigital.com). Domínio próprio é um add-on opcional, sem travar a entrega.",
+    q: "Eu consigo editar o site depois?",
+    a: "Sim! Você recebe acesso para fazer pequenas atualizações. Para mudanças maiores, podemos ajustar com custo adicional.",
   },
   {
-    q: "E se eu quiser independência total?",
-    a: "Oferecemos handoff completo: você recebe todo o código, acesso ao Google e documentação. É um add-on, não obrigatório.",
+    q: "Vocês fazem gestão de redes sociais?",
+    a: "Não. Nosso foco é construir sua base técnica no Google, não gestão de conteúdo ou tráfego pago.",
   },
   {
-    q: "Em quanto tempo fica pronto?",
-    a: "Após o onboarding (que leva poucos minutos), a entrega do Essencial acontece em poucos dias úteis.",
+    q: "O site vai aparecer no Google automaticamente?",
+    a: "O site é otimizado tecnicamente, mas o ranqueamento depende de fatores como concorrência local, conteúdo e avaliações. Entregamos a base, o crescimento é orgânico.",
   },
   {
-    q: "Isso funciona em cidade pequena?",
-    a: "Sim, e muitas vezes é ainda mais eficaz — menos concorrência no Google local significa mais visibilidade com menos esforço.",
+    q: "Posso usar meu próprio domínio?",
+    a: "Sim! Você pode comprar seu domínio personalizado (ex: psicologamaria.com.br) e nós configuramos. Custo adicional de R$ 100 (setup único).",
   },
   {
-    q: "Posso sair quando quiser?",
-    a: "Sim. Não há contrato de fidelidade. O plano Crescimento é mensal e pode ser cancelado a qualquer momento.",
+    q: "Tem garantia?",
+    a: "Sim! 7 dias de garantia incondicional. Se não gostar, devolvemos 100% do valor.",
   },
 ];
 

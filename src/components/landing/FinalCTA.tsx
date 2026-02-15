@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
+
+const badges = [
+  "Entrega em 7 dias",
+  "Hospedagem grátis para sempre",
+  "Garantia de 7 dias",
+];
 
 export const FinalCTA = () => {
   const navigate = useNavigate();
@@ -16,26 +22,27 @@ export const FinalCTA = () => {
           className="mx-auto max-w-2xl"
         >
           <h2 className="font-serif text-3xl md:text-5xl">
-            Se o seu negócio é bom,
-            <br />
-            <span className="gold-gradient-text">ele precisa ser encontrável.</span>
+            Você está a um passo de ter sua{" "}
+            <span className="gold-gradient-text">presença digital profissional</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            O JB Digital OS organiza sua presença no Google com padrão premium — sem burocracia.
+            Pare de depender de algoritmos que mudam toda semana. Tenha seu próprio espaço, seja encontrado por quem realmente precisa de você e construa autoridade digital de forma ética e sustentável.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Button variant="hero" size="lg" className="gap-2" onClick={() => navigate("/signup")}>
-              Começar agora <ArrowRight size={18} />
-            </Button>
-            <Button variant="heroOutline" size="lg" onClick={() => document.getElementById("planos")?.scrollIntoView({ behavior: "smooth" })}>
-              Ver planos
+          <div className="mt-8">
+            <Button variant="hero" size="lg" className="gap-2 text-base" onClick={() => navigate("/signup")}>
+              Começar minha Presença Google agora <ArrowRight size={18} />
             </Button>
           </div>
 
-          <p className="mt-6 text-xs text-muted-foreground/60">
-            Onboarding guiado. Você acompanha tudo pelo painel.
-          </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            {badges.map((badge) => (
+              <span key={badge} className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <Check size={14} className="text-primary" />
+                {badge}
+              </span>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

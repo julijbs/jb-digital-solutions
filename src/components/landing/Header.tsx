@@ -6,7 +6,6 @@ import jbLogo from "@/assets/jb-logo.jpg";
 
 const navItems = [
   { label: "Como funciona", href: "#como-funciona" },
-  { label: "O que entregamos", href: "#entregaveis" },
   { label: "Planos", href: "#planos" },
   { label: "FAQ", href: "#faq" },
 ];

@@ -1,25 +1,18 @@
 import { motion } from "framer-motion";
-import { Check, X } from "lucide-react";
+import { Check } from "lucide-react";
 
-const forYou = [
-  "Profissional de saúde ou serviço local",
-  "Quer aparecer quando procuram no Google",
-  "Valoriza qualidade e posicionamento",
-  "Prefere processo organizado a improviso",
-  "Quer acompanhar tudo com transparência",
-];
-
-const notForYou = [
-  "Busca promessas de resultado garantido",
-  "Quer o site mais barato possível",
-  "Não se importa com presença digital",
-  "Prefere fazer tudo por conta própria",
-  "Espera resultados sem consistência",
+const items = [
+  "Você é psicólogo(a), terapeuta, nutricionista ou profissional liberal",
+  "Atende presencialmente ou online e quer ser encontrado na sua região",
+  "Ainda não tem um site ou seu site atual não te ajuda a atrair clientes",
+  "Quer reduzir a dependência das redes sociais e ter um espaço seu",
+  "Busca uma solução ética, profissional e sem complicação técnica",
+  "Não quer (ou não pode) pagar mensalidades de hospedagem ou gestão",
 ];
 
 export const ForYouSection = () => {
   return (
-    <section className="py-20 md:py-28">
+    <section id="para-quem" className="py-20 md:py-28">
       <div className="section-divider mx-auto mb-20 max-w-xl" />
       <div className="container">
         <motion.div
@@ -29,44 +22,26 @@ export const ForYouSection = () => {
           className="mx-auto mb-12 max-w-2xl text-center"
         >
           <h2 className="font-serif text-3xl md:text-4xl">
-            É pra você?
+            Esse serviço é para você se...
           </h2>
         </motion.div>
 
-        <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="glass-card rounded-xl p-6"
-          >
-            <h3 className="mb-4 font-serif text-lg text-primary">É pra você se…</h3>
-            <ul className="space-y-3">
-              {forYou.map((item, i) => (
-                <li key={i} className="flex items-start gap-3 text-sm text-foreground">
-                  <Check size={16} className="mt-0.5 shrink-0 text-primary" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="glass-card rounded-xl p-6"
-          >
-            <h3 className="mb-4 font-serif text-lg text-muted-foreground">Não é pra você se…</h3>
-            <ul className="space-y-3">
-              {notForYou.map((item, i) => (
-                <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
-                  <X size={16} className="mt-0.5 shrink-0 text-muted-foreground/50" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+        <div className="mx-auto max-w-xl space-y-4">
+          {items.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.07 }}
+              className="flex items-start gap-4 rounded-xl px-2 py-1"
+            >
+              <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md gold-gradient-bg">
+                <Check size={14} className="text-primary-foreground" />
+              </div>
+              <p className="text-muted-foreground">{item}</p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
