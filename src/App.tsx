@@ -13,6 +13,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import NewProject from "./pages/NewProject";
 import Onboarding from "./pages/Onboarding";
 import PromptGenerator from "./pages/PromptGenerator";
+import DomainSuccess from "./pages/DomainSuccess";
 import ClientProjects from "./pages/ClientProjects";
 import ClientReports from "./pages/ClientReports";
 import ClientBilling from "./pages/ClientBilling";
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/dashboard/reports" element={<ProtectedRoute><ClientReports /></ProtectedRoute>} />
             <Route path="/dashboard/billing" element={<ProtectedRoute><ClientBilling /></ProtectedRoute>} />
             <Route path="/dashboard/review" element={<ProtectedRoute><ClientReview /></ProtectedRoute>} />
+            <Route path="/dashboard/domain-success" element={<ProtectedRoute><DomainSuccess /></ProtectedRoute>} />
 
             {/* Admin routes */}
             <Route path="/admin" element={<ProtectedRoute requiredRole="admin_jb"><AdminDashboard /></ProtectedRoute>} />
