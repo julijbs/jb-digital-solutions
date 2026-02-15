@@ -2,40 +2,45 @@ import { useState } from "react";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Palette, Eye, Copy, Star } from "lucide-react";
+import { Palette, Eye, Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const defaultTemplates = [
   {
     id: "elegant-minimal",
     name: "Elegante Minimalista",
     emoji: "🎨",
-    description: "Estilo sofisticado com muito espaço em branco, tipografia serif refinada e layout limpo.",
-    colors: ["#1a1a2e", "#e2c08d", "#f5f5f5"],
-    tags: ["Psicólogos", "Terapeutas"],
+    description: "Sofisticado, limpo e espaçoso. Tipografia serif (DM Serif Display) + Inter. Ideal para transmitir autoridade e confiança.",
+    colors: ["#0A1128", "#C8A882", "#f8f9fa"],
+    tags: ["Psicólogos", "Terapeutas", "Coaches"],
     popular: true,
+    fonts: "DM Serif Display + Inter",
   },
   {
     id: "modern-clean",
     name: "Moderno Clean",
     emoji: "✨",
-    description: "Linhas retas, cantos arredondados, ícones modernos. Aparência tech-forward mas acessível.",
-    colors: ["#0f172a", "#3b82f6", "#f8fafc"],
-    tags: ["Dentistas", "Médicos"],
+    description: "Contemporâneo e enérgico. Tipografia Poppins + Inter. Layout em grid, cantos arredondados, estilo tech-forward.",
+    colors: ["#2D6A4F", "#40916C", "#f0fdf4"],
+    tags: ["Nutricionistas", "Personal Trainers", "Wellness"],
     popular: false,
+    fonts: "Poppins + Inter",
   },
   {
     id: "warm-soft",
     name: "Acolhedor Suave",
     emoji: "🌿",
-    description: "Cores pastéis, formas orgânicas, fontes humanistas. Transmite calma e confiança.",
-    colors: ["#1a3c34", "#22c55e", "#f0fdf4"],
-    tags: ["Nutricionistas", "Terapeutas"],
+    description: "Caloroso e empático. Tipografia Playfair Display + Open Sans. Formas orgânicas, bordas suaves, tons pastéis.",
+    colors: ["#5A189A", "#9D4EDD", "#faf5ff"],
+    tags: ["Terapeutas Holísticos", "Consteladores", "Coaches de Vida"],
     popular: true,
+    fonts: "Playfair Display + Open Sans",
   },
 ];
 
 const AdminTemplates = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   return (
     <DashboardLayout>
@@ -43,7 +48,7 @@ const AdminTemplates = () => {
         <div>
           <h1 className="font-serif text-2xl text-foreground">Templates</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Galeria de templates disponíveis para geração de sites
+            3 templates base para geração de sites com IA — cada um com personalidade visual distinta
           </p>
         </div>
         <Button
@@ -59,11 +64,11 @@ const AdminTemplates = () => {
         {defaultTemplates.map((tmpl) => (
           <div key={tmpl.id} className="glass-card-hover rounded-xl overflow-hidden">
             {/* Color preview header */}
-            <div className="h-32 relative" style={{
-              background: `linear-gradient(135deg, ${tmpl.colors[0]} 0%, ${tmpl.colors[0]} 60%, ${tmpl.colors[1]} 100%)`
+            <div className="h-36 relative" style={{
+              background: `linear-gradient(135deg, ${tmpl.colors[0]} 0%, ${tmpl.colors[0]} 50%, ${tmpl.colors[1]} 100%)`
             }}>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-4xl">{tmpl.emoji}</span>
+                <span className="text-5xl">{tmpl.emoji}</span>
               </div>
               {tmpl.popular && (
                 <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-primary/90 px-2.5 py-0.5 text-[10px] font-semibold text-primary-foreground">
@@ -92,6 +97,12 @@ const AdminTemplates = () => {
                 </div>
               </div>
 
+              {/* Fonts */}
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-muted-foreground">Fontes:</span>
+                <span className="text-[10px] text-foreground">{tmpl.fonts}</span>
+              </div>
+
               {/* Tags */}
               <div className="flex flex-wrap gap-1">
                 {tmpl.tags.map((tag) => (
@@ -102,22 +113,14 @@ const AdminTemplates = () => {
               </div>
 
               {/* Actions */}
-              <div className="flex gap-2 pt-2 border-t border-border">
+              <div className="pt-2 border-t border-border">
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="flex-1 h-8 text-xs"
-                  onClick={() => toast({ title: "Em breve", description: "Preview de template será implementado" })}
+                  className="w-full h-8 text-xs gap-1.5"
+                  onClick={() => navigate(`/admin/site-generator`)}
                 >
-                  <Eye size={12} /> Preview
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="flex-1 h-8 text-xs"
-                  onClick={() => toast({ title: "Em breve", description: "Duplicação de template será implementada" })}
-                >
-                  <Copy size={12} /> Duplicar
+                  <Eye size={12} /> Usar no Gerador
                 </Button>
               </div>
             </div>
