@@ -122,6 +122,63 @@ export type Database = {
           },
         ]
       }
+      client_health_scores: {
+        Row: {
+          ai_summary: string | null
+          analyzed_at: string
+          client_id: string
+          created_at: string
+          factors: Json
+          id: string
+          project_id: string
+          recommended_actions: Json
+          risk_level: string
+          risk_score: number
+          updated_at: string
+        }
+        Insert: {
+          ai_summary?: string | null
+          analyzed_at?: string
+          client_id: string
+          created_at?: string
+          factors?: Json
+          id?: string
+          project_id: string
+          recommended_actions?: Json
+          risk_level?: string
+          risk_score?: number
+          updated_at?: string
+        }
+        Update: {
+          ai_summary?: string | null
+          analyzed_at?: string
+          client_id?: string
+          created_at?: string
+          factors?: Json
+          id?: string
+          project_id?: string
+          recommended_actions?: Json
+          risk_level?: string
+          risk_score?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_health_scores_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_health_scores_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       client_intake: {
         Row: {
           business_data: Json | null

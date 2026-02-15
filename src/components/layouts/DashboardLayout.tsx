@@ -24,6 +24,7 @@ import {
   Palette,
   Shield,
   Star,
+  Brain,
 } from "lucide-react";
 import { NotificationBell } from "@/components/NotificationBell";
 import jbLogo from "@/assets/jb-logo.jpg";
@@ -58,6 +59,7 @@ const adminSections = [
       { href: "/admin/gbp", label: "Perfil no Google", icon: MapPin },
       { href: "/admin/maintenance", label: "Acompanhamento", icon: Shield },
       { href: "/admin/feedback", label: "NPS & Depoimentos", icon: Star },
+      { href: "/admin/churn-alerts", label: "IA de CS", icon: Brain },
     ],
   },
   {
