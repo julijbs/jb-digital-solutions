@@ -19,6 +19,7 @@ const ClientFeedback = () => {
   const initialScore = searchParams.get("score");
   const feedbackType = searchParams.get("type") || "nps";
   const projectId = searchParams.get("project");
+  const clientIdParam = searchParams.get("client");
 
   const [score, setScore] = useState<number | null>(initialScore ? parseInt(initialScore) : null);
   const [comment, setComment] = useState("");
@@ -26,11 +27,14 @@ const ClientFeedback = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<"nps" | "testimonial">(feedbackType === "testimonial" ? "testimonial" : "nps");
-  const [clientId, setClientId] = useState<string | null>(null);
+  const [clientId, setClientId] = useState<string | null>(clientIdParam);
   const [resolvedProjectId, setResolvedProjectId] = useState<string | null>(projectId);
 
   useEffect(() => {
     const fetchClient = async () => {
+      // If we already have both IDs from URL params, skip fetching
+      if (clientId && resolvedProjectId) return;
+
       if (!user) return;
       const { data } = await supabase
         .from("clients")
@@ -38,7 +42,7 @@ const ClientFeedback = () => {
         .eq("user_id", user.id)
         .maybeSingle();
       if (data) {
-        setClientId(data.id);
+        if (!clientId) setClientId(data.id);
         if (!resolvedProjectId) {
           const { data: proj } = await supabase
             .from("projects")
@@ -52,19 +56,22 @@ const ClientFeedback = () => {
       }
     };
     fetchClient();
-  }, [user]);
+  }, [user, clientId, resolvedProjectId]);
 
   const handleSubmitNPS = async () => {
     if (score === null || !clientId || !resolvedProjectId) return;
     setLoading(true);
     try {
-      await supabase.from("client_feedback").insert({
-        client_id: clientId,
-        project_id: resolvedProjectId,
-        type: "nps",
-        nps_score: score,
-        comment: comment || null,
+      const { error } = await supabase.functions.invoke("submit-feedback", {
+        body: {
+          client_id: clientId,
+          project_id: resolvedProjectId,
+          type: "nps",
+          nps_score: score,
+          comment: comment || null,
+        },
       });
+      if (error) throw error;
       if (score >= 9) {
         setStep("testimonial");
         setComment("");
@@ -82,13 +89,16 @@ const ClientFeedback = () => {
     if (!comment.trim() || !clientId || !resolvedProjectId) return;
     setLoading(true);
     try {
-      await supabase.from("client_feedback").insert({
-        client_id: clientId,
-        project_id: resolvedProjectId,
-        type: "testimonial",
-        comment,
-        is_public: isPublic,
+      const { error } = await supabase.functions.invoke("submit-feedback", {
+        body: {
+          client_id: clientId,
+          project_id: resolvedProjectId,
+          type: "testimonial",
+          comment,
+          is_public: isPublic,
+        },
       });
+      if (error) throw error;
       setSubmitted(true);
       toast.success("Depoimento enviado! Obrigado!");
     } catch {
