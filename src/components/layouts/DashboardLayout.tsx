@@ -16,6 +16,12 @@ import {
   Sparkles,
   MapPin,
   CheckCircle2,
+  Bell,
+  Folder,
+  DollarSign,
+  BarChart3,
+  Globe,
+  Palette,
 } from "lucide-react";
 import { NotificationBell } from "@/components/NotificationBell";
 import jbLogo from "@/assets/jb-logo.jpg";
@@ -28,16 +34,44 @@ const clientLinks = [
   { href: "/dashboard/billing", label: "Cobrança", icon: CreditCard },
 ];
 
-const adminLinks = [
-  { href: "/admin", label: "Painel Admin", icon: LayoutDashboard },
-  { href: "/admin/clients", label: "Clientes", icon: Users },
-  { href: "/admin/pipeline", label: "Pipeline", icon: FolderKanban },
-  { href: "/admin/gbp", label: "Google Business", icon: MapPin },
-  { href: "/admin/prompt-generator", label: "Gerador de Prompt", icon: Sparkles },
-  { href: "/admin/billing", label: "Cobrança", icon: CreditCard },
-  { href: "/admin/reports", label: "Relatórios", icon: FileText },
-  { href: "/admin/integrations", label: "Integrações", icon: Plug },
-  { href: "/admin/settings", label: "Configurações", icon: Settings },
+const adminSections = [
+  {
+    label: "Visão Geral",
+    items: [
+      { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+    ],
+  },
+  {
+    label: "Produção",
+    items: [
+      { href: "/admin/site-generator", label: "Gerar Site com IA", icon: Sparkles },
+      { href: "/admin/pipeline", label: "Pipeline", icon: FolderKanban },
+      { href: "/admin/prompt-generator", label: "Gerador de Prompt", icon: FileText },
+    ],
+  },
+  {
+    label: "Clientes",
+    items: [
+      { href: "/admin/clients", label: "Clientes", icon: Users },
+      { href: "/admin/gbp", label: "Perfil no Google", icon: MapPin },
+    ],
+  },
+  {
+    label: "Gestão",
+    items: [
+      { href: "/admin/billing", label: "Financeiro", icon: DollarSign },
+      { href: "/admin/reports", label: "Relatórios", icon: BarChart3 },
+      { href: "/admin/domains", label: "Domínios", icon: Globe },
+    ],
+  },
+  {
+    label: "Sistema",
+    items: [
+      { href: "/admin/templates", label: "Templates", icon: Palette },
+      { href: "/admin/integrations", label: "Integrações", icon: Plug },
+      { href: "/admin/settings", label: "Configurações", icon: Settings },
+    ],
+  },
 ];
 
 export const DashboardLayout = ({ children }: { children: ReactNode }) => {
@@ -45,7 +79,7 @@ export const DashboardLayout = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const links = role === "admin_jb" ? adminLinks : clientLinks;
+  const isAdmin = role === "admin_jb";
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -64,25 +98,53 @@ export const DashboardLayout = ({ children }: { children: ReactNode }) => {
           </button>
         </div>
 
-        <nav className="flex flex-col gap-1 p-3">
-          {links.map((link) => {
-            const isActive = location.pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                to={link.href}
-                onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
-                  isActive
-                    ? "bg-primary/10 text-primary font-medium"
-                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-                }`}
-              >
-                <link.icon size={18} />
-                {link.label}
-              </Link>
-            );
-          })}
+        <nav className="flex flex-col gap-1 p-3 overflow-y-auto max-h-[calc(100vh-8rem)]">
+          {isAdmin ? (
+            adminSections.map((section) => (
+              <div key={section.label} className="mb-2">
+                <p className="mb-1 px-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60">
+                  {section.label}
+                </p>
+                {section.items.map((link) => {
+                  const isActive = location.pathname === link.href;
+                  return (
+                    <Link
+                      key={link.href}
+                      to={link.href}
+                      onClick={() => setSidebarOpen(false)}
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
+                        isActive
+                          ? "bg-primary/10 text-primary font-medium"
+                          : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                      }`}
+                    >
+                      <link.icon size={16} />
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            ))
+          ) : (
+            clientLinks.map((link) => {
+              const isActive = location.pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  onClick={() => setSidebarOpen(false)}
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
+                    isActive
+                      ? "bg-primary/10 text-primary font-medium"
+                      : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  }`}
+                >
+                  <link.icon size={18} />
+                  {link.label}
+                </Link>
+              );
+            })
+          )}
         </nav>
 
         <div className="absolute bottom-0 left-0 right-0 border-t border-border p-3">

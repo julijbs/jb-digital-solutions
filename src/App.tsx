@@ -26,6 +26,9 @@ import AdminIntegrations from "./pages/admin/AdminIntegrations";
 import AdminSettings from "./pages/admin/AdminSettings";
 import AdminGBP from "./pages/admin/AdminGBP";
 import AdminProjectDetail from "./pages/admin/AdminProjectDetail";
+import AdminDomains from "./pages/admin/AdminDomains";
+import AdminTemplates from "./pages/admin/AdminTemplates";
+import SiteGenerator from "./pages/admin/SiteGenerator";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -63,6 +66,9 @@ const App = () => (
             <Route path="/admin/reports" element={<ProtectedRoute requiredRole="admin_jb"><AdminReports /></ProtectedRoute>} />
             <Route path="/admin/integrations" element={<ProtectedRoute requiredRole="admin_jb"><AdminIntegrations /></ProtectedRoute>} />
             <Route path="/admin/settings" element={<ProtectedRoute requiredRole="admin_jb"><AdminSettings /></ProtectedRoute>} />
+            <Route path="/admin/domains" element={<ProtectedRoute requiredRole="admin_jb"><AdminDomains /></ProtectedRoute>} />
+            <Route path="/admin/templates" element={<ProtectedRoute requiredRole="admin_jb"><AdminTemplates /></ProtectedRoute>} />
+            <Route path="/admin/site-generator" element={<ProtectedRoute requiredRole="admin_jb"><SiteGenerator /></ProtectedRoute>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
