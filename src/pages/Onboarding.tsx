@@ -41,6 +41,7 @@ const Onboarding = () => {
   const [services, setServices] = useState({
     main_category: "", alt_categories: "", services_tags: "",
     pain_points: "", differentials: "", approach: "",
+    target_audience: "", common_questions: "", credentials_summary: "",
   });
 
   // Photos state
@@ -344,16 +345,19 @@ const Onboarding = () => {
             <div className="space-y-4">
               <h2 className="font-serif text-xl text-foreground">Categoria e serviços</h2>
               {[
-                { key: "main_category", label: "Categoria principal", placeholder: "Ex.: Psicólogo Clínico" },
-                { key: "alt_categories", label: "2 categorias alternativas", placeholder: "Ex.: Terapia Cognitivo-Comportamental, Psicologia Infantil" },
-                { key: "services_tags", label: "Serviços (3 a 10, separados por vírgula)", placeholder: "Ex.: Terapia individual, Terapia de casal, Avaliação psicológica" },
-                { key: "pain_points", label: "Dores/situações dos seus clientes", placeholder: "Ex.: Ansiedade, Insônia, Dificuldade nos relacionamentos" },
-                { key: "differentials", label: "Diferenciais reais (3 a 6)", placeholder: "Ex.: Atendimento online e presencial, Flexibilidade de horários" },
-                { key: "approach", label: "Abordagem/método", placeholder: "Ex.: Terapia Cognitivo-Comportamental com foco em resultados práticos" },
+                { key: "main_category", label: "Categoria principal", placeholder: "Ex.: Psicólogo Clínico", type: "input" },
+                { key: "alt_categories", label: "2 categorias alternativas", placeholder: "Ex.: Terapia Cognitivo-Comportamental, Psicologia Infantil", type: "input" },
+                { key: "services_tags", label: "Serviços (3 a 10, separados por vírgula)", placeholder: "Ex.: Terapia individual, Terapia de casal, Avaliação psicológica", type: "input" },
+                { key: "target_audience", label: "Público-alvo principal", placeholder: "Ex.: Adultos com ansiedade, casais em crise, adolescentes", type: "input" },
+                { key: "pain_points", label: "Dores/situações dos seus clientes", placeholder: "Ex.: Ansiedade, Insônia, Dificuldade nos relacionamentos", type: "textarea" },
+                { key: "differentials", label: "Diferenciais reais (3 a 6)", placeholder: "Ex.: Atendimento online e presencial, Flexibilidade de horários", type: "input" },
+                { key: "approach", label: "Abordagem/método", placeholder: "Ex.: Terapia Cognitivo-Comportamental com foco em resultados práticos", type: "textarea" },
+                { key: "credentials_summary", label: "Formação e certificações principais", placeholder: "Ex.: CRP 06/12345, Pós-graduação em TCC pela USP, 10 anos de experiência", type: "textarea" },
+                { key: "common_questions", label: "Perguntas frequentes dos seus clientes (para otimização IA)", placeholder: "Ex.: Quanto tempo dura uma sessão? Online funciona bem? Preciso de encaminhamento médico?", type: "textarea" },
               ].map((field) => (
                 <div key={field.key} className="space-y-1">
                   <Label>{field.label}</Label>
-                  {field.key === "pain_points" || field.key === "approach" ? (
+                  {field.type === "textarea" ? (
                     <textarea
                       className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                       placeholder={field.placeholder}
