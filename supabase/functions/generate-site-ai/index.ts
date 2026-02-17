@@ -143,6 +143,9 @@ DADOS DO CLIENTE:
 - Serviços: ${svd.services_tags || ""}
 - Diferenciais: ${svd.differentials || ""}
 - Abordagem: ${svd.approach || ""}
+- Público-alvo: ${svd.target_audience || ""}
+- Formação/Certificações: ${svd.credentials_summary || ""}
+- Perguntas frequentes dos clientes: ${svd.common_questions || ""}
 - WhatsApp: ${bd.phone || ""}
 - Instagram: ${bd.instagram || ""}
 - Email: ${bd.email || ""}
@@ -171,6 +174,9 @@ GERE este JSON exato:
   "testimonials": [
     { "text": "depoimento fictício realista", "name": "Nome do Cliente" }
   ],
+  "faq": [
+    { "question": "pergunta frequente sobre o serviço", "answer": "resposta clara e direta (40-60 palavras)" }
+  ],
   "cta_final": {
     "headline": "chamada final forte",
     "subheadline": "reforço da transformação"
@@ -183,7 +189,9 @@ DIRETRIZES:
 - Linguagem: simples, acolhedora, profissional
 - Evite: jargões técnicos, promessas exageradas
 - Gere pelo menos 3 serviços e 4 etapas de processo
-- Gere 2-3 depoimentos fictícios realistas`;
+- Gere 2-3 depoimentos fictícios realistas
+- Gere pelo menos 5 FAQs estratégicas — perguntas que alguém faria ao ChatGPT/Gemini sobre esse profissional
+- As FAQs devem ser otimizadas para AEO (Answer Engine Optimization)`;
 
     const contentRaw = await callAI([
       { role: "system", content: "Você é um copywriter expert. Retorne APENAS JSON válido, sem markdown ou explicações." },
@@ -248,8 +256,21 @@ ${JSON.stringify(content, null, 2)}
 5. **Serviços** em grid de cards
 6. **Como Funciona** em timeline/steps visual
 7. **Depoimentos** com cards e aspas visuais
-8. **CTA Final** com fundo colorido, headline e botão WhatsApp grande
-9. **Rodapé** com contatos, redes sociais e disclaimers
+8. **Widget de Avaliações Google** — seção visual simulando avaliações 5 estrelas do Google Meu Negócio com 3 reviews fictícios, nome, estrelas e texto. Incluir link placeholder para o perfil no Google Maps.
+9. **FAQ** em formato acordeão/collapsible com as perguntas e respostas geradas — otimizado para AEO
+10. **CTA Final** com fundo colorido, headline e botão WhatsApp grande
+11. **Rodapé** com contatos, redes sociais e disclaimers
+
+## REQUISITOS DE AEO (Answer Engine Optimization)
+- Inclua Schema.org JSON-LD completo com:
+  - LocalBusiness (com name, address, telephone, url, openingHours)
+  - FAQPage schema com TODAS as perguntas e respostas
+  - ProfessionalService ou tipo específico da vertical
+  - aggregateRating com rating fictício 4.9/5
+  - review schema com os depoimentos
+- Use tags semânticas HTML5 (article, section, header, main, nav, footer)
+- Cada FAQ deve usar <details>/<summary> ou accordion com microdados
+- Meta description otimizada para perguntas naturais
 
 ## REQUISITOS TÉCNICOS
 - Use APENAS Tailwind CSS via CDN: <script src="https://cdn.tailwindcss.com"></script>
@@ -258,12 +279,11 @@ ${JSON.stringify(content, null, 2)}
 - HTML5 semântico
 - Ícones inline SVG
 - Animações CSS suaves (fadeInUp)
-- Schema.org LocalBusiness em JSON-LD
 - Botão WhatsApp flutuante no canto inferior direito
 - Links WhatsApp: https://wa.me/55${phone.replace(/\D/g, "")}
 
 ## MARQUE CADA SEÇÃO COM DATA ATTRIBUTES
-Cada seção deve ter data-section="hero|pain|about|services|process|testimonials|cta|footer"
+Cada seção deve ter data-section="hero|pain|about|services|process|testimonials|reviews|faq|cta|footer"
 
 ## OUTPUT
 Retorne APENAS o código HTML completo (<!DOCTYPE html> até </html>). Sem explicações.`;
