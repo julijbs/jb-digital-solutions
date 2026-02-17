@@ -7,6 +7,7 @@ const trustBadges = [
   "Entrega em até 7 dias",
   "Hospedagem inclusa",
   "Sem mensalidades",
+  "Otimizado para IA (AEO)",
 ];
 
 export const HeroSection = () => {
@@ -38,10 +39,10 @@ export const HeroSection = () => {
             </Button>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          <div className="mt-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-x-6">
             {trustBadges.map((badge) => (
               <span key={badge} className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                <Check size={14} className="text-primary" />
+                <Check size={14} className="shrink-0 text-primary" />
                 {badge}
               </span>
             ))}

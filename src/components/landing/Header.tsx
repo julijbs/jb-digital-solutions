@@ -5,6 +5,8 @@ import { Menu, X } from "lucide-react";
 import jbLogo from "@/assets/jb-logo.jpg";
 
 const navItems = [
+  { label: "Solução", href: "#solucao" },
+  { label: "AEO + IA", href: "#aeo" },
   { label: "Como funciona", href: "#como-funciona" },
   { label: "Planos", href: "#planos" },
   { label: "FAQ", href: "#faq" },

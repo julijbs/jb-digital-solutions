@@ -65,10 +65,10 @@ export const HowItWorks = () => {
           ))}
         </div>
 
-        <div className="mx-auto mt-10 flex max-w-2xl flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-x-6">
           {notes.map((note) => (
             <span key={note} className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <Check size={14} className="text-primary" />
+              <Check size={14} className="shrink-0 text-primary" />
               {note}
             </span>
           ))}
