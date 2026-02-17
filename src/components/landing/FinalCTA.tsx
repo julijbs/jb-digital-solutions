@@ -30,15 +30,15 @@ export const FinalCTA = () => {
           </p>
 
           <div className="mt-8">
-            <Button variant="hero" size="lg" className="gap-2 text-base" onClick={() => navigate("/signup")}>
-              Começar minha Presença Google agora <ArrowRight size={18} />
+            <Button variant="hero" size="default" className="gap-2 text-sm md:text-base md:px-8 md:py-6" onClick={() => navigate("/signup")}>
+              Começar minha Presença Google agora <ArrowRight size={16} />
             </Button>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          <div className="mt-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-x-6">
             {badges.map((badge) => (
               <span key={badge} className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                <Check size={14} className="text-primary" />
+                <Check size={14} className="shrink-0 text-primary" />
                 {badge}
               </span>
             ))}
