@@ -125,10 +125,10 @@ export const PricingSection = () => {
           ))}
         </div>
 
-        <div className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-3">
+        <div className="mx-auto mt-10 flex max-w-3xl flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-x-8">
           {badges.map((b, i) => (
             <span key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-              <b.icon size={16} className="text-primary" />
+              <b.icon size={16} className="shrink-0 text-primary" />
               {b.text}
             </span>
           ))}
