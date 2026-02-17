@@ -34,8 +34,8 @@ export const HeroSection = () => {
           </p>
 
           <div className="mt-10">
-            <Button variant="hero" size="lg" className="gap-2 text-base" onClick={() => navigate("/signup")}>
-              Quero minha Presença Google agora <ArrowRight size={18} />
+            <Button variant="hero" size="default" className="gap-2 text-sm md:text-base md:px-8 md:py-6" onClick={() => navigate("/signup")}>
+              Quero minha Presença Google agora <ArrowRight size={16} />
             </Button>
           </div>
 
