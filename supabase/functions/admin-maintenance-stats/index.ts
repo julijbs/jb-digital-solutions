@@ -50,8 +50,8 @@ serve(async (req) => {
       const subs = await stripe.subscriptions.list(params);
       
       // Filter for maintenance product
-      const filtered = subs.data.filter(sub => 
-        sub.items.data.some(item => item.price.product === MAINTENANCE_PRODUCT_ID)
+      const filtered = subs.data.filter((sub: any) => 
+        sub.items.data.some((item: any) => item.price.product === MAINTENANCE_PRODUCT_ID)
       );
       allSubscriptions.push(...filtered);
       hasMore = subs.has_more;
