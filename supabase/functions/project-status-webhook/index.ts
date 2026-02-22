@@ -142,7 +142,7 @@ serve(async (req) => {
           siteUrl: project.site_url,
           publishedUrl: project.published_url,
           dashboardUrl,
-          googleReviewUrl: "https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID",
+          googleReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJuwatYaZZzpQR--bioPySvYg",
         },
       }),
     });
