@@ -317,7 +317,7 @@ Retorne APENAS o código HTML completo (<!DOCTYPE html> até </html>). Sem expli
   } catch (error) {
     console.error("generate-site-ai error:", error);
     return new Response(
-      JSON.stringify({ error: error.message || "Erro interno" }),
+      JSON.stringify({ error: (error as Error).message || "Erro interno" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }

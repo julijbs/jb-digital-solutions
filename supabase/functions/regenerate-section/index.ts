@@ -100,7 +100,7 @@ REGRAS:
   } catch (error) {
     console.error("regenerate-section error:", error);
     return new Response(
-      JSON.stringify({ error: error.message || "Erro ao refinar seção" }),
+      JSON.stringify({ error: (error as Error).message || "Erro ao refinar seção" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
