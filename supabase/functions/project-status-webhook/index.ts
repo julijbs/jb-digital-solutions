@@ -12,7 +12,7 @@ const STATUS_EMAIL_MAP: Record<string, string> = {
   lovable_site_generated: "site_ready_review",
   client_review: "site_ready_review",
   vercel_deployed_prod: "site_published",
-  handoff_done: "site_published",
+  handoff_done: "handoff_delivery",
 };
 
 // Statuses that create a notification for the client
@@ -142,6 +142,7 @@ serve(async (req) => {
           siteUrl: project.site_url,
           publishedUrl: project.published_url,
           dashboardUrl,
+          googleReviewUrl: "https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID",
         },
       }),
     });
