@@ -3,8 +3,8 @@ import { Quote } from "lucide-react";
 
 const testimonials = [
   {
-    text: "Antes eu dependia 100% do Instagram. Hoje tenho meu próprio espaço e as pessoas me encontram direto no Google. Foi a melhor decisão profissional que tomei.",
-    author: "Ariane P.",
+    text: "O serviço prestado pela Thaís foi excelente desde o primeiro contato. Como não tenho nenhuma experiência com as ferramentas e o que seria bom pro meu negócio, precisei de muita ajuda — e ela sempre foi muito prestativa e esclarecedora. O site saiu exatamente como pedi e, com a contribuição dela, ficou muito aderente ao meu nicho de trabalho. Além disso, todo o trabalho foi feito em colaboração comigo, num tempo recorde. É uma profissional que indico de olhos fechados!",
+    author: "Dra. Ariane Pontes",
     role: "Psicóloga Clínica — São Paulo/SP",
   },
   {
