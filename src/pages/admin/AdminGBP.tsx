@@ -6,11 +6,13 @@ import { useToast } from "@/hooks/use-toast";
 import {
   MapPin, Star, Image as ImageIcon, Clock, MessageSquare,
   ExternalLink, Search, Loader2, Link2, RefreshCw, BarChart3,
+  Globe, Phone, Unlink,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
 } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface GbpAccount {
   name: string;
@@ -53,7 +55,6 @@ const AdminGBP = () => {
   // Link dialog
   const [linkDialogOpen, setLinkDialogOpen] = useState(false);
   const [linkingLocation, setLinkingLocation] = useState<GbpLocation | null>(null);
-  const [linkProjectId, setLinkProjectId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
   // Metrics dialog
@@ -62,12 +63,13 @@ const AdminGBP = () => {
 
   useEffect(() => {
     fetchProjects();
+    fetchAccounts();
   }, []);
 
   const fetchProjects = async () => {
     const { data } = await supabase
       .from("projects")
-      .select("*, clients(business_name, vertical, city, state), client_intake(google_data, business_data, schedule_data)")
+      .select("*, clients(business_name, vertical, city, state)")
       .order("updated_at", { ascending: false });
     setProjects(data || []);
     setLoading(false);
@@ -80,8 +82,12 @@ const AdminGBP = () => {
         body: {},
       });
       if (error) throw error;
-      setAccounts(data?.accounts || []);
-      if (data?.accounts?.length === 0) {
+      const accs = data?.accounts || [];
+      setAccounts(accs);
+      // Auto-select first account
+      if (accs.length > 0) {
+        fetchLocations(accs[0].name);
+      } else if (accs.length === 0) {
         toast({ title: "Nenhuma conta encontrada", description: "Verifique as credenciais OAuth do Google." });
       }
     } catch (e: unknown) {
@@ -101,9 +107,6 @@ const AdminGBP = () => {
       });
       if (error) throw error;
       setLocations(data?.locations || []);
-      if (data?.locations?.length === 0) {
-        toast({ title: "Nenhuma localização encontrada", description: "Esta conta não tem localizações cadastradas." });
-      }
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : "Erro desconhecido";
       toast({ title: "Erro ao buscar localizações", description: msg, variant: "destructive" });
@@ -112,9 +115,8 @@ const AdminGBP = () => {
     }
   };
 
-  const openLinkDialog = (location: GbpLocation, projectId?: string) => {
+  const openLinkDialog = (location: GbpLocation) => {
     setLinkingLocation(location);
-    setLinkProjectId(projectId || null);
     setLinkDialogOpen(true);
   };
 
@@ -150,11 +152,19 @@ const AdminGBP = () => {
     }, 0);
   };
 
-  const filtered = projects.filter(
-    (p) =>
-      p.name?.toLowerCase().includes(search.toLowerCase()) ||
-      (p.clients as any)?.business_name?.toLowerCase().includes(search.toLowerCase())
+  // Find which project is linked to a location
+  const getLinkedProject = (location: GbpLocation) => {
+    const locId = location.name.split("/").pop();
+    return projects.find((p) => p.gbp_url?.includes(locId));
+  };
+
+  const filteredLocations = locations.filter(
+    (loc) =>
+      loc.location.title?.toLowerCase().includes(search.toLowerCase()) ||
+      loc.location.storefrontAddress?.locality?.toLowerCase().includes(search.toLowerCase())
   );
+
+  const isLoading = loadingAccounts || loadingLocations;
 
   return (
     <DashboardLayout>
@@ -162,190 +172,154 @@ const AdminGBP = () => {
         <div>
           <h1 className="font-serif text-2xl text-foreground">Google Business Profile</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Gerencie os perfis GBP de todos os clientes
+            Gerencie seus perfis GBP diretamente — sem precisar de projeto vinculado
           </p>
         </div>
         <Button
           onClick={fetchAccounts}
-          disabled={loadingAccounts}
+          disabled={isLoading}
           variant="outline"
           size="sm"
         >
-          {loadingAccounts ? <Loader2 size={14} className="animate-spin mr-1" /> : <RefreshCw size={14} className="mr-1" />}
-          Carregar contas GBP
+          {isLoading ? <Loader2 size={14} className="animate-spin mr-1" /> : <RefreshCw size={14} className="mr-1" />}
+          Atualizar
         </Button>
       </div>
 
-      {/* GBP Accounts & Locations Panel */}
-      {accounts.length > 0 && (
-        <div className="mb-8 glass-card rounded-xl p-5 space-y-4">
-          <h2 className="text-sm font-medium text-foreground">Contas Google Business</h2>
-          <div className="flex flex-wrap gap-2">
-            {accounts.map((acc) => (
-              <Button
-                key={acc.name}
-                variant={selectedAccount === acc.name ? "default" : "outline"}
-                size="sm"
-                onClick={() => fetchLocations(acc.name)}
-                disabled={loadingLocations}
-              >
-                {acc.accountName || acc.name}
-              </Button>
-            ))}
-          </div>
-
-          {loadingLocations && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Loader2 size={14} className="animate-spin" /> Carregando localizações…
-            </div>
-          )}
-
-          {!loadingLocations && locations.length > 0 && (
-            <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-              {locations.map((loc, i) => {
-                const l = loc.location;
-                const addr = l.storefrontAddress;
-                const totalImpressions = loc.metrics?.reduce((sum: number, m: any) => {
-                  const series = m?.dailyMetricTimeSeries?.timeSeries?.datedValues || [];
-                  return sum + sumMetricValues(series);
-                }, 0) || 0;
-
-                return (
-                  <div key={i} className="rounded-lg border border-border bg-card p-4 space-y-3">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="font-medium text-sm text-foreground">{l.title}</p>
-                        <p className="text-xs text-muted-foreground mt-0.5">
-                          {addr?.addressLines?.join(", ")} {addr?.locality && `- ${addr.locality}`}
-                        </p>
-                      </div>
-                      {totalImpressions > 0 && (
-                        <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => openMetrics(loc)}>
-                          <BarChart3 size={12} className="mr-1" /> Métricas
-                        </Button>
-                      )}
-                    </div>
-                    {l.websiteUri && (
-                      <p className="text-xs text-muted-foreground truncate">🌐 {l.websiteUri}</p>
-                    )}
-                    {l.phoneNumbers?.primaryPhone && (
-                      <p className="text-xs text-muted-foreground">📞 {l.phoneNumbers.primaryPhone}</p>
-                    )}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full h-7 text-xs"
-                      onClick={() => openLinkDialog(l)}
-                    >
-                      <Link2 size={12} className="mr-1" /> Vincular a projeto
-                    </Button>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+      {/* Account selector */}
+      {accounts.length > 1 && (
+        <div className="mb-6 flex flex-wrap gap-2">
+          {accounts.map((acc) => (
+            <Button
+              key={acc.name}
+              variant={selectedAccount === acc.name ? "default" : "outline"}
+              size="sm"
+              onClick={() => fetchLocations(acc.name)}
+              disabled={loadingLocations}
+            >
+              {acc.accountName || acc.name}
+            </Button>
+          ))}
         </div>
       )}
 
       {/* Search */}
-      <div className="mb-6 relative max-w-sm">
-        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          placeholder="Buscar projeto…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="pl-9"
-        />
-      </div>
-
-      {/* Projects Grid */}
-      {loading ? (
-        <div className="space-y-4">
-          {[1, 2, 3].map((i) => <div key={i} className="glass-card animate-pulse rounded-xl h-32" />)}
+      {locations.length > 0 && (
+        <div className="mb-6 relative max-w-sm">
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Buscar localização…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9"
+          />
         </div>
-      ) : filtered.length === 0 ? (
+      )}
+
+      {/* Loading */}
+      {isLoading && (
+        <div className="flex items-center justify-center gap-2 py-16 text-muted-foreground">
+          <Loader2 size={20} className="animate-spin" />
+          <span className="text-sm">Carregando perfis GBP…</span>
+        </div>
+      )}
+
+      {/* Empty state */}
+      {!isLoading && locations.length === 0 && (
         <div className="glass-card flex flex-col items-center justify-center rounded-xl py-16 text-center">
           <MapPin size={48} className="mb-4 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">Nenhum projeto encontrado</p>
+          <p className="text-sm text-muted-foreground">
+            {accounts.length === 0
+              ? "Clique em Atualizar para carregar suas contas GBP"
+              : "Nenhuma localização encontrada nesta conta"}
+          </p>
         </div>
-      ) : (
+      )}
+
+      {/* Locations Grid */}
+      {!isLoading && filteredLocations.length > 0 && (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((project: any) => {
-            const client = project.clients as any;
-            const intake = Array.isArray(project.client_intake) ? project.client_intake[0] : project.client_intake;
-            const gd = (intake?.google_data as any) || {};
-            const bd = (intake?.business_data as any) || {};
-            const sd = (intake?.schedule_data as any) || {};
-            const hasGbp = gd.has_gbp;
-            const googleConnected = gd.google_connected;
+          {filteredLocations.map((loc, i) => {
+            const l = loc.location;
+            const addr = l.storefrontAddress;
+            const linkedProject = getLinkedProject(l);
+            const totalImpressions = loc.metrics?.reduce((sum: number, m: any) => {
+              const series = m?.dailyMetricTimeSeries?.timeSeries?.datedValues || [];
+              return sum + sumMetricValues(series);
+            }, 0) || 0;
 
             return (
-              <div key={project.id} className="glass-card-hover rounded-xl p-5 space-y-4">
+              <div key={i} className="glass-card-hover rounded-xl p-5 space-y-4">
                 <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="font-medium text-foreground">{project.name}</h3>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {client?.business_name} • {client?.city}/{client?.state}
-                    </p>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-medium text-foreground truncate">{l.title}</h3>
+                    {addr && (
+                      <p className="text-xs text-muted-foreground mt-0.5 truncate">
+                        <MapPin size={10} className="inline mr-1" />
+                        {addr.addressLines?.join(", ")} {addr.locality && `— ${addr.locality}/${addr.administrativeArea}`}
+                      </p>
+                    )}
                   </div>
-                  <span className={`rounded-full px-2 py-0.5 text-xs ${
-                    project.gbp_url
-                      ? "bg-green-500/10 text-green-400"
-                      : hasGbp
-                      ? "bg-yellow-500/10 text-yellow-400"
-                      : "bg-secondary text-muted-foreground"
-                  }`}>
-                    {project.gbp_url ? "Vinculado" : hasGbp ? "Tem GBP" : "Sem GBP"}
-                  </span>
+                  {linkedProject ? (
+                    <span className="shrink-0 ml-2 rounded-full px-2 py-0.5 text-xs bg-primary/10 text-primary">
+                      Vinculado
+                    </span>
+                  ) : (
+                    <span className="shrink-0 ml-2 rounded-full px-2 py-0.5 text-xs bg-secondary text-muted-foreground">
+                      Avulso
+                    </span>
+                  )}
                 </div>
 
-                <div className="space-y-2 text-xs">
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <MapPin size={12} />
-                    <span>{sd.city ? `${sd.street || ""} ${sd.number || ""} - ${sd.city}` : "Endereço não informado"}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Clock size={12} />
-                    <span>Vertical: {client?.vertical || "—"}</span>
-                  </div>
-                  {bd.phone && (
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <MessageSquare size={12} />
-                      <span>{bd.phone}</span>
+                {/* Contact info */}
+                <div className="space-y-1.5 text-xs text-muted-foreground">
+                  {l.websiteUri && (
+                    <div className="flex items-center gap-1.5 truncate">
+                      <Globe size={11} /> <span className="truncate">{l.websiteUri}</span>
+                    </div>
+                  )}
+                  {l.phoneNumbers?.primaryPhone && (
+                    <div className="flex items-center gap-1.5">
+                      <Phone size={11} /> {l.phoneNumbers.primaryPhone}
+                    </div>
+                  )}
+                  {linkedProject && (
+                    <div className="flex items-center gap-1.5 text-primary">
+                      <Link2 size={11} /> Projeto: {linkedProject.name}
                     </div>
                   )}
                 </div>
 
+                {/* Metrics summary */}
+                {totalImpressions > 0 && (
+                  <div className="rounded-lg bg-accent/30 p-3">
+                    <p className="text-xs text-muted-foreground mb-1">Últimos 30 dias</p>
+                    <p className="text-lg font-semibold text-foreground">{totalImpressions.toLocaleString("pt-BR")} <span className="text-xs font-normal text-muted-foreground">impressões</span></p>
+                  </div>
+                )}
+
+                {/* Actions */}
                 <div className="flex flex-wrap gap-2 pt-2 border-t border-border">
-                  {project.gbp_url ? (
-                    <a href={project.gbp_url} target="_blank" rel="noopener noreferrer">
-                      <Button variant="ghost" size="sm" className="h-7 text-xs">
-                        <ExternalLink size={12} /> Ver GBP
-                      </Button>
-                    </a>
-                  ) : (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-7 text-xs"
-                      onClick={() => {
-                        if (accounts.length === 0) {
-                          fetchAccounts();
-                        } else {
-                          toast({ title: "Use o painel acima", description: "Selecione uma conta e vincule uma localização a este projeto." });
-                        }
-                      }}
-                    >
-                      <Search size={12} /> Buscar GBP
+                  {totalImpressions > 0 && (
+                    <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => openMetrics(loc)}>
+                      <BarChart3 size={12} className="mr-1" /> Métricas
                     </Button>
                   )}
                   <Button
                     variant="ghost"
                     size="sm"
                     className="h-7 text-xs"
-                    onClick={() => toast({ title: "Em breve", description: "Gestão de posts e fotos via API GBP" })}
+                    onClick={() => openLinkDialog(l)}
                   >
-                    <ImageIcon size={12} /> Fotos
+                    <Link2 size={12} className="mr-1" /> {linkedProject ? "Revincular" : "Vincular projeto"}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-7 text-xs"
+                    onClick={() => toast({ title: "Em breve", description: "Gestão de fotos via API GBP" })}
+                  >
+                    <ImageIcon size={12} className="mr-1" /> Fotos
                   </Button>
                   <Button
                     variant="ghost"
@@ -353,7 +327,7 @@ const AdminGBP = () => {
                     className="h-7 text-xs"
                     onClick={() => toast({ title: "Em breve", description: "Gestão de avaliações via API GBP" })}
                   >
-                    <Star size={12} /> Reviews
+                    <Star size={12} className="mr-1" /> Reviews
                   </Button>
                 </div>
               </div>
@@ -368,31 +342,30 @@ const AdminGBP = () => {
           <DialogHeader>
             <DialogTitle>Vincular "{linkingLocation?.title}" a um projeto</DialogTitle>
             <DialogDescription>
-              Selecione o projeto ao qual deseja vincular esta localização GBP.
+              Selecione o projeto ao qual deseja vincular esta localização GBP. Isso é opcional — você pode gerenciar o perfil sem projeto vinculado.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-2 mt-2">
-            {projects
-              .filter((p) => !p.gbp_url)
-              .map((p) => (
-                <button
-                  key={p.id}
-                  className="w-full flex items-center justify-between rounded-lg border border-border p-3 text-left hover:bg-accent/50 transition-colors"
-                  disabled={saving}
-                  onClick={() => linkingLocation && linkGbpToProject(p.id, linkingLocation)}
-                >
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{p.name}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {(p.clients as any)?.business_name}
-                    </p>
-                  </div>
-                  {saving && linkProjectId === p.id && <Loader2 size={14} className="animate-spin" />}
-                </button>
-              ))}
-            {projects.filter((p) => !p.gbp_url).length === 0 && (
+            {projects.map((p) => (
+              <button
+                key={p.id}
+                className="w-full flex items-center justify-between rounded-lg border border-border p-3 text-left hover:bg-accent/50 transition-colors"
+                disabled={saving}
+                onClick={() => linkingLocation && linkGbpToProject(p.id, linkingLocation)}
+              >
+                <div>
+                  <p className="text-sm font-medium text-foreground">{p.name}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {(p.clients as any)?.business_name}
+                    {p.gbp_url && " • ⚠️ já tem GBP vinculado"}
+                  </p>
+                </div>
+                {saving && <Loader2 size={14} className="animate-spin" />}
+              </button>
+            ))}
+            {projects.length === 0 && (
               <p className="text-sm text-muted-foreground text-center py-4">
-                Todos os projetos já possuem um GBP vinculado.
+                Nenhum projeto encontrado.
               </p>
             )}
           </div>
