@@ -136,6 +136,35 @@ const templates: Record<string, { subject: string; html: (data: any) => string }
         <p style="margin-top:32px;color:#9ca3af;font-size:12px">JB Digital — Presença Google Essencial</p>
       </div>`,
   },
+  handoff_delivery: {
+    subject: "🎉 Projeto entregue! Sua presença digital está no ar",
+    html: (d) => `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
+        <h2 style="color:#1a1a2e">${d.clientName}, seu projeto está entregue! 🎉</h2>
+        <p>É com muito orgulho que comunicamos: o projeto <strong>${d.projectName}</strong> foi concluído e está 100% operacional.</p>
+        ${d.publishedUrl ? `<p>🌐 Seu site: <a href="${d.publishedUrl}" style="color:#6366f1;font-weight:600">${d.publishedUrl}</a></p>` : ''}
+        <div style="margin:24px 0;padding:20px;background:#f0fdf4;border-radius:8px;border-left:4px solid #22c55e">
+          <p style="margin:0 0 8px 0;color:#166534;font-weight:600">✅ O que foi entregue:</p>
+          <ul style="margin:0;padding-left:20px;color:#166534">
+            <li>Site profissional otimizado para Google</li>
+            <li>SEO técnico configurado</li>
+            <li>Perfil Google Business Profile otimizado</li>
+            <li>Deploy em produção</li>
+          </ul>
+        </div>
+        <div style="margin:24px 0;padding:20px;background:#fffbeb;border-radius:8px;border-left:4px solid #f59e0b">
+          <p style="margin:0 0 8px 0;color:#92400e;font-weight:600">💡 Mantenha seu site sempre atualizado</p>
+          <p style="margin:0;color:#92400e">Com nosso plano de Acompanhamento e Manutenção (R$ 397/mês), cuidamos de tudo para você: atualizações, novos conteúdos e otimizações contínuas.</p>
+        </div>
+        <div style="margin:24px 0;padding:20px;background:#eff6ff;border-radius:8px;text-align:center">
+          <p style="margin:0 0 12px 0;color:#1e40af;font-weight:600">⭐ Gostou do nosso trabalho?</p>
+          <p style="margin:0 0 16px 0;color:#1e40af">Sua avaliação nos ajuda a alcançar mais profissionais como você!</p>
+          <a href="${d.googleReviewUrl}" target="_blank" style="display:inline-block;background:#4285f4;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600">Avaliar no Google ⭐</a>
+        </div>
+        <a href="${d.dashboardUrl}" style="display:inline-block;background:#6366f1;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600">Acessar Painel →</a>
+        <p style="margin-top:32px;color:#9ca3af;font-size:12px">JB Digital — Presença Google Essencial</p>
+      </div>`,
+  },
 };
 
 serve(async (req) => {
