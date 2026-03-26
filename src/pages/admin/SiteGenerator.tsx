@@ -17,7 +17,7 @@ import {
 const templateOptions = [
   { value: "elegant-minimal", label: "🎨 Elegante Minimalista" },
   { value: "modern-clean", label: "✨ Moderno Clean" },
-  { value: "warm-welcoming", label: "🌿 Acolhedor Suave" },
+  { value: "warm-soft", label: "🌿 Acolhedor Suave" },
 ];
 
 const generationSteps = [
