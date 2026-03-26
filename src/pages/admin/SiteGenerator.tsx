@@ -20,6 +20,7 @@ import {
   Upload,
   ExternalLink,
 } from "lucide-react";
+import { Palette } from "lucide-react";
 
 const templateOptions = [
   { value: "elegant-minimal", label: "🎨 Elegante Minimalista" },
@@ -52,6 +53,7 @@ const SiteGenerator = () => {
   const [publishing, setPublishing] = useState(false);
   const [publishedUrl, setPublishedUrl] = useState<string | null>(null);
   const { toast } = useToast();
+  const [brandData, setBrandData] = useState<any>(null);
 
   const safeTemplate = useMemo(
     () => (isValidTemplate(template) ? template : DEFAULT_TEMPLATE),
@@ -80,6 +82,7 @@ const SiteGenerator = () => {
   useEffect(() => {
     if (!selectedProject) {
       setProjectData(null);
+      setBrandData(null);
       return;
     }
 
@@ -91,6 +94,9 @@ const SiteGenerator = () => {
         .maybeSingle();
 
       setProjectData(data);
+      if (data?.brand_data && (data.brand_data as any)?.primary_color) {
+        setBrandData(data.brand_data);
+      }
     };
 
     fetchIntake();
@@ -146,6 +152,7 @@ const SiteGenerator = () => {
       }
 
       const finalHTML = applyTextsToTemplate(templateHTML, result.texts, buildProjectInfo());
+      // Note: brandData is applied via applyTextsToTemplate's 4th arg
 
       setGeneratedHtml(finalHTML);
       setGenerationStep(3);
@@ -264,6 +271,16 @@ const SiteGenerator = () => {
               {selectedProject && projectData && (
                 <div className="space-y-1 rounded-lg bg-background/50 p-3">
                   <p className="mb-2 text-xs font-medium text-muted-foreground">Dados do Onboarding</p>
+                  {brandData?.logo_url && (
+                    <div className="mb-3 flex items-center gap-3">
+                      <img src={brandData.logo_url} alt="Logo" className="h-10 w-10 rounded-lg border border-border bg-white object-contain p-1" />
+                      <div className="flex gap-1.5">
+                        {(brandData.dominant_colors || [brandData.primary_color, brandData.accent_color]).filter(Boolean).map((c: string, i: number) => (
+                          <div key={i} className="h-6 w-6 rounded-md border border-border shadow-sm" style={{ backgroundColor: c }} title={c} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <p className="text-xs text-muted-foreground">
                     <Check size={10} className="mr-1 inline text-primary" />
                     Nome: <span className="text-foreground">{bd.name || bd.business_name || "—"}</span>
@@ -396,7 +413,7 @@ const SiteGenerator = () => {
 
                       if (generatedTexts) {
                         const nextTemplateHtml = htmlTemplates[next];
-                        const newHTML = applyTextsToTemplate(nextTemplateHtml, generatedTexts, buildProjectInfo());
+                        const newHTML = applyTextsToTemplate(nextTemplateHtml, generatedTexts, buildProjectInfo(), brandData || undefined);
                         setGeneratedHtml(newHTML);
                         toast({ title: `Template alterado para ${templateOptions.find((t) => t.value === next)?.label}` });
                       }
