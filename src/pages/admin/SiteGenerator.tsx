@@ -151,8 +151,7 @@ const SiteGenerator = () => {
         throw new Error("Template inválido. Selecione um template e tente novamente.");
       }
 
-      const finalHTML = applyTextsToTemplate(templateHTML, result.texts, buildProjectInfo());
-      // Note: brandData is applied via applyTextsToTemplate's 4th arg
+      const finalHTML = applyTextsToTemplate(templateHTML, result.texts, buildProjectInfo(), brandData || undefined);
 
       setGeneratedHtml(finalHTML);
       setGenerationStep(3);
