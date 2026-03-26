@@ -181,6 +181,7 @@ export type Database = {
       }
       client_intake: {
         Row: {
+          brand_data: Json | null
           business_data: Json | null
           completed: boolean
           created_at: string
@@ -194,6 +195,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          brand_data?: Json | null
           business_data?: Json | null
           completed?: boolean
           created_at?: string
@@ -207,6 +209,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          brand_data?: Json | null
           business_data?: Json | null
           completed?: boolean
           created_at?: string

@@ -12,6 +12,15 @@ export function applyTextsToTemplate(
     vertical: string;
     slug?: string;
     customDomain?: string;
+  },
+  brandData?: {
+    primary_color?: string;
+    accent_color?: string;
+    background_color?: string;
+    text_color?: string;
+    font_display?: string;
+    font_body?: string;
+    logo_url?: string;
   }
 ): string {
   const schemaTypeMap: Record<string, string> = {
@@ -37,6 +46,14 @@ export function applyTextsToTemplate(
     SITE_URL: projectData.customDomain || `${projectData.slug || "site"}.jbdigital.com.br`,
     WHATSAPP_LINK: `https://wa.me/55${phoneClean}`,
     CURRENT_YEAR: new Date().getFullYear().toString(),
+    // Brand overrides
+    BRAND_PRIMARY: brandData?.primary_color || "",
+    BRAND_ACCENT: brandData?.accent_color || "",
+    BRAND_BG: brandData?.background_color || "",
+    BRAND_TEXT: brandData?.text_color || "",
+    BRAND_FONT_DISPLAY: brandData?.font_display || "",
+    BRAND_FONT_BODY: brandData?.font_body || "",
+    LOGO_URL: brandData?.logo_url || "",
 
     // AI-generated texts
     META_DESCRIPTION: texts.meta_description || "",
@@ -77,5 +94,60 @@ export function applyTextsToTemplate(
     finalHTML = finalHTML.replace(regex, value);
   });
 
+  // Apply brand color overrides if provided
+  if (brandData?.primary_color) {
+    finalHTML = applyBrandColors(finalHTML, brandData);
+  }
+
+  // Replace logo text with image if logo URL provided
+  if (brandData?.logo_url) {
+    finalHTML = finalHTML.replace(
+      /(<a[^>]*href="#hero"[^>]*>)([^<]+)(<\/a>)/gi,
+      `$1<img src="${brandData.logo_url}" alt="${projectData.businessName}" style="height:36px;width:auto;" />$3`
+    );
+  }
+
   return finalHTML;
+}
+
+function applyBrandColors(html: string, brand: NonNullable<Parameters<typeof applyTextsToTemplate>[3]>): string {
+  const p = brand.primary_color!;
+  const a = brand.accent_color || p;
+  const bg = brand.background_color || "#f8f9fa";
+  const txt = brand.text_color || "#111827";
+
+  // Replace template-specific hardcoded colors with brand colors
+  // Elegant: #16233b -> primary, #c8a882 -> accent, #f6f2ea -> bg
+  html = html.replace(/#16233b/gi, p).replace(/#0A1128/gi, p);
+  html = html.replace(/#c8a882/gi, a);
+  html = html.replace(/#f6f2ea/gi, bg).replace(/#f8f5ef/gi, bg);
+
+  // Modern: #163a2d -> primary, #2d6a4f -> primary, #e8f5eb -> bg tint
+  html = html.replace(/#163a2d/gi, p);
+  html = html.replace(/#2d6a4f/gi, a);
+  html = html.replace(/#f4f7f4/gi, bg).replace(/#e8f5eb/gi, bg);
+
+  // Warm: #5b21b6 -> primary, #7c3aed -> accent, #fcf7fb -> bg
+  html = html.replace(/#5b21b6/gi, p);
+  html = html.replace(/#7c3aed/gi, a);
+  html = html.replace(/#fcf7fb/gi, bg).replace(/#f7ecff/gi, bg);
+
+  // Replace fonts if provided
+  if (brand.font_display && brand.font_body) {
+    const fontUrl = `https://fonts.googleapis.com/css2?family=${brand.font_display.replace(/ /g, "+")}:wght@400;500;600;700;800&family=${brand.font_body.replace(/ /g, "+")}:wght@400;500;600;700&display=swap`;
+    html = html.replace(
+      /https:\/\/fonts\.googleapis\.com\/css2\?family=[^"]+/g,
+      fontUrl
+    );
+    html = html.replace(
+      /font-family:\s*'[^']+',\s*serif/g,
+      `font-family: '${brand.font_display}', serif`
+    );
+    html = html.replace(
+      /font-family:\s*'[^']+',\s*sans-serif/g,
+      `font-family: '${brand.font_body}', sans-serif`
+    );
+  }
+
+  return html;
 }

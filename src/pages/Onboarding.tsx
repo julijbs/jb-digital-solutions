@@ -14,8 +14,8 @@ const steps = [
   { id: 1, label: "Dados básicos" },
   { id: 2, label: "Atendimento" },
   { id: 3, label: "Serviços" },
-  { id: 4, label: "Fotos" },
-  { id: 5, label: "Google" },
+  { id: 4, label: "Marca & Fotos" },
+  { id: 5, label: "Conectar Google" },
 ];
 
 const Onboarding = () => {
@@ -48,6 +48,13 @@ const Onboarding = () => {
   const [photos, setPhotos] = useState<{ name: string; url: string }[]>([]);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const logoInputRef = useRef<HTMLInputElement>(null);
+
+  // Brand state
+  const [brand, setBrand] = useState<any>({});
+  const [logoUrl, setLogoUrl] = useState<string>("");
+  const [extractingBrand, setExtractingBrand] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
 
   // Google connect state
   const [googleConnecting, setGoogleConnecting] = useState(false);
@@ -76,6 +83,11 @@ const Onboarding = () => {
         if (sd) setLocation((prev) => ({ ...prev, ...sd }));
         if (svd) setServices((prev) => ({ ...prev, ...svd }));
         if (pd?.photos) setPhotos(pd.photos);
+        const brd = data.brand_data as any;
+        if (brd) {
+          setBrand(brd);
+          if (brd.logo_url) setLogoUrl(brd.logo_url);
+        }
 
         if (data.step_current) {
           setCurrentStep(Math.max(0, data.step_current - 1));
@@ -99,6 +111,7 @@ const Onboarding = () => {
         schedule_data: location as any,
         services_data: services as any,
         photos_data: { photos } as any,
+      brand_data: { ...brand, logo_url: logoUrl } as any,
         step_current: stepNum,
         completed: nextStep === 5,
       })
@@ -157,6 +170,45 @@ const Onboarding = () => {
       await supabase.storage.from("client-photos").remove([decodeURIComponent(urlParts[1])]);
     }
     setPhotos((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // Logo upload & brand extraction
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+    setUploadingLogo(true);
+
+    const ext = file.name.split(".").pop();
+    const path = `${user.id}/${projectId}/logo-${Date.now()}.${ext}`;
+    const { error } = await supabase.storage.from("client-photos").upload(path, file);
+    if (error) {
+      toast({ title: "Erro ao enviar logo", variant: "destructive" });
+      setUploadingLogo(false);
+      return;
+    }
+
+    const { data: urlData } = supabase.storage.from("client-photos").getPublicUrl(path);
+    const url = urlData.publicUrl;
+    setLogoUrl(url);
+    setUploadingLogo(false);
+    if (logoInputRef.current) logoInputRef.current.value = "";
+    toast({ title: "Logo enviado!" });
+
+    // Auto-extract brand
+    setExtractingBrand(true);
+    try {
+      const { data: result, error: fnErr } = await supabase.functions.invoke("extract-brand", {
+        body: { logoUrl: url, projectId },
+      });
+      if (fnErr) throw fnErr;
+      if (result?.brand) {
+        setBrand(result.brand);
+        toast({ title: "Cores da marca extraídas!", description: result.brand.brand_mood });
+      }
+    } catch (err) {
+      toast({ title: "Erro ao extrair cores", description: "Você pode definir manualmente.", variant: "destructive" });
+    }
+    setExtractingBrand(false);
   };
 
   // Google OAuth connect
@@ -380,10 +432,83 @@ const Onboarding = () => {
           {currentStep === 4 && (
             <div className="space-y-6">
               <div>
-                <h2 className="font-serif text-xl text-foreground">Fotos e identidade</h2>
+                <h2 className="font-serif text-xl text-foreground">Marca, logo e fotos</h2>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Envie logo e fotos do seu negócio. Recomendamos 5 a 20 fotos.
+                  Envie seu logotipo para extrairmos as cores da marca automaticamente. Depois, adicione fotos do negócio.
                 </p>
+              </div>
+
+              {/* Logo upload */}
+              <div className="space-y-3">
+                <Label className="text-foreground font-medium">Logotipo</Label>
+                <div className="flex items-start gap-4">
+                  {logoUrl ? (
+                    <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-border bg-white p-2">
+                      <img src={logoUrl} alt="Logo" className="h-full w-full object-contain" />
+                      <button
+                        onClick={() => { setLogoUrl(""); setBrand({}); }}
+                        className="absolute -right-1 -top-1 rounded-full bg-destructive p-0.5 text-destructive-foreground"
+                      >
+                        <X size={10} />
+                      </button>
+                    </div>
+                  ) : (
+                    <div
+                      className="flex h-20 w-20 shrink-0 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-border hover:border-primary/40"
+                      onClick={() => logoInputRef.current?.click()}
+                    >
+                      {uploadingLogo ? (
+                        <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                      ) : (
+                        <Upload size={20} className="text-muted-foreground" />
+                      )}
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    {!logoUrl && (
+                      <Button variant="outline" size="sm" onClick={() => logoInputRef.current?.click()} disabled={uploadingLogo}>
+                        {uploadingLogo ? "Enviando…" : "Enviar logo"}
+                      </Button>
+                    )}
+                    {extractingBrand && (
+                      <div className="mt-2 flex items-center gap-2 text-xs text-primary">
+                        <div className="h-3 w-3 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                        Extraindo cores da marca com IA…
+                      </div>
+                    )}
+                    {brand.primary_color && !extractingBrand && (
+                      <div className="mt-2 space-y-2">
+                        <p className="text-xs text-muted-foreground">Cores extraídas:</p>
+                        <div className="flex gap-2">
+                          {(brand.dominant_colors || []).map((c: string, i: number) => (
+                            <div key={i} className="flex flex-col items-center gap-1">
+                              <div className="h-8 w-8 rounded-lg border border-border shadow-sm" style={{ backgroundColor: c }} />
+                              <span className="text-[10px] text-muted-foreground">{c}</span>
+                            </div>
+                          ))}
+                        </div>
+                        {brand.brand_mood && (
+                          <p className="text-xs text-muted-foreground italic">"{brand.brand_mood}"</p>
+                        )}
+                        {brand.font_display && (
+                          <p className="text-xs text-muted-foreground">Fontes sugeridas: <span className="font-medium text-foreground">{brand.font_display}</span> + <span className="font-medium text-foreground">{brand.font_body}</span></p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <input
+                  ref={logoInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleLogoUpload}
+                />
+              </div>
+
+              <div className="border-t border-border pt-4">
+                <Label className="text-foreground font-medium">Fotos do negócio</Label>
+                <p className="mb-3 text-xs text-muted-foreground">Recomendamos 5 a 20 fotos.</p>
               </div>
 
               {/* Upload area */}
