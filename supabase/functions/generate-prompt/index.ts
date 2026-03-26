@@ -17,40 +17,144 @@ serve(async (req) => {
     let userPrompt = "";
 
     if (action === "generate_prompt") {
-      // Generate a Lovable site prompt from intake data
       const disclaimers: Record<string, string> = {
         psicologo: `OBRIGATÓRIO: Incluir disclaimer "Este site não substitui atendimento de emergência. Em caso de crise, ligue 188 (CVV) ou procure o CAPS mais próximo."`,
         dentista: `OBRIGATÓRIO: Linguagem clínica ética. Seção antes/depois só com assets reais; caso contrário usar "Resultados e expectativas".`,
         terapeuta: `OBRIGATÓRIO: Linguagem acolhedora sem prometer cura clínica. Incluir aviso "A terapia complementar não substitui cuidados médicos ou psicológicos."`,
       };
 
-      systemPrompt = `Você é um especialista em criação de prompts para o Lovable (editor de código IA) que gera sites one-page premium para profissionais de saúde e negócios locais.
-
-Seu objetivo é gerar um prompt completo, detalhado e otimizado que, ao ser colado no Lovable, produza um site one-page profissional, bonito e otimizado para SEO local.
-
-O prompt deve seguir esta estrutura obrigatória:
-1. Hero — headline forte + subheadline + CTA WhatsApp
-2. Espelho/Dor — bullets com sinais e situações do público
-3. Sobre/Autoridade — abordagem e diferenciais
-4. Como funciona — 4 passos
-5. Serviços — lista clara
-6. Antes/Depois ou Resultados esperados
-7. Depoimentos — anonimizados, realistas
-8. FAQ — 5 perguntas relevantes
-9. CTA Final — headline + botão WhatsApp
-10. Rodapé — NAP + aviso legal
-
-Inclua instruções técnicas de SEO: title tag, meta description, Schema JSON-LD, Open Graph, H1 único, performance (lazy loading, mobile-first).
-
-Estilo visual: Dark premium, tipografia elegante (serif para títulos), paleta sofisticada, sem aspecto genérico.
-
-${disclaimers[vertical] || ""}`;
-
       const bd = intake_data.business_data || {};
       const sd = intake_data.schedule_data || {};
       const svd = intake_data.services_data || {};
 
-      userPrompt = `Gere um prompt completo para o Lovable criar o site one-page para este negócio:
+      systemPrompt = `Você é um especialista em criação de prompts ultra-detalhados para gerar projetos Astro completos. Seu objetivo é gerar um prompt COMPLETO e EXTENSO que, ao ser colado em um editor de código IA (como Lovable ou Cursor), produza TODOS os arquivos de um projeto Astro funcional com landing page profissional e visualmente impactante.
+
+O prompt gerado DEVE seguir EXATAMENTE este formato e nível de detalhe:
+
+---
+
+### FORMATO OBRIGATÓRIO DO PROMPT GERADO
+
+O prompt deve começar com:
+"Crie um projeto Astro completo usando Bun como package manager, configurado para deploy na Vercel. O projeto deve ser uma landing page profissional e visualmente impactante para [NOME DO NEGÓCIO]."
+
+### INFORMAÇÕES DO PRODUTO (preencha com os dados do negócio)
+- Nome, Slogan, Descrição, Público-alvo
+- Cor primária e cor secundária (escolha cores que combinem com a vertical do negócio)
+
+### ESTRUTURA DE ARQUIVOS (sempre gerar esta estrutura)
+\`\`\`
+[slug-do-negocio]/
+├── package.json
+├── astro.config.mjs
+├── tsconfig.json
+├── .gitignore
+├── vercel.json
+└── src/
+    ├── pages/
+    │   └── index.astro
+    ├── layouts/
+    │   └── Layout.astro
+    └── components/
+        ├── Hero.astro
+        ├── PainPoints.astro
+        ├── About.astro
+        ├── HowItWorks.astro
+        ├── Services.astro
+        ├── Testimonials.astro
+        ├── FAQ.astro
+        ├── FinalCTA.astro
+        └── Footer.astro
+\`\`\`
+
+### PACKAGE.JSON
+Incluir astro e @astrojs/vercel como dependências.
+
+### ASTRO.CONFIG.MJS
+Configurar com @astrojs/vercel/static como adapter.
+
+### VERCEL.JSON
+Configurar com "framework": "astro". Rewrites para index.html. Sem propriedade "output".
+
+### SEÇÕES DA LANDING PAGE
+
+Para CADA seção, o prompt deve especificar com o MÁXIMO de detalhe:
+
+#### SEÇÃO 1 — Hero (Hero.astro)
+- Design: Tela cheia (100vh), fundo escuro dramático com mesh gradient animado usando as cores primária e secundária
+- Efeito de ruído/grain sutil via pseudo-elemento
+- Badge animado no topo com o nome do negócio
+- Headline gigante (clamp 52px–96px) com fonte display (Google Fonts: Syne weight 800) — usar o slogan
+- Subtítulo (16–20px, fonte sans-serif leve) — usar a descrição
+- Dois botões: CTA principal (WhatsApp ou agendamento) e secundário (saiba mais)
+- Social proof: avatares empilhados + texto de clientes atendidos
+- Card flutuante com métrica de destaque e micro-animação float
+- Animações: @keyframes fadeUp staggerado, mesh gradient com @keyframes gradientShift
+
+#### SEÇÃO 2 — Dores do Público (PainPoints.astro)
+- Design: fundo levemente diferente do hero. Grid de cards com as dores
+- Cada card: ícone SVG inline, título em negrito, descrição
+- Glassmorphism: backdrop-filter blur, borda sutil
+- Hover: borda ilumina com cor primária, translateY(-4px)
+- Intersection Observer para animação de entrada staggerada
+
+#### SEÇÃO 3 — Sobre/Autoridade (About.astro)
+- Apresentação da abordagem e diferenciais do profissional
+- Layout assimétrico com destaque visual
+- Elementos decorativos com a cor primária
+
+#### SEÇÃO 4 — Como Funciona (HowItWorks.astro)
+- 3-4 passos em linha horizontal (desktop), vertical (mobile)
+- Linha conectora tracejada animada via stroke-dashoffset
+- Números grandes estilizados como fundo decorativo
+- Ícones SVG 40x40 com background circular
+
+#### SEÇÃO 5 — Serviços (Services.astro)
+- Grid de cards com os serviços oferecidos
+- Ícones SVG únicos por serviço
+- Hover com efeito de elevação e brilho
+
+#### SEÇÃO 6 — Depoimentos (Testimonials.astro)
+- 3 cards, card central destacado (escala 1.05 + sombra mais intensa)
+- Depoimentos realistas e anonimizados adequados à vertical
+- Avatar com iniciais, aspas decorativas, estrelas ★★★★★
+- Glassmorphism em todos os cards
+
+#### SEÇÃO 7 — FAQ (FAQ.astro)
+- 5 perguntas relevantes para a vertical e serviços
+- Accordion com animação suave
+- Otimizado para AEO (linguagem natural, respostas completas)
+
+#### SEÇÃO 8 — CTA Final + Footer (FinalCTA.astro + Footer.astro)
+- CTA: gradiente dramático, headline grande, input de contato + botão
+- Garantias em linha
+- Footer: logo + tagline, colunas de links, copyright + ícones sociais
+- NAP completo (Nome, Endereço, Telefone)
+
+### VARIÁVEIS CSS GLOBAIS (em Layout.astro)
+Definir paleta completa: --color-primary, --color-secondary, --color-bg, --color-bg-card, --color-text, --color-text-muted, --color-border, --font-display, --font-body, --radius, --shadow-glow, --max-width, --section-padding.
+Importar Google Fonts: Syne (400, 700, 800) e DM Sans (300, 400, 500).
+
+### REQUISITOS TÉCNICOS OBRIGATÓRIOS
+1. Zero dependências JS além do Astro — tudo em CSS + vanilla JS inline
+2. Totalmente responsivo — mobile-first, breakpoints em 768px e 1024px
+3. Performance máxima — sem imagens externas, visuais em CSS/SVG
+4. Acessibilidade: alt em imagens, aria-label em botões, contraste adequado
+5. SEO: title tag, meta description, meta og:*, Schema JSON-LD (LocalBusiness + FAQPage), H1 único
+6. tsconfig.json com strict: true
+7. .gitignore com node_modules, dist, .env, .vercel
+
+### INSTRUÇÕES FINAIS
+- Gerar CADA arquivo completo, sem omitir nenhuma linha
+- Cada arquivo com comentário // arquivo: caminho/do/arquivo
+- Bloco "Como rodar localmente" com bun install && bun run dev
+- Bloco "Como fazer deploy na Vercel"
+
+${disclaimers[vertical] || ""}
+
+IMPORTANTE: O prompt gerado deve ser EXTREMAMENTE detalhado e específico, descrevendo CADA elemento visual, CADA animação, CADA interação. Quanto mais detalhado, melhor o resultado final. Use o contexto do negócio para personalizar TUDO: cores, textos, depoimentos, FAQs, serviços, métricas de social proof.`;
+
+      userPrompt = `Gere o prompt completo e ultra-detalhado para criar o projeto Astro da landing page para este negócio:
 
 NEGÓCIO: ${bd.name || "Não informado"}
 DESCRIÇÃO: ${bd.description || "Não informado"}
@@ -70,9 +174,17 @@ DORES DO PÚBLICO: ${svd.pain_points || "Não informado"}
 DIFERENCIAIS: ${svd.differentials || "Não informado"}
 ABORDAGEM: ${svd.approach || "Não informado"}
 
-Gere o prompt completo, pronto para colar no Lovable.`;
+Gere o prompt completo com TODAS as seções detalhadas, pronto para colar em um editor de código IA. O prompt deve ser auto-contido e gerar um projeto Astro funcional completo.`;
+
     } else if (action === "generate_content_pack") {
-      systemPrompt = `Você é um especialista em SEO local. Gere um content pack JSON com: meta_title (< 60 chars com keyword + cidade), meta_description (< 160 chars, persuasiva), schema_type (LocalBusiness, Dentist, ou ProfessionalService), e 5 FAQs relevantes para a vertical.`;
+      systemPrompt = `Você é um especialista em SEO local e AEO (Answer Engine Optimization). Gere um content pack JSON com:
+- meta_title (< 60 chars com keyword + cidade)
+- meta_description (< 160 chars, persuasiva)
+- schema_type (LocalBusiness, Dentist, ou ProfessionalService)
+- og_title e og_description
+- 5 FAQs relevantes para a vertical (otimizadas para linguagem natural e busca por IA)
+- keywords (array de 10 keywords relevantes)
+- schema_json_ld (objeto completo LocalBusiness + FAQPage)`;
 
       const bd = intake_data.business_data || {};
       const sd = intake_data.schedule_data || {};
@@ -88,7 +200,7 @@ Gere o prompt completo, pronto para colar no Lovable.`;
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
