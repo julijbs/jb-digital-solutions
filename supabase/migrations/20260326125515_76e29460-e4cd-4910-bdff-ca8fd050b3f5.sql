@@ -1,0 +1,1 @@
+ALTER TABLE public.client_intake ADD COLUMN IF NOT EXISTS brand_data jsonb DEFAULT '{}'::jsonb;
