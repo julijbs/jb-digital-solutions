@@ -9,6 +9,7 @@ const corsHeaders = {
 
 const CF_ACCOUNT_ID = Deno.env.get("CLOUDFLARE_ACCOUNT_ID")!;
 const CF_API_TOKEN = Deno.env.get("CLOUDFLARE_API_TOKEN")!;
+const CF_DOMAIN = Deno.env.get("CF_DOMAIN") || "jbdigitalsystem.com";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -56,7 +57,9 @@ serve(async (req) => {
     let cfDeployUrl = "";
 
     try {
-      const cfProjectName = `jb-${(projectSlug || projectId).slice(0, 30).replace(/[^a-z0-9-]/g, "-")}`;
+      const slug = (projectSlug || projectId).slice(0, 30).replace(/[^a-z0-9-]/g, "-");
+      const cfProjectName = `jb-${slug}`; // unique Pages project name
+      const clientSubdomain = slug;        // clean subdomain: slug.jbdigitalsystem.com
 
       // 2a. Ensure Cloudflare Pages project exists
       const checkProject = await fetch(
@@ -113,8 +116,38 @@ serve(async (req) => {
       if (deployResp.ok) {
         const deployData = await deployResp.json();
         cfDeployUrl = deployData.result?.url || "";
-        publishedUrl = cfDeployUrl || `https://${cfProjectName}.pages.dev`;
-        console.log("Cloudflare deploy success:", publishedUrl);
+
+        // 2c. Assign subdomain: slug.jbdigitalsystem.com
+        const subdomain = `${clientSubdomain}.${CF_DOMAIN}`;
+        try {
+          const domainResp = await fetch(
+            `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${cfProjectName}/domains`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${CF_API_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name: subdomain }),
+            }
+          );
+          if (domainResp.ok) {
+            publishedUrl = `https://${subdomain}`;
+            console.log("Custom subdomain assigned:", publishedUrl);
+          } else {
+            const domainErr = await domainResp.text();
+            // Subdomain may already exist — use it anyway
+            if (domainErr.includes("already")) {
+              publishedUrl = `https://${subdomain}`;
+            } else {
+              console.error("Subdomain assignment error:", domainErr);
+              publishedUrl = cfDeployUrl || `https://${cfProjectName}.pages.dev`;
+            }
+          }
+        } catch (domErr) {
+          console.error("Subdomain assignment failed:", domErr);
+          publishedUrl = cfDeployUrl || `https://${cfProjectName}.pages.dev`;
+        }
       } else {
         const errText = await deployResp.text();
         console.error("CF deploy error:", errText);
