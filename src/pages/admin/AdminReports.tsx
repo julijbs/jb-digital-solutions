@@ -129,6 +129,15 @@ const AdminReports = () => {
         body: {},
       });
       if (fnError) throw fnError;
+      if (data?.error === "google_api_error") {
+        const detail = data.detail?.error;
+        if (detail?.status === "RESOURCE_EXHAUSTED") {
+          setError("API do Google Business Profile aguardando aprovação de cota. O acesso será liberado em breve pelo Google.");
+        } else {
+          setError(detail?.message || "Erro na API do Google Business Profile");
+        }
+        return;
+      }
       setAccounts(data.accounts || []);
       if (data.accounts?.length === 1) {
         setSelectedAccount(data.accounts[0].name);
