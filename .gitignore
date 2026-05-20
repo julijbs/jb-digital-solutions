@@ -23,3 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 .env
+.env.*
+
+# Supabase local CLI temp files (contain connection strings and project refs)
+supabase/.temp/
+
+# Vercel local project config
+.vercel/
