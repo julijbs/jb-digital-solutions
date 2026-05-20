@@ -1,73 +1,84 @@
-# Welcome to your Lovable project
+# JB Digital System
 
-## Project info
+> B2B SaaS platform that automates the creation of high-performance local websites and Google Business Profile optimization for independent professionals in Brazil.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**Live:** [jbdigitalsystem.com](https://jbdigitalsystem.com)
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## What it does
 
-**Use Lovable**
+JB Digital System lets agencies and consultants deliver complete digital presence packages to local businesses — a conversion-optimized one-page website plus a fully optimized Google Business Profile — in days instead of weeks.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- **AI-powered site generation:** client fills a 5-step onboarding form; AI generates all copy across 31 fields; admin reviews and publishes
+- **GBP management:** connects to Google Business Profile API to track impressions, calls, and route requests
+- **Project pipeline:** 12-stage status flow from lead creation to monthly active client
+- **Domain registration:** automated flow from subdomain to custom domain via Cloudflare
+- **Role-based access:** admin dashboard for the agency, client portal for the end customer
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## Stack
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+| Layer | Technology |
+|---|---|
+| Frontend | React + Vite + TypeScript |
+| UI | shadcn/ui + Tailwind CSS + Radix UI |
+| Data fetching | TanStack React Query |
+| Auth + Database | Supabase |
+| Edge Functions | Deno (Supabase Edge Functions) |
+| AI | Gemini via AI Gateway |
+| Domains | Cloudflare Registrar |
+| Deployments | Vercel |
+| Animations | Framer Motion |
+| Charts | Recharts |
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## Local development
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+```bash
+# Install dependencies
+npm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Copy env file and fill in your Supabase credentials
+cp .env.example .env
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Start dev server
+npm run dev   # http://localhost:5173
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Run tests
+npm run test
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Project structure
 
-**Use GitHub Codespaces**
+```
+src/
+  components/      # UI components (admin/, client/, landing/, ui/)
+  pages/           # Route-level page components
+  hooks/           # Custom React hooks
+  integrations/    # Supabase client setup
+supabase/
+  functions/       # Edge Functions (Deno)
+  migrations/      # Database migrations
+docs/
+  PRD.md           # Product requirements document
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+## Environment variables
 
-This project is built with:
+| Variable | Description |
+|---|---|
+| `VITE_SUPABASE_URL` | Your Supabase project URL |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Supabase anon/public key |
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+All other secrets (Stripe, Google, Cloudflare, GitHub, Vercel) are configured as Supabase Edge Function secrets — never stored in code or `.env`.
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Built by [JB Digital Consulting](https://jbdigitalsystem.com)
