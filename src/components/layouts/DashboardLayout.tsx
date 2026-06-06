@@ -25,6 +25,8 @@ import {
   Shield,
   Star,
   Brain,
+  Target,
+  Briefcase,
 } from "lucide-react";
 import { NotificationBell } from "@/components/NotificationBell";
 import jbLogo from "@/assets/jb-logo.jpg";
@@ -68,6 +70,14 @@ const adminSections = [
       { href: "/admin/billing", label: "Financeiro", icon: DollarSign },
       { href: "/admin/reports", label: "Relatórios", icon: BarChart3 },
       { href: "/admin/domains", label: "Domínios", icon: Globe },
+    ],
+  },
+  {
+    label: "Serviços",
+    items: [
+      { href: "/admin/seo-leads",     label: "SEO Local — Leads",  icon: MapPin },
+      { href: "/admin/arc-prospects", label: "ARC — Prospects",    icon: Target },
+      { href: "/admin/arc-clients",   label: "ARC — Clientes",     icon: Briefcase },
     ],
   },
   {
