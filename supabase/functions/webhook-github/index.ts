@@ -12,12 +12,47 @@ Deno.serve(async (req) => {
 
   try {
     const event = req.headers.get("x-github-event");
-    const payload = await req.json();
+    const body = await req.text();
 
+    // Verify HMAC-SHA256 signature from GitHub
+    const webhookSecret = Deno.env.get("GITHUB_WEBHOOK_SECRET");
+    const signature = req.headers.get("x-hub-signature-256");
+
+    if (!webhookSecret) {
+      console.error("GITHUB_WEBHOOK_SECRET not configured");
+      return new Response(JSON.stringify({ error: "Webhook secret not configured" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (!signature) {
+      return new Response(JSON.stringify({ error: "Missing x-hub-signature-256 header" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const key = await crypto.subtle.importKey(
+      "raw",
+      new TextEncoder().encode(webhookSecret),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"]
+    );
+    const mac = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(body));
+    const expected = "sha256=" + Array.from(new Uint8Array(mac)).map(b => b.toString(16).padStart(2, "0")).join("");
+
+    if (signature !== expected) {
+      console.error("Invalid GitHub webhook signature");
+      return new Response(JSON.stringify({ error: "Invalid signature" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const payload = JSON.parse(body);
     console.log(`GitHub webhook received: event=${event}`);
-
-    // TODO: Adicionar verificação de assinatura com GITHUB_WEBHOOK_SECRET
-    // const signature = req.headers.get("x-hub-signature-256");
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
