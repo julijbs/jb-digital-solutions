@@ -1,17 +1,17 @@
 import { motion } from "framer-motion";
 
 const antes = [
-  "Base de 6.000 contatos sem envio há mais de 8 meses",
-  "Oferta de mentoria validada, mas sem campanha ativa para a base antiga",
-  "Sem ferramenta de email configurada corretamente",
-  "Dependência total de tráfego pago para novas vendas",
+  "Base de mais de 3.000 contatos sem comunicação há mais de 6 meses",
+  "Oferta validada, mas sem campanha ativa para a base existente",
+  "Dependência total de indicação e tráfego pago para novas vendas",
+  "Margem sendo corroída pelo custo de aquisição de cliente novo",
 ];
 
 const depois = [
-  "Sequência de 4 emails escrita, configurada e disparada",
+  "Sequência de 4 emails escrita, configurada e disparada em 7 dias",
   "Reativação de compradores antigos com oferta de continuidade",
-  "Primeiras respostas no dia 2 — interações diretas com leads qualificados",
-  "Resultado em caixa suficiente para validar continuidade do modelo",
+  "Primeiras respostas no dia 2 — clientes que queriam voltar, mas não tinham recebido uma oferta",
+  "Resultado em caixa suficiente para validar o modelo e iniciar o ciclo contínuo",
 ];
 
 export const ArcCase = () => (
@@ -24,7 +24,7 @@ export const ArcCase = () => (
           <h2 className="font-serif text-3xl md:text-4xl mb-10">O que acontece quando a base começa a ser ativada.</h2>
           <div className="glass-card rounded-xl overflow-hidden">
             <div className="px-6 py-5 border-b border-border/50 flex flex-wrap gap-2">
-              <span className="text-xs text-primary border border-primary/30 rounded-full px-3 py-1">Mentoria — base acumulada em 3 anos</span>
+              <span className="text-xs text-primary border border-primary/30 rounded-full px-3 py-1">Empresa de serviços — base acumulada em 4 anos</span>
               <span className="text-xs text-muted-foreground border border-border/50 rounded-full px-3 py-1">Campanha de reativação</span>
               <span className="text-xs text-muted-foreground border border-border/50 rounded-full px-3 py-1">14 dias</span>
             </div>
@@ -52,9 +52,9 @@ export const ArcCase = () => (
             </div>
             <div className="px-6 py-5 border-t border-border/50 bg-card/40">
               <p className="text-sm text-muted-foreground italic leading-relaxed">
-                "A base estava parada há meses. A gente achava que estava morta. Na primeira semana de campanha já tiveram respostas de pessoas que tinham comprado há dois anos e queriam saber como continuar."
+                "A base estava parada há meses. A gente achava que estava morta. Na primeira semana de campanha já vieram respostas de pessoas que tinham comprado há mais de um ano e queriam retomar."
               </p>
-              <p className="mt-3 text-xs text-muted-foreground/50">Cliente ARC™ — Mentoria de carreira</p>
+              <p className="mt-3 text-xs text-muted-foreground/50">Cliente ARC™ — Empresa de serviços B2B</p>
             </div>
           </div>
           <p className="mt-6 text-xs text-muted-foreground/40 text-center">Dados representativos do primeiro ciclo de ativação. Resultados variam de acordo com tamanho e qualidade da base, oferta e contexto de mercado.</p>

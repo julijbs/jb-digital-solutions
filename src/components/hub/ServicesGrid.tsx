@@ -14,8 +14,8 @@ const services = [
   {
     icon: MapPin,
     title: "SEO Local",
-    subtitle: "Prospecção de Negócios Locais",
-    text: "Ferramenta de prospecção que mapeia negócios na sua cidade, analisa presença digital e identifica as maiores oportunidades de crescimento local.",
+    subtitle: "Consultoria de SEO para Negócios Locais",
+    text: "Diagnóstico técnico completo + site novo construído do zero para negócios locais com serviços de alto ticket que não aparecem no Google quando os clientes buscam.",
     href: "/servicos/seo-local",
     cta: "Saiba mais",
   },
@@ -23,7 +23,7 @@ const services = [
     icon: TrendingUp,
     title: "ARC™",
     subtitle: "Ativação de Receita Contínua",
-    text: "Metodologia proprietária de monetização da base estabelecida. Campanhas de email done-for-you, modelo 100% por performance — você não paga nada adiantado.",
+    text: "Monetização da base de clientes que você já tem, mas não explora. Campanhas de email feitas por mim, modelo 100% por performance — você não paga nada adiantado.",
     href: "/servicos/arc",
     cta: "Saiba mais",
   },
@@ -43,8 +43,7 @@ export const ServicesGrid = () => (
           <span className="gold-gradient-text">Soluções para cada etapa</span>
         </h2>
         <p className="mt-4 text-muted-foreground">
-          Desde a primeira impressão digital até a ativação da receita da sua base — temos a
-          solução certa para onde você está agora.
+          Desde a primeira presença digital até a ativação da receita da base que você já conquistou.
         </p>
       </motion.div>
 

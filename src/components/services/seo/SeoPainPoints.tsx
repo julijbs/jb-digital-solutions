@@ -2,16 +2,16 @@ import { motion } from "framer-motion";
 
 const pains = [
   {
-    title: "Prospecção manual que consome horas",
-    text: "Pesquisar negócio por negócio no Google, anotar telefone em planilha, repetir o processo. Trabalho manual que escala zero.",
+    title: "Você está na 8ª página enquanto o concorrente leva todos os pedidos",
+    text: "Quando alguém precisa do seu serviço no Google, clica nos primeiros resultados. Quem não aparece ali simplesmente não existe para esse cliente — e o orçamento vai para quem está à frente.",
   },
   {
-    title: "Sem critério de prioridade",
-    text: "Não saber quais leads têm mais urgência: aqueles com site ruim? Sem avaliações? Sem site algum? Sem dados, a abordagem é genérica — e genérica não converte.",
+    title: "Problemas técnicos que o Google penaliza em silêncio",
+    text: "Site lento, sem HTTPS, não responsivo no celular — cada um desses problemas faz o Google empurrar seu site para trás. E enquanto esses problemas existem, nenhuma divulgação resolve.",
   },
   {
-    title: "Tempo perdido em leads desqualificados",
-    text: "Abordar negócios que já têm presença digital forte ou que simplesmente não têm verba para investir. Cada contato errado é energia desperdiçada.",
+    title: "Cada dia sem aparecer é um cliente que foi para o concorrente",
+    text: "Serviços de ticket alto têm margens que compensam investir em posicionamento. Um cliente a mais por mês pode representar R$ 2.000 a R$ 10.000 em faturamento — e ele foi para quem aparece antes de você.",
   },
 ];
 
@@ -26,10 +26,10 @@ export const SeoPainPoints = () => (
         className="mx-auto mb-14 max-w-2xl text-center"
       >
         <h2 className="font-serif text-3xl md:text-4xl">
-          <span className="gold-gradient-text">O problema de prospectar localmente hoje</span>
+          <span className="gold-gradient-text">Por que bons negócios ficam invisíveis no Google</span>
         </h2>
         <p className="mt-4 text-muted-foreground">
-          Encontrar negócios com potencial de compra é trabalhoso, impreciso e caro em tempo.
+          Não é falta de qualidade no serviço. É falta de estrutura técnica no site.
         </p>
       </motion.div>
 
