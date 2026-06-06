@@ -32,7 +32,13 @@ import SiteGenerator from "./pages/admin/SiteGenerator";
 import AdminMaintenance from "./pages/admin/AdminMaintenance";
 import AdminFeedback from "./pages/admin/AdminFeedback";
 import AdminChurnAlerts from "./pages/admin/AdminChurnAlerts";
+import AdminSeoLeads from "./pages/admin/AdminSeoLeads";
+import AdminArcProspects from "./pages/admin/AdminArcProspects";
+import AdminArcClients from "./pages/admin/AdminArcClients";
 import ClientFeedback from "./pages/ClientFeedback";
+import SiteGbp from "./pages/services/SiteGbp";
+import SeoLocal from "./pages/services/SeoLocal";
+import Arc from "./pages/services/Arc";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -76,6 +82,16 @@ const App = () => (
             <Route path="/admin/maintenance" element={<ProtectedRoute requiredRole="admin_jb"><AdminMaintenance /></ProtectedRoute>} />
             <Route path="/admin/feedback" element={<ProtectedRoute requiredRole="admin_jb"><AdminFeedback /></ProtectedRoute>} />
             <Route path="/admin/churn-alerts" element={<ProtectedRoute requiredRole="admin_jb"><AdminChurnAlerts /></ProtectedRoute>} />
+
+            {/* Serviços consolidados — SEO Local + ARC™ */}
+            <Route path="/admin/seo-leads" element={<ProtectedRoute requiredRole="admin_jb"><AdminSeoLeads /></ProtectedRoute>} />
+            <Route path="/admin/arc-prospects" element={<ProtectedRoute requiredRole="admin_jb"><AdminArcProspects /></ProtectedRoute>} />
+            <Route path="/admin/arc-clients" element={<ProtectedRoute requiredRole="admin_jb"><AdminArcClients /></ProtectedRoute>} />
+
+            {/* Serviços públicos */}
+            <Route path="/servicos/site-gbp" element={<SiteGbp />} />
+            <Route path="/servicos/seo-local" element={<SeoLocal />} />
+            <Route path="/servicos/arc" element={<Arc />} />
 
             {/* Public feedback page - no auth required */}
             <Route path="/feedback" element={<ClientFeedback />} />

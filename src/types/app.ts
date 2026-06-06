@@ -1,5 +1,7 @@
 export type AppRole = "admin_jb" | "client";
 
+export type ServiceType = "site_gbp" | "seo_local" | "arc_backend";
+
 export type ProjectStatus =
   | "lead_created"
   | "onboarding_in_progress"

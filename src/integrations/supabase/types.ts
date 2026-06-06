@@ -588,6 +588,7 @@ export type Database = {
           published_url: string | null
           site_html_path: string | null
           site_url: string | null
+          service_type: Database["public"]["Enums"]["service_type"]
           status: string
           updated_at: string
           vercel_project_id: string | null
@@ -609,6 +610,7 @@ export type Database = {
           name: string
           plan?: string
           published_url?: string | null
+          service_type?: Database["public"]["Enums"]["service_type"]
           site_html_path?: string | null
           site_url?: string | null
           status?: string
@@ -632,6 +634,7 @@ export type Database = {
           name?: string
           plan?: string
           published_url?: string | null
+          service_type?: Database["public"]["Enums"]["service_type"]
           site_html_path?: string | null
           site_url?: string | null
           status?: string
@@ -644,6 +647,285 @@ export type Database = {
             columns: ["client_id"]
             isOneToOne: false
             referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      seo_leads: {
+        Row: {
+          id: string
+          empresa: string
+          nicho: string
+          cidade: string | null
+          url: string | null
+          email: string | null
+          telefone: string | null
+          whatsapp: string | null
+          status: string
+          prioridade: string | null
+          diagnostico: string | null
+          pontos_abordagem: string[] | null
+          frase_perda: string | null
+          sugestao_abordagem: string | null
+          proximo_passo: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          empresa: string
+          nicho: string
+          cidade?: string | null
+          url?: string | null
+          email?: string | null
+          telefone?: string | null
+          whatsapp?: string | null
+          status?: string
+          prioridade?: string | null
+          diagnostico?: string | null
+          pontos_abordagem?: string[] | null
+          frase_perda?: string | null
+          sugestao_abordagem?: string | null
+          proximo_passo?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          empresa?: string
+          nicho?: string
+          cidade?: string | null
+          url?: string | null
+          email?: string | null
+          telefone?: string | null
+          whatsapp?: string | null
+          status?: string
+          prioridade?: string | null
+          diagnostico?: string | null
+          pontos_abordagem?: string[] | null
+          frase_perda?: string | null
+          sugestao_abordagem?: string | null
+          proximo_passo?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      seo_lead_history: {
+        Row: {
+          id: string
+          lead_id: string | null
+          acao: string
+          descricao: string | null
+          data: string
+        }
+        Insert: {
+          id?: string
+          lead_id?: string | null
+          acao: string
+          descricao?: string | null
+          data?: string
+        }
+        Update: {
+          id?: string
+          lead_id?: string | null
+          acao?: string
+          descricao?: string | null
+          data?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seo_lead_history_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "seo_leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      arc_prospects: {
+        Row: {
+          id: string
+          created_at: string
+          nome: string
+          produto: string
+          instagram: string | null
+          site: string | null
+          seguidores: string | null
+          nicho: string | null
+          checks: Json
+          score: number
+          status_direct: string
+          notas_gerais: string | null
+          data_auditoria: string
+        }
+        Insert: {
+          id?: string
+          created_at?: string
+          nome: string
+          produto: string
+          instagram?: string | null
+          site?: string | null
+          seguidores?: string | null
+          nicho?: string | null
+          checks?: Json
+          score?: number
+          status_direct?: string
+          notas_gerais?: string | null
+          data_auditoria?: string
+        }
+        Update: {
+          id?: string
+          created_at?: string
+          nome?: string
+          produto?: string
+          instagram?: string | null
+          site?: string | null
+          seguidores?: string | null
+          nicho?: string | null
+          checks?: Json
+          score?: number
+          status_direct?: string
+          notas_gerais?: string | null
+          data_auditoria?: string
+        }
+        Relationships: []
+      }
+      arc_clients: {
+        Row: {
+          id: string
+          created_at: string
+          nome: string
+          empresa: string
+          email: string | null
+          whatsapp: string | null
+          nicho: string | null
+          ferramenta_email: string | null
+          tamanho_lista: string | null
+          data_inicio: string
+          status: string
+          comissao_percentual: number
+          notas: string | null
+          checklist: Json
+          metricas: Json
+        }
+        Insert: {
+          id?: string
+          created_at?: string
+          nome: string
+          empresa: string
+          email?: string | null
+          whatsapp?: string | null
+          nicho?: string | null
+          ferramenta_email?: string | null
+          tamanho_lista?: string | null
+          data_inicio?: string
+          status?: string
+          comissao_percentual?: number
+          notas?: string | null
+          checklist?: Json
+          metricas?: Json
+        }
+        Update: {
+          id?: string
+          created_at?: string
+          nome?: string
+          empresa?: string
+          email?: string | null
+          whatsapp?: string | null
+          nicho?: string | null
+          ferramenta_email?: string | null
+          tamanho_lista?: string | null
+          data_inicio?: string
+          status?: string
+          comissao_percentual?: number
+          notas?: string | null
+          checklist?: Json
+          metricas?: Json
+        }
+        Relationships: []
+      }
+      service_metrics: {
+        Row: {
+          id: string
+          project_id: string
+          service_type: Database["public"]["Enums"]["service_type"]
+          period_label: string
+          metrics: Json
+          summary: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          project_id: string
+          service_type: Database["public"]["Enums"]["service_type"]
+          period_label: string
+          metrics?: Json
+          summary?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          project_id?: string
+          service_type?: Database["public"]["Enums"]["service_type"]
+          period_label?: string
+          metrics?: Json
+          summary?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_metrics_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_deliverables: {
+        Row: {
+          id: string
+          project_id: string
+          service_type: Database["public"]["Enums"]["service_type"]
+          title: string
+          description: string | null
+          url: string | null
+          status: string
+          delivered_at: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          project_id: string
+          service_type: Database["public"]["Enums"]["service_type"]
+          title: string
+          description?: string | null
+          url?: string | null
+          status?: string
+          delivered_at?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          project_id?: string
+          service_type?: Database["public"]["Enums"]["service_type"]
+          title?: string
+          description?: string | null
+          url?: string | null
+          status?: string
+          delivered_at?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_deliverables_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
             referencedColumns: ["id"]
           },
         ]
@@ -683,6 +965,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin_jb" | "client"
+      service_type: "site_gbp" | "seo_local" | "arc_backend"
     }
     CompositeTypes: {
       [_ in never]: never
