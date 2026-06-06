@@ -36,6 +36,9 @@ import AdminSeoLeads from "./pages/admin/AdminSeoLeads";
 import AdminArcProspects from "./pages/admin/AdminArcProspects";
 import AdminArcClients from "./pages/admin/AdminArcClients";
 import ClientFeedback from "./pages/ClientFeedback";
+import SiteGbp from "./pages/services/SiteGbp";
+import SeoLocal from "./pages/services/SeoLocal";
+import Arc from "./pages/services/Arc";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -84,6 +87,11 @@ const App = () => (
             <Route path="/admin/seo-leads" element={<ProtectedRoute requiredRole="admin_jb"><AdminSeoLeads /></ProtectedRoute>} />
             <Route path="/admin/arc-prospects" element={<ProtectedRoute requiredRole="admin_jb"><AdminArcProspects /></ProtectedRoute>} />
             <Route path="/admin/arc-clients" element={<ProtectedRoute requiredRole="admin_jb"><AdminArcClients /></ProtectedRoute>} />
+
+            {/* Serviços públicos */}
+            <Route path="/servicos/site-gbp" element={<SiteGbp />} />
+            <Route path="/servicos/seo-local" element={<SeoLocal />} />
+            <Route path="/servicos/arc" element={<Arc />} />
 
             {/* Public feedback page - no auth required */}
             <Route path="/feedback" element={<ClientFeedback />} />
