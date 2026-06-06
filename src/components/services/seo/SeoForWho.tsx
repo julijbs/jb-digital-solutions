@@ -2,16 +2,16 @@ import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 
 const forItems = [
-  "Agências e freelancers de marketing digital que prospectam PMEs locais",
-  "Times de vendas de software, serviços ou SaaS com foco em negócios locais",
-  "Consultores que precisam mapear oportunidades em uma cidade ou região",
-  "Profissionais que querem abordar com dados concretos, não argumentos genéricos",
+  "Aluguel de gerador, caminhão pipa, andaime, caçamba, banheiro químico",
+  "Detetive particular, empresa de energia solar, aluguel de som para eventos",
+  "Qualquer serviço local de ticket alto que depende de ser encontrado no Google",
+  "Negócios com site existente que não aparecem bem nas buscas locais",
 ];
 
 const notForItems = [
-  "Quem busca prospecção nacional ou por segmento não-local",
-  "Quem quer apenas uma lista de contatos sem análise de presença digital",
-  "Empresas de e-commerce ou B2B sem foco em mercado local",
+  "Negócios que ainda não têm site (veja o serviço Site + Google)",
+  "E-commerce ou negócios sem foco em mercado local",
+  "Empresas que já aparecem na primeira página para suas buscas principais",
 ];
 
 export const SeoForWho = () => (
@@ -25,8 +25,11 @@ export const SeoForWho = () => (
         className="mx-auto mb-14 max-w-2xl text-center"
       >
         <h2 className="font-serif text-3xl md:text-4xl">
-          <span className="gold-gradient-text">Para quem é o SEO Local</span>
+          <span className="gold-gradient-text">Para quem é esse serviço</span>
         </h2>
+        <p className="mt-4 text-muted-foreground">
+          Focado em negócios locais com serviços de alto valor que perdem clientes por não aparecerem no Google.
+        </p>
       </motion.div>
 
       <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
@@ -50,6 +53,9 @@ export const SeoForWho = () => (
               </li>
             ))}
           </ul>
+          <p className="mt-6 text-xs text-muted-foreground/70">
+            Se o seu serviço vale mais de R$ 1.000 por cliente e você depende de ser encontrado na sua região, o SEO Local foi feito para você.
+          </p>
         </motion.div>
 
         <motion.div

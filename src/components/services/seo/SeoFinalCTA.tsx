@@ -14,12 +14,12 @@ export const SeoFinalCTA = () => (
         className="mx-auto max-w-2xl text-center"
       >
         <h2 className="font-serif text-3xl md:text-4xl">
-          Pronto para prospectar{" "}
-          <span className="gold-gradient-text">com dados reais?</span>
+          Quer saber se seu site está{" "}
+          <span className="gold-gradient-text">te fazendo perder clientes?</span>
         </h2>
         <p className="mt-4 text-muted-foreground">
-          Fale com a nossa equipe e veja como o SEO Local pode funcionar para o seu processo
-          comercial — sem compromisso.
+          Faço uma análise gratuita do seu site e mostro exatamente o que está impedindo o Google
+          de te colocar na primeira página — sem compromisso e sem enrolação.
         </p>
         <div className="mt-10">
           <Button
@@ -28,9 +28,12 @@ export const SeoFinalCTA = () => (
             className="gap-2 text-sm md:text-base md:px-8 md:py-6"
             onClick={() => window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer")}
           >
-            <MessageCircle size={18} /> Conversar no WhatsApp
+            <MessageCircle size={18} /> Falar no WhatsApp
           </Button>
         </div>
+        <p className="mt-4 text-xs text-muted-foreground/50">
+          Condições e valores detalhados na conversa — cada projeto é avaliado individualmente.
+        </p>
       </motion.div>
     </div>
   </section>

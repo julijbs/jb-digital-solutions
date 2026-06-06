@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Check, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { WHATSAPP_URL } from "@/config/contact";
 
-const badges = [
-  "Prospecção baseada em dados reais do Google",
-  "Análise de presença digital automatizada",
-  "Sem contrato de longo prazo",
+const problems = [
+  "Site lento que o Google penaliza",
+  "Sem HTTPS — o Google marca como inseguro",
+  "Aparece na 8ª página enquanto o concorrente leva o pedido",
 ];
 
 export const SeoHero = () => (
@@ -20,18 +20,35 @@ export const SeoHero = () => (
         transition={{ duration: 0.7 }}
         className="mx-auto max-w-3xl text-center"
       >
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-primary/80">
-          SEO Local — JB Digital Solutions
-        </p>
+        <div className="mb-8 flex items-center justify-center gap-4">
+          <span className="h-px w-8 bg-primary md:w-12" />
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/80">
+            SEO Local — JB Digital Solutions
+          </span>
+          <span className="h-px w-8 bg-primary md:w-12" />
+        </div>
+
         <h1 className="font-serif text-4xl leading-tight md:text-5xl lg:text-6xl">
-          Encontre negócios locais{" "}
-          <span className="gold-gradient-text">antes de qualquer concorrente.</span>
+          O seu concorrente aparece no Google.{" "}
+          <span className="gold-gradient-text">Os pedidos de orçamento vão para ele.</span>
         </h1>
+
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Ferramenta de prospecção que mapeia estabelecimentos na sua cidade, analisa a presença
-          digital de cada um e entrega uma lista qualificada — com notas de performance, telefone
-          e endereço — em minutos.
+          Empresas locais com serviços de ticket alto perdem clientes todos os dias para concorrentes
+          que aparecem na primeira página — não porque oferecem um serviço melhor, mas porque o
+          Google os encontra primeiro.
         </p>
+
+        <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
+          {problems.map((p) => (
+            <div
+              key={p}
+              className="rounded-lg border border-border/50 bg-card px-4 py-3 text-sm text-muted-foreground"
+            >
+              {p}
+            </div>
+          ))}
+        </div>
 
         <div className="mt-10">
           <Button
@@ -40,17 +57,11 @@ export const SeoHero = () => (
             className="gap-2 text-sm md:text-base md:px-8 md:py-6"
             onClick={() => window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer")}
           >
-            Falar sobre SEO Local <ArrowRight size={16} />
+            Quero saber se estou perdendo clientes <ArrowRight size={16} />
           </Button>
-        </div>
-
-        <div className="mt-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-x-6">
-          {badges.map((badge) => (
-            <span key={badge} className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <Check size={14} className="shrink-0 text-primary" />
-              {badge}
-            </span>
-          ))}
+          <p className="mt-4 text-xs text-muted-foreground/60">
+            Diagnóstico gratuito — mostro exatamente o que está impedindo o Google de te encontrar.
+          </p>
         </div>
       </motion.div>
     </div>
