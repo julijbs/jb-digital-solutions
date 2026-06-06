@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { WHATSAPP_URL } from "@/config/contact";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SeoHero } from "@/components/services/seo/SeoHero";
@@ -26,7 +27,7 @@ const SeoLocal = () => (
 
     <SiteHeader
       navItems={navItems}
-      ctaPrimary={{ label: "Falar com a equipe", href: "https://wa.me/5521999999999" }}
+      ctaPrimary={{ label: "Falar com a equipe", href: WHATSAPP_URL }}
     />
 
     <main>

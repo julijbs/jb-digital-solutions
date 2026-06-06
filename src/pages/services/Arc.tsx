@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { WHATSAPP_URL } from "@/config/contact";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { ArcHero } from "@/components/services/arc/ArcHero";
@@ -28,7 +29,7 @@ const Arc = () => (
 
     <SiteHeader
       navItems={navItems}
-      ctaPrimary={{ label: "Aplicar para diagnóstico", href: "https://wa.me/5521999999999" }}
+      ctaPrimary={{ label: "Aplicar para diagnóstico", href: WHATSAPP_URL }}
     />
 
     <main>
