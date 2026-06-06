@@ -845,6 +845,91 @@ export type Database = {
         }
         Relationships: []
       }
+      service_metrics: {
+        Row: {
+          id: string
+          project_id: string
+          service_type: Database["public"]["Enums"]["service_type"]
+          period_label: string
+          metrics: Json
+          summary: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          project_id: string
+          service_type: Database["public"]["Enums"]["service_type"]
+          period_label: string
+          metrics?: Json
+          summary?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          project_id?: string
+          service_type?: Database["public"]["Enums"]["service_type"]
+          period_label?: string
+          metrics?: Json
+          summary?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_metrics_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_deliverables: {
+        Row: {
+          id: string
+          project_id: string
+          service_type: Database["public"]["Enums"]["service_type"]
+          title: string
+          description: string | null
+          url: string | null
+          status: string
+          delivered_at: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          project_id: string
+          service_type: Database["public"]["Enums"]["service_type"]
+          title: string
+          description?: string | null
+          url?: string | null
+          status?: string
+          delivered_at?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          project_id?: string
+          service_type?: Database["public"]["Enums"]["service_type"]
+          title?: string
+          description?: string | null
+          url?: string | null
+          status?: string
+          delivered_at?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_deliverables_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
