@@ -138,6 +138,12 @@ function applyBrandColors(html: string, brand: NonNullable<Parameters<typeof app
   html = html.replace(/#F7F5EF/gi, bg).replace(/#EEECE5/gi, bg);
   html = html.replace(/#1F2A24/gi, txt);
 
+  // Psicólogo Calm: #3E5C76 -> primary, #C08552 -> accent, #F4F2ED -> bg, #1E2733 -> text
+  html = html.replace(/#3E5C76/gi, p).replace(/#2F4A60/gi, p);
+  html = html.replace(/#C08552/gi, a);
+  html = html.replace(/#F4F2ED/gi, bg).replace(/#EAE7E0/gi, bg);
+  html = html.replace(/#1E2733/gi, txt);
+
   // Replace fonts if provided
   if (brand.font_display && brand.font_body) {
     const fontUrl = `https://fonts.googleapis.com/css2?family=${brand.font_display.replace(/ /g, "+")}:wght@400;500;600;700;800&family=${brand.font_body.replace(/ /g, "+")}:wght@400;500;600;700&display=swap`;

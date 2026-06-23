@@ -17,6 +17,16 @@ const defaultTemplates = [
     fonts: "Fraunces + Inter",
   },
   {
+    id: "psicologo-calm",
+    name: "Psicólogo · Calm Trust",
+    emoji: "🧠",
+    description: "Azul ardósia + areia quente + âmbar. Hand-CSS sem Tailwind CDN — Lighthouse ≥ 90. Fraunces + Inter. Ideal para psicólogos e profissionais de saúde mental.",
+    colors: ["#3E5C76", "#C08552", "#F4F2ED"],
+    tags: ["Psicólogos", "Saúde Mental", "Terapia"],
+    popular: true,
+    fonts: "Fraunces + Inter",
+  },
+  {
     id: "elegant-minimal",
     name: "Elegante Minimalista",
     emoji: "🎨",
@@ -58,7 +68,7 @@ const AdminTemplates = () => {
         <div>
           <h1 className="font-serif text-2xl text-foreground">Templates</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            3 templates base para geração de sites com IA — cada um com personalidade visual distinta
+            4 templates base para geração de sites com IA — cada um com personalidade visual distinta
           </p>
         </div>
         <Button

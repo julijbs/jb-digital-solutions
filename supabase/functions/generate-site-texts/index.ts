@@ -65,6 +65,16 @@ serve(async (req) => {
 - Respostas de FAQ no formato AEO: resposta direta e completa na PRIMEIRA frase (citável por featured snippet ou AI Overview), depois complemento. Máx 90 palavras por FAQ.
 - Hero headline deve nomear o benefício final concreto (ex: emagrecer, regular o intestino, ganhar massa) + contexto local, NÃO slogan genérico
 - Depoimentos: mencionar resultado específico (peso perdido, exame normalizado, disposição melhorada) em linguagem espontânea de paciente real`,
+      psicologo: `
+**CONTEXTO DE NICHO — PSICÓLOGO:**
+- Palavras-chave locais obrigatórias: "psicólogo em ${sd.city || client?.city || ""}", "terapia em ${sd.city || client?.city || ""}", "consulta com psicólogo ${sd.city || client?.city || ""}", "psicólogo online"
+- Keywords de serviço a incluir naturalmente: terapia individual, TCC (terapia cognitivo-comportamental), ansiedade, depressão, burnout, autoconhecimento, saúde mental, terapia de casal, psicoterapia, regulação emocional
+- FAQs devem ser formuladas como buscas reais no Google/ChatGPT:
+  Exemplos: "quanto custa uma sessão de terapia?", "psicólogo online funciona igual ao presencial?", "qual a diferença entre psicólogo e psiquiatra?", "em quanto tempo a terapia faz efeito?", "preciso de encaminhamento para ver um psicólogo?"
+- Respostas de FAQ no formato AEO: resposta direta e completa na PRIMEIRA frase (citável por featured snippet ou AI Overview), depois complemento. Máx 90 palavras por FAQ.
+- Hero headline deve nomear o benefício emocional concreto (ex: viver com menos ansiedade, retomar o controle, dormir melhor, sair do ciclo do burnout) + contexto local, NÃO slogan genérico nem clichê de "bem-estar"
+- Depoimentos: mencionar mudança específica percebida (ansiedade reduzida, sono melhorado, relacionamento transformado, retorno ao trabalho) em linguagem espontânea e íntima — nunca clínica
+- ÉTICA CFP: não faça promessas absolutas de cura ou de resultado garantido. Use linguagem de possibilidade: "pode ajudar", "muitos pacientes relatam", "trabalhamos para". Não use linguagem sensacionalista sobre saúde mental. Respeite as normas do Código de Ética Profissional do Psicólogo.`,
     };
 
     const prompt = `Você é um diretor criativo + copywriter especialista em landing pages premium para profissionais liberais brasileiros.

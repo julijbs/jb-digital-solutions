@@ -27,6 +27,7 @@ const templateOptions = [
   { value: "modern-clean", label: "✨ Moderno Clean" },
   { value: "warm-soft", label: "🌿 Acolhedor Suave" },
   { value: "nutricionista-fresh", label: "🥗 Nutricionista · Fresh Clinical" },
+  { value: "psicologo-calm", label: "🧠 Psicólogo · Calm Trust" },
 ] as const;
 
 const generationSteps = [
