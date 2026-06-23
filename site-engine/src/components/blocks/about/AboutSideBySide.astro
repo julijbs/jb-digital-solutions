@@ -9,14 +9,14 @@ export interface Props {
   name: string;
   headline: string;
   body: string;
+  /** Frase de destaque / pull quote (opcional) */
+  pullQuote?: string;
   credential: string;
   photoAlt: string;
   photoSrc?: string;
-  /** Frase de destaque integrada ao corpo (opcional) */
-  highlightLine?: string;
 }
 
-const { name, headline, body, credential, photoAlt, photoSrc, highlightLine } = Astro.props;
+const { name, headline, body, pullQuote, credential, photoAlt, photoSrc } = Astro.props;
 ---
 
 <section class="about-ss" aria-labelledby="about-ss-heading">
@@ -37,8 +37,8 @@ const { name, headline, body, credential, photoAlt, photoSrc, highlightLine } = 
       <p class="about-ss-label">Sobre {name.split(' ').slice(0, 2).join(' ')}</p>
       <h2 id="about-ss-heading" class="about-ss-heading">{headline}</h2>
       <p class="about-ss-body">{body}</p>
-      {highlightLine && (
-        <p class="about-ss-highlight">"{highlightLine}"</p>
+      {pullQuote && (
+        <p class="about-ss-highlight">"{pullQuote}"</p>
       )}
       <p class="about-ss-cred">{credential}</p>
     </div>

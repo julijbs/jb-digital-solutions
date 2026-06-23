@@ -1,23 +1,17 @@
 ---
 // ───────────────────────────────────────────────────────────────────
-// Pillar page — Dra. Ana Mello (psicólogo · Calm Trust)
-// Copy e dados: src/data/dra-ana-mello.ts
-// Mood: calm-trust · Astro static · zero JS de runtime
+// Pillar page — orientada a dados, mood dinâmico
+// Copy e dados: src/lib/activeClient.ts → src/data/<slug>.ts
+// Blocos: selecionados por mood via componentsForMood()
 // ───────────────────────────────────────────────────────────────────
 
 import Layout from '../layouts/Layout.astro';
-import { draAnaMello as client } from '../data/dra-ana-mello';
-// ── Blocos — variante Calm Trust ──────────────────────────────────
-import Nav from '../components/blocks/nav/NavStickyMinimal.astro';
-import Hero from '../components/blocks/hero/HeroEditorialSplit.astro';
-import PainPoints from '../components/blocks/painpoints/PainPointsNumbered.astro';
-import About from '../components/blocks/about/AboutPortraitOffset.astro';
-import Services from '../components/blocks/services/ServicesTypoList.astro';
-import Process from '../components/blocks/process/ProcessHorizontalSteps.astro';
-import Testimonials from '../components/blocks/testimonials/TestimonialsPullQuote.astro';
-import FAQ from '../components/blocks/faq/FAQNativeDetails.astro';
-import FinalCTA from '../components/blocks/finalcta/FinalCTACenteredEditorial.astro';
-import Footer from '../components/blocks/footer/FooterSimpleColumns.astro';
+import { client } from '../lib/activeClient.ts';
+import { componentsForMood } from '../lib/blockComponents.ts';
+
+// Resolver de blocos por mood
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const B = componentsForMood(client.mood) as any;
 
 // ── Schema JSON-LD ────────────────────────────────────────────────
 const schemaObj = {
@@ -27,16 +21,16 @@ const schemaObj = {
       "@type": client.schemaType,
       "@id": `${client.siteUrl}/#business`,
       "name": client.businessName,
-      "description": `${client.specialty}. Atende ansiedade, depressão, burnout e questões de relacionamento. Consultório em Jardins, São Paulo, e atendimento online.`,
+      "description": client.copy.businessDescription,
       "url": client.siteUrl,
       "telephone": client.phone,
       "email": client.email,
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Rua Haddock Lobo, 595",
+        "streetAddress": client.streetAddress,
         "addressLocality": client.city,
         "addressRegion": client.state,
-        "postalCode": "01414-001",
+        "postalCode": client.postalCode,
         "addressCountry": "BR"
       },
       "geo": {
@@ -64,14 +58,11 @@ const schemaObj = {
     }
   ]
 };
-
-const title       = `Psicóloga em ${client.city} — ${client.businessName} | TCC e Terapia de Casal`;
-const description = `Psicóloga clínica em Jardins, ${client.city}. Especialista em TCC, ansiedade, burnout e terapia de casal. Atendimento presencial e online. ${client.credential.split('·')[0].trim()}.`;
 ---
 
 <Layout
-  title={title}
-  description={description}
+  title={client.copy.homeTitle}
+  description={client.copy.homeMetaDescription}
   slug={client.slug}
   siteUrl={client.siteUrl}
   businessName={client.businessName}
@@ -84,16 +75,17 @@ const description = `Psicóloga clínica em Jardins, ${client.city}. Especialist
   lng={client.lng}
   schemaType={client.schemaType}
   schemaJson={JSON.stringify(schemaObj)}
+  mood={client.mood}
 >
   <main id="main">
 
-    <Nav
+    <B.nav
       businessName={client.businessName}
       phone={client.phone}
       phoneClean={client.phoneClean}
     />
 
-    <Hero
+    <B.hero
       headline={client.copy.heroHeadline}
       subheadline={client.copy.heroSubheadline}
       credential={client.credential}
@@ -104,45 +96,45 @@ const description = `Psicóloga clínica em Jardins, ${client.city}. Especialist
       city={client.city}
     />
 
-    <PainPoints
+    <B.painpoints
       point1={client.copy.painPoints[0]}
       point2={client.copy.painPoints[1]}
       point3={client.copy.painPoints[2]}
     />
 
-    <About
+    <B.about
       name={client.businessName}
       headline={client.copy.aboutHeadline}
       body={client.copy.aboutBody}
-      pullQuote={client.copy.aboutPullQuote}
+      pullQuote={client.copy.pullQuote}
       credential={client.copy.aboutCredential}
       photoAlt={client.copy.aboutPhotoAlt}
       photoSrc={client.copy.aboutPhotoSrc}
     />
 
-    <Services
+    <B.services
       headline={client.copy.servicesHeadline}
-      services={client.services.map(s => ({ name: s.name, tag: s.tag, description: s.description }))}
+      services={client.services.map(s => ({ name: s.name, tag: s.tag, description: s.description, icon: s.icon }))}
     />
 
-    <Process
+    <B.process
       headline={client.copy.processHeadline}
       steps={client.copy.processSteps}
     />
 
-    <Testimonials
+    <B.testimonials
       quote1={client.copy.testimonials[0].quote}
       author1={client.copy.testimonials[0].author}
       quote2={client.copy.testimonials[1].quote}
       author2={client.copy.testimonials[1].author}
     />
 
-    <FAQ
+    <B.faq
       headline={client.copy.faqHeadline}
       faqs={client.copy.faqs}
     />
 
-    <FinalCTA
+    <B.finalcta
       headline={client.copy.ctaHeadline}
       subtext={client.copy.ctaSubtext}
       buttonText={client.copy.ctaButtonText}
@@ -152,7 +144,7 @@ const description = `Psicóloga clínica em Jardins, ${client.city}. Especialist
       address={client.address}
     />
 
-    <Footer
+    <B.footer
       businessName={client.businessName}
       credential={`${client.credential.split('·')[0].trim()} · ${client.city}, ${client.state}`}
       city={client.city}
