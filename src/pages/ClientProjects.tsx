@@ -6,31 +6,25 @@ import { Clock } from "lucide-react";
 import { ProjectCard } from "@/components/client/services/ProjectCard";
 import { useClientProjects } from "@/hooks/useClientProjects";
 import { SERVICE_CONFIG } from "@/config/services";
-import type { ServiceType } from "@/types/app";
 
-// Resolve human-readable status label per service_type
-function getStatusLabel(serviceType: ServiceType, status: string): string {
-  const config = SERVICE_CONFIG[serviceType];
-  // For seo_local / arc_backend, status is one of the phase keys
-  const phase = config.phases.find((p) => p.key === status);
-  if (phase) return phase.label;
-  // Fallback for site_gbp or unknown values
-  const fallbacks: Record<string, string> = {
-    intake: "Onboarding",
-    onboarding_in_progress: "Onboarding",
-    content_ready: "Conteúdo pronto",
-    lovable_prompt_ready: "Em criação",
-    lovable_site_generated: "Site gerado",
-    repo_created: "Repositório criado",
-    vercel_deployed_preview: "Preview online",
-    qa_passed: "QA aprovado",
-    client_review: "Em revisão",
-    vercel_deployed_prod: "Publicado",
-    handoff_ready: "Entrega pronta",
-    handoff_done: "Entregue",
-    monthly_active: "Ativo mensal",
-  };
-  return fallbacks[status] ?? status;
+const STATUS_LABELS: Record<string, string> = {
+  intake: "Onboarding",
+  onboarding_in_progress: "Onboarding",
+  content_ready: "Conteúdo pronto",
+  lovable_prompt_ready: "Em criação",
+  lovable_site_generated: "Site gerado",
+  repo_created: "Repositório criado",
+  vercel_deployed_preview: "Preview online",
+  qa_passed: "QA aprovado",
+  client_review: "Em revisão",
+  vercel_deployed_prod: "Publicado",
+  handoff_ready: "Entrega pronta",
+  handoff_done: "Entregue",
+  monthly_active: "Ativo mensal",
+};
+
+function getStatusLabel(status: string): string {
+  return STATUS_LABELS[status] ?? status;
 }
 
 const ClientProjects = () => {
@@ -73,8 +67,8 @@ const ClientProjects = () => {
           {/* Summary list — compact overview */}
           <div className="space-y-2">
             {projects.map((project) => {
-              const cfg = SERVICE_CONFIG[project.service_type as ServiceType];
-              const statusLabel = getStatusLabel(project.service_type as ServiceType, project.status);
+              const cfg = SERVICE_CONFIG[project.service_type];
+              const statusLabel = getStatusLabel(project.status);
               return (
                 <div key={`summary-${project.id}`} className="glass-card-hover rounded-xl p-4">
                   <div className="flex items-center justify-between">

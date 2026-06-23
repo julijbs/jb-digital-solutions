@@ -13,14 +13,12 @@ interface SiteFooterProps {
 
 const defaultLinks: FooterLink[] = [
   { label: "Site + Google", href: "/servicos/site-gbp" },
-  { label: "SEO Local", href: "/servicos/seo-local" },
-  { label: "ARC™", href: "/servicos/arc" },
   { label: "Entrar", href: "/login" },
 ];
 
 export const SiteFooter = ({
   links = defaultLinks,
-  tagline = "Presença digital, prospecção local e ativação de receita para negócios brasileiros.",
+  tagline = "Site profissional e Google Business Profile para negócios brasileiros.",
 }: SiteFooterProps) => {
   return (
     <footer className="border-t border-border/50 py-12">
