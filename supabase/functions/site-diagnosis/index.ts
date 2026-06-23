@@ -290,7 +290,8 @@ Deno.serve(async (req) => {
     // Build PageSpeed API URL
     const apiKey = Deno.env.get("GOOGLE_PAGESPEED_API_KEY");
     const baseUrl = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
-    const commonParams = `url=${encodeURIComponent(siteUrl)}&locale=pt_BR${apiKey ? `&key=${apiKey}` : ""}`;
+    const categories = "category=performance&category=seo&category=accessibility&category=best-practices";
+    const commonParams = `url=${encodeURIComponent(siteUrl)}&locale=pt_BR&${categories}${apiKey ? `&key=${apiKey}` : ""}`;
 
     // Fetch mobile and desktop in parallel
     const [mobileRes, desktopRes] = await Promise.allSettled([
