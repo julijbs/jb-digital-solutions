@@ -185,12 +185,14 @@ export type Database = {
           business_data: Json | null
           completed: boolean
           created_at: string
+          existing_site_url: string | null
           google_data: Json | null
           id: string
           photos_data: Json | null
           project_id: string
           schedule_data: Json | null
           services_data: Json | null
+          site_diagnosis: Json | null
           step_current: number
           updated_at: string
         }
@@ -199,12 +201,14 @@ export type Database = {
           business_data?: Json | null
           completed?: boolean
           created_at?: string
+          existing_site_url?: string | null
           google_data?: Json | null
           id?: string
           photos_data?: Json | null
           project_id: string
           schedule_data?: Json | null
           services_data?: Json | null
+          site_diagnosis?: Json | null
           step_current?: number
           updated_at?: string
         }
@@ -213,12 +217,14 @@ export type Database = {
           business_data?: Json | null
           completed?: boolean
           created_at?: string
+          existing_site_url?: string | null
           google_data?: Json | null
           id?: string
           photos_data?: Json | null
           project_id?: string
           schedule_data?: Json | null
           services_data?: Json | null
+          site_diagnosis?: Json | null
           step_current?: number
           updated_at?: string
         }

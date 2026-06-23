@@ -25,6 +25,7 @@ import {
   Shield,
   Star,
   Brain,
+  Search,
 } from "lucide-react";
 import { NotificationBell } from "@/components/NotificationBell";
 import jbLogo from "@/assets/jb-logo.jpg";
@@ -48,6 +49,7 @@ const adminSections = [
     label: "Produção",
     items: [
       { href: "/admin/site-generator", label: "Gerar Site com IA", icon: Sparkles },
+      { href: "/admin/site-diagnosis", label: "Diagnóstico de Site", icon: Search },
       { href: "/admin/pipeline", label: "Pipeline", icon: FolderKanban },
       { href: "/admin/prompt-generator", label: "Gerador de Prompt", icon: FileText },
     ],

@@ -31,7 +31,7 @@ const Onboarding = () => {
   // Form state
   const [hasGbp, setHasGbp] = useState<string>("");
   const [business, setBusiness] = useState({
-    name: "", description: "", phone: "", email: "", instagram: "", has_site: "no",
+    name: "", description: "", phone: "", email: "", instagram: "", has_site: "no", site_url: "",
   });
   const [location, setLocation] = useState({
     type: "address", cep: "", street: "", number: "", neighborhood: "", city: "", state: "",
@@ -111,7 +111,8 @@ const Onboarding = () => {
         schedule_data: location as any,
         services_data: services as any,
         photos_data: { photos } as any,
-      brand_data: { ...brand, logo_url: logoUrl } as any,
+        brand_data: { ...brand, logo_url: logoUrl } as any,
+        existing_site_url: (business as any).site_url || null,
         step_current: stepNum,
         completed: nextStep === 5,
       })
@@ -341,6 +342,16 @@ const Onboarding = () => {
                   ))}
                 </div>
               </div>
+              {business.has_site === "yes" && (
+                <div className="space-y-1">
+                  <Label>URL do site atual</Label>
+                  <Input
+                    placeholder="https://www.seusite.com.br"
+                    value={(business as any).site_url || ""}
+                    onChange={(e) => setBusiness({ ...business, site_url: e.target.value } as any)}
+                  />
+                </div>
+              )}
             </div>
           )}
 
