@@ -1,0 +1,137 @@
+---
+// Services — Variante A: Lista tipográfica com separadores
+// NOT cards com ícone. Linha horizontal + número em âmbar + nome + descrição.
+// Editorial, limpo, confiante.
+export interface Props {
+  headline: string;
+  services: Array<{ name: string; description: string; tag?: string }>;
+}
+const { headline, services } = Astro.props;
+---
+
+<section id="servicos" aria-labelledby="services-headline" class="services-section">
+  <div class="section-wrap">
+
+    <header class="services-header">
+      <span class="section-label">O que ofereço</span>
+      <h2 id="services-headline" class="services-title">{headline}</h2>
+    </header>
+
+    <ul class="services-list" role="list">
+      {services.map((svc, i) => (
+        <li class="service-item">
+          <span class="service-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <div class="service-body">
+            <div class="service-header-row">
+              <h3 class="service-name">{svc.name}</h3>
+              {svc.tag && <span class="service-tag">{svc.tag}</span>}
+            </div>
+            <p class="service-desc">{svc.description}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</section>
+
+<style>
+  .services-section {
+    padding-block: 6rem;
+    background: #F4F2ED;
+    border-top: 1px solid #DDD9D0;
+  }
+
+  .services-header {
+    margin-bottom: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: end;
+  }
+
+  .services-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: #1E2733;
+    margin: 0;
+    /* Title lands on right column, visually offset */
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .services-header .section-label {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+    padding-top: 0.35rem;
+  }
+
+  .services-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .service-item {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 0 2rem;
+    padding-block: 2rem;
+    border-bottom: 1px solid #DDD9D0;
+    align-items: start;
+  }
+  .service-item:first-child { border-top: 1px solid #DDD9D0; }
+
+  .service-num {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #C08552;
+    padding-top: 0.25rem;
+  }
+
+  .service-header-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+
+  .service-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1E2733;
+    margin: 0;
+  }
+
+  .service-tag {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #3E5C76;
+    background: rgba(62, 92, 118, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 2rem;
+  }
+
+  .service-desc {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #5A6475;
+    margin: 0;
+    max-width: 600px;
+  }
+
+  @media (max-width: 768px) {
+    .services-section { padding-block: 4rem; }
+    .services-header { grid-template-columns: 1fr; gap: 0.25rem; }
+    .services-title { grid-column: 1; }
+    .service-item { grid-template-columns: 2.5rem 1fr; gap: 0 1rem; }
+  }
+</style>

@@ -1,0 +1,125 @@
+---
+// Testimonials — Variante A: Pull quote + depoimento secundário
+// Anti cara-de-IA: não são 3 cards iguais com estrelas. Uma aspas grande, texto fluido.
+export interface Props {
+  quote1:   string;  // depoimento principal (50-90 palavras)
+  author1:  string;  // nome + contexto, ex: "Marina T. · Paciente há 1 ano"
+  quote2:   string;  // depoimento secundário
+  author2:  string;
+}
+const { quote1, author1, quote2, author2 } = Astro.props;
+---
+
+<section id="depoimentos" aria-labelledby="testimonials-headline" class="testimonials-section">
+  <div class="section-wrap">
+
+    <span class="section-label">O que dizem os pacientes</span>
+
+    <!-- Depoimento principal — pull quote style -->
+    <figure class="primary-quote" aria-labelledby="testimonials-headline">
+      <span class="quote-mark" aria-hidden="true">"</span>
+      <blockquote>
+        <p id="testimonials-headline">{quote1}</p>
+      </blockquote>
+      <figcaption class="quote-author">— {author1}</figcaption>
+    </figure>
+
+    <!-- Divisor + depoimento secundário -->
+    <div class="secondary-block">
+      <div class="secondary-divider" aria-hidden="true"></div>
+      <figure class="secondary-quote">
+        <blockquote>
+          <p>"{quote2}"</p>
+        </blockquote>
+        <figcaption class="quote-author secondary-author">— {author2}</figcaption>
+      </figure>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .testimonials-section {
+    padding-block: 6.5rem;
+    background: #3E5C76;
+    color: #fff;
+  }
+
+  .testimonials-section .section-label {
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* ── Primary quote ── */
+  .primary-quote {
+    margin: 0 0 4rem;
+    position: relative;
+    max-width: 760px;
+  }
+
+  .quote-mark {
+    font-family: 'Fraunces', serif;
+    font-size: 7rem;
+    line-height: 0.7;
+    color: #C08552;
+    display: block;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+    user-select: none;
+  }
+
+  .primary-quote blockquote p {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.375rem, 2.5vw, 1.875rem);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.95);
+    margin: 0;
+  }
+
+  .quote-author {
+    margin-top: 1.25rem;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.55);
+    font-style: normal;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Secondary ── */
+  .secondary-block {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 2rem;
+    align-items: start;
+    max-width: 560px;
+  }
+
+  .secondary-divider {
+    width: 1px;
+    height: 100%;
+    min-height: 80px;
+    background: #C08552;
+    opacity: 0.45;
+    margin-top: 0.25rem;
+  }
+
+  .secondary-quote blockquote p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+    margin: 0;
+    font-style: italic;
+  }
+
+  .secondary-author {
+    margin-top: 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  @media (max-width: 640px) {
+    .testimonials-section { padding-block: 4rem; }
+    .quote-mark { font-size: 5rem; }
+    .secondary-block { grid-template-columns: 1fr; }
+    .secondary-divider { height: 1px; width: 3rem; min-height: auto; }
+  }
+</style>

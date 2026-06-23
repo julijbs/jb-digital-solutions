@@ -1,0 +1,76 @@
+---
+// FAQ — Variante A: Accordion com <details>/<summary> nativo (zero JS)
+// AEO-optimized: perguntas em linguagem natural de busca
+// Clean: só bordas horizontais, sem cards, sem ícones desnecessários
+export interface Props {
+  headline: string;
+  faqs: Array<{ question: string; answer: string }>;
+}
+const { headline, faqs } = Astro.props;
+---
+
+<section id="faq" aria-labelledby="faq-headline" class="faq-section">
+  <div class="section-wrap faq-layout">
+
+    <!-- ── Coluna esquerda: header ── -->
+    <header class="faq-header">
+      <span class="section-label">Perguntas frequentes</span>
+      <h2 id="faq-headline" class="faq-title">{headline}</h2>
+      <p class="faq-note">
+        Respondemos as dúvidas mais comuns sobre como funciona a psicoterapia.
+      </p>
+    </header>
+
+    <!-- ── Coluna direita: perguntas ── -->
+    <div class="faq-list">
+      {faqs.map((faq) => (
+        <details>
+          <summary>{faq.question}</summary>
+          <div class="faq-answer">
+            <p>{faq.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    padding-block: 6rem;
+    background: #F4F2ED;
+    border-top: 1px solid #DDD9D0;
+  }
+
+  .faq-layout {
+    display: grid;
+    grid-template-columns: 38fr 62fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .faq-header { position: sticky; top: 6rem; }
+
+  .faq-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: #1E2733;
+    margin: 0 0 1rem;
+  }
+
+  .faq-note {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #5A6475;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .faq-section { padding-block: 4rem; }
+    .faq-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .faq-header { position: static; }
+  }
+</style>

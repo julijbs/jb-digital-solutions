@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* ── Reset & base ── */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: theme('colors.surface.DEFAULT');
+    color: theme('colors.ink.DEFAULT');
+    font-family: theme('fontFamily.sans');
+    font-size: theme('fontSize.body[0]');
+    line-height: theme('fontSize.body[1].lineHeight');
+  }
+
+  /* ── Heading defaults ── */
+  h1, h2, h3, h4 {
+    font-family: theme('fontFamily.serif');
+    color: theme('colors.ink.DEFAULT');
+  }
+
+  a {
+    color: theme('colors.primary.DEFAULT');
+    text-decoration: none;
+  }
+
+  a:hover { color: theme('colors.primary.dark'); }
+
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* ── Skip link (a11y) ── */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    padding: 0.5rem 1rem;
+    background: theme('colors.primary.DEFAULT');
+    color: #fff;
+    z-index: 9999;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* ── Section utility ── */
+  .section-wrap {
+    width: 100%;
+    max-width: theme('maxWidth.content');
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  /* ── Label chip (small-caps above headlines) ── */
+  .section-label {
+    display: inline-block;
+    font-family: theme('fontFamily.sans');
+    font-size: theme('fontSize.label[0]');
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: theme('colors.accent.dark');
+    margin-bottom: 0.75rem;
+  }
+
+  /* ── FAQ details/summary ── */
+  details { border-bottom: 1px solid theme('colors.surface.dark'); }
+  details:first-of-type { border-top: 1px solid theme('colors.surface.dark'); }
+
+  summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.125rem 0;
+    font-family: theme('fontFamily.sans');
+    font-size: theme('fontSize.body[0]');
+    font-weight: 500;
+    color: theme('colors.ink.DEFAULT');
+    user-select: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+
+  summary::after {
+    content: '+';
+    font-size: 1.25rem;
+    color: theme('colors.primary.DEFAULT');
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  details[open] summary::after { transform: rotate(45deg); }
+
+  details .faq-answer {
+    padding-bottom: 1.25rem;
+    color: theme('colors.ink.muted');
+    line-height: 1.75;
+  }
+}
+
+@layer components {
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: theme('borderRadius.btn');
+    font-family: theme('fontFamily.sans');
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.18s ease, transform 0.12s ease;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: theme('colors.primary.DEFAULT');
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: theme('colors.primary.dark');
+    transform: translateY(-1px);
+    color: #fff;
+  }
+  .btn-accent {
+    background: theme('colors.accent.DEFAULT');
+    color: #fff;
+  }
+  .btn-accent:hover {
+    background: theme('colors.accent.dark');
+    transform: translateY(-1px);
+    color: #fff;
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid theme('colors.primary.DEFAULT');
+    color: theme('colors.primary.DEFAULT');
+  }
+  .btn-outline:hover {
+    background: theme('colors.primary.DEFAULT');
+    color: #fff;
+  }
+
+  /* ── Photo placeholder ── */
+  .photo-frame {
+    position: relative;
+    background: theme('colors.surface.muted');
+    border-radius: theme('borderRadius.photo');
+    overflow: hidden;
+  }
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-frame .photo-hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: theme('colors.ink.faint');
+    font-size: 0.8125rem;
+    text-align: center;
+    padding: 1rem;
+  }
+}

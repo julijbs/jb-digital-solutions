@@ -1,0 +1,122 @@
+---
+export interface Props {
+  businessName: string;
+  credential:   string;
+  city:         string;
+  state:        string;
+  address?:     string;
+  phone:        string;
+  email?:       string;
+  instagram?:   string;
+  year:         number;
+}
+const {
+  businessName, credential, city, state,
+  address, phone, email, instagram, year,
+} = Astro.props;
+---
+
+<footer role="contentinfo" class="site-footer">
+  <div class="section-wrap footer-inner">
+
+    <div class="footer-brand">
+      <p class="footer-name">{businessName}</p>
+      <p class="footer-credential">{credential}</p>
+      <address class="footer-nap" aria-label="Informações de contato">
+        {address && <span class="footer-address">{address}</span>}
+        <a href={`tel:+55${phone.replace(/\D/g,'')}`}>{phone}</a>
+        {email && <a href={`mailto:${email}`}>{email}</a>}
+        {instagram && (
+          <a href={`https://instagram.com/${instagram.replace('@','')}`}
+             target="_blank" rel="noopener noreferrer"
+             aria-label={`Instagram: ${instagram}`}>
+            {instagram}
+          </a>
+        )}
+      </address>
+    </div>
+
+    <div class="footer-meta">
+      <p class="footer-copyright">
+        © {year} {businessName} · {city}, {state}
+      </p>
+      <p class="footer-disclaimer">
+        Este site é apenas informativo. Em caso de emergência, ligue <strong>188</strong> (CVV)
+        ou procure o CAPS mais próximo.
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: 3rem;
+    background: #1E2733;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .footer-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    margin: 0 0 0.25rem;
+  }
+
+  .footer-credential {
+    font-size: 0.8125rem;
+    color: rgba(255,255,255,0.45);
+    margin: 0 0 1.25rem;
+    letter-spacing: 0.02em;
+  }
+
+  .footer-nap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    font-style: normal;
+    font-size: 0.875rem;
+  }
+
+  .footer-address {
+    color: rgba(255,255,255,0.45);
+  }
+
+  .footer-nap a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .footer-nap a:hover { color: #C08552; }
+
+  .footer-meta { align-self: end; text-align: right; }
+
+  .footer-copyright {
+    font-size: 0.8125rem;
+    margin: 0 0 0.75rem;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .footer-disclaimer {
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.3);
+    margin: 0;
+    max-width: 320px;
+    margin-left: auto;
+  }
+
+  @media (max-width: 640px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-meta { text-align: left; }
+    .footer-disclaimer { margin-left: 0; }
+  }
+</style>

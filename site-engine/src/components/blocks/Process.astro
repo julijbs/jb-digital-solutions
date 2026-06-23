@@ -1,0 +1,133 @@
+---
+// Process — Variante A: Passos horizontais com conectores
+// 3 passos, linha conectora simples, números outlined (não filled)
+export interface Props {
+  headline: string;
+  steps: Array<{ name: string; description: string }>;
+}
+const { headline, steps } = Astro.props;
+---
+
+<section id="como-funciona" aria-labelledby="process-headline" class="process-section">
+  <div class="section-wrap">
+
+    <header class="process-header">
+      <span class="section-label">Como funciona</span>
+      <h2 id="process-headline" class="process-title">{headline}</h2>
+    </header>
+
+    <ol class="process-steps" role="list">
+      {steps.map((step, i) => (
+        <li class="process-step">
+          <div class="step-marker" aria-hidden="true">
+            <span class="step-number">{i + 1}</span>
+          </div>
+          <h3 class="step-name">{step.name}</h3>
+          <p class="step-desc">{step.description}</p>
+        </li>
+      ))}
+    </ol>
+
+  </div>
+</section>
+
+<style>
+  .process-section {
+    padding-block: 6rem;
+    background: #EAE7E0;
+    border-top: 1px solid #DDD9D0;
+  }
+
+  .process-header {
+    margin-bottom: 3.5rem;
+    max-width: 520px;
+  }
+
+  .process-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: #1E2733;
+    margin: 0;
+  }
+
+  .process-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    position: relative;
+  }
+
+  /* Connecting line between steps */
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 1.375rem; /* center of the step markers */
+    left: calc(100% / 6);
+    right: calc(100% / 6);
+    height: 1px;
+    background: linear-gradient(to right, #C08552 0%, #3E5C76 100%);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-top: 0.25rem;
+  }
+
+  .step-marker {
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1.5px solid #3E5C76;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F4F2ED;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-number {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #3E5C76;
+  }
+
+  .step-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1E2733;
+    margin: 0;
+  }
+
+  .step-desc {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #5A6475;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .process-section { padding-block: 4rem; }
+    .process-steps {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .process-steps::before { display: none; }
+    .process-step { flex-direction: row; gap: 1.25rem; }
+    .step-marker { flex-shrink: 0; }
+    .process-step > div:not(.step-marker) { padding-top: 0; }
+  }
+</style>

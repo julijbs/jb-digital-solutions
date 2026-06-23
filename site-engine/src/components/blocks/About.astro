@@ -1,0 +1,118 @@
+---
+// About — Variante A: Retrato offset + pull quote
+// Layout: foto portrait (3:4) à esquerda, texto à direita com destaque de citação
+// Anti cara-de-IA: não é 50/50 com avatar circular. Foto ocupa 38%, texto 62%.
+export interface Props {
+  name:        string;
+  headline:    string;
+  body:        string;   // 150-220 words
+  pullQuote:   string;   // 1 frase marcante (Fraunces itálico)
+  credential:  string;   // ex: "CRP 06/12345 · Pós-graduada em TCC · 8 anos de experiência"
+  photoSrc?:   string;
+  photoAlt:    string;
+}
+const { name, headline, body, pullQuote, credential, photoSrc, photoAlt } = Astro.props;
+---
+
+<section id="sobre" aria-labelledby="about-headline" class="about-section">
+  <div class="section-wrap about-grid">
+
+    <!-- ── Foto portrait ── -->
+    <div class="about-photo-wrap">
+      <div class="photo-frame about-photo" role="img" aria-label={photoAlt}>
+        {photoSrc
+          ? <img src={photoSrc} alt={photoAlt} width="400" height="530" loading="lazy" />
+          : <div class="photo-hint">
+              Foto de {name}<br /><span style="opacity:.55;font-size:.75rem">3:4 — retrato</span>
+            </div>
+        }
+      </div>
+    </div>
+
+    <!-- ── Texto ── -->
+    <div class="about-copy">
+      <span class="section-label">Sobre mim</span>
+      <h2 id="about-headline" class="about-headline">{headline}</h2>
+
+      <p class="about-body">{body}</p>
+
+      <blockquote class="about-quote">
+        <p>"{pullQuote}"</p>
+      </blockquote>
+
+      <p class="about-credential">{credential}</p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .about-section {
+    padding-block: 6.5rem;
+    background: #F4F2ED;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 38fr 62fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  /* ── Photo ── */
+  .about-photo-wrap { position: relative; }
+  .about-photo {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    /* Slight offset shadow for depth — não glassmorphism */
+    box-shadow: 8px 12px 32px rgba(62, 92, 118, 0.12);
+  }
+
+  /* ── Copy ── */
+  .about-headline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: #1E2733;
+    margin: 0 0 1.5rem;
+    max-width: 480px;
+  }
+
+  .about-body {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #5A6475;
+    margin: 0 0 2rem;
+  }
+
+  .about-quote {
+    border-left: 2px solid #C08552;
+    padding-left: 1.375rem;
+    margin: 0 0 1.75rem;
+  }
+  .about-quote p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.125rem;
+    line-height: 1.55;
+    color: #3E5C76;
+    margin: 0;
+  }
+
+  .about-credential {
+    font-size: 0.8125rem;
+    color: #8A919E;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 768px) {
+    .about-section { padding-block: 4rem; }
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .about-photo { max-width: 280px; margin-inline: auto; }
+  }
+</style>

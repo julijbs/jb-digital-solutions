@@ -1,0 +1,115 @@
+---
+// PainPoints — Variante A: Lista numerada editorial
+// NOT cards com ícone. Números grandes em âmbar, texto em preto.
+export interface Props {
+  point1: string;
+  point2: string;
+  point3: string;
+}
+const { point1, point2, point3 } = Astro.props;
+
+const points = [point1, point2, point3];
+---
+
+<section id="dores" aria-labelledby="pain-headline" class="pain-section">
+  <div class="section-wrap">
+
+    <header class="pain-header">
+      <span class="section-label">Para quem é essa terapia</span>
+      <h2 id="pain-headline" class="pain-title">
+        Você se reconhece<br />em algum desses cenários?
+      </h2>
+    </header>
+
+    <ol class="pain-list" role="list">
+      {points.map((point, i) => (
+        <li class="pain-item">
+          <span class="pain-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <p class="pain-text">{point}</p>
+        </li>
+      ))}
+    </ol>
+
+    <p class="pain-note">
+      Se sim, você não está sozinho — e a terapia é o espaço para isso mudar.
+    </p>
+
+  </div>
+</section>
+
+<style>
+  .pain-section {
+    padding-block: 6rem;
+    background: #EAE7E0;
+  }
+
+  .pain-header {
+    margin-bottom: 3.5rem;
+    max-width: 560px;
+  }
+
+  .pain-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.875rem, 3.5vw, 2.625rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: #1E2733;
+    margin: 0;
+  }
+
+  .pain-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-left: 1px solid #DDD9D0;
+  }
+
+  .pain-item {
+    padding: 2rem 2.5rem;
+    border-right: 1px solid #DDD9D0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .pain-num {
+    font-family: 'Fraunces', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #C08552;
+    line-height: 1;
+    opacity: 0.55;
+  }
+
+  .pain-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #1E2733;
+    margin: 0;
+  }
+
+  .pain-note {
+    margin-top: 3rem;
+    font-size: 0.9375rem;
+    color: #5A6475;
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+  }
+
+  @media (max-width: 768px) {
+    .pain-section { padding-block: 4rem; }
+    .pain-list {
+      grid-template-columns: 1fr;
+      border-left: none;
+    }
+    .pain-item {
+      padding: 1.5rem 0;
+      border-right: none;
+      border-bottom: 1px solid #DDD9D0;
+    }
+    .pain-item:last-child { border-bottom: none; }
+  }
+</style>

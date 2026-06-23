@@ -1,0 +1,22 @@
+# {{BUSINESS_NAME}} — Psicóloga em {{CITY}}, {{STATE}}
+
+> {{BUSINESS_NAME}} é especialista em terapia individual, TCC (terapia cognitivo-comportamental)
+> e terapia de casal, com consultório em {{CITY}} e atendimento online para todo o Brasil.
+> CRP: {{CRP}}.
+
+## Serviços
+
+- Terapia individual (adultos)
+- Terapia de casal
+- TCC para ansiedade, depressão e burnout
+- Atendimento online
+
+## Contato
+
+- WhatsApp: {{PHONE}}
+- Cidade: {{CITY}}, {{STATE}}
+- Endereço: {{ADDRESS}}
+
+## Sobre
+
+{{ABOUT_SNIPPET}}

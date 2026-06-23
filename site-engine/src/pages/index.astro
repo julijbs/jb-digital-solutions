@@ -1,0 +1,279 @@
+---
+// ───────────────────────────────────────────────────────────────────
+// SPIKE — Psicólogo · Dra. Ana Mello · São Paulo
+// Copy escrita pelo Claude (JB Digital System)
+// Template: Calm Trust palette · Astro static · zero JS de runtime
+// ───────────────────────────────────────────────────────────────────
+
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/blocks/Nav.astro';
+import Hero from '../components/blocks/Hero.astro';
+import PainPoints from '../components/blocks/PainPoints.astro';
+import About from '../components/blocks/About.astro';
+import Services from '../components/blocks/Services.astro';
+import Process from '../components/blocks/Process.astro';
+import Testimonials from '../components/blocks/Testimonials.astro';
+import FAQ from '../components/blocks/FAQ.astro';
+import FinalCTA from '../components/blocks/FinalCTA.astro';
+import Footer from '../components/blocks/Footer.astro';
+
+// ── Dados do cliente (Dra. Ana Mello — persona de spike) ──────────
+const data = {
+  businessName:  'Dra. Ana Mello',
+  specialty:     'Psicóloga | TCC e Terapia de Casal',
+  credential:    'CRP 06/123456 · Pós-graduada em TCC · Jardins, São Paulo',
+  city:          'São Paulo',
+  state:         'SP',
+  phone:         '(11) 91234-5678',
+  phoneClean:    '11912345678',
+  email:         'contato@dranamello.com.br',
+  instagram:     '@dranamello.psi',
+  address:       'Rua Haddock Lobo, 595 — Jardins, São Paulo-SP',
+  lat:           '-23.558',
+  lng:           '-46.661',
+  siteUrl:       'https://anamello.jbdigitalsystem.com',
+  slug:          'anamello',
+};
+
+// ── Schema JSON-LD ────────────────────────────────────────────────
+const schemaObj = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": `${data.siteUrl}/#business`,
+      "name": data.businessName,
+      "description": "Psicóloga especialista em TCC (Terapia Cognitivo-Comportamental) e terapia de casal. Atende ansiedade, depressão, burnout e questões de relacionamento. Consultório em Jardins, São Paulo, e atendimento online.",
+      "url": data.siteUrl,
+      "telephone": data.phone,
+      "email": data.email,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Rua Haddock Lobo, 595",
+        "addressLocality": data.city,
+        "addressRegion": data.state,
+        "postalCode": "01414-001",
+        "addressCountry": "BR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": data.lat,
+        "longitude": data.lng
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+          "opens": "08:00",
+          "closes": "19:00"
+        }
+      ],
+      "priceRange": "$$",
+      "sameAs": [`https://www.instagram.com/dranamello.psi`],
+      "knowsAbout": [
+        "Terapia Cognitivo-Comportamental",
+        "Terapia de Casal",
+        "Ansiedade",
+        "Depressão",
+        "Burnout",
+        "Saúde Mental"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${data.siteUrl}/#faq`,
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Quanto custa uma sessão de psicologia em São Paulo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O valor de uma sessão de psicologia em São Paulo varia entre R$150 e R$400, dependendo da especialização e localização do profissional. Na consulta inicial, conversamos sobre suas necessidades e alinhamos os detalhes do investimento."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Psicólogo online funciona igual ao presencial?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim. Pesquisas clínicas mostram que a psicoterapia online tem eficácia equivalente ao atendimento presencial para a maioria das queixas, incluindo ansiedade, depressão e burnout. A diferença é apenas logística — você pode ser atendido do lugar que preferir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qual a diferença entre psicólogo e psiquiatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O psicólogo realiza acompanhamento psicoterápico — trabalha com comportamento, pensamentos e emoções. O psiquiatra é médico e pode prescrever medicação. Nos casos em que há necessidade, ambos trabalham em conjunto, cada um com seu papel específico."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Em quanto tempo a terapia faz efeito?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Os primeiros resultados da TCC costumam aparecer entre 8 e 12 sessões, quando questões mais urgentes — como crises de ansiedade ou padrões de pensamento negativos — já começam a ceder. O processo mais profundo varia de acordo com o histórico e os objetivos de cada pessoa."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Preciso de encaminhamento médico para consultar um psicólogo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Não. Qualquer pessoa pode agendar uma sessão diretamente com o psicólogo, sem necessidade de encaminhamento médico. Basta entrar em contato e agendar sua primeira conversa."
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const title       = 'Psicóloga em São Paulo — Dra. Ana Mello | TCC e Terapia de Casal';
+const description = 'Psicóloga clínica em Jardins, São Paulo. Especialista em TCC, ansiedade, burnout e terapia de casal. Atendimento presencial e online. CRP 06/123456.';
+---
+
+<Layout
+  title={title}
+  description={description}
+  slug={data.slug}
+  siteUrl={data.siteUrl}
+  businessName={data.businessName}
+  city={data.city}
+  state={data.state}
+  phone={data.phone}
+  address={data.address}
+  instagram={data.instagram}
+  lat={data.lat}
+  lng={data.lng}
+  schemaType="ProfessionalService"
+  schemaJson={JSON.stringify(schemaObj)}
+>
+  <main id="main">
+
+    <Nav
+      businessName={data.businessName}
+      phone={data.phone}
+      phoneClean={data.phoneClean}
+    />
+
+    <Hero
+      headline="Viver com menos ansiedade é possível — com o suporte certo."
+      subheadline="Psicóloga especialista em TCC e terapia de casal. Consultório em Jardins, São Paulo, e atendimento online para todo o Brasil."
+      credential={data.credential}
+      phone={data.phone}
+      phoneClean={data.phoneClean}
+      photoAlt="Dra. Ana Mello, psicóloga em São Paulo"
+      city={data.city}
+    />
+
+    <PainPoints
+      point1="Você acorda já cansada, com a mente acelerada e sem conseguir desligar — mesmo nos momentos em que deveria descansar."
+      point2="Os mesmos conflitos se repetem no relacionamento, e cada tentativa de conversa termina da mesma forma, sem resolução."
+      point3="O trabalho consome tudo, mas por dentro você sente que está operando no limite — e não sabe bem como chegou até aqui."
+    />
+
+    <About
+      name="Dra. Ana Mello"
+      headline="Uma psicóloga que acredita no poder das perguntas certas."
+      body="Me formei em Psicologia pela USP e me especializei em Terapia Cognitivo-Comportamental porque acredito que entender como pensamos é o primeiro passo para mudar como nos sentimos. Ao longo de 8 anos de clínica, trabalhei com pessoas que chegaram com ansiedade paralisante, relacionamentos desgastados e esgotamento profissional — e que encontraram, no processo terapêutico, ferramentas reais para retomar o controle das próprias vidas. Não acredito em respostas prontas. Acredito em escuta atenta, em perguntas que abrem possibilidades e em um espaço onde você pode ser honesta — consigo mesma e com o que está vivendo. Atendo adultos individualmente e casais, presencialmente em Jardins ou por videochamada."
+      pullQuote="A terapia não muda o que aconteceu. Muda o que você faz com isso a partir de agora."
+      credential="CRP 06/123456 · Pós-graduada em TCC (PUC-SP) · Membro do CFP · 8 anos de experiência clínica"
+      photoAlt="Dra. Ana Mello em seu consultório em Jardins, São Paulo"
+    />
+
+    <Services
+      headline="Caminhos que ofereço."
+      services={[
+        {
+          name: 'Terapia Individual',
+          tag: 'Presencial · Online',
+          description: 'Sessões semanais com foco em ansiedade, depressão, burnout e autoconhecimento. Usamos a TCC para identificar padrões de pensamento e construir estratégias práticas de mudança.',
+        },
+        {
+          name: 'Terapia de Casal',
+          tag: 'Presencial · Online',
+          description: 'Espaço estruturado para que dois parceiros consigam se ouvir, entender o que está travando a comunicação e reconstruir a conexão — sem que nenhum precise "ganhar" a discussão.',
+        },
+        {
+          name: 'Orientação para Burnout',
+          tag: 'Especialidade',
+          description: 'Para quem está no limite com o trabalho: identificamos os gatilhos, ajustamos expectativas e construímos um plano de recuperação que respeita o seu ritmo, sem romantizar o "descanso forçado".',
+        },
+      ]}
+    />
+
+    <Process
+      headline="Como começa o nosso trabalho."
+      steps={[
+        {
+          name: 'Primeira conversa',
+          description: 'Uma sessão de 50 minutos para você me contar o que está vivendo. Sem julgamento, sem pressa. Avalio juntos com você se faz sentido seguirmos.',
+        },
+        {
+          name: 'Definimos o foco',
+          description: 'A partir do que emergiu na primeira sessão, alinhamos um contrato terapêutico: o que queremos trabalhar, em que ritmo e com qual abordagem.',
+        },
+        {
+          name: 'Sessões semanais',
+          description: 'Encontros de 50 minutos, no dia e horário que combinamos. O processo é colaborativo — você traz o que viveu; trabalhamos juntos no que significa.',
+        },
+      ]}
+    />
+
+    <Testimonials
+      quote1="Eu cheguei com crises de ansiedade que me impediam de trabalhar. Em quatro meses de TCC com a Ana, aprendi a identificar o que disparava esses episódios e a agir antes de entrar em colapso. Não foi mágica — foi processo. Mas foi real."
+      author1="Marina T. · Engenheira · Paciente desde 2023"
+      quote2="Buscamos a terapia de casal quando já estávamos quase desistindo. O que mudou foi simples: aprendemos a nos ouvir de verdade. A Ana cria um espaço onde os dois conseguem falar sem o outro entrar na defensiva."
+      author2="Rafael e Camila · São Paulo"
+    />
+
+    <FAQ
+      headline="O que você talvez queira saber antes de agendar."
+      faqs={[
+        {
+          question: 'Quanto custa uma sessão de psicologia em São Paulo?',
+          answer: 'O valor das sessões é alinhado na primeira conversa, de acordo com o formato (individual ou casal) e a frequência. Entre em contato para saber os valores atuais — também avaliamos possibilidades de plano de saúde para reembolso.',
+        },
+        {
+          question: 'Psicólogo online funciona igual ao presencial?',
+          answer: 'Sim. Pesquisas clínicas mostram eficácia equivalente para a maioria das queixas, incluindo ansiedade, depressão e burnout. A diferença é apenas logística — você pode ser atendida do lugar que preferir, inclusive de outra cidade ou país.',
+        },
+        {
+          question: 'Qual a diferença entre psicólogo e psiquiatra?',
+          answer: 'O psicólogo realiza acompanhamento psicoterápico — trabalha com comportamentos, pensamentos e emoções através da conversa. O psiquiatra é médico e pode prescrever medicação quando necessário. Nos casos que exigem os dois, trabalho em comunicação com o psiquiatra do paciente.',
+        },
+        {
+          question: 'Em quanto tempo a terapia começa a fazer diferença?',
+          answer: 'Na TCC, resultados iniciais costumam aparecer entre a 6ª e a 12ª sessão — quando padrões de pensamento mais rígidos começam a ceder e estratégias práticas já estão em uso. O processo mais profundo varia de pessoa para pessoa.',
+        },
+        {
+          question: 'Preciso de encaminhamento médico para agendar?',
+          answer: 'Não. Qualquer pessoa pode marcar diretamente, sem encaminhamento. Se você já tem acompanhamento psiquiátrico, ótimo — trabalharemos em conjunto. Se não tem, avaliamos juntos se faz sentido buscar essa complementaridade.',
+        },
+      ]}
+    />
+
+    <FinalCTA
+      headline="Quando você estiver pronta, estarei aqui."
+      subtext="Agende uma primeira conversa. Cinquenta minutos para entendermos o que está acontecendo — sem compromisso de continuidade se não fizer sentido."
+      buttonText="Agendar primeira sessão"
+      phone={data.phone}
+      phoneClean={data.phoneClean}
+      email={data.email}
+      address={data.address}
+    />
+
+    <Footer
+      businessName={data.businessName}
+      credential="CRP 06/123456 · São Paulo, SP"
+      city={data.city}
+      state={data.state}
+      address={data.address}
+      phone={data.phone}
+      email={data.email}
+      instagram={data.instagram}
+      year={new Date().getFullYear()}
+    />
+
+  </main>
+</Layout>

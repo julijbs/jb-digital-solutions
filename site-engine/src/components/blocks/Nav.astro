@@ -1,0 +1,78 @@
+---
+export interface Props {
+  businessName: string;
+  phone:        string;
+  phoneClean:   string;
+}
+const { businessName, phone, phoneClean } = Astro.props;
+---
+
+<header role="banner" class="nav-bar">
+  <div class="section-wrap nav-inner">
+    <a href="#hero" class="nav-logo" aria-label={`${businessName} — início`}>
+      {businessName}
+    </a>
+    <nav role="navigation" aria-label="Menu principal">
+      <ul class="nav-links">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <a
+      href={`https://wa.me/55${phoneClean}`}
+      class="btn btn-primary nav-cta"
+      aria-label={`Agendar conversa via WhatsApp — ${phone}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Agendar conversa
+    </a>
+  </div>
+</header>
+
+<style>
+  .nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(244, 242, 237, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid #DDD9D0;
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1rem;
+    gap: 1.5rem;
+  }
+  .nav-logo {
+    font-family: var(--font-serif, 'Fraunces', serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1E2733;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2rem;
+  }
+  .nav-links a {
+    font-size: 0.9375rem;
+    color: #5A6475;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: #1E2733; }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .nav-cta { padding: 0.625rem 1.125rem; font-size: 0.875rem; }
+  }
+</style>
