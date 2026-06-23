@@ -33,6 +33,7 @@ import AdminMaintenance from "./pages/admin/AdminMaintenance";
 import AdminFeedback from "./pages/admin/AdminFeedback";
 import AdminChurnAlerts from "./pages/admin/AdminChurnAlerts";
 import AdminSiteDiagnosis from "./pages/admin/AdminSiteDiagnosis";
+import AdminGBPDiagnosis from "./pages/admin/AdminGBPDiagnosis";
 import ClientFeedback from "./pages/ClientFeedback";
 import SiteGbp from "./pages/services/SiteGbp";
 import NotFound from "./pages/NotFound";
@@ -79,6 +80,7 @@ const App = () => (
             <Route path="/admin/feedback" element={<ProtectedRoute requiredRole="admin_jb"><AdminFeedback /></ProtectedRoute>} />
             <Route path="/admin/churn-alerts" element={<ProtectedRoute requiredRole="admin_jb"><AdminChurnAlerts /></ProtectedRoute>} />
             <Route path="/admin/site-diagnosis" element={<ProtectedRoute requiredRole="admin_jb"><AdminSiteDiagnosis /></ProtectedRoute>} />
+            <Route path="/admin/gbp-diagnosis" element={<ProtectedRoute requiredRole="admin_jb"><AdminGBPDiagnosis /></ProtectedRoute>} />
 
             {/* Serviços públicos */}
             <Route path="/servicos/site-gbp" element={<SiteGbp />} />

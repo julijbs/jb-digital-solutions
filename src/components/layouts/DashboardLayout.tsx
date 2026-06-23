@@ -50,6 +50,7 @@ const adminSections = [
     items: [
       { href: "/admin/site-generator", label: "Gerar Site com IA", icon: Sparkles },
       { href: "/admin/site-diagnosis", label: "Diagnóstico de Site", icon: Search },
+      { href: "/admin/gbp-diagnosis", label: "Diagnóstico GBP", icon: Star },
       { href: "/admin/pipeline", label: "Pipeline", icon: FolderKanban },
       { href: "/admin/prompt-generator", label: "Gerador de Prompt", icon: FileText },
     ],
