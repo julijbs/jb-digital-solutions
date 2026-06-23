@@ -1,0 +1,137 @@
+---
+/**
+ * ProcessVerticalTimeline — Variante B · Fresh Clinical
+ * Layout: timeline vertical com linha conectora e números circulares.
+ * Contraste com ProcessHorizontalSteps: vertical/fluido vs. horizontal/grid.
+ * Regras: zero JS · WCAG AA · hand-CSS
+ */
+export interface Props {
+  headline: string;
+  steps: { name: string; description: string }[];
+}
+
+const { headline, steps } = Astro.props;
+---
+
+<section class="proc-vt" aria-labelledby="proc-vt-heading">
+  <div class="proc-vt-inner">
+
+    <div class="proc-vt-header">
+      <h2 id="proc-vt-heading" class="proc-vt-heading">{headline}</h2>
+    </div>
+
+    <ol class="proc-vt-list">
+      {steps.map((step, i) => (
+        <li class="proc-vt-item">
+          <div class="proc-vt-number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</div>
+          <div class="proc-vt-content">
+            <h3 class="proc-vt-name">{step.name}</h3>
+            <p class="proc-vt-desc">{step.description}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+  </div>
+</section>
+
+<style>
+  .proc-vt {
+    --fc-primary: #2D6A4F;
+    --fc-accent: #52B788;
+    --fc-surface: #F7F9F7;
+    --fc-text: #1A2318;
+    --fc-text-muted: #4A6358;
+    --fc-border: #C8DDD1;
+    background: var(--fc-surface);
+    padding: clamp(3rem, 6vw, 5rem) 1.25rem;
+  }
+
+  .proc-vt-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .proc-vt-heading {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2.125rem);
+    font-weight: 400;
+    color: var(--fc-primary);
+    margin: 0;
+    text-align: center;
+  }
+
+  .proc-vt-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  /* Linha conectora vertical */
+  .proc-vt-list::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    bottom: 28px;
+    left: 19px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--fc-accent), color-mix(in srgb, var(--fc-accent) 30%, transparent));
+  }
+
+  .proc-vt-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 0 0 2.5rem;
+    position: relative;
+  }
+  .proc-vt-item:last-child { padding-bottom: 0; }
+
+  .proc-vt-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--fc-accent);
+    color: #fff;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .proc-vt-content {
+    padding-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .proc-vt-name {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: var(--fc-primary);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .proc-vt-desc {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    color: var(--fc-text);
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,119 @@
+---
+/**
+ * TestimonialsCardGrid — Variante B · Fresh Clinical
+ * Layout: 3 cards em grid sobre fundo verde escuro.
+ * Contraste com TestimonialsPullQuote: cards/grid vs. pull-quote/full-width.
+ * Regras: zero JS · WCAG AA (branco sobre #1B4332 = 12:1) · hand-CSS
+ */
+export interface Props {
+  quotes: { text: string; author: string; context?: string }[];
+  sectionLabel?: string;
+}
+
+const { quotes, sectionLabel = 'O que dizem as pacientes' } = Astro.props;
+---
+
+<section class="test-cg" aria-labelledby="test-cg-heading">
+  <div class="test-cg-inner">
+
+    <h2 id="test-cg-heading" class="test-cg-heading">{sectionLabel}</h2>
+
+    <ul class="test-cg-grid" role="list">
+      {quotes.slice(0, 3).map((q) => (
+        <li class="test-cg-card">
+          <blockquote class="test-cg-blockquote">
+            <p class="test-cg-text">"{q.text}"</p>
+            <footer class="test-cg-footer">
+              <cite class="test-cg-author">{q.author}</cite>
+              {q.context && <span class="test-cg-context"> · {q.context}</span>}
+            </footer>
+          </blockquote>
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</section>
+
+<style>
+  .test-cg {
+    --fc-green-break: #1B4332;
+    --fc-accent: #52B788;
+    --fc-border-light: rgba(255,255,255,.15);
+    background: var(--fc-green-break);
+    padding: clamp(3rem, 6vw, 5rem) 1.25rem;
+  }
+
+  .test-cg-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .test-cg-heading {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.375rem, 2.5vw, 1.875rem);
+    font-weight: 400;
+    color: #fff;
+    margin: 0;
+    text-align: center;
+  }
+
+  .test-cg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .test-cg-card {
+    border: 1px solid var(--fc-border-light);
+    border-radius: 8px;
+    padding: 1.75rem;
+  }
+
+  .test-cg-blockquote {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    height: 100%;
+  }
+
+  .test-cg-text {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1rem;
+    font-style: italic;
+    line-height: 1.7;
+    color: rgba(255,255,255,.92);
+    margin: 0;
+    flex: 1;
+  }
+
+  .test-cg-footer {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.8125rem;
+  }
+
+  .test-cg-author {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--fc-accent);
+  }
+
+  .test-cg-context {
+    color: rgba(255,255,255,.55);
+  }
+
+  @media (max-width: 768px) {
+    .test-cg-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

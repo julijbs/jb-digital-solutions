@@ -1,0 +1,159 @@
+---
+/**
+ * AboutSideBySide — Variante B · Fresh Clinical
+ * Layout: foto à esquerda (rectangular, não offset), texto à direita.
+ * Sem pull-quote em bloco isolado — integrada ao parágrafo como destaque em itálico.
+ * Regras: zero JS · WCAG AA · hand-CSS
+ */
+export interface Props {
+  name: string;
+  headline: string;
+  body: string;
+  credential: string;
+  photoAlt: string;
+  photoSrc?: string;
+  /** Frase de destaque integrada ao corpo (opcional) */
+  highlightLine?: string;
+}
+
+const { name, headline, body, credential, photoAlt, photoSrc, highlightLine } = Astro.props;
+---
+
+<section class="about-ss" aria-labelledby="about-ss-heading">
+  <div class="about-ss-inner">
+
+    <!-- Foto -->
+    <div class="about-ss-media">
+      {photoSrc
+        ? <img src={photoSrc} alt={photoAlt} class="about-ss-photo" width="420" height="520" loading="lazy" decoding="async" />
+        : <div class="about-ss-placeholder" role="img" aria-label={photoAlt}>
+            <span>Foto profissional</span>
+          </div>
+      }
+    </div>
+
+    <!-- Texto -->
+    <div class="about-ss-content">
+      <p class="about-ss-label">Sobre {name.split(' ').slice(0, 2).join(' ')}</p>
+      <h2 id="about-ss-heading" class="about-ss-heading">{headline}</h2>
+      <p class="about-ss-body">{body}</p>
+      {highlightLine && (
+        <p class="about-ss-highlight">"{highlightLine}"</p>
+      )}
+      <p class="about-ss-cred">{credential}</p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .about-ss {
+    --fc-primary: #2D6A4F;
+    --fc-accent: #52B788;
+    --fc-surface: #F7F9F7;
+    --fc-text: #1A2318;
+    --fc-text-muted: #4A6358;
+    --fc-border: #C8DDD1;
+    background: var(--fc-surface);
+    padding: clamp(3rem, 6vw, 5rem) 1.25rem;
+  }
+
+  .about-ss-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* Foto */
+  .about-ss-media {
+    position: relative;
+  }
+
+  .about-ss-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+    object-fit: cover;
+  }
+
+  .about-ss-placeholder {
+    width: 100%;
+    aspect-ratio: 4/5;
+    border-radius: 8px;
+    border: 2px dashed var(--fc-border);
+    background: var(--fc-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: var(--fc-text-muted);
+  }
+
+  /* Conteúdo */
+  .about-ss-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-top: 0.5rem;
+  }
+
+  .about-ss-label {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--fc-accent);
+    margin: 0;
+  }
+
+  .about-ss-heading {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2.125rem);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--fc-primary);
+    margin: 0;
+  }
+
+  .about-ss-body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--fc-text);
+    margin: 0;
+  }
+
+  .about-ss-highlight {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.125rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--fc-primary);
+    border-left: 3px solid var(--fc-accent);
+    padding-left: 1.25rem;
+    margin: 0;
+  }
+
+  .about-ss-cred {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: var(--fc-text-muted);
+    letter-spacing: 0.02em;
+    margin: 0;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--fc-border);
+  }
+
+  @media (max-width: 768px) {
+    .about-ss-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

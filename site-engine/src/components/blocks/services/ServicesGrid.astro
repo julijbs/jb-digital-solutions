@@ -1,0 +1,152 @@
+---
+/**
+ * ServicesGrid — Variante B · Fresh Clinical
+ * Layout: 2 colunas de cards (ícone SVG inline + nome + tag + descrição).
+ * Contraste com ServicesTypoList: visual/grid vs. tipográfico/lista.
+ * Regras: zero JS · WCAG AA · hand-CSS
+ */
+export interface Props {
+  headline: string;
+  services: { name: string; tag: string; description: string; icon?: 'leaf' | 'heart' | 'chart' | 'baby' | 'apple' | 'dna' }[];
+}
+
+const { headline, services } = Astro.props;
+
+const icons: Record<string, string> = {
+  leaf:  `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C6 2 3 8 3 12c0 4.5 3.5 8 9 9 5.5-1 9-4.5 9-9C21 8 18 2 12 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 21V12M12 12C9 10 6 9 3 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  heart: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21C12 21 3 15 3 9a5 5 0 0110-1 5 5 0 0110 1c0 6-9 12-9 12H12z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  chart: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 20h18M7 20V12m4 8V8m4 12V4m4 16v-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  baby:  `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M5 20a7 7 0 0114 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  apple: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3c0 0-1-2 2-2M9 7c-2.5 0-5 2.5-5 7s3 7 5 7 3-2 5-2 3 2 5 2 5-2 5-7-2.5-7-5-7c-1 0-2 .5-3 1-1-.5-2-1-3-1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  dna:   `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3c0 5 12 5 12 9S6 17 6 21M18 3c0 5-12 5-12 9s12 5 12 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 8h12M6 16h12" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>`,
+};
+---
+
+<section class="svc-grid" aria-labelledby="svc-grid-heading" id="servicos">
+  <div class="svc-grid-inner">
+
+    <h2 id="svc-grid-heading" class="svc-grid-heading">{headline}</h2>
+
+    <ul class="svc-list" role="list">
+      {services.map((svc) => (
+        <li class="svc-card">
+          <span class="svc-icon" set:html={icons[svc.icon ?? 'leaf']} />
+          <div class="svc-text">
+            <div class="svc-header">
+              <h3 class="svc-name">{svc.name}</h3>
+              <span class="svc-tag">{svc.tag}</span>
+            </div>
+            <p class="svc-desc">{svc.description}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</section>
+
+<style>
+  .svc-grid {
+    --fc-primary: #2D6A4F;
+    --fc-accent: #52B788;
+    --fc-surface-alt: #EAF2EE;
+    --fc-border: #C8DDD1;
+    --fc-text: #1A2318;
+    --fc-text-muted: #4A6358;
+    background: var(--fc-surface-alt);
+    padding: clamp(3rem, 6vw, 5rem) 1.25rem;
+  }
+
+  .svc-grid-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .svc-grid-heading {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2.125rem);
+    font-weight: 400;
+    color: var(--fc-primary);
+    margin: 0;
+    text-align: center;
+  }
+
+  .svc-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .svc-card {
+    background: #fff;
+    border: 1px solid var(--fc-border);
+    border-radius: 8px;
+    padding: 1.75rem;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .svc-icon {
+    display: block;
+    width: 28px;
+    height: 28px;
+    color: var(--fc-accent);
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .svc-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .svc-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .svc-name {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: var(--fc-primary);
+    margin: 0;
+  }
+
+  .svc-tag {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--fc-accent);
+    background: color-mix(in srgb, var(--fc-accent) 12%, transparent);
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .svc-desc {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--fc-text);
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .svc-list { grid-template-columns: 1fr; }
+  }
+</style>

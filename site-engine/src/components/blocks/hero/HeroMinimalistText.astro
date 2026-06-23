@@ -1,0 +1,161 @@
+---
+/**
+ * HeroMinimalistText — Variante C · sem foto · qualquer mood
+ * Layout: texto em 2 colunas tipográficas, sem imagem. Para profissionais
+ * sem foto disponível ou nichos onde copy > visual (ex: advogado, contador).
+ * Regras: zero JS · WCAG AA · Lighthouse-tuned · hand-CSS
+ */
+export interface Props {
+  headline: string;
+  subheadline: string;
+  credential: string;
+  phone: string;
+  phoneClean: string;
+  city: string;
+  /** Cor primária do mood — ex: #3E5C76 (Calm Trust) ou #2D6A4F (Fresh Clinical) */
+  colorPrimary?: string;
+  /** Cor de destaque do mood — ex: #C08552 ou #52B788 */
+  colorAccent?: string;
+  /** Cor do fundo — ex: #F4F2ED ou #F7F9F7 */
+  colorSurface?: string;
+  /** Fonte display — ex: 'Fraunces' ou 'DM Serif Display' */
+  fontDisplay?: string;
+  /** Fonte body — ex: 'Inter' ou 'DM Sans' */
+  fontBody?: string;
+}
+
+const {
+  headline, subheadline, credential, phone, phoneClean, city,
+  colorPrimary = '#3E5C76',
+  colorAccent  = '#C08552',
+  colorSurface = '#F4F2ED',
+  fontDisplay  = 'Fraunces',
+  fontBody     = 'Inter',
+} = Astro.props;
+---
+
+<section
+  class="hero-mt"
+  style={`--mt-primary:${colorPrimary};--mt-accent:${colorAccent};--mt-surface:${colorSurface};--mt-font-display:'${fontDisplay}';--mt-font-body:'${fontBody}';`}
+  aria-label="Apresentação"
+>
+  <div class="hero-mt-inner">
+
+    <div class="hero-mt-left">
+      <p class="hero-mt-tag">{city}</p>
+      <h1 class="hero-mt-headline">{headline}</h1>
+      <a href={`tel:${phoneClean}`} class="btn-primary-mt">
+        Agendar consulta
+      </a>
+    </div>
+
+    <div class="hero-mt-right">
+      <p class="hero-mt-sub">{subheadline}</p>
+      <p class="hero-mt-cred">{credential}</p>
+      <p class="hero-mt-phone">
+        <a href={`tel:${phoneClean}`}>{phone}</a>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .hero-mt {
+    background: var(--mt-surface);
+    border-bottom: 1px solid color-mix(in srgb, var(--mt-primary) 15%, transparent);
+    padding: clamp(3.5rem, 7vw, 6rem) 1.25rem;
+  }
+
+  .hero-mt-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem 4rem;
+    align-items: start;
+  }
+
+  /* Tag */
+  .hero-mt-tag {
+    font-family: var(--mt-font-body), system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--mt-accent);
+    margin: 0 0 1.25rem;
+  }
+
+  /* Headline */
+  .hero-mt-headline {
+    font-family: var(--mt-font-display), Georgia, serif;
+    font-size: clamp(2.25rem, 4.5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--mt-primary);
+    margin: 0 0 2rem;
+  }
+
+  /* CTA */
+  .btn-primary-mt {
+    display: inline-block;
+    background: var(--mt-accent);
+    color: #fff;
+    font-family: var(--mt-font-body), system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    padding: 0.875rem 2rem;
+    border-radius: 999px;
+    text-decoration: none;
+  }
+  .btn-primary-mt:hover { filter: brightness(0.9); }
+  .btn-primary-mt:focus-visible {
+    outline: 3px solid var(--mt-accent);
+    outline-offset: 2px;
+  }
+
+  /* Right column */
+  .hero-mt-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-top: 0.5rem;
+  }
+
+  .hero-mt-sub {
+    font-family: var(--mt-font-body), system-ui, sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: #1A1A1A;
+    margin: 0;
+  }
+
+  .hero-mt-cred {
+    font-family: var(--mt-font-body), system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: color-mix(in srgb, var(--mt-primary) 60%, #000);
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+
+  .hero-mt-phone {
+    font-family: var(--mt-font-body), system-ui, sans-serif;
+    font-size: 0.875rem;
+    margin: 0;
+  }
+  .hero-mt-phone a {
+    color: var(--mt-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 500;
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .hero-mt-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

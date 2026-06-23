@@ -1,0 +1,174 @@
+---
+/**
+ * FinalCTASplitAction — Variante B · Fresh Clinical
+ * Layout: texto à esquerda (headline + benefícios) + ação à direita (telefone + email + endereço).
+ * Contraste com FinalCTACenteredEditorial: split/funcional vs. centrado/emocional.
+ * Regras: zero JS · WCAG AA · hand-CSS
+ */
+export interface Props {
+  headline: string;
+  subtext: string;
+  benefits?: string[];
+  buttonText: string;
+  phone: string;
+  phoneClean: string;
+  email: string;
+  address: string;
+}
+
+const {
+  headline, subtext, benefits = [], buttonText, phone, phoneClean, email, address
+} = Astro.props;
+---
+
+<section class="cta-sa" aria-labelledby="cta-sa-heading">
+  <div class="cta-sa-inner">
+
+    <!-- Esquerda: copy -->
+    <div class="cta-sa-left">
+      <h2 id="cta-sa-heading" class="cta-sa-heading">{headline}</h2>
+      <p class="cta-sa-sub">{subtext}</p>
+      {benefits.length > 0 && (
+        <ul class="cta-sa-benefits">
+          {benefits.map((b) => (
+            <li class="cta-sa-benefit">
+              <span class="cta-check" aria-hidden="true">✓</span>
+              {b}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    <!-- Direita: ação -->
+    <div class="cta-sa-right">
+      <a href={`tel:${phoneClean}`} class="btn-primary-sa">
+        {buttonText}
+      </a>
+      <p class="cta-sa-phone">
+        <a href={`tel:${phoneClean}`}>{phone}</a>
+      </p>
+      <p class="cta-sa-email">
+        <a href={`mailto:${email}`}>{email}</a>
+      </p>
+      <address class="cta-sa-address">{address}</address>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .cta-sa {
+    --fc-primary: #2D6A4F;
+    --fc-accent: #52B788;
+    --fc-surface-alt: #EAF2EE;
+    --fc-text: #1A2318;
+    --fc-text-muted: #4A6358;
+    --fc-border: #C8DDD1;
+    background: var(--fc-surface-alt);
+    padding: clamp(3rem, 6vw, 5rem) 1.25rem;
+    border-top: 1px solid var(--fc-border);
+  }
+
+  .cta-sa-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  /* Left */
+  .cta-sa-heading {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.625rem, 3.5vw, 2.5rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--fc-primary);
+    margin: 0 0 1rem;
+  }
+
+  .cta-sa-sub {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--fc-text);
+    margin: 0 0 1.25rem;
+  }
+
+  .cta-sa-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .cta-sa-benefit {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    color: var(--fc-text);
+    display: flex;
+    gap: 0.625rem;
+    align-items: baseline;
+  }
+
+  .cta-check {
+    color: var(--fc-accent);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* Right */
+  .cta-sa-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+    background: #fff;
+    border: 1px solid var(--fc-border);
+    border-radius: 8px;
+  }
+
+  .btn-primary-sa {
+    display: block;
+    background: var(--fc-accent);
+    color: #fff;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    padding: 0.9375rem 1.5rem;
+    border-radius: 999px;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+  }
+  .btn-primary-sa:hover { background: #3ea06a; }
+  .btn-primary-sa:focus-visible {
+    outline: 3px solid var(--fc-accent);
+    outline-offset: 2px;
+  }
+
+  .cta-sa-phone, .cta-sa-email, .cta-sa-address {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: var(--fc-text-muted);
+    margin: 0;
+    font-style: normal;
+  }
+  .cta-sa-phone a, .cta-sa-email a {
+    color: var(--fc-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .cta-sa-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>
