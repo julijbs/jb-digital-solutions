@@ -22,16 +22,16 @@ export const FinalCTA = () => {
           className="mx-auto max-w-2xl"
         >
           <h2 className="font-serif text-3xl md:text-5xl">
-            Você está a um passo de ter sua{" "}
-            <span className="gold-gradient-text">presença digital profissional</span>
+            Seu próximo paciente está pesquisando agora.{" "}
+            <span className="gold-gradient-text">Você vai aparecer?</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            Pare de depender de algoritmos que mudam toda semana. Tenha seu próprio espaço, seja encontrado por quem realmente precisa de você e construa autoridade digital de forma ética e sustentável.
+            Em 7 dias você tem um site profissional e um Perfil Google completo — visível para quem procura pelo seu serviço na sua cidade, sem mensalidade e sem depender de redes sociais.
           </p>
 
           <div className="mt-8">
             <Button variant="hero" size="default" className="gap-2 text-sm md:text-base md:px-8 md:py-6" onClick={() => navigate("/signup")}>
-              Começar minha Presença Google agora <ArrowRight size={16} />
+              Quero aparecer no Google agora <ArrowRight size={16} />
             </Button>
           </div>
 

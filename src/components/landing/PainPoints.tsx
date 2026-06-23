@@ -4,18 +4,18 @@ import { Search, Smartphone, DollarSign } from "lucide-react";
 const pains = [
   {
     icon: Search,
-    title: '"Ninguém me encontra no Google"',
-    text: "Você investe tempo criando conteúdo, mas quando alguém procura pelo seu serviço na sua região, você simplesmente não aparece. É como se você não existisse.",
+    title: '"Alguém procurou nutricionista aqui perto — e não me achou"',
+    text: "Você estudou anos para isso. Tem resultado real com seus pacientes. Mas quando alguém abre o Google e digita 'nutricionista em [sua cidade]', aparece o consultório do lado — não o seu.",
   },
   {
     icon: Smartphone,
-    title: '"Dependo das redes sociais"',
-    text: "Você sente que precisa postar todo dia para existir profissionalmente. Se parar de alimentar o algoritmo, desaparece. É exaustivo.",
+    title: '"Minha agenda depende de indicação — e isso me deixa inseguro"',
+    text: "Indicação é ótima. Mas ela seca quando você menos espera. E aí você volta a postar nas redes, fazer stories, torcer para o algoritmo ajudar — sem previsibilidade nenhuma.",
   },
   {
     icon: DollarSign,
-    title: '"Não tenho verba para marketing"',
-    text: "Agências cobram mensalidades altas, sites prontos são genéricos e você não sabe por onde começar para ter uma presença digital profissional e acessível.",
+    title: '"Tenho um site, mas ele não traz nenhum paciente"',
+    text: "O site existe. Está bonito, até. Mas não aparece no Google, não tem seu telefone visível no Maps, não tem avaliações. Para quem pesquisa online, é como se você não tivesse consultório.",
   },
 ];
 
@@ -31,7 +31,7 @@ export const PainPoints = () => {
           className="mx-auto mb-14 max-w-2xl text-center"
         >
           <h2 className="font-serif text-3xl md:text-4xl">
-            Talvez você reconheça esses sinais...
+            Isso soa familiar?
           </h2>
         </motion.div>
 
@@ -59,7 +59,7 @@ export const PainPoints = () => {
           transition={{ delay: 0.4 }}
           className="mx-auto mt-12 max-w-xl text-center text-lg text-primary"
         >
-          E se existisse um caminho mais simples, ético e sustentável?
+          O problema não é a sua competência. É que o Google não sabe que você existe.
         </motion.p>
       </div>
     </section>

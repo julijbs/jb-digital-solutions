@@ -78,10 +78,10 @@ const navItems = [
 const SiteGbp = () => (
   <div className="min-h-screen bg-background">
     <Helmet>
-      <title>Site + Google — JB Digital Consulting</title>
+      <title>Apareça no Google — Site + Perfil Google para Profissionais de Saúde</title>
       <meta
         name="description"
-        content="Site profissional otimizado para Google e IA (AEO). Seja encontrado e recomendado pelo Google, ChatGPT e Gemini. Entrega em 7 dias, sem mensalidade."
+        content="Site profissional + Perfil Google completo para nutricionistas, psicólogos, fisioterapeutas e profissionais de saúde. Seja encontrado por pacientes da sua cidade. Entrega em 7 dias, sem mensalidade."
       />
       <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       <script type="application/ld+json">{JSON.stringify(orgSchema)}</script>
@@ -109,7 +109,7 @@ const SiteGbp = () => (
     </main>
 
     <SiteFooter
-      tagline="Presença Google Essencial — site profissional + GBP para profissionais liberais."
+      tagline="Site profissional + Perfil Google para nutricionistas, psicólogos, fisioterapeutas e profissionais de saúde."
     />
     <MobileCTA />
   </div>

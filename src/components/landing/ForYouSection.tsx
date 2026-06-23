@@ -2,12 +2,12 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 
 const items = [
-  "Você é psicólogo(a), terapeuta, nutricionista ou profissional liberal",
-  "Atende presencialmente ou online e quer ser encontrado na sua região",
-  "Ainda não tem um site ou seu site atual não te ajuda a atrair clientes",
-  "Quer reduzir a dependência das redes sociais e ter um espaço seu",
-  "Busca uma solução ética, profissional e sem complicação técnica",
-  "Não quer (ou não pode) pagar mensalidades de hospedagem ou gestão",
+  "Você é nutricionista, psicólogo(a), fisioterapeuta, fonoaudiólogo(a), médico(a) ou terapeuta",
+  "Atende presencialmente e quer que pacientes da sua cidade te encontrem no Google",
+  "Sua agenda ainda depende muito de indicação e você quer mudar isso",
+  "Não tem site — ou tem um que não aparece no Google e não traz ninguém",
+  "Não quer pagar agência todo mês nem aprender a mexer em ferramentas técnicas",
+  "Quer ter presença profissional real sem depender de stories e algoritmo",
 ];
 
 export const ForYouSection = () => {
@@ -22,7 +22,7 @@ export const ForYouSection = () => {
           className="mx-auto mb-12 max-w-2xl text-center"
         >
           <h2 className="font-serif text-3xl md:text-4xl">
-            Esse serviço é para você se...
+            Este serviço foi feito para você se...
           </h2>
         </motion.div>
 

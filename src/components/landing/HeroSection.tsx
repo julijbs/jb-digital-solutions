@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 const trustBadges = [
   "Entrega em até 7 dias",
-  "Hospedagem inclusa",
+  "Hospedagem inclusa para sempre",
   "Sem mensalidades",
-  "Otimizado para IA (AEO)",
+  "Visível no Google Maps",
 ];
 
 export const HeroSection = () => {
@@ -24,18 +24,17 @@ export const HeroSection = () => {
           className="mx-auto max-w-3xl text-center"
         >
           <h1 className="font-serif text-4xl leading-tight md:text-5xl lg:text-6xl">
-            Você merece ser encontrado por quem{" "}
-            <span className="gold-gradient-text">realmente precisa de você</span>
+            Seu consultório aparece no Google quando{" "}
+            <span className="gold-gradient-text">o paciente está procurando por você</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            Transforme sua presença digital em uma ferramenta de conexão verdadeira
-            — sem depender de redes sociais, sem complicação técnica,
-            sem gastar fortunas todo mês.
+            Para nutricionistas, psicólogos, fisioterapeutas e profissionais de saúde que
+            atendem presencialmente — e ainda dependem de indicação para lotar a agenda.
           </p>
 
           <div className="mt-10">
             <Button variant="hero" size="default" className="gap-2 text-sm md:text-base md:px-8 md:py-6" onClick={() => navigate("/signup")}>
-              Quero minha Presença Google agora <ArrowRight size={16} />
+              Quero aparecer no Google agora <ArrowRight size={16} />
             </Button>
           </div>
 
