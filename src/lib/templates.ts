@@ -17,26 +17,7 @@ const buildStructuredData = () => `
           "addressRegion": "{{STATE}}",
           "addressCountry": "BR"
         },
-        "sameAs": ["https://instagram.com/{{INSTAGRAM}}"],
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "reviewCount": "48"
-        },
-        "review": [
-          {
-            "@type": "Review",
-            "reviewBody": "{{TESTIMONIAL_1}}",
-            "author": { "@type": "Person", "name": "Paciente" },
-            "reviewRating": { "@type": "Rating", "ratingValue": "5" }
-          },
-          {
-            "@type": "Review",
-            "reviewBody": "{{TESTIMONIAL_2}}",
-            "author": { "@type": "Person", "name": "Paciente" },
-            "reviewRating": { "@type": "Rating", "ratingValue": "5" }
-          }
-        ]
+        "sameAs": ["https://instagram.com/{{INSTAGRAM}}"]
       },
       {
         "@type": "FAQPage",
@@ -98,6 +79,35 @@ const buildHead = ({ title, description, fonts, styles }: { title: string; descr
       pointer-events: none;
     }
     .section-shell { position: relative; overflow: hidden; }
+    ${styles}
+  </style>
+</head>`;
+
+// Static builder — NO Tailwind CDN (for B2 templates targeting Lighthouse ≥ 90)
+const buildHeadStatic = ({ title, description, fonts, styles }: { title: string; description: string; fonts: string; styles: string }) => `
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${title}</title>
+  <meta name="description" content="${description}">
+  <link rel="canonical" href="https://{{SITE_URL}}">
+  <meta property="og:title" content="${title}">
+  <meta property="og:description" content="${description}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://{{SITE_URL}}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="${fonts}" rel="stylesheet">
+  ${buildStructuredData()}
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
     ${styles}
   </style>
 </head>`;
@@ -393,8 +403,219 @@ export const warmWelcomingTemplate = `${buildHead({
 </body>
 </html>`;
 
+// ─── B2 SPIKE: Nutricionista — Fresh Clinical ────────────────────────────────
+// Hand-authored CSS only (no Tailwind CDN) → target Lighthouse ≥ 90
+// Palette: sage #4A7C59 · cream #F7F5EF · gold #C8A44B · text #1F2A24
+// Fonts: Fraunces (display) + Inter (body)
+export const nutricionistaFreshTemplate = `${buildHeadStatic({
+  title: "{{BUSINESS_NAME}} | Nutricionista em {{CITY}}",
+  description: "{{META_DESCRIPTION}}",
+  fonts: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&display=swap",
+  styles: `
+    :root{--bg:#F7F5EF;--text:#1F2A24;--primary:#4A7C59;--primary-d:#3a6347;--accent:#C8A44B;--accent-dark:#8B6418;--surface:#EEECE5;--border:rgba(31,42,36,.09);--r:14px;--max:1100px}
+    body{background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+    .container{max-width:var(--max);margin:0 auto;padding:0 1.25rem}
+    /* NAV */
+    .nav{position:fixed;inset-x:0;top:0;z-index:50;background:rgba(247,245,239,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+    .nav-inner{max-width:var(--max);margin:0 auto;padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between;height:62px}
+    .nav-logo{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:600;color:var(--text)}
+    .nav-links{display:none;gap:2rem}
+    @media(min-width:768px){.nav-links{display:flex}}
+    .nav-links a{font-size:.875rem;color:rgba(31,42,36,.65);font-weight:500;transition:color .15s}
+    .nav-links a:hover{color:var(--primary)}
+    .btn-nav{display:inline-flex;align-items:center;background:var(--primary);color:#fff;padding:.6rem 1.25rem;border-radius:9999px;font-size:.8125rem;font-weight:600;transition:background .15s}
+    .btn-nav:hover{background:var(--primary-d)}
+    /* HERO */
+    .hero{padding:7.5rem 1.25rem 4rem;min-height:100svh;display:flex;align-items:center}
+    .hero-grid{max-width:var(--max);margin:0 auto;display:grid;gap:3rem;align-items:center;width:100%}
+    @media(min-width:768px){.hero-grid{grid-template-columns:1.1fr .9fr}}
+    .hero-tag{display:inline-block;background:rgba(74,124,89,.12);color:var(--primary-d);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:.3rem .875rem;border-radius:9999px;margin-bottom:1.25rem}
+    .hero-h1{font-family:'Fraunces',serif;font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.1;color:var(--text);margin-bottom:1.25rem;font-weight:600}
+    .hero-sub{font-size:1.0625rem;color:rgba(31,42,36,.65);line-height:1.7;margin-bottom:2.25rem;max-width:440px}
+    .btn-hero{display:inline-flex;align-items:center;gap:.5rem;background:var(--primary);color:#fff;padding:.875rem 1.75rem;border-radius:9999px;font-size:.9375rem;font-weight:600;transition:background .15s}
+    .btn-hero:hover{background:var(--primary-d)}
+    .hero-visual{border-radius:var(--r);background:linear-gradient(145deg,var(--primary) 0%,rgba(74,124,89,.55) 100%);aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .hero-visual-inner{width:80%;height:80%;border-radius:calc(var(--r) - 4px);background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center}
+    .hero-icon{width:5rem;height:5rem;opacity:.6}
+    /* SECTIONS */
+    .section{padding:5rem 1.25rem}
+    .section-alt{background:var(--surface)}
+    .section-top{text-align:center;margin-bottom:3rem}
+    .section-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent-dark);margin-bottom:.75rem}
+    .section-h2{font-family:'Fraunces',serif;font-size:clamp(1.6rem,3.5vw,2.5rem);color:var(--text);font-weight:600;line-height:1.2}
+    /* PAIN */
+    .grid-3{max-width:var(--max);margin:0 auto;display:grid;gap:1.25rem}
+    @media(min-width:640px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+    .pain-card{background:#fff;border-radius:var(--r);padding:1.75rem;border:1px solid var(--border)}
+    .pain-icon{width:2.75rem;height:2.75rem;border-radius:50%;background:rgba(74,124,89,.1);display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+    .pain-icon svg{width:1.25rem;height:1.25rem;stroke:var(--primary);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .pain-card p{font-size:.9375rem;line-height:1.7;color:rgba(31,42,36,.75)}
+    /* ABOUT */
+    .about-grid{max-width:var(--max);margin:0 auto;display:grid;gap:3rem;align-items:center}
+    @media(min-width:768px){.about-grid{grid-template-columns:.85fr 1.15fr}}
+    .about-visual{border-radius:var(--r);background:linear-gradient(160deg,rgba(74,124,89,.12) 0%,rgba(200,164,75,.1) 100%);aspect-ratio:3/4;display:flex;align-items:flex-end;padding:1.5rem}
+    .about-visual-badge{background:var(--primary);color:#fff;border-radius:calc(var(--r) - 4px);padding:.875rem 1.25rem;font-size:.875rem;font-weight:600}
+    .section-h2-left{font-family:'Fraunces',serif;font-size:clamp(1.6rem,3vw,2.25rem);color:var(--text);font-weight:600;margin-bottom:1.25rem;line-height:1.25}
+    .body-text{font-size:.9375rem;line-height:1.8;color:rgba(31,42,36,.72)}
+    /* SERVICES */
+    .service-card{background:#fff;border-radius:var(--r);padding:2rem;border:1px solid var(--border);transition:box-shadow .2s}
+    .service-card:hover{box-shadow:0 6px 24px rgba(31,42,36,.07)}
+    .svc-num{font-family:'Fraunces',serif;font-size:2rem;color:var(--accent-dark);margin-bottom:1rem;font-weight:600}
+    .svc-name{font-size:1rem;font-weight:700;margin-bottom:.5rem;color:var(--text)}
+    .svc-desc{font-size:.875rem;line-height:1.7;color:rgba(31,42,36,.72)}
+    /* PROCESS */
+    .process-grid{max-width:var(--max);margin:0 auto;display:grid;gap:2.5rem}
+    @media(min-width:768px){.process-grid{grid-template-columns:repeat(3,1fr)}}
+    .step{display:flex;flex-direction:column;gap:1rem}
+    .step-num{width:3rem;height:3rem;border-radius:50%;background:var(--primary);color:#fff;font-family:'Fraunces',serif;font-size:1.125rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .step-text{font-size:.9375rem;line-height:1.7;color:rgba(31,42,36,.75)}
+    /* TESTIMONIALS */
+    .testi-grid{max-width:var(--max);margin:0 auto;display:grid;gap:1.25rem}
+    @media(min-width:640px){.testi-grid{grid-template-columns:repeat(2,1fr)}}
+    .testi-card{background:#fff;border-radius:var(--r);padding:2rem;border:1px solid var(--border)}
+    .stars{color:var(--accent);font-size:1rem;margin-bottom:1rem;letter-spacing:.1em}
+    .testi-text{font-size:.9375rem;font-style:italic;line-height:1.75;color:rgba(31,42,36,.75);margin-bottom:1.25rem}
+    .testi-author{font-size:.8125rem;font-weight:700;color:var(--primary)}
+    /* FAQ */
+    .faq-wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:.75rem}
+    details.faq{background:#fff;border-radius:var(--r);border:1px solid var(--border);overflow:hidden}
+    details.faq summary{list-style:none;padding:1.25rem 1.5rem;font-weight:600;font-size:.9375rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;color:var(--text)}
+    details.faq summary::-webkit-details-marker{display:none}
+    details.faq summary::after{content:"+";color:var(--primary);font-size:1.375rem;font-weight:300;flex-shrink:0;line-height:1}
+    details.faq[open] summary::after{content:"−"}
+    .faq-body{padding:0 1.5rem 1.25rem;font-size:.9375rem;line-height:1.75;color:rgba(31,42,36,.68)}
+    /* CTA */
+    .cta-section{background:var(--primary);color:#fff;padding:5.5rem 1.25rem;text-align:center}
+    .cta-h2{font-family:'Fraunces',serif;font-size:clamp(1.75rem,4vw,2.875rem);margin-bottom:1.5rem;font-weight:600;line-height:1.2}
+    .cta-sub{font-size:1rem;opacity:.82;margin-bottom:2.25rem}
+    .btn-cta{display:inline-flex;align-items:center;gap:.625rem;background:#fff;color:var(--primary);padding:1rem 2rem;border-radius:9999px;font-size:1rem;font-weight:700;transition:opacity .15s}
+    .btn-cta:hover{opacity:.92}
+    /* FOOTER */
+    .footer{background:#161c19;color:rgba(255,255,255,.5);padding:3.5rem 1.25rem;font-size:.875rem}
+    .footer-grid{max-width:var(--max);margin:0 auto;display:grid;gap:2rem}
+    @media(min-width:768px){.footer-grid{grid-template-columns:repeat(3,1fr)}}
+    .footer-logo{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:600;color:#fff;margin-bottom:.5rem}
+    .footer-copy{max-width:var(--max);margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);font-size:.75rem;text-align:center}
+    /* FAB */
+    .fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:50;width:3.5rem;height:3.5rem;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4)}
+  `,
+})}
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">{{BUSINESS_NAME}}</a>
+      <div class="nav-links">
+        <a href="#sobre">Sobre</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#processo">Como funciona</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a href="{{WHATSAPP_LINK}}" target="_blank" rel="noopener" class="btn-nav">Agendar consulta</a>
+    </div>
+  </nav>
+  <main>
+    <section id="hero" data-section="hero" class="hero">
+      <div class="hero-grid">
+        <div>
+          <span class="hero-tag">Nutrição Clínica · {{CITY}}</span>
+          <h1 class="hero-h1">{{HERO_HEADLINE}}</h1>
+          <p class="hero-sub">{{HERO_SUBHEADLINE}}</p>
+          <a href="{{WHATSAPP_LINK}}" target="_blank" rel="noopener" class="btn-hero"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.612.638l4.687-1.228A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.387 0-4.592-.838-6.313-2.236l-.44-.366-3.12.818.852-3.008-.388-.462A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>{{CTA_BUTTON_TEXT}}</a>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-visual-inner">
+            <svg class="hero-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="28" r="16" stroke="rgba(255,255,255,.7)" stroke-width="2"/><path d="M14 68c0-14.36 11.64-26 26-26h0c14.36 0 26 11.64 26 26" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="dores" data-section="pain_section" class="section section-alt">
+      <div class="section-top">
+        <div class="section-label">Você se reconhece aqui?</div>
+        <h2 class="section-h2">O que te impede de ter a saúde que você quer</h2>
+      </div>
+      <div class="grid-3">
+        <div class="pain-card"><div class="pain-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><p>{{PAIN_POINT_1}}</p></div>
+        <div class="pain-card"><div class="pain-icon"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><p>{{PAIN_POINT_2}}</p></div>
+        <div class="pain-card"><div class="pain-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><p>{{PAIN_POINT_3}}</p></div>
+      </div>
+    </section>
+    <section id="sobre" data-section="about" class="section">
+      <div class="about-grid">
+        <div class="about-visual" aria-hidden="true"><div class="about-visual-badge">{{SPECIALTY}} · {{CITY}}</div></div>
+        <div>
+          <div class="section-label">Sobre</div>
+          <h2 class="section-h2-left">{{ABOUT_HEADLINE}}</h2>
+          <p class="body-text">{{ABOUT_TEXT}}</p>
+        </div>
+      </div>
+    </section>
+    <section id="servicos" data-section="services" class="section section-alt">
+      <div class="section-top">
+        <div class="section-label">Serviços</div>
+        <h2 class="section-h2">{{SERVICES_HEADLINE}}</h2>
+      </div>
+      <div class="grid-3">
+        <div class="service-card"><div class="svc-num">01</div><div class="svc-name">{{SERVICE_1_NAME}}</div><div class="svc-desc">{{SERVICE_1_DESC}}</div></div>
+        <div class="service-card"><div class="svc-num">02</div><div class="svc-name">{{SERVICE_2_NAME}}</div><div class="svc-desc">{{SERVICE_2_DESC}}</div></div>
+        <div class="service-card"><div class="svc-num">03</div><div class="svc-name">{{SERVICE_3_NAME}}</div><div class="svc-desc">{{SERVICE_3_DESC}}</div></div>
+      </div>
+    </section>
+    <section id="processo" data-section="process" class="section">
+      <div class="section-top">
+        <div class="section-label">Como funciona</div>
+        <h2 class="section-h2">{{PROCESS_HEADLINE}}</h2>
+      </div>
+      <div class="process-grid">
+        <div class="step"><div class="step-num">1</div><p class="step-text">{{PROCESS_STEP_1}}</p></div>
+        <div class="step"><div class="step-num">2</div><p class="step-text">{{PROCESS_STEP_2}}</p></div>
+        <div class="step"><div class="step-num">3</div><p class="step-text">{{PROCESS_STEP_3}}</p></div>
+      </div>
+    </section>
+    <section id="depoimentos" data-section="testimonials" class="section section-alt">
+      <div class="section-top">
+        <div class="section-label">Depoimentos</div>
+        <h2 class="section-h2">Resultados reais de pessoas reais</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card"><div class="stars">★★★★★</div><p class="testi-text">{{TESTIMONIAL_1}}</p><div class="testi-author">Paciente</div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p class="testi-text">{{TESTIMONIAL_2}}</p><div class="testi-author">Paciente</div></div>
+      </div>
+    </section>
+    <section id="faq" data-section="faq" class="section">
+      <div class="section-top">
+        <div class="section-label">Perguntas frequentes</div>
+        <h2 class="section-h2">Tire suas dúvidas</h2>
+      </div>
+      <div class="faq-wrap">
+        <details class="faq"><summary>{{FAQ_QUESTION_1}}</summary><div class="faq-body">{{FAQ_ANSWER_1}}</div></details>
+        <details class="faq"><summary>{{FAQ_QUESTION_2}}</summary><div class="faq-body">{{FAQ_ANSWER_2}}</div></details>
+        <details class="faq"><summary>{{FAQ_QUESTION_3}}</summary><div class="faq-body">{{FAQ_ANSWER_3}}</div></details>
+      </div>
+    </section>
+    <section id="contato" data-section="cta" class="cta-section">
+      <div class="container">
+        <h2 class="cta-h2">{{CTA_HEADLINE}}</h2>
+        <p class="cta-sub">{{SPECIALTY}} em {{CITY}} — atendimento presencial</p>
+        <a href="{{WHATSAPP_LINK}}" target="_blank" rel="noopener" class="btn-cta"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.612.638l4.687-1.228A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.387 0-4.592-.838-6.313-2.236l-.44-.366-3.12.818.852-3.008-.388-.462A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>{{CTA_BUTTON_TEXT}}</a>
+      </div>
+    </section>
+  </main>
+  <footer data-section="footer" class="footer">
+    <div class="footer-grid">
+      <div><div class="footer-logo">{{BUSINESS_NAME}}</div><p>{{SPECIALTY}} em {{CITY}}, {{STATE}}</p></div>
+      <div><p style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:.75rem">Contato</p><p>{{PHONE}}</p><p style="margin-top:.5rem">{{EMAIL}}</p></div>
+      <div><p style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:.75rem">Redes</p><a href="https://instagram.com/{{INSTAGRAM}}" target="_blank" rel="noopener">@{{INSTAGRAM}}</a></div>
+    </div>
+    <div class="footer-copy">© {{CURRENT_YEAR}} {{BUSINESS_NAME}}. Todos os direitos reservados.</div>
+  </footer>
+  <a href="{{WHATSAPP_LINK}}" target="_blank" rel="noopener" class="fab" aria-label="Falar no WhatsApp"><svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.612.638l4.687-1.228A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.387 0-4.592-.838-6.313-2.236l-.44-.366-3.12.818.852-3.008-.388-.462A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></a>
+</body>
+</html>`;
+
 export const templates: Record<string, string> = {
   "elegant-minimal": elegantMinimalTemplate,
   "modern-clean": modernCleanTemplate,
   "warm-soft": warmWelcomingTemplate,
+  "nutricionista-fresh": nutricionistaFreshTemplate,
 };

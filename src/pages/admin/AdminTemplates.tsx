@@ -7,6 +7,16 @@ import { useNavigate } from "react-router-dom";
 
 const defaultTemplates = [
   {
+    id: "nutricionista-fresh",
+    name: "Nutricionista · Fresh Clinical",
+    emoji: "🥗",
+    description: "Sálvia + creme + dourado. Hand-CSS sem Tailwind CDN — Lighthouse ≥ 90. Fraunces + Inter. Ideal para nutricionistas e profissionais de saúde.",
+    colors: ["#4A7C59", "#C8A44B", "#F7F5EF"],
+    tags: ["Nutricionistas", "Saúde", "Wellness"],
+    popular: true,
+    fonts: "Fraunces + Inter",
+  },
+  {
     id: "elegant-minimal",
     name: "Elegante Minimalista",
     emoji: "🎨",

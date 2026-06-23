@@ -51,7 +51,20 @@ serve(async (req) => {
       psicologo: "profissional de psicologia clínica",
       dentista: "profissional de odontologia",
       terapeuta: "profissional de terapia holística",
-      nutricionista: "profissional de nutrição",
+      nutricionista: "nutricionista clínica com foco em resultados baseados em ciência",
+    };
+
+    // Niche-specific prompt injection for AEO and keyword depth
+    const nicheBoost: Record<string, string> = {
+      nutricionista: `
+**CONTEXTO DE NICHO — NUTRICIONISTA:**
+- Palavras-chave locais obrigatórias: "nutricionista em ${sd.city || client?.city || ""}", "consulta nutricional em ${sd.city || client?.city || ""}", "reeducação alimentar"
+- Keywords de serviço a incluir naturalmente: emagrecimento, reeducação alimentar, nutrição clínica, nutrição esportiva, saúde metabólica, plano alimentar individualizado
+- FAQs devem ser formuladas como buscas reais no Google/ChatGPT:
+  Exemplos: "quanto custa consulta com nutricionista?", "nutricionista online ou presencial?", "em quanto tempo vejo resultado com nutricionista?", "qual a diferença de nutricionista e nutrólogo?"
+- Respostas de FAQ no formato AEO: resposta direta e completa na PRIMEIRA frase (citável por featured snippet ou AI Overview), depois complemento. Máx 90 palavras por FAQ.
+- Hero headline deve nomear o benefício final concreto (ex: emagrecer, regular o intestino, ganhar massa) + contexto local, NÃO slogan genérico
+- Depoimentos: mencionar resultado específico (peso perdido, exame normalizado, disposição melhorada) em linguagem espontânea de paciente real`,
     };
 
     const prompt = `Você é um diretor criativo + copywriter especialista em landing pages premium para profissionais liberais brasileiros.
@@ -70,6 +83,7 @@ serve(async (req) => {
 - Instagram: ${bd.instagram || ""}
 
 ${customInstructions ? `\n**INSTRUÇÕES PERSONALIZADAS:**\n${customInstructions}\n` : ""}
+${nicheBoost[vertical] || ""}
 
 **TAREFA:**
 Gere textos para uma landing page com nível de direção criativa comparável ao que seria feito manualmente no Lovable.

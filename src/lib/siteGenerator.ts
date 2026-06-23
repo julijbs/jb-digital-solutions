@@ -132,6 +132,12 @@ function applyBrandColors(html: string, brand: NonNullable<Parameters<typeof app
   html = html.replace(/#7c3aed/gi, a);
   html = html.replace(/#fcf7fb/gi, bg).replace(/#f7ecff/gi, bg);
 
+  // Nutricionista Fresh: #4A7C59 -> primary, #C8A44B -> accent, #F7F5EF -> bg, #1F2A24 -> text
+  html = html.replace(/#4A7C59/gi, p).replace(/#3a6347/gi, p);
+  html = html.replace(/#C8A44B/gi, a);
+  html = html.replace(/#F7F5EF/gi, bg).replace(/#EEECE5/gi, bg);
+  html = html.replace(/#1F2A24/gi, txt);
+
   // Replace fonts if provided
   if (brand.font_display && brand.font_body) {
     const fontUrl = `https://fonts.googleapis.com/css2?family=${brand.font_display.replace(/ /g, "+")}:wght@400;500;600;700;800&family=${brand.font_body.replace(/ /g, "+")}:wght@400;500;600;700&display=swap`;

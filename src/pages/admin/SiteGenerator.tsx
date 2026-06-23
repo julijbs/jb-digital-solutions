@@ -26,6 +26,7 @@ const templateOptions = [
   { value: "elegant-minimal", label: "🎨 Elegante Minimalista" },
   { value: "modern-clean", label: "✨ Moderno Clean" },
   { value: "warm-soft", label: "🌿 Acolhedor Suave" },
+  { value: "nutricionista-fresh", label: "🥗 Nutricionista · Fresh Clinical" },
 ] as const;
 
 const generationSteps = [
