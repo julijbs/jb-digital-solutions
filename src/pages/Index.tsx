@@ -7,17 +7,15 @@ import { HubCTA } from "@/components/hub/HubCTA";
 
 const navItems = [
   { label: "Site + Google", href: "/servicos/site-gbp" },
-  { label: "SEO Local", href: "/servicos/seo-local" },
-  { label: "ARC™", href: "/servicos/arc" },
 ];
 
 const Index = () => (
   <div className="min-h-screen bg-background">
     <Helmet>
-      <title>JB Digital Solutions — Site, SEO Local e ARC™ para negócios brasileiros</title>
+      <title>JB Digital Solutions — Site + Google para negócios brasileiros</title>
       <meta
         name="description"
-        content="Três soluções para crescer com estratégia: Site + Google, prospecção SEO local e ativação de receita por performance. JB Digital Consulting."
+        content="Site profissional e Google Business Profile para negócios locais brasileiros. Entrega em até 7 dias, sem mensalidade. JB Digital Consulting."
       />
     </Helmet>
 

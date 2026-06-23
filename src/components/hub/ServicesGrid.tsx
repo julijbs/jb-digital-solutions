@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Globe, MapPin, TrendingUp, ArrowRight } from "lucide-react";
+import { Globe, ArrowRight } from "lucide-react";
 
 const services = [
   {
@@ -10,22 +10,6 @@ const services = [
     text: "Site profissional otimizado para IA, Perfil da Empresa no Google configurado e conectado. Entrega em até 7 dias, hospedagem inclusa, sem mensalidade.",
     href: "/servicos/site-gbp",
     cta: "Ver planos",
-  },
-  {
-    icon: MapPin,
-    title: "SEO Local",
-    subtitle: "Consultoria de SEO para Negócios Locais",
-    text: "Diagnóstico técnico completo + site novo construído do zero para negócios locais com serviços de alto ticket que não aparecem no Google quando os clientes buscam.",
-    href: "/servicos/seo-local",
-    cta: "Saiba mais",
-  },
-  {
-    icon: TrendingUp,
-    title: "ARC™",
-    subtitle: "Ativação de Receita Contínua",
-    text: "Monetização da base de clientes que você já tem, mas não explora. Campanhas de email feitas por mim, modelo 100% por performance — você não paga nada adiantado.",
-    href: "/servicos/arc",
-    cta: "Saiba mais",
   },
 ];
 
@@ -47,7 +31,7 @@ export const ServicesGrid = () => (
         </p>
       </motion.div>
 
-      <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
+      <div className="mx-auto flex max-w-sm justify-center gap-6">
         {services.map((svc, i) => (
           <motion.div
             key={svc.href}

@@ -3,16 +3,11 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft, ExternalLink, GitBranch, Globe, MapPin, Sparkles,
   ChevronRight, ChevronLeft, Copy, Send, Clock, CheckCircle2,
-  Plus, Trash2,
 } from "lucide-react";
-import { SERVICE_CONFIG } from "@/config/services";
-import type { ServiceMetric, ServiceDeliverable } from "@/types/services";
 
 // Site+GBP admin pipeline stages (internal, not in SERVICE_CONFIG)
 const SITE_GBP_ADMIN_STAGES = [
@@ -41,22 +36,6 @@ const AdminProjectDetail = () => {
   const [review, setReview] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  // service data (non-site projects)
-  const [metrics, setMetrics] = useState<ServiceMetric[]>([]);
-  const [deliverables, setDeliverables] = useState<ServiceDeliverable[]>([]);
-
-  // metric form state
-  const [metricForm, setMetricForm] = useState<Record<string, string>>({});
-  const [metricPeriod, setMetricPeriod] = useState("");
-  const [metricSummary, setMetricSummary] = useState("");
-  const [savingMetric, setSavingMetric] = useState(false);
-
-  // deliverable form state
-  const [delTitle, setDelTitle] = useState("");
-  const [delDesc, setDelDesc] = useState("");
-  const [delUrl, setDelUrl] = useState("");
-  const [savingDel, setSavingDel] = useState(false);
-
   const fetchAll = async () => {
     if (!projectId) return;
     const [projRes, intakeRes, reviewRes] = await Promise.all([
@@ -68,28 +47,11 @@ const AdminProjectDetail = () => {
     setIntake(intakeRes.data);
     setReview(reviewRes.data);
     setLoading(false);
-
-    // if non-site project, load service data
-    if (projRes.data && projRes.data.service_type !== "site_gbp") {
-      const [mRes, dRes] = await Promise.all([
-        supabase.from("service_metrics").select("*").eq("project_id", projectId).order("created_at", { ascending: false }),
-        supabase.from("service_deliverables").select("*").eq("project_id", projectId).order("delivered_at", { ascending: false }),
-      ]);
-      setMetrics((mRes.data ?? []) as unknown as ServiceMetric[]);
-      setDeliverables((dRes.data ?? []) as unknown as ServiceDeliverable[]);
-    }
   };
 
   useEffect(() => { fetchAll(); }, [projectId]);
 
-  // Resolve admin pipeline stages based on service_type
-  const getPipelineStages = () => {
-    if (!project) return SITE_GBP_ADMIN_STAGES;
-    if (project.service_type === "site_gbp") return SITE_GBP_ADMIN_STAGES;
-    return SERVICE_CONFIG[project.service_type as "seo_local" | "arc_backend"].phases.map(
-      (p) => ({ key: p.key, label: p.label })
-    );
-  };
+  const getPipelineStages = () => SITE_GBP_ADMIN_STAGES;
 
   const moveProject = async (newStatus: string) => {
     if (!projectId) return;
@@ -114,58 +76,6 @@ const AdminProjectDetail = () => {
       });
     }
     toast({ title: "Enviado para revisão do cliente" });
-    fetchAll();
-  };
-
-  const saveMetric = async () => {
-    if (!projectId || !project || !metricPeriod) return;
-    setSavingMetric(true);
-    const metricsObj: Record<string, string> = {};
-    for (const [k, v] of Object.entries(metricForm)) {
-      if (v !== "") metricsObj[k] = v;
-    }
-    const { error } = await supabase.from("service_metrics").insert({
-      project_id: projectId,
-      service_type: project.service_type,
-      period_label: metricPeriod,
-      metrics: metricsObj,
-      summary: metricSummary || null,
-    });
-    setSavingMetric(false);
-    if (error) { toast({ title: "Erro ao salvar métrica", variant: "destructive" }); return; }
-    toast({ title: "Métrica salva" });
-    setMetricPeriod("");
-    setMetricSummary("");
-    setMetricForm({});
-    fetchAll();
-  };
-
-  const deleteMetric = async (id: string) => {
-    await supabase.from("service_metrics").delete().eq("id", id);
-    fetchAll();
-  };
-
-  const saveDeliverable = async () => {
-    if (!projectId || !project || !delTitle) return;
-    setSavingDel(true);
-    const { error } = await supabase.from("service_deliverables").insert({
-      project_id: projectId,
-      service_type: project.service_type,
-      title: delTitle,
-      description: delDesc || null,
-      url: delUrl || null,
-    });
-    setSavingDel(false);
-    if (error) { toast({ title: "Erro ao salvar entregável", variant: "destructive" }); return; }
-    toast({ title: "Entregável salvo" });
-    setDelTitle("");
-    setDelDesc("");
-    setDelUrl("");
-    fetchAll();
-  };
-
-  const deleteDeliverable = async (id: string) => {
-    await supabase.from("service_deliverables").delete().eq("id", id);
     fetchAll();
   };
 
@@ -203,9 +113,6 @@ const AdminProjectDetail = () => {
   const nextStatus = currentIdx < pipelineStages.length - 1 ? pipelineStages[currentIdx + 1].key : null;
   const prevStatus = currentIdx > 0 ? pipelineStages[currentIdx - 1].key : null;
 
-  const isSiteGbp = project.service_type === "site_gbp";
-  const serviceConfig = !isSiteGbp ? SERVICE_CONFIG[project.service_type as "seo_local" | "arc_backend"] : null;
-
   return (
     <DashboardLayout>
       {/* Header */}
@@ -224,11 +131,6 @@ const AdminProjectDetail = () => {
             <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary capitalize">
               {project.plan}
             </span>
-            {serviceConfig ? (
-              <span className={`rounded-full px-3 py-1 text-xs font-medium ${serviceConfig.bgClass} ${serviceConfig.accentClass}`}>
-                {serviceConfig.shortLabel}
-              </span>
-            ) : null}
             <span className="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
               {pipelineStages.find(s => s.key === project.status)?.label || project.status}
             </span>
@@ -279,18 +181,16 @@ const AdminProjectDetail = () => {
             Avançar etapa <ChevronRight size={14} />
           </Button>
         )}
-        {isSiteGbp && (project.status === "qa_passed" || project.status === "vercel_deployed_preview") && (
+        {(project.status === "qa_passed" || project.status === "vercel_deployed_preview") && (
           <Button variant="hero" size="sm" onClick={sendToReview}>
             <Send size={14} /> Enviar para revisão
           </Button>
         )}
-        {isSiteGbp && (
-          <Link to={`/admin/prompt-generator?project=${projectId}`}>
-            <Button variant="outline" size="sm">
-              <Sparkles size={14} /> Gerar Prompt
-            </Button>
-          </Link>
-        )}
+        <Link to={`/admin/prompt-generator?project=${projectId}`}>
+          <Button variant="outline" size="sm">
+            <Sparkles size={14} /> Gerar Prompt
+          </Button>
+        </Link>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -324,208 +224,76 @@ const AdminProjectDetail = () => {
           </div>
         </div>
 
-        {/* Intake (site_gbp) or service summary */}
+        {/* Intake summary */}
         <div className="glass-card rounded-xl p-5 space-y-4">
-          {isSiteGbp ? (
-            <>
-              <h3 className="text-sm font-medium text-muted-foreground">Resumo do Intake</h3>
-              {intake ? (
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Status</span>
-                    <span className="text-foreground">{intake.completed ? "✅ Completo" : `⏳ Passo ${intake.step_current}/6`}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Nome</span>
-                    <span className="text-foreground">{bd.name || "—"}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Telefone</span>
-                    <span className="text-foreground">{bd.phone || "—"}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Categoria</span>
-                    <span className="text-foreground">{svd.main_category || "—"}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Serviços</span>
-                    <span className="text-foreground text-right max-w-[60%] truncate">{svd.services_tags || "—"}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Cidade</span>
-                    <span className="text-foreground">{sd.city || "—"}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">GBP</span>
-                    <span className="text-foreground">{gd.has_gbp ? "Sim" : "Não"}</span>
-                  </div>
-                </div>
-              ) : (
-                <p className="text-xs text-muted-foreground">Nenhum intake encontrado.</p>
-              )}
-            </>
-          ) : (
-            <>
-              <h3 className="text-sm font-medium text-muted-foreground">Resumo do Serviço</h3>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Serviço</span>
-                  <span className="text-foreground">{serviceConfig?.label}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Fase atual</span>
-                  <span className="text-foreground">{pipelineStages.find(s => s.key === project.status)?.label || project.status}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Relatórios</span>
-                  <span className="text-foreground">{metrics.length}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Entregáveis</span>
-                  <span className="text-foreground">{deliverables.length}</span>
-                </div>
+          <h3 className="text-sm font-medium text-muted-foreground">Resumo do Intake</h3>
+          {intake ? (
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Status</span>
+                <span className="text-foreground">{intake.completed ? "✅ Completo" : `⏳ Passo ${intake.step_current}/6`}</span>
               </div>
-            </>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Nome</span>
+                <span className="text-foreground">{bd.name || "—"}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Telefone</span>
+                <span className="text-foreground">{bd.phone || "—"}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Categoria</span>
+                <span className="text-foreground">{svd.main_category || "—"}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Serviços</span>
+                <span className="text-foreground text-right max-w-[60%] truncate">{svd.services_tags || "—"}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Cidade</span>
+                <span className="text-foreground">{sd.city || "—"}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">GBP</span>
+                <span className="text-foreground">{gd.has_gbp ? "Sim" : "Não"}</span>
+              </div>
+            </div>
+          ) : (
+            <p className="text-xs text-muted-foreground">Nenhum intake encontrado.</p>
           )}
         </div>
 
-        {/* Client Review (site_gbp only) */}
-        {isSiteGbp && (
-          <div className="glass-card rounded-xl p-5 space-y-4 lg:col-span-2">
-            <h3 className="text-sm font-medium text-muted-foreground">Revisão do Cliente</h3>
-            {review ? (
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                    review.status === "approved"
-                      ? "bg-green-500/10 text-green-400"
-                      : review.status === "changes_requested"
-                      ? "bg-yellow-500/10 text-yellow-400"
-                      : "bg-blue-500/10 text-blue-400"
-                  }`}>
-                    {review.status === "approved" ? "✅ Aprovado" : review.status === "changes_requested" ? "🔄 Ajustes solicitados" : "⏳ Aguardando"}
-                  </span>
-                  <span className="text-xs text-muted-foreground flex items-center gap-1">
-                    <Clock size={12} />
-                    {new Date(review.created_at).toLocaleDateString("pt-BR")}
-                  </span>
-                </div>
-                {review.feedback && (
-                  <div className="rounded-lg bg-background/50 p-3 text-sm text-foreground">
-                    <p className="text-xs text-muted-foreground mb-1">Feedback do cliente:</p>
-                    {review.feedback}
-                  </div>
-                )}
+        {/* Client Review */}
+        <div className="glass-card rounded-xl p-5 space-y-4 lg:col-span-2">
+          <h3 className="text-sm font-medium text-muted-foreground">Revisão do Cliente</h3>
+          {review ? (
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                  review.status === "approved"
+                    ? "bg-green-500/10 text-green-400"
+                    : review.status === "changes_requested"
+                    ? "bg-yellow-500/10 text-yellow-400"
+                    : "bg-blue-500/10 text-blue-400"
+                }`}>
+                  {review.status === "approved" ? "✅ Aprovado" : review.status === "changes_requested" ? "🔄 Ajustes solicitados" : "⏳ Aguardando"}
+                </span>
+                <span className="text-xs text-muted-foreground flex items-center gap-1">
+                  <Clock size={12} />
+                  {new Date(review.created_at).toLocaleDateString("pt-BR")}
+                </span>
               </div>
-            ) : (
-              <p className="text-xs text-muted-foreground">Nenhuma revisão enviada ainda.</p>
-            )}
-          </div>
-        )}
-
-        {/* --- Non-site panels --- */}
-        {!isSiteGbp && serviceConfig && (
-          <>
-            {/* Add metric */}
-            <div className="glass-card rounded-xl p-5 space-y-4">
-              <h3 className="text-sm font-medium text-muted-foreground">Adicionar Relatório de Métricas</h3>
-              <div className="space-y-3">
-                <Input
-                  placeholder="Período (ex: Junho 2026)"
-                  value={metricPeriod}
-                  onChange={(e) => setMetricPeriod(e.target.value)}
-                />
-                {serviceConfig.metricFields.map((field) => (
-                  <div key={field.key} className="flex items-center gap-2">
-                    <label className="text-xs text-muted-foreground w-36 shrink-0">{field.label}</label>
-                    <Input
-                      placeholder={field.unit ?? "valor"}
-                      value={metricForm[field.key] ?? ""}
-                      onChange={(e) => setMetricForm((prev) => ({ ...prev, [field.key]: e.target.value }))}
-                    />
-                  </div>
-                ))}
-                <Textarea
-                  placeholder="Resumo (opcional)"
-                  rows={2}
-                  value={metricSummary}
-                  onChange={(e) => setMetricSummary(e.target.value)}
-                />
-                <Button size="sm" variant="hero" onClick={saveMetric} disabled={savingMetric || !metricPeriod}>
-                  <Plus size={14} /> Salvar Relatório
-                </Button>
-              </div>
-
-              {/* Metric history */}
-              {metrics.length > 0 && (
-                <div className="mt-4 space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/60">Histórico</p>
-                  {metrics.map((m) => (
-                    <div key={m.id} className="flex items-center justify-between rounded-lg bg-muted/20 px-3 py-2">
-                      <div>
-                        <p className="text-xs font-medium text-foreground">{m.period_label}</p>
-                        {m.summary && <p className="text-[10px] text-muted-foreground">{m.summary}</p>}
-                      </div>
-                      <button onClick={() => deleteMetric(m.id)} className="text-muted-foreground hover:text-destructive transition-colors">
-                        <Trash2 size={13} />
-                      </button>
-                    </div>
-                  ))}
+              {review.feedback && (
+                <div className="rounded-lg bg-background/50 p-3 text-sm text-foreground">
+                  <p className="text-xs text-muted-foreground mb-1">Feedback do cliente:</p>
+                  {review.feedback}
                 </div>
               )}
             </div>
-
-            {/* Add deliverable */}
-            <div className="glass-card rounded-xl p-5 space-y-4">
-              <h3 className="text-sm font-medium text-muted-foreground">Adicionar Entregável</h3>
-              <div className="space-y-3">
-                <Input
-                  placeholder="Título (ex: Relatório Maio 2026)"
-                  value={delTitle}
-                  onChange={(e) => setDelTitle(e.target.value)}
-                />
-                <Input
-                  placeholder="Descrição (opcional)"
-                  value={delDesc}
-                  onChange={(e) => setDelDesc(e.target.value)}
-                />
-                <Input
-                  placeholder="URL (opcional)"
-                  value={delUrl}
-                  onChange={(e) => setDelUrl(e.target.value)}
-                />
-                <Button size="sm" variant="hero" onClick={saveDeliverable} disabled={savingDel || !delTitle}>
-                  <Plus size={14} /> Salvar Entregável
-                </Button>
-              </div>
-
-              {/* Deliverable list */}
-              {deliverables.length > 0 && (
-                <div className="mt-4 space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/60">Entregáveis</p>
-                  {deliverables.map((d) => (
-                    <div key={d.id} className="flex items-center justify-between rounded-lg bg-muted/20 px-3 py-2">
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-medium text-foreground truncate">{d.title}</p>
-                        {d.description && <p className="text-[10px] text-muted-foreground">{d.description}</p>}
-                      </div>
-                      <div className="flex items-center gap-2 ml-2">
-                        {d.url && (
-                          <a href={d.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80">
-                            <ExternalLink size={12} />
-                          </a>
-                        )}
-                        <button onClick={() => deleteDeliverable(d.id)} className="text-muted-foreground hover:text-destructive transition-colors">
-                          <Trash2 size={13} />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </>
-        )}
+          ) : (
+            <p className="text-xs text-muted-foreground">Nenhuma revisão enviada ainda.</p>
+          )}
+        </div>
       </div>
 
       <p className="mt-6 text-xs text-muted-foreground flex items-center gap-1">

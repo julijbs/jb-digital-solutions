@@ -53,9 +53,3 @@ verify_jwt = false
 
 [functions.domain-renewal-alerts]
 verify_jwt = false
-
-[functions.seo-places-search]
-verify_jwt = false
-
-[functions.seo-place-details]
-verify_jwt = false
