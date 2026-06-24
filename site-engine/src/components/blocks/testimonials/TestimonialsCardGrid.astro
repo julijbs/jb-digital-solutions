@@ -6,11 +6,18 @@
  * Regras: zero JS · WCAG AA (branco sobre #1B4332 = 12:1) · hand-CSS
  */
 export interface Props {
-  quotes: { text: string; author: string; context?: string }[];
+  quote1: string;
+  author1: string;
+  quote2: string;
+  author2: string;
   sectionLabel?: string;
 }
 
-const { quotes, sectionLabel = 'O que dizem as pacientes' } = Astro.props;
+const { quote1, author1, quote2, author2, sectionLabel = 'O que dizem as pacientes' } = Astro.props;
+const quotes = [
+  { text: quote1, author: author1 },
+  { text: quote2, author: author2 },
+];
 ---
 
 <section class="test-cg" aria-labelledby="test-cg-heading">

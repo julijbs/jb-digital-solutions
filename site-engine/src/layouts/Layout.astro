@@ -14,9 +14,11 @@ export interface Props {
   instagram?:   string;
   lat?:         string;
   lng?:         string;
-  schemaType:   string;   // e.g. "ProfessionalService", "Dentist"
-  schemaJson:   string;   // prebuilt JSON-LD string
+  schemaType:   string;
+  schemaJson:   string;
   ogImage?:     string;
+  /** Mood do cliente — controla qual família de fontes carregar */
+  mood?:        'calm-trust' | 'fresh-clinical';
 }
 
 const {
@@ -24,10 +26,16 @@ const {
   city, state, phone, address, instagram,
   lat, lng, schemaType, schemaJson,
   ogImage = `${siteUrl}/og-default.png`,
+  mood = 'calm-trust',
 } = Astro.props;
 
 const canonical = siteUrl;
 const stateCode = state.toUpperCase().slice(0, 2);
+
+// URLs das fontes por mood (display=swap previne CLS)
+const fontHref = mood === 'fresh-clinical'
+  ? 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap'
+  : 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600&display=swap';
 ---
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -76,11 +84,8 @@ const stateCode = state.toUpperCase().slice(0, 2);
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- ── Fonts: Fraunces + Inter — display=swap for CLS prevention ── -->
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600&display=swap"
-  />
+  <!-- ── Fonts: carrega família correta por mood ── -->
+  <link rel="stylesheet" href={fontHref} />
 
   <!-- ── Schema JSON-LD ── -->
   <script type="application/ld+json" set:html={schemaJson}></script>

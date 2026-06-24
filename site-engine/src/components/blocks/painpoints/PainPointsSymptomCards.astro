@@ -3,18 +3,38 @@
  * PainPointsSymptomCards — Variante B · Fresh Clinical
  * Layout: 3 cards em grid com ícone SVG orgânico + título curto + texto.
  * Contraste com PainPointsNumbered: visual vs. tipográfico; cards vs. lista.
+ *
+ * Props: contrato padrão do motor (point1/2/3).
+ * O separador " — " dentro da string divide título do corpo do card.
+ * Ex.: "Energia em colapso — Você acorda cansada mesmo depois de dormir..."
+ * Se não houver " — ", os primeiros 50 chars viram título e o resto, corpo.
+ *
  * Regras: zero JS · WCAG AA · hand-CSS
  */
 export interface Props {
+  point1: string;
+  point2: string;
+  point3: string;
   sectionLabel?: string;
-  /** Máximo 3 cards */
-  cards: { icon: 'energy' | 'cycle' | 'weight' | 'gut' | 'anxiety' | 'sleep'; title: string; body: string }[];
 }
 
-const { sectionLabel = 'Para quem é o meu trabalho?', cards } = Astro.props;
+const { point1, point2, point3, sectionLabel = 'Para quem é o meu trabalho?' } = Astro.props;
 
-// SVGs orgânicos simples (sem dependência externa)
-const icons: Record<string, string> = {
+type IconKey = 'energy' | 'cycle' | 'weight' | 'gut' | 'anxiety' | 'sleep';
+const defaultIcons: IconKey[] = ['energy', 'cycle', 'weight'];
+
+function splitCard(text: string, icon: IconKey) {
+  const sep = text.indexOf(' — ');
+  return {
+    icon,
+    title: sep > 0 ? text.slice(0, sep) : text.slice(0, 50).replace(/\s\w+$/, '…'),
+    body:  sep > 0 ? text.slice(sep + 3) : text,
+  };
+}
+
+const cards = [point1, point2, point3].map((p, i) => splitCard(p, defaultIcons[i]));
+
+const icons: Record<IconKey, string> = {
   energy: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M22 10l-6 12h8l-6 12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   cycle:  `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M13 20a7 7 0 0114 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M27 20a7 7 0 01-14 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-dasharray="3 3"/><path d="M25 17l2 3-3 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
   weight: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M12 26h16M14 26V20m4 6v-8m4 8v-5m4 5V18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>`,
@@ -30,9 +50,9 @@ const icons: Record<string, string> = {
     <h2 id="pp-cards-heading" class="pp-cards-heading">{sectionLabel}</h2>
 
     <ul class="pp-grid" role="list">
-      {cards.slice(0, 3).map((card) => (
+      {cards.map((card) => (
         <li class="pp-card">
-          <span class="pp-icon" set:html={icons[card.icon] ?? icons.energy} />
+          <span class="pp-icon" set:html={icons[card.icon]} />
           <h3 class="pp-card-title">{card.title}</h3>
           <p class="pp-card-body">{card.body}</p>
         </li>

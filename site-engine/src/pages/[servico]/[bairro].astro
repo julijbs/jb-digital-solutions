@@ -2,26 +2,29 @@
 /**
  * [servico]/[bairro].astro — SEO programático Serviço × Bairro
  *
- * Gera 1 página estática para cada combinação de serviço + bairro.
- * Exemplo: /terapia-individual/jardins  /terapia-casal/pinheiros
+ * Gera 1 página estática por combinação de serviço + bairro.
+ * Exemplo: /terapia-individual/jardins  /nutricao-esportiva/pinheiros
  *
  * Cada página tem H1/title/meta/Schema únicos — sem duplicate content.
  * Interlink: ← pillar page (/) | → outras páginas do mesmo serviço
+ *
+ * A seção local-context usa data-mood para tokens de cor mood-aware.
  */
 
 import Layout from '../../layouts/Layout.astro';
-import { draAnaMello as client } from '../../data/dra-ana-mello';
-// Blocos Calm Trust (herdam o design da pillar page)
-import Nav from '../../components/blocks/nav/NavStickyMinimal.astro';
-import Hero from '../../components/blocks/hero/HeroMinimalistText.astro';
-import FAQ from '../../components/blocks/faq/FAQNativeDetails.astro';
-import FinalCTA from '../../components/blocks/finalcta/FinalCTACenteredEditorial.astro';
-import Footer from '../../components/blocks/footer/FooterSimpleColumns.astro';
+import { client } from '../../lib/activeClient.ts';
+import { componentsForMood } from '../../lib/blockComponents.ts';
+
+// Resolver de blocos (nav, hero, faq, finalcta, footer)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const B = componentsForMood(client.mood) as any;
 
 export async function getStaticPaths() {
+  // Re-importa activeClient dentro de getStaticPaths (escopo de build)
+  const { client: c } = await import('../../lib/activeClient.ts');
   const paths = [];
-  for (const svc of client.services) {
-    for (const nbh of client.neighborhoods) {
+  for (const svc of c.services) {
+    for (const nbh of c.neighborhoods) {
       paths.push({
         params: { servico: svc.slug, bairro: nbh.slug },
         props: { svc, nbh },
@@ -34,12 +37,12 @@ export async function getStaticPaths() {
 const { svc, nbh } = Astro.props;
 
 // H1 e meta únicos por combinação
-const h1    = svc.h1Template
+const h1   = svc.h1Template
   .replace('{{BAIRRO}}', nbh.name)
-  .replace('{{PREP}}', nbh.prep);
-const meta  = svc.metaDescTemplate
+  .replace('{{PREP}}',   nbh.prep);
+const meta = svc.metaDescTemplate
   .replace('{{BAIRRO}}', nbh.name)
-  .replace('{{PREP}}', nbh.prep);
+  .replace('{{PREP}}',   nbh.prep);
 const title = `${h1} | ${client.businessName}`;
 
 // Canonical desta página
@@ -59,10 +62,10 @@ const schemaObj = {
       "email": client.email,
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Rua Haddock Lobo, 595",
+        "streetAddress": client.streetAddress,
         "addressLocality": client.city,
         "addressRegion": client.state,
-        "postalCode": "01414-001",
+        "postalCode": client.postalCode,
         "addressCountry": "BR"
       },
       "geo": {
@@ -87,17 +90,16 @@ const schemaObj = {
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": client.businessName, "item": client.siteUrl },
-        { "@type": "ListItem", "position": 2, "name": svc.name, "item": `${client.siteUrl}/${svc.slug}/${nbh.slug}` },
+        { "@type": "ListItem", "position": 2, "name": svc.name, "item": canonicalUrl },
       ]
     }
   ]
 };
 
-// FAQs filtradas: 2 mais relevantes para este serviço
-// Usa as 2 primeiras da lista geral (suficiente para AEO local)
+// FAQs filtradas: 2 mais relevantes para AEO local
 const localFaqs = client.copy.faqs.slice(0, 2);
 
-// Outros bairros do mesmo serviço (para internal linking)
+// Outros bairros do mesmo serviço (internal linking)
 const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug);
 ---
 
@@ -116,17 +118,18 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
   lng={client.lng}
   schemaType={client.schemaType}
   schemaJson={JSON.stringify(schemaObj)}
+  mood={client.mood}
 >
   <main id="main">
 
-    <Nav
+    <B.nav
       businessName={client.businessName}
       phone={client.phone}
       phoneClean={client.phoneClean}
     />
 
-    <!-- Hero minimalista (sem foto, texto em 2 colunas) -->
-    <Hero
+    <!-- Hero minimalista (sem foto, texto em 2 colunas — variante C para ambos os moods) -->
+    <B.hero
       headline={h1}
       subheadline={`${svc.description} Atendo ${nbh.prep} ${nbh.name}, São Paulo — presencialmente e online para todo o Brasil.`}
       credential={client.credential}
@@ -135,20 +138,20 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
       city={`${nbh.name}, ${client.city}`}
     />
 
-    <!-- Breadcrumb + contexto local -->
-    <section class="local-context">
+    <!-- Breadcrumb + contexto local (mood-aware via data-mood) -->
+    <section class="local-context" data-mood={client.mood}>
       <div class="local-context-inner">
         <nav aria-label="Localização" class="breadcrumb">
           <a href={client.siteUrl}>{client.businessName}</a>
           <span aria-hidden="true"> › </span>
-          <a href={`${client.siteUrl}/${svc.slug}/${nbh.slug}`}>{svc.name} {nbh.prep} {nbh.name}</a>
+          <a href={canonicalUrl}>{svc.name} {nbh.prep} {nbh.name}</a>
         </nav>
 
         <div class="local-intro">
           <h2 class="local-h2">{svc.name} {nbh.prep} {nbh.name}</h2>
           <p class="local-body">
-            Se você está buscando uma psicóloga {nbh.prep} {nbh.name} para {svc.name.toLowerCase()},
-            o consultório da {client.businessName} fica a poucos minutos — na Rua Haddock Lobo, 595, Jardins.
+            Se você está buscando uma {client.specialtyNoun} {nbh.prep} {nbh.name} para {svc.name.toLowerCase()},
+            o consultório da {client.businessName} fica a poucos minutos — na {client.streetAddress}, {client.district}.
             Também ofereço atendimento online com a mesma qualidade, sem necessidade de deslocamento.
           </p>
           <p class="local-body">
@@ -179,13 +182,13 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
       </div>
     </section>
 
-    <!-- FAQ local (2 perguntas + Schema FAQPage) -->
-    <FAQ
+    <!-- FAQ local (2 perguntas) -->
+    <B.faq
       headline={`Dúvidas sobre ${svc.name.toLowerCase()} ${nbh.prep} ${nbh.name}`}
       faqs={localFaqs}
     />
 
-    <FinalCTA
+    <B.finalcta
       headline={client.copy.ctaHeadline}
       subtext={client.copy.ctaSubtext}
       buttonText={client.copy.ctaButtonText}
@@ -195,7 +198,7 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
       address={client.address}
     />
 
-    <Footer
+    <B.footer
       businessName={client.businessName}
       credential={`${client.credential.split('·')[0].trim()} · ${client.city}, ${client.state}`}
       city={client.city}
@@ -211,16 +214,32 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
 </Layout>
 
 <style>
-  /* ── Local context section ──────────────────────────────────── */
+  /* ── Tokens mood-aware ───────────────────────────────────────── */
+  [data-mood="calm-trust"] {
+    --lc-primary:     #3E5C76;
+    --lc-accent:      #C08552;
+    --lc-surface-alt: #EAE6DE;
+    --lc-text:        #1A1A1A;
+    --lc-text-muted:  #5A6475;
+    --lc-border:      #D4CFC8;
+    --lc-font-serif:  'Fraunces', Georgia, serif;
+    --lc-font-sans:   'Inter', system-ui, sans-serif;
+  }
+
+  [data-mood="fresh-clinical"] {
+    --lc-primary:     #2D6A4F;
+    --lc-accent:      #52B788;
+    --lc-surface-alt: #EAF2EE;
+    --lc-text:        #1A2318;
+    --lc-text-muted:  #4A6358;
+    --lc-border:      #C8DDD1;
+    --lc-font-serif:  'DM Serif Display', Georgia, serif;
+    --lc-font-sans:   'DM Sans', system-ui, sans-serif;
+  }
+
+  /* ── Local context section ───────────────────────────────────── */
   .local-context {
-    --ct-primary: #3E5C76;
-    --ct-accent: #C08552;
-    --ct-surface: #F4F2ED;
-    --ct-surface-alt: #EAE6DE;
-    --ct-text: #1A1A1A;
-    --ct-text-muted: #5A6475;
-    --ct-border: #D4CFC8;
-    background: var(--ct-surface-alt);
+    background: var(--lc-surface-alt);
     padding: clamp(2.5rem, 5vw, 4rem) 1.25rem;
   }
 
@@ -234,12 +253,12 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
 
   /* Breadcrumb */
   .breadcrumb {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--lc-font-sans);
     font-size: 0.8125rem;
-    color: var(--ct-text-muted);
+    color: var(--lc-text-muted);
   }
   .breadcrumb a {
-    color: var(--ct-primary);
+    color: var(--lc-primary);
     text-decoration: underline;
     text-underline-offset: 2px;
   }
@@ -252,26 +271,26 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
   }
 
   .local-h2 {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: var(--lc-font-serif);
     font-size: clamp(1.375rem, 3vw, 1.875rem);
     font-weight: 700;
-    color: var(--ct-primary);
+    color: var(--lc-primary);
     margin: 0;
   }
 
   .local-body {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--lc-font-sans);
     font-size: 1rem;
     line-height: 1.75;
-    color: var(--ct-text);
+    color: var(--lc-text);
     margin: 0;
   }
 
   .btn-local-cta {
     display: inline-block;
-    background: var(--ct-accent);
+    background: var(--lc-accent);
     color: #fff;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--lc-font-sans);
     font-size: 0.9375rem;
     font-weight: 600;
     padding: 0.875rem 1.75rem;
@@ -282,23 +301,23 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
   }
   .btn-local-cta:hover { filter: brightness(0.9); }
   .btn-local-cta:focus-visible {
-    outline: 3px solid var(--ct-accent);
+    outline: 3px solid var(--lc-accent);
     outline-offset: 2px;
   }
 
   /* Internal links */
   .local-links {
     padding-top: 1.5rem;
-    border-top: 1px solid var(--ct-border);
+    border-top: 1px solid var(--lc-border);
   }
 
   .local-links-label {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--lc-font-sans);
     font-size: 0.8125rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--ct-text-muted);
+    color: var(--lc-text-muted);
     margin: 0 0 0.75rem;
   }
 
@@ -312,11 +331,11 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
   }
 
   .local-links-list a {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--lc-font-sans);
     font-size: 0.875rem;
-    color: var(--ct-primary);
+    color: var(--lc-primary);
     text-decoration: underline;
     text-underline-offset: 2px;
   }
-  .local-links-list a:hover { color: var(--ct-accent); }
+  .local-links-list a:hover { color: var(--lc-accent); }
 </style>

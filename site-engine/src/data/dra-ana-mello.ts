@@ -5,104 +5,24 @@
  * Inclui: dados de contato, copy de cada bloco, serviços e bairros
  * para geração das páginas Serviço × Bairro via getStaticPaths().
  */
-
-// ── Tipos ─────────────────────────────────────────────────────────
-
-export interface ClientService {
-  /** Slug usado na URL: /[servico]/[bairro] */
-  slug: string;
-  /** Nome exibido na pillar page e nas páginas de bairro */
-  name: string;
-  /** Tag curta (Presencial · Online, etc.) */
-  tag: string;
-  /** Descrição completa para pillar page */
-  description: string;
-  /** Schema.org @type específico para este serviço */
-  schemaType: string;
-  /** H1 template para página de bairro — use {{BAIRRO}} como placeholder */
-  h1Template: string;
-  /** Descrição meta para página de bairro — use {{BAIRRO}} */
-  metaDescTemplate: string;
-}
-
-export interface ClientNeighborhood {
-  /** Slug URL-safe */
-  slug: string;
-  /** Nome exibido */
-  name: string;
-  /** Preposição + artigo para "consultar psicóloga EM/NA cidade" */
-  prep: string;
-}
-
-export interface ClientData {
-  // Identidade
-  businessName: string;
-  specialty: string;
-  credential: string;
-  slug: string;
-  siteUrl: string;
-  /** Mood: chave do DESIGN.md */
-  mood: 'calm-trust' | 'fresh-clinical';
-
-  // Contato
-  city: string;
-  state: string;
-  phone: string;
-  phoneClean: string;
-  email: string;
-  instagram: string;
-  address: string;
-  lat: string;
-  lng: string;
-
-  // Copy — pillar page (uma por bloco)
-  copy: {
-    heroHeadline: string;
-    heroSubheadline: string;
-    heroPhotoAlt: string;
-    heroPhotoSrc?: string;
-    painPoints: [string, string, string];
-    aboutHeadline: string;
-    aboutBody: string;
-    aboutPullQuote: string;
-    aboutCredential: string;
-    aboutPhotoAlt: string;
-    aboutPhotoSrc?: string;
-    servicesHeadline: string;
-    processHeadline: string;
-    processSteps: { name: string; description: string }[];
-    testimonials: { quote: string; author: string }[];
-    faqHeadline: string;
-    faqs: { question: string; answer: string }[];
-    ctaHeadline: string;
-    ctaSubtext: string;
-    ctaButtonText: string;
-  };
-
-  // Serviços (para SEO programático)
-  services: ClientService[];
-
-  // Bairros atendidos (para SEO programático)
-  neighborhoods: ClientNeighborhood[];
-
-  // Schema.org
-  schemaType: string;
-  openingHours: { days: string[]; opens: string; closes: string }[];
-  priceRange: string;
-}
-
-// ── Dados ─────────────────────────────────────────────────────────
+import type { ClientData } from '../lib/types.ts';
 
 export const draAnaMello: ClientData = {
-  // Identidade
+  // ── Identidade ──────────────────────────────────────────────────
   businessName: 'Dra. Ana Mello',
   specialty: 'Psicóloga | TCC e Terapia de Casal',
   credential: 'CRP 06/123456 · Pós-graduada em TCC · Jardins, São Paulo',
-  slug: 'anamello',
+  slug: 'dra-ana-mello',
   siteUrl: 'https://anamello.jbdigitalsystem.com',
   mood: 'calm-trust',
 
-  // Contato
+  // ── Endereço ─────────────────────────────────────────────────────
+  streetAddress: 'Rua Haddock Lobo, 595',
+  postalCode: '01414-001',
+  district: 'Jardins',
+  specialtyNoun: 'psicóloga',
+
+  // ── Contato ──────────────────────────────────────────────────────
   city: 'São Paulo',
   state: 'SP',
   phone: '(11) 91234-5678',
@@ -113,25 +33,36 @@ export const draAnaMello: ClientData = {
   lat: '-23.558',
   lng: '-46.661',
 
-  // Copy — pillar page
+  // ── Copy ─────────────────────────────────────────────────────────
   copy: {
+    homeTitle: 'Psicóloga em São Paulo — Dra. Ana Mello | TCC e Terapia de Casal',
+    homeMetaDescription:
+      'Psicóloga clínica em Jardins, São Paulo. Especialista em TCC, ansiedade, burnout e terapia de casal. Atendimento presencial e online. CRP 06/123456.',
+    businessDescription:
+      'Psicóloga especialista em TCC e terapia de casal. Atende ansiedade, depressão, burnout e questões de relacionamento. Consultório em Jardins, São Paulo, e atendimento online para todo o Brasil.',
+    llmsSummary:
+      'Dra. Ana Mello é psicóloga clínica especialista em TCC, com 8 anos de experiência no tratamento de ansiedade, depressão, burnout e terapia de casal. Atende presencialmente no consultório em Jardins, São Paulo, e oferece sessões online para todo o Brasil.',
+
     heroHeadline: 'Viver com menos ansiedade é possível — com o suporte certo.',
     heroSubheadline:
       'Psicóloga especialista em TCC e terapia de casal. Consultório em Jardins, São Paulo, e atendimento online para todo o Brasil.',
     heroPhotoAlt: 'Dra. Ana Mello, psicóloga em São Paulo',
+
     painPoints: [
       'Você acorda já cansada, com a mente acelerada e sem conseguir desligar — mesmo nos momentos em que deveria descansar.',
       'Os mesmos conflitos se repetem no relacionamento, e cada tentativa de conversa termina da mesma forma, sem resolução.',
       'O trabalho consome tudo, mas por dentro você sente que está operando no limite — e não sabe bem como chegou até aqui.',
     ],
+
     aboutHeadline: 'Uma psicóloga que acredita no poder das perguntas certas.',
     aboutBody:
       'Me formei em Psicologia pela USP e me especializei em Terapia Cognitivo-Comportamental porque acredito que entender como pensamos é o primeiro passo para mudar como nos sentimos. Ao longo de 8 anos de clínica, trabalhei com pessoas que chegaram com ansiedade paralisante, relacionamentos desgastados e esgotamento profissional — e que encontraram, no processo terapêutico, ferramentas reais para retomar o controle das próprias vidas. Não acredito em respostas prontas. Acredito em escuta atenta, em perguntas que abrem possibilidades e em um espaço onde você pode ser honesta — consigo mesma e com o que está vivendo. Atendo adultos individualmente e casais, presencialmente em Jardins ou por videochamada.',
-    aboutPullQuote:
+    pullQuote:
       'A terapia não muda o que aconteceu. Muda o que você faz com isso a partir de agora.',
     aboutCredential:
       'CRP 06/123456 · Pós-graduada em TCC (PUC-SP) · Membro do CFP · 8 anos de experiência clínica',
     aboutPhotoAlt: 'Dra. Ana Mello em seu consultório em Jardins, São Paulo',
+
     servicesHeadline: 'Caminhos que ofereço.',
     processHeadline: 'Como começa o nosso trabalho.',
     processSteps: [
@@ -197,7 +128,7 @@ export const draAnaMello: ClientData = {
     ctaButtonText: 'Agendar primeira sessão',
   },
 
-  // Serviços (SEO programático)
+  // ── Serviços (SEO programático) ───────────────────────────────────
   services: [
     {
       slug: 'terapia-individual',
@@ -234,17 +165,17 @@ export const draAnaMello: ClientData = {
     },
   ],
 
-  // Bairros (SEO programático)
+  // ── Bairros (SEO programático) ────────────────────────────────────
   neighborhoods: [
-    { slug: 'jardins', name: 'Jardins', prep: 'nos' },
-    { slug: 'itaim-bibi', name: 'Itaim Bibi', prep: 'no' },
-    { slug: 'pinheiros', name: 'Pinheiros', prep: 'em' },
-    { slug: 'vila-madalena', name: 'Vila Madalena', prep: 'na' },
-    { slug: 'moema', name: 'Moema', prep: 'em' },
-    { slug: 'brooklin', name: 'Brooklin', prep: 'no' },
+    { slug: 'jardins',       name: 'Jardins',       prep: 'nos'  },
+    { slug: 'itaim-bibi',   name: 'Itaim Bibi',    prep: 'no'   },
+    { slug: 'pinheiros',    name: 'Pinheiros',      prep: 'em'   },
+    { slug: 'vila-madalena', name: 'Vila Madalena', prep: 'na'   },
+    { slug: 'moema',        name: 'Moema',          prep: 'em'   },
+    { slug: 'brooklin',     name: 'Brooklin',       prep: 'no'   },
   ],
 
-  // Schema.org
+  // ── Schema.org ────────────────────────────────────────────────────
   schemaType: 'ProfessionalService',
   openingHours: [
     { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '19:00' },
