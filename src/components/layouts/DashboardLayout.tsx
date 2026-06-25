@@ -12,16 +12,9 @@ import {
   Users,
   CreditCard,
   FileText,
-  Plug,
-  Sparkles,
-  MapPin,
   CheckCircle2,
-  Bell,
-  Folder,
   DollarSign,
-  BarChart3,
   Globe,
-  Palette,
   Shield,
   Star,
   Brain,
@@ -48,18 +41,14 @@ const adminSections = [
   {
     label: "Produção",
     items: [
-      { href: "/admin/site-generator", label: "Gerar Site com IA", icon: Sparkles },
       { href: "/admin/site-diagnosis", label: "Diagnóstico de Site", icon: Search },
-      { href: "/admin/gbp-diagnosis", label: "Diagnóstico GBP", icon: Star },
       { href: "/admin/pipeline", label: "Pipeline", icon: FolderKanban },
-      { href: "/admin/prompt-generator", label: "Gerador de Prompt", icon: FileText },
     ],
   },
   {
     label: "Clientes",
     items: [
       { href: "/admin/clients", label: "Clientes", icon: Users },
-      { href: "/admin/gbp", label: "Perfil no Google", icon: MapPin },
       { href: "/admin/maintenance", label: "Acompanhamento", icon: Shield },
       { href: "/admin/feedback", label: "NPS & Depoimentos", icon: Star },
       { href: "/admin/churn-alerts", label: "IA de CS", icon: Brain },
@@ -69,15 +58,12 @@ const adminSections = [
     label: "Gestão",
     items: [
       { href: "/admin/billing", label: "Financeiro", icon: DollarSign },
-      { href: "/admin/reports", label: "Relatórios", icon: BarChart3 },
       { href: "/admin/domains", label: "Domínios", icon: Globe },
     ],
   },
   {
     label: "Sistema",
     items: [
-      { href: "/admin/templates", label: "Templates", icon: Palette },
-      { href: "/admin/integrations", label: "Integrações", icon: Plug },
       { href: "/admin/settings", label: "Configurações", icon: Settings },
     ],
   },

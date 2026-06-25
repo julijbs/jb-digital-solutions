@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import {
-  ChevronRight, ChevronLeft, Eye, Sparkles, FolderKanban,
+  ChevronRight, ChevronLeft, Eye, FolderKanban,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -174,16 +174,6 @@ const AdminPipeline = () => {
                           >
                             <Eye size={12} /> Intake
                           </Button>
-                          {(p.status === "content_ready" || p.status === "intake") && (
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="h-7 text-xs px-2 text-primary"
-                              onClick={() => navigate(`/admin/prompt-generator?project=${p.id}`)}
-                            >
-                              <Sparkles size={12} /> Prompt
-                            </Button>
-                          )}
                         </div>
 
                         {/* Expanded intake data */}

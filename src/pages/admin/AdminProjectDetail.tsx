@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import {
-  ArrowLeft, ExternalLink, GitBranch, Globe, MapPin, Sparkles,
+  ArrowLeft, ExternalLink, GitBranch, Globe, MapPin,
   ChevronRight, ChevronLeft, Copy, Send, Clock, CheckCircle2,
 } from "lucide-react";
 
@@ -186,11 +186,6 @@ const AdminProjectDetail = () => {
             <Send size={14} /> Enviar para revisão
           </Button>
         )}
-        <Link to={`/admin/prompt-generator?project=${projectId}`}>
-          <Button variant="outline" size="sm">
-            <Sparkles size={14} /> Gerar Prompt
-          </Button>
-        </Link>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
