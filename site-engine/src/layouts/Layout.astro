@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import type { BrandTokens } from '../lib/types.ts';
 
 export interface Props {
   title:        string;
@@ -18,7 +19,11 @@ export interface Props {
   schemaJson:   string;
   ogImage?:     string;
   /** Mood do cliente — controla qual família de fontes carregar */
-  mood?:        'calm-trust' | 'fresh-clinical';
+  mood?:        string;
+  /** Tokens de marca derivados do logotipo — sobrepõem os defaults do :root */
+  brand?:    BrandTokens;
+  /** Caminho para o logo usado no favicon e og:image */
+  logoSrc?:  string;
 }
 
 const {
@@ -27,15 +32,16 @@ const {
   lat, lng, schemaType, schemaJson,
   ogImage = `${siteUrl}/og-default.png`,
   mood = 'calm-trust',
+  brand, logoSrc,
 } = Astro.props;
 
 const canonical = siteUrl;
 const stateCode = state.toUpperCase().slice(0, 2);
 
 // URLs das fontes por mood (display=swap previne CLS)
-const fontHref = mood === 'fresh-clinical'
+const fontHref = brand?.googleFontsUrl ?? (mood === 'fresh-clinical'
   ? 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap'
-  : 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600&display=swap';
+  : 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600&display=swap');
 ---
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -80,6 +86,31 @@ const fontHref = mood === 'fresh-clinical'
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image"       content={ogImage} />
 
+  {brand && (
+    <style set:html={`
+      :root {
+        --brand-primary: ${brand.primary};
+        --brand-primary-dark: ${brand.primaryDark};
+        --brand-primary-light: ${brand.primaryLight};
+        --brand-accent: ${brand.accent};
+        --brand-accent-dark: ${brand.accentDark};
+        --brand-accent-light: ${brand.accentLight};
+        --brand-surface: ${brand.surface};
+        --brand-surface-muted: ${brand.surfaceMuted};
+        --brand-surface-dark: ${brand.surfaceDark};
+        --brand-surface-alt: ${brand.surfaceAlt};
+        --brand-ink: ${brand.ink};
+        --brand-ink-muted: ${brand.inkMuted};
+        --brand-ink-faint: ${brand.inkFaint};
+        --brand-border: ${brand.border};
+        --brand-break: ${brand.breakBg};
+        --brand-white: ${brand.white};
+        --brand-font-display: ${brand.fontDisplayFamily};
+        --brand-font-body: ${brand.fontBodyFamily};
+      }
+    `} />
+  )}
+
   <!-- ── Preconnect (performance) ── -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -91,7 +122,7 @@ const fontHref = mood === 'fresh-clinical'
   <script type="application/ld+json" set:html={schemaJson}></script>
 
   <!-- ── Favicon (placeholder) ── -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href={logoSrc ?? '/favicon.svg'} />
 </head>
 <body>
   <a href="#main" class="skip-link">Pular para o conteúdo</a>

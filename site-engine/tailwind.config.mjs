@@ -4,26 +4,25 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Calm Trust — palette for psicólogo/saúde mental
         primary: {
-          DEFAULT: '#3E5C76',   // slate blue
-          dark:    '#2F4A60',   // for small text / hover
-          light:   '#5A7A9A',   // for hover states
+          DEFAULT: 'var(--brand-primary)',
+          dark:    'var(--brand-primary-dark)',
+          light:   'var(--brand-primary-light)',
         },
         accent: {
-          DEFAULT: '#C08552',   // amber terracotta
-          dark:    '#8A5A33',   // contrast-safe for small text
-          light:   '#D4A070',   // hover
+          DEFAULT: 'var(--brand-accent)',
+          dark:    'var(--brand-accent-dark)',
+          light:   'var(--brand-accent-light)',
         },
         surface: {
-          DEFAULT: '#F4F2ED',   // warm off-white (bg)
-          muted:   '#EAE7E0',   // slightly darker warm (cards, section tint)
-          dark:    '#DDD9D0',   // dividers
+          DEFAULT: 'var(--brand-surface)',
+          muted:   'var(--brand-surface-muted)',
+          dark:    'var(--brand-surface-dark)',
         },
         ink: {
-          DEFAULT: '#1E2733',   // main text
-          muted:   '#5A6475',   // secondary text
-          faint:   '#8A919E',   // captions, labels
+          DEFAULT: 'var(--brand-ink)',
+          muted:   'var(--brand-ink-muted)',
+          faint:   'var(--brand-ink-faint)',
         },
       },
       fontFamily: {

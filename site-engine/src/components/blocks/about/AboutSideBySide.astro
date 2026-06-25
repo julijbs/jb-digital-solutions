@@ -48,13 +48,7 @@ const { name, headline, body, pullQuote, credential, photoAlt, photoSrc } = Astr
 
 <style>
   .about-ss {
-    --fc-primary: #2D6A4F;
-    --fc-accent: #52B788;
-    --fc-surface: #F7F9F7;
-    --fc-text: #1A2318;
-    --fc-text-muted: #4A6358;
-    --fc-border: #C8DDD1;
-    background: var(--fc-surface);
+    background: var(--brand-surface);
     padding: clamp(3rem, 6vw, 5rem) 1.25rem;
   }
 
@@ -84,14 +78,14 @@ const { name, headline, body, pullQuote, credential, photoAlt, photoSrc } = Astr
     width: 100%;
     aspect-ratio: 4/5;
     border-radius: 8px;
-    border: 2px dashed var(--fc-border);
+    border: 2px dashed var(--brand-border);
     background: var(--fc-surface);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: var(--brand-font-body);
     font-size: 0.8125rem;
-    color: var(--fc-text-muted);
+    color: var(--brand-ink-muted);
   }
 
   /* Conteúdo */
@@ -103,51 +97,51 @@ const { name, headline, body, pullQuote, credential, photoAlt, photoSrc } = Astr
   }
 
   .about-ss-label {
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: var(--brand-font-body);
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--fc-accent);
+    color: var(--brand-accent);
     margin: 0;
   }
 
   .about-ss-heading {
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: var(--brand-font-display);
     font-size: clamp(1.5rem, 3vw, 2.125rem);
     font-weight: 400;
     line-height: 1.25;
-    color: var(--fc-primary);
+    color: var(--brand-primary);
     margin: 0;
   }
 
   .about-ss-body {
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: var(--brand-font-body);
     font-size: 1rem;
     line-height: 1.8;
-    color: var(--fc-text);
+    color: var(--brand-ink);
     margin: 0;
   }
 
   .about-ss-highlight {
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: var(--brand-font-display);
     font-size: 1.125rem;
     font-style: italic;
     line-height: 1.5;
-    color: var(--fc-primary);
-    border-left: 3px solid var(--fc-accent);
+    color: var(--brand-primary);
+    border-left: 3px solid var(--brand-accent);
     padding-left: 1.25rem;
     margin: 0;
   }
 
   .about-ss-cred {
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: var(--brand-font-body);
     font-size: 0.8125rem;
-    color: var(--fc-text-muted);
+    color: var(--brand-ink-muted);
     letter-spacing: 0.02em;
     margin: 0;
     padding-top: 0.5rem;
-    border-top: 1px solid var(--fc-border);
+    border-top: 1px solid var(--brand-border);
   }
 
   @media (max-width: 768px) {

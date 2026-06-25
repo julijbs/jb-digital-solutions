@@ -119,6 +119,8 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
   schemaType={client.schemaType}
   schemaJson={JSON.stringify(schemaObj)}
   mood={client.mood}
+  brand={client.brand}
+  logoSrc={client.logoSrc}
 >
   <main id="main">
 
@@ -214,27 +216,16 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
 </Layout>
 
 <style>
-  /* ── Tokens mood-aware ───────────────────────────────────────── */
-  [data-mood="calm-trust"] {
-    --lc-primary:     #3E5C76;
-    --lc-accent:      #C08552;
-    --lc-surface-alt: #EAE6DE;
-    --lc-text:        #1A1A1A;
-    --lc-text-muted:  #5A6475;
-    --lc-border:      #D4CFC8;
-    --lc-font-serif:  'Fraunces', Georgia, serif;
-    --lc-font-sans:   'Inter', system-ui, sans-serif;
-  }
-
-  [data-mood="fresh-clinical"] {
-    --lc-primary:     #2D6A4F;
-    --lc-accent:      #52B788;
-    --lc-surface-alt: #EAF2EE;
-    --lc-text:        #1A2318;
-    --lc-text-muted:  #4A6358;
-    --lc-border:      #C8DDD1;
-    --lc-font-serif:  'DM Serif Display', Georgia, serif;
-    --lc-font-sans:   'DM Sans', system-ui, sans-serif;
+  /* ── Tokens mood-aware — bridge para --brand-* global ─────────── */
+  [data-mood] {
+    --lc-primary:     var(--brand-primary);
+    --lc-accent:      var(--brand-accent);
+    --lc-surface-alt: var(--brand-surface-alt);
+    --lc-text:        var(--brand-ink);
+    --lc-text-muted:  var(--brand-ink-muted);
+    --lc-border:      var(--brand-border);
+    --lc-font-serif:  var(--brand-font-display);
+    --lc-font-sans:   var(--brand-font-body);
   }
 
   /* ── Local context section ───────────────────────────────────── */

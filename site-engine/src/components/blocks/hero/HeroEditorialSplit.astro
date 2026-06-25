@@ -69,7 +69,7 @@ const { headline, subheadline, credential, phone, phoneClean, photoAlt, photoSrc
 <style>
   .hero-section {
     padding-block: 5rem 5.5rem;
-    background: #F4F2ED;
+    background: var(--brand-surface);
   }
   .hero-grid {
     display: grid;
@@ -80,11 +80,11 @@ const { headline, subheadline, credential, phone, phoneClean, photoAlt, photoSrc
   .hero-copy { max-width: 600px; }
 
   .hero-headline {
-    font-family: 'Fraunces', serif;
+    font-family: var(--brand-font-display);
     font-size: clamp(2.5rem, 5.5vw, 4.25rem);
     font-weight: 700;
     line-height: 1.08;
-    color: #1E2733;
+    color: var(--brand-ink);
     margin: 0 0 1.5rem;
     /* Hanging indent for the em-dash if present */
   }
@@ -92,7 +92,7 @@ const { headline, subheadline, credential, phone, phoneClean, photoAlt, photoSrc
   .hero-sub {
     font-size: 1.0625rem;
     line-height: 1.7;
-    color: #5A6475;
+    color: var(--brand-ink-muted);
     margin: 0 0 2.25rem;
     max-width: 480px;
   }
@@ -107,16 +107,16 @@ const { headline, subheadline, credential, phone, phoneClean, photoAlt, photoSrc
 
   .hero-phone a {
     font-size: 0.9375rem;
-    color: #3E5C76;
+    color: var(--brand-primary);
     text-decoration: none;
-    border-bottom: 1px solid #C08552;
+    border-bottom: 1px solid var(--brand-accent);
     padding-bottom: 1px;
   }
-  .hero-phone a:hover { color: #2F4A60; }
+  .hero-phone a:hover { color: var(--brand-primary-dark); }
 
   .hero-credential {
     font-size: 0.8125rem;
-    color: #5A6475; /* contraste WCAG AA: ~5.1:1 em fundo creme */
+    color: var(--brand-ink-muted);
     margin: 0;
     letter-spacing: 0.02em;
   }

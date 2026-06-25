@@ -40,7 +40,7 @@ const points = [point1, point2, point3];
 <style>
   .pain-section {
     padding-block: 6rem;
-    background: #EAE7E0;
+    background: var(--brand-surface-muted);
   }
 
   .pain-header {
@@ -49,11 +49,11 @@ const points = [point1, point2, point3];
   }
 
   .pain-title {
-    font-family: 'Fraunces', serif;
+    font-family: var(--brand-font-display);
     font-size: clamp(1.875rem, 3.5vw, 2.625rem);
     font-weight: 600;
     line-height: 1.2;
-    color: #1E2733;
+    color: var(--brand-ink);
     margin: 0;
   }
 
@@ -64,22 +64,22 @@ const points = [point1, point2, point3];
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0;
-    border-left: 1px solid #DDD9D0;
+    border-left: 1px solid var(--brand-surface-dark);
   }
 
   .pain-item {
     padding: 2rem 2.5rem;
-    border-right: 1px solid #DDD9D0;
+    border-right: 1px solid var(--brand-surface-dark);
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
 
   .pain-num {
-    font-family: 'Fraunces', serif;
+    font-family: var(--brand-font-display);
     font-size: 3.5rem;
     font-weight: 700;
-    color: #C08552;
+    color: var(--brand-accent);
     line-height: 1;
     opacity: 0.55;
   }
@@ -87,16 +87,16 @@ const points = [point1, point2, point3];
   .pain-text {
     font-size: 1rem;
     line-height: 1.7;
-    color: #1E2733;
+    color: var(--brand-ink);
     margin: 0;
   }
 
   .pain-note {
     margin-top: 3rem;
     font-size: 0.9375rem;
-    color: #5A6475;
+    color: var(--brand-ink-muted);
     font-style: italic;
-    font-family: 'Fraunces', serif;
+    font-family: var(--brand-font-display);
   }
 
   @media (max-width: 768px) {
@@ -108,7 +108,7 @@ const points = [point1, point2, point3];
     .pain-item {
       padding: 1.5rem 0;
       border-right: none;
-      border-bottom: 1px solid #DDD9D0;
+      border-bottom: 1px solid var(--brand-surface-dark);
     }
     .pain-item:last-child { border-bottom: none; }
   }
