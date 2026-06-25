@@ -6,18 +6,16 @@
  *
  * ⚠️  PLACEHOLDERS — preencher antes do deploy:
  *   CRP_NUMERO   → número do CRP (ex.: "06/123456")
- *   CIDADE       → cidade do consultório (ex.: "São Paulo")
- *   ESTADO       → UF (ex.: "SP")
- *   RUA          → endereço completo
- *   BAIRRO_CLI   → bairro do consultório (para endereço)
- *   CEP          → código postal (ex.: "01414-001")
- *   LAT / LNG    → coordenadas (Google Maps → clique direito → "O que tem aqui?")
- *   TELEFONE     → (11) 9XXXX-XXXX
- *   TELEFONE_RAW → somente dígitos, ex.: 11912345678
- *   EMAIL        → email de contato
- *   INSTAGRAM    → @handle (sem https)
- *   ENDERECO_COMPLETO → "Rua ..., 123 — Bairro, Cidade-UF"
- *   BAIRRO_1..N  → bairros para SEO (3–6 bairros próximos)
+ *   ✅ CONFIRMADOS via GBP: cidade, estado, telefone, Instagram, lat/lng
+ *   ⚠️  PENDENTES (preencher antes do deploy):
+ *   CRP_NUMERO        → número do CRP
+ *   RUA               → endereço da rua
+ *   BAIRRO_CLI        → bairro do consultório
+ *   CEP               → código postal
+ *   EMAIL             → email de contato
+ *   ENDERECO_COMPLETO → "Rua ..., 123 — Bairro, São José dos Campos-SP"
+ *   BAIRRO_1..6       → bairros reais para SEO (próximos ao consultório em SJC)
+ *   depoimentos reais → substituir os placeholders por depoimentos com autorização
  */
 
 import type { ClientData } from '../lib/types.ts';
@@ -26,7 +24,7 @@ export const marcelaBarcells: ClientData = {
   // ── Identidade ──────────────────────────────────────────────────
   businessName: 'Marcela Barcellos',
   specialty:    'Psicóloga | Neuropsicologia · TCC',
-  credential:   'CRP CRP_NUMERO · Pós-graduada em Neuropsicologia · Albert Einstein · CIDADE, ESTADO',
+  credential:   'CRP CRP_NUMERO · Pós-graduada em Neuropsicologia · Albert Einstein · São José dos Campos, SP',
   slug:         'marcela-barcellos',
   siteUrl:      'https://marcelabarcells.jbdigitalsystem.com',
   mood:         'calm-trust',
@@ -62,15 +60,15 @@ export const marcelaBarcells: ClientData = {
   specialtyNoun: 'psicóloga',
 
   // ── Contato ──────────────────────────────────────────────────────
-  city:         'CIDADE',
-  state:        'ESTADO',
-  phone:        'TELEFONE',
-  phoneClean:   'TELEFONE_RAW',
+  city:         'São José dos Campos',
+  state:        'SP',
+  phone:        '(12) 98147-0915',
+  phoneClean:   '12981470915',
   email:        'EMAIL',
-  instagram:    '@INSTAGRAM',
+  instagram:    '@psi.marcelabarcellos',
   address:      'ENDERECO_COMPLETO',
-  lat:          'LAT',
-  lng:          'LNG',
+  lat:          '-23.1895062',
+  lng:          '-45.8630127',
 
   // ── Copy ─────────────────────────────────────────────────────────
   copy: {
