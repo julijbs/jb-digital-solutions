@@ -1,0 +1,65 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+
+const verticalLabels: Record<string, string> = {
+  psicologos: 'Psicólogos', dentistas: 'Dentistas',
+  nutricionistas: 'Nutricionistas', fisioterapeutas: 'Fisioterapeutas',
+};
+---
+<section class="section-wrap related-posts">
+  <div class="section-divider" style="margin-bottom:3rem"></div>
+  <h2 class="related-title">Continue lendo</h2>
+  <div class="related-grid">
+    {posts.map(post => (
+      <a href={`/blog/${post.id}/`} class="post-card">
+        <span class="post-vertical">{verticalLabels[post.data.vertical]}</span>
+        <h3>{post.data.title}</h3>
+        <p>{post.data.description}</p>
+        <time datetime={post.data.pubDate.toISOString()}>
+          {post.data.pubDate.toLocaleDateString('pt-BR')}
+        </time>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .related-posts { padding-bottom: 5rem; }
+  .related-title {
+    font-size: clamp(1.4rem, 3vw, 1.875rem);
+    margin-bottom: 1.75rem;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  .post-card {
+    display: block;
+    background: var(--brand-surface-alt);
+    border: 1px solid var(--brand-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .post-card:hover { border-color: var(--brand-primary); transform: translateY(-2px); }
+  .post-vertical {
+    display: inline-block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand-primary);
+    margin-bottom: 0.75rem;
+  }
+  .post-card h3 { font-size: 1.0625rem; color: var(--brand-ink); margin-bottom: 0.5rem; line-height: 1.4; }
+  .post-card p  { font-size: 0.875rem; color: var(--brand-ink-muted); margin-bottom: 1rem; line-height: 1.6; }
+  .post-card time { font-size: 0.8125rem; color: var(--brand-ink-faint); }
+</style>

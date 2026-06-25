@@ -1,0 +1,70 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  posts: CollectionEntry<'blog'>[];
+  verticalSlug: string;
+  professionPlural: string;
+}
+
+const { posts, verticalSlug, professionPlural } = Astro.props;
+---
+<section class="section-wrap vertical-articles">
+  <div class="section-divider" style="margin-bottom:4rem"></div>
+  <div class="articles-header">
+    <h2>Artigos para {professionPlural}</h2>
+    <a href={`/blog/${verticalSlug}/`} class="see-all">
+      Ver todos os artigos →
+    </a>
+  </div>
+  <div class="articles-grid">
+    {posts.map(post => (
+      <a href={`/blog/${post.id}/`} class="article-card">
+        <h3>{post.data.title}</h3>
+        <p>{post.data.description}</p>
+        <time datetime={post.data.pubDate.toISOString()}>
+          {post.data.pubDate.toLocaleDateString('pt-BR')}
+        </time>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .vertical-articles { padding-bottom: 5rem; }
+  .articles-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+  .articles-header h2 { font-size: clamp(1.4rem, 3vw, 1.875rem); }
+  .see-all {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--brand-primary);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .see-all:hover { color: var(--brand-primary-light); }
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .article-card {
+    display: block;
+    background: var(--brand-surface-alt);
+    border: 1px solid var(--brand-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .article-card:hover { border-color: var(--brand-primary); transform: translateY(-2px); }
+  .article-card h3 { font-size: 1.0625rem; color: var(--brand-ink); margin-bottom: 0.5rem; line-height: 1.4; }
+  .article-card p  { font-size: 0.875rem; color: var(--brand-ink-muted); margin-bottom: 1rem; line-height: 1.6; }
+  .article-card time { font-size: 0.8125rem; color: var(--brand-ink-faint); }
+</style>

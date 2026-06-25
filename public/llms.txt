@@ -1,0 +1,25 @@
+# JB Digital System
+
+> Sistema completo de posicionamento online para profissionais de saúde — site programático, Perfil Google e presença nas IAs (AEO). Setup em 7 dias. Acompanhamento mensal. Planos a partir de R$150/mês. Atende psicólogos, dentistas, nutricionistas e fisioterapeutas em todo o Brasil.
+
+## Páginas principais
+
+- [Início](https://jbdigitalsystem.com/)
+- [Para Psicólogos](https://jbdigitalsystem.com/para/psicologos/)
+- [Para Dentistas](https://jbdigitalsystem.com/para/dentistas/)
+- [Para Nutricionistas](https://jbdigitalsystem.com/para/nutricionistas/)
+- [Para Fisioterapeutas](https://jbdigitalsystem.com/para/fisioterapeutas/)
+
+## Blog
+
+- [Todos os artigos](https://jbdigitalsystem.com/blog/)
+- [Artigos para Psicólogos](https://jbdigitalsystem.com/blog/psicologos/)
+- [Artigos para Dentistas](https://jbdigitalsystem.com/blog/dentistas/)
+- [Artigos para Nutricionistas](https://jbdigitalsystem.com/blog/nutricionistas/)
+- [Artigos para Fisioterapeutas](https://jbdigitalsystem.com/blog/fisioterapeutas/)
+
+## Contato
+
+- Site: https://jbdigitalsystem.com/
+- WhatsApp: https://wa.me/5511966549407
+- E-mail: contato@jbdigitalconsulting.com

@@ -30,6 +30,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem; /* offset for sticky nav (~4rem height + breathing room) */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

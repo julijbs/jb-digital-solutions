@@ -11,10 +11,12 @@ import HowItWorksB2B from '../../components/sections/HowItWorksB2B.astro';
 import PricingTable from '../../components/sections/PricingTable.astro';
 import PortfolioProof from '../../components/sections/PortfolioProof.astro';
 import FaqB2B from '../../components/sections/FaqB2B.astro';
+import VerticalArticles from '../../components/sections/VerticalArticles.astro';
 import WhatsappCta from '../../components/sections/WhatsappCta.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import { verticals } from '../../data/verticals.ts';
 import { plans, whatsappUrl } from '../../data/pricing.ts';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const { verticals: verts } = await import('../../data/verticals.ts');
@@ -27,6 +29,10 @@ export async function getStaticPaths() {
 const { v } = Astro.props;
 
 const canonical = `https://jbdigitalsystem.com/para/${v.slug}/`;
+
+// Blog posts for this vertical (for internal linking section)
+const verticalPosts = (await getCollection('blog', p => !p.data.draft && p.data.vertical === v.slug))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 
 // JSON-LD @graph: Service + Offer (2 planos) + FAQPage + BreadcrumbList
 const schemaObj = {
@@ -98,6 +104,13 @@ const schemaObj = {
     <PricingTable whatsappText={v.whatsappText} />
     <PortfolioProof portfolio={v.portfolio} />
     <FaqB2B faqs={v.faqs} />
+    {verticalPosts.length > 0 && (
+      <VerticalArticles
+        posts={verticalPosts}
+        verticalSlug={v.slug}
+        professionPlural={v.professionPlural}
+      />
+    )}
     <WhatsappCta professionPlural={v.professionPlural} whatsappText={v.whatsappText} />
   </main>
   <SiteFooter />
