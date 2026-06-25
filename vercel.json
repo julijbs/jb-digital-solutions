@@ -1,16 +1,16 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "vite",
-  "rewrites": [
-    { "source": "/",                  "destination": "https://jbds-marketing.vercel.app/" },
-    { "source": "/para",              "destination": "https://jbds-marketing.vercel.app/para" },
-    { "source": "/para/:path*",       "destination": "https://jbds-marketing.vercel.app/para/:path*" },
-    { "source": "/blog",              "destination": "https://jbds-marketing.vercel.app/blog" },
-    { "source": "/blog/:path*",       "destination": "https://jbds-marketing.vercel.app/blog/:path*" },
-    { "source": "/_astro/:path*",     "destination": "https://jbds-marketing.vercel.app/_astro/:path*" },
-    { "source": "/sitemap-index.xml", "destination": "https://jbds-marketing.vercel.app/sitemap-index.xml" },
-    { "source": "/sitemap-0.xml",     "destination": "https://jbds-marketing.vercel.app/sitemap-0.xml" },
-    { "source": "/(.*)",              "destination": "/index.html" }
+  "routes": [
+    { "src": "^/$",                     "dest": "https://jbds-marketing.vercel.app/" },
+    { "src": "^/para$",                 "dest": "https://jbds-marketing.vercel.app/para" },
+    { "src": "^/para(/.*)",             "dest": "https://jbds-marketing.vercel.app/para$1" },
+    { "src": "^/blog$",                 "dest": "https://jbds-marketing.vercel.app/blog" },
+    { "src": "^/blog(/.*)",             "dest": "https://jbds-marketing.vercel.app/blog$1" },
+    { "src": "^/_astro/(.+)",           "dest": "https://jbds-marketing.vercel.app/_astro/$1" },
+    { "src": "^/sitemap-index\\.xml$",  "dest": "https://jbds-marketing.vercel.app/sitemap-index.xml" },
+    { "src": "^/sitemap-0\\.xml$",      "dest": "https://jbds-marketing.vercel.app/sitemap-0.xml" },
+    { "handle": "filesystem" },
+    { "src": "/.*",                     "dest": "/index.html" }
   ]
 }
