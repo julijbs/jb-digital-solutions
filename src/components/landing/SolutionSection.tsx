@@ -4,21 +4,21 @@ import { Globe, MapPin, Link2 } from "lucide-react";
 const cards = [
   {
     icon: Globe,
-    title: "Site Profissional",
-    subtitle: "Seu espaço digital próprio",
-    text: "Um site elegante, rápido e otimizado para o Google te encontrar. Carrega em segundos, funciona perfeitamente no celular e transmite confiança profissional.\n\nSem WordPress, sem hospedagem paga, sem dor de cabeça.",
+    title: "Presença nos Buscadores",
+    subtitle: "Site + páginas estratégicas por serviço",
+    text: "Construímos páginas específicas para cada serviço que você oferece e cada região que você atende. Assim, quando alguém busca sua especialidade no seu bairro, você aparece — não o concorrente.",
   },
   {
     icon: MapPin,
-    title: "Perfil da Empresa no Google",
-    subtitle: "Visibilidade local no Google",
-    text: "Quando alguém procurar pelo seu serviço na sua cidade, você aparece no mapa, com foto, telefone, endereço e avaliações. Tudo organizado e conectado ao seu site.",
+    title: "Perfil Google Completo",
+    subtitle: "Visibilidade no mapa e nas buscas locais",
+    text: "Seu Perfil da Empresa no Google configurado e otimizado — com avaliações visíveis, dados corretos e tudo integrado ao seu site. O paciente te encontra e te confia antes mesmo de ligar.",
   },
   {
     icon: Link2,
-    title: "Conexão Técnica",
-    subtitle: "Tudo integrado e consistente",
-    text: 'Seu site e seu perfil no Google "conversam" entre si. Informações sincronizadas, dados corretos, apresentação profissional. O Google entende quem você é e te mostra para as pessoas certas.',
+    title: "Acompanhamento Contínuo",
+    subtitle: "Seu posicionamento monitorado todo mês",
+    text: "O posicionamento orgânico precisa de cuidado constante. Monitoramos sua presença, ajustamos o que precisa e garantimos que você continue crescendo — sem você precisar entender de tecnologia.",
   },
 ];
 
@@ -34,10 +34,11 @@ export const SolutionSection = () => {
           className="mx-auto mb-4 max-w-2xl text-center"
         >
           <h2 className="font-serif text-3xl md:text-4xl">
-            <span className="gold-gradient-text">Presença Google Essencial</span>
+            <span className="gold-gradient-text">O Sistema Completo de Posicionamento</span>
           </h2>
           <p className="mt-4 text-muted-foreground">
-            A base digital que profissionais liberais precisam para serem encontrados, confiarem e conectarem — sem complicação, sem mensalidade, sem depender de redes sociais.
+            Não vendemos apenas um site. Construímos toda a infraestrutura que faz pacientes
+            encontrarem você organicamente — e mantemos ela funcionando, todo mês.
           </p>
         </motion.div>
 

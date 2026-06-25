@@ -2,12 +2,12 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 
 const items = [
-  "Você é nutricionista, psicólogo(a), fisioterapeuta, fonoaudiólogo(a), médico(a) ou terapeuta",
-  "Atende presencialmente e quer que pacientes da sua cidade te encontrem no Google",
-  "Sua agenda ainda depende muito de indicação e você quer mudar isso",
-  "Não tem site — ou tem um que não aparece no Google e não traz ninguém",
-  "Não quer pagar agência todo mês nem aprender a mexer em ferramentas técnicas",
-  "Quer ter presença profissional real sem depender de stories e algoritmo",
+  "Você é dentista, médico(a), psicólogo(a), nutricionista, fisioterapeuta, esteta, terapeuta ou qualquer profissional de saúde que atende pacientes",
+  "Atende presencialmente e quer que novos pacientes da sua cidade te encontrem no Google",
+  "Sua agenda ainda depende muito de indicação e você quer construir uma fonte orgânica, previsível",
+  "Não tem site — ou tem um que não aparece no Google e não traz nenhum paciente",
+  "Quer ter presença digital profissional e completa, sem precisar entender de tecnologia",
+  "Quer parar de depender de stories e algoritmo para atrair pacientes",
 ];
 
 export const ForYouSection = () => {
