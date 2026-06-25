@@ -1,0 +1,20 @@
+---
+// HomeMobileCTA.astro — Sticky mobile-only bottom bar
+---
+<div class="mobile-cta" role="complementary" aria-label="CTA mobile">
+  <a href="https://jbdigitalsystem.com/signup" class="btn btn-primary mobile-cta-btn">
+    Quero minha Presença Google
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</div>
+<style>
+  .mobile-cta {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+    background: rgba(11,29,46,0.97); backdrop-filter: blur(12px);
+    border-top: 1px solid var(--brand-border);
+    padding: 0.875rem 1.25rem;
+  }
+  .mobile-cta-btn { width:100%; justify-content:center; }
+  @media (max-width: 767px) { .mobile-cta { display: flex; } }
+</style>

@@ -1,0 +1,97 @@
+---
+export interface Props {
+  headline: string;
+  sub: string;
+  professionPlural: string;
+  whatsappText: string;
+}
+const { headline, sub, professionPlural, whatsappText } = Astro.props;
+const wUrl = `https://wa.me/5511966549407?text=${encodeURIComponent(whatsappText)}`;
+const trustBadges = ['Setup em até 7 dias','Site + Google + IA integrados','Acompanhamento mensal incluso','Sem depender de redes sociais'];
+---
+<section class="hero-section">
+  <div class="section-wrap hero-inner">
+    <div class="hero-label">Para {professionPlural}</div>
+    <h1 class="hero-headline">{headline}</h1>
+    <p class="hero-sub">{sub}</p>
+    <div class="hero-actions">
+      <a href={wUrl} target="_blank" rel="noopener" class="btn-whatsapp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.13.558 4.13 1.532 5.867L.057 23.09a.75.75 0 00.906.905l5.29-1.476A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.886 0-3.663-.497-5.197-1.368l-.373-.218-3.135.875.877-3.069-.237-.388A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Quero saber mais
+      </a>
+      <a href="https://jbdigitalsystem.com/signup" class="btn btn-outline">Ver planos</a>
+    </div>
+    <ul class="trust-badges" role="list">
+      {trustBadges.map(b => (
+        <li>
+          <span class="badge-dot" aria-hidden="true"></span>
+          {b}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    padding: 8rem 0 5rem;
+    background: radial-gradient(ellipse at 50% 0%, rgba(200,164,75,0.08) 0%, transparent 60%);
+  }
+  .hero-inner { text-align: center; }
+  .hero-label {
+    display: inline-block;
+    font-family: var(--brand-font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-primary);
+    border: 1px solid var(--brand-primary);
+    border-radius: 2rem;
+    padding: 0.25rem 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-headline {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.12;
+    max-width: 820px;
+    margin: 0 auto 1.5rem;
+  }
+  .hero-sub {
+    max-width: 640px;
+    margin: 0 auto 2.5rem;
+    font-size: 1.125rem;
+    color: var(--brand-ink-muted);
+    line-height: 1.7;
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.75rem;
+    list-style: none;
+    padding: 0; margin: 0;
+  }
+  .trust-badges li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    color: var(--brand-ink-muted);
+  }
+  .badge-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--brand-primary);
+    flex-shrink: 0;
+  }
+</style>

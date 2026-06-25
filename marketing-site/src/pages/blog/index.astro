@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteNav from '../../components/sections/SiteNav.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import { getCollection } from 'astro:content';
+
+const canonical = 'https://jbdigitalsystem.com/blog/';
+const posts = (await getCollection('blog', p => !p.data.draft))
+  .sort((a,b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const verticalLabels: Record<string,string> = {
+  psicologos: 'Psicólogos', dentistas: 'Dentistas',
+  nutricionistas: 'Nutricionistas', fisioterapeutas: 'Fisioterapeutas',
+};
+---
+<Layout
+  title="Blog JB Digital — Marketing para Profissionais de Saúde"
+  description="Artigos sobre como psicólogos, dentistas, nutricionistas e fisioterapeutas podem atrair mais pacientes organicamente com Google, SEO e IA."
+  canonical={canonical}
+>
+  <SiteNav />
+  <main id="main">
+    <section class="section-wrap blog-hero">
+      <h1>Blog — Posicionamento Digital para Profissionais de Saúde</h1>
+      <p>Como atrair mais pacientes organicamente com Google, site e presença em IA.</p>
+    </section>
+    <section class="section-wrap blog-list">
+      {posts.length === 0 ? (
+        <p style="color:var(--brand-ink-muted)">Em breve — novos artigos chegando.</p>
+      ) : (
+        <div class="posts-grid">
+          {posts.map(post => (
+            <a href={`/blog/${post.id}/`} class="post-card">
+              <span class="post-vertical">{verticalLabels[post.data.vertical]}</span>
+              <h2>{post.data.title}</h2>
+              <p>{post.data.description}</p>
+              <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('pt-BR')}</time>
+            </a>
+          ))}
+        </div>
+      )}
+    </section>
+  </main>
+  <SiteFooter />
+</Layout>
+
+<style>
+  .blog-hero { padding: 7rem 0 2rem; }
+  .blog-hero h1 { font-size: clamp(1.8rem,4vw,3rem); margin-bottom: 0.75rem; }
+  .blog-hero p { color: var(--brand-ink-muted); font-size: 1.0625rem; }
+  .blog-list { padding-bottom: 6rem; }
+  .posts-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 1.25rem; }
+  .post-card {
+    display: block; background: var(--brand-surface-alt); border: 1px solid var(--brand-border);
+    border-radius: 0.75rem; padding: 1.5rem; text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .post-card:hover { border-color: var(--brand-primary); transform: translateY(-2px); }
+  .post-vertical {
+    display: inline-block; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--brand-primary); margin-bottom: 0.75rem;
+  }
+  .post-card h2 { font-size: 1.125rem; color: var(--brand-ink); margin-bottom: 0.5rem; line-height: 1.4; }
+  .post-card p  { font-size: 0.875rem; color: var(--brand-ink-muted); margin-bottom: 1rem; line-height: 1.6; }
+  .post-card time { font-size: 0.8125rem; color: var(--brand-ink-faint); }
+</style>

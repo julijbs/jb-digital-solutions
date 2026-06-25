@@ -1,0 +1,104 @@
+---
+/**
+ * /para/[vertical]/ — Páginas programáticas por vertical (psicologos, dentistas, etc.)
+ * getStaticPaths gera 1 página estática por vertical — mirror de site-engine/[servico]/[bairro].astro
+ */
+import Layout from '../../layouts/Layout.astro';
+import SiteNav from '../../components/sections/SiteNav.astro';
+import HeroB2B from '../../components/sections/HeroB2B.astro';
+import PainPointsB2B from '../../components/sections/PainPointsB2B.astro';
+import HowItWorksB2B from '../../components/sections/HowItWorksB2B.astro';
+import PricingTable from '../../components/sections/PricingTable.astro';
+import PortfolioProof from '../../components/sections/PortfolioProof.astro';
+import FaqB2B from '../../components/sections/FaqB2B.astro';
+import WhatsappCta from '../../components/sections/WhatsappCta.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import { verticals } from '../../data/verticals.ts';
+import { plans, whatsappUrl } from '../../data/pricing.ts';
+
+export async function getStaticPaths() {
+  const { verticals: verts } = await import('../../data/verticals.ts');
+  return verts.map(v => ({
+    params: { vertical: v.slug },
+    props: { v },
+  }));
+}
+
+const { v } = Astro.props;
+
+const canonical = `https://jbdigitalsystem.com/para/${v.slug}/`;
+
+// JSON-LD @graph: Service + Offer (2 planos) + FAQPage + BreadcrumbList
+const schemaObj = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": `${canonical}#service`,
+      "name": `Sistema de Posicionamento Online para ${v.professionPlural}`,
+      "description": v.metaDescription,
+      "url": canonical,
+      "provider": {
+        "@type": "Organization",
+        "name": "JB Digital Consulting",
+        "url": "https://jbdigitalsystem.com",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "sales",
+          "telephone": "+55-11-96654-9407",
+          "availableLanguage": "Portuguese"
+        }
+      },
+      "areaServed": "BR",
+      "serviceType": ["Web Design", "SEO", "AEO", "Google Business Profile Management"],
+      "offers": plans.map(p => ({
+        "@type": "Offer",
+        "name": `Plano ${p.name}`,
+        "price": p.schemaPrice,
+        "priceCurrency": "BRL",
+        "availability": "https://schema.org/InStock",
+      })),
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": v.faqs.map(f => ({
+        "@type": "Question",
+        "name": f.q,
+        "acceptedAnswer": { "@type": "Answer", "text": f.a },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "JB Digital System", "item": "https://jbdigitalsystem.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Para profissionais", "item": "https://jbdigitalsystem.com/para/" },
+        { "@type": "ListItem", "position": 3, "name": v.professionPlural, "item": canonical },
+      ],
+    },
+  ],
+};
+---
+
+<Layout
+  title={v.metaTitle}
+  description={v.metaDescription}
+  canonical={canonical}
+  schemaJson={JSON.stringify(schemaObj)}
+>
+  <SiteNav />
+  <main id="main">
+    <HeroB2B
+      headline={v.hero.headline}
+      sub={v.hero.sub}
+      professionPlural={v.professionPlural}
+      whatsappText={v.whatsappText}
+    />
+    <PainPointsB2B painPoints={v.painPoints} />
+    <HowItWorksB2B steps={v.howItWorks} />
+    <PricingTable whatsappText={v.whatsappText} />
+    <PortfolioProof portfolio={v.portfolio} />
+    <FaqB2B faqs={v.faqs} />
+    <WhatsappCta professionPlural={v.professionPlural} whatsappText={v.whatsappText} />
+  </main>
+  <SiteFooter />
+</Layout>

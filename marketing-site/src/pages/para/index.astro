@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteNav from '../../components/sections/SiteNav.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import { verticals } from '../../data/verticals.ts';
+
+const canonical = 'https://jbdigitalsystem.com/para/';
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "JB Digital System", "item": "https://jbdigitalsystem.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Para profissionais de saúde", "item": canonical },
+  ],
+});
+---
+<Layout
+  title="Sistema de Posicionamento Online para Profissionais de Saúde | JB Digital"
+  description="Site, Perfil Google e presença em IA para psicólogos, dentistas, nutricionistas e fisioterapeutas. Setup em 7 dias. Acompanhamento mensal."
+  canonical={canonical}
+  schemaJson={schema}
+>
+  <SiteNav />
+  <main id="main">
+    <section class="hub-hero section-wrap">
+      <span class="hub-label">Para Profissionais de Saúde</span>
+      <h1>Posicionamento digital que atrai pacientes organicamente</h1>
+      <p>Escolha sua área de atuação e veja como o sistema funciona para você.</p>
+    </section>
+
+    <section class="hub-grid-section section-wrap">
+      <div class="hub-grid">
+        {verticals.map(v => (
+          <a href={`/para/${v.slug}/`} class="hub-card">
+            <h2>{v.professionPlural}</h2>
+            <p>{v.hero.sub.slice(0, 120)}…</p>
+            <span class="hub-link">Ver sistema para {v.professionPlural} →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</Layout>
+
+<style>
+  .hub-hero { padding: 8rem 0 3rem; text-align: center; }
+  .hub-label {
+    display: inline-block;
+    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--brand-primary); border: 1px solid var(--brand-primary);
+    border-radius: 2rem; padding: 0.25rem 0.875rem; margin-bottom: 1.5rem;
+  }
+  .hub-hero h1 { font-size: clamp(2rem,5vw,3.5rem); max-width: 700px; margin: 0 auto 1rem; }
+  .hub-hero p  { color: var(--brand-ink-muted); font-size: 1.125rem; }
+  .hub-grid-section { padding-bottom: 6rem; }
+  .hub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  .hub-card {
+    display: block;
+    background: var(--brand-surface-alt);
+    border: 1px solid var(--brand-border);
+    border-radius: 0.75rem;
+    padding: 1.75rem;
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .hub-card:hover { border-color: var(--brand-primary); transform: translateY(-2px); }
+  .hub-card h2 { font-size: 1.5rem; color: var(--brand-ink); margin-bottom: 0.75rem; }
+  .hub-card p  { font-size: 0.9375rem; color: var(--brand-ink-muted); line-height: 1.6; margin-bottom: 1.25rem; }
+  .hub-link    { font-size: 0.9375rem; color: var(--brand-primary); font-weight: 500; }
+</style>

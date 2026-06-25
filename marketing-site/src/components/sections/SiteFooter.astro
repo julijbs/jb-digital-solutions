@@ -1,0 +1,170 @@
+---
+// SiteFooter.astro — Marketing site footer
+---
+
+<footer class="site-footer">
+  <div class="section-wrap footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="footer-logo" aria-label="JB Digital System">
+        <span class="logo-jb">JB</span>
+        <span class="logo-name">Digital System</span>
+      </a>
+      <p class="footer-tagline">
+        Sistema completo de posicionamento online para profissionais de saúde —
+        site, Perfil Google e presença nas IAs trabalhando juntos para atrair
+        pacientes organicamente.
+      </p>
+    </div>
+
+    <nav class="footer-nav" aria-label="Links do rodapé">
+      <div class="footer-col">
+        <h3 class="footer-col-title">Para quem</h3>
+        <ul role="list">
+          <li><a href="/para/psicologos/">Psicólogos</a></li>
+          <li><a href="/para/dentistas/">Dentistas</a></li>
+          <li><a href="/para/nutricionistas/">Nutricionistas</a></li>
+          <li><a href="/para/fisioterapeutas/">Fisioterapeutas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-col-title">Blog</h3>
+        <ul role="list">
+          <li><a href="/blog/">Todos os artigos</a></li>
+          <li><a href="/blog/psicologos/">Para Psicólogos</a></li>
+          <li><a href="/blog/dentistas/">Para Dentistas</a></li>
+          <li><a href="/blog/nutricionistas/">Para Nutricionistas</a></li>
+          <li><a href="/blog/fisioterapeutas/">Para Fisioterapeutas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-col-title">Conta</h3>
+        <ul role="list">
+          <li><a href="https://jbdigitalsystem.com/signup">Começar agora</a></li>
+          <li><a href="https://jbdigitalsystem.com/login">Entrar</a></li>
+          <li><a href="https://wa.me/5511966549407" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="section-wrap footer-bottom-inner">
+      <p>&copy; {new Date().getFullYear()} JB Digital Consulting. Todos os direitos reservados.</p>
+      <p class="footer-email">contato@jbdigitalsolutions.online</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--brand-border);
+    padding-top: 4rem;
+    margin-top: 6rem;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4rem;
+    padding-bottom: 3rem;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+
+  .logo-jb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.375rem;
+    background: linear-gradient(135deg, #C8A44B, #D4B06A);
+    color: #0B1D2E;
+    font-family: var(--brand-font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .logo-name {
+    font-family: var(--brand-font-body);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--brand-ink);
+  }
+
+  .footer-tagline {
+    max-width: 340px;
+    font-size: 0.875rem;
+    color: var(--brand-ink-muted);
+    line-height: 1.6;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 3rem;
+  }
+
+  .footer-col h3 {
+    font-family: var(--brand-font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand-primary);
+    margin-bottom: 1rem;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-col a {
+    font-size: 0.875rem;
+    color: var(--brand-ink-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .footer-col a:hover { color: var(--brand-ink); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--brand-border);
+    padding-block: 1.5rem;
+  }
+
+  .footer-bottom-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-bottom p {
+    font-size: 0.8125rem;
+    color: var(--brand-ink-faint);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .footer-nav {
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+  }
+</style>

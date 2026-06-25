@@ -30,3 +30,7 @@ supabase/.temp/
 
 # Vercel local project config
 .vercel/
+
+# marketing-site build artifacts
+marketing-site/dist
+marketing-site/.astro

@@ -1,0 +1,72 @@
+---
+// HomePainPoints.astro — Pain points / "Isso soa familiar?" section
+---
+<section class="pain-section">
+  <div class="section-wrap">
+    <div class="section-divider" style="margin-bottom:4rem"></div>
+    <h2 class="pain-title">Isso soa familiar?</h2>
+    <div class="pain-grid">
+      <div class="card pain-card">
+        <div class="pain-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+        <blockquote>"Alguém procurou minha especialidade aqui perto — e não me achou"</blockquote>
+        <p>Você estudou anos para isso. Tem resultado real com seus pacientes. Mas quando alguém abre o Google e digita sua especialidade e sua cidade, aparece o concorrente — não você.</p>
+      </div>
+
+      <div class="card pain-card">
+        <div class="pain-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <blockquote>"Minha agenda ainda depende muito de indicação"</blockquote>
+        <p>Indicação é ótima. Mas ela seca quando você menos espera. E aí você volta a postar nas redes, fazer stories, torcer para o algoritmo ajudar — sem previsibilidade nenhuma.</p>
+      </div>
+
+      <div class="card pain-card">
+        <div class="pain-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <blockquote>"Tenho avaliações incríveis — mas elas ficam escondidas"</blockquote>
+        <p>Seus pacientes te recomendam. Mas quando alguém pesquisa online, essas avaliações não aparecem com destaque — ou não aparecem de jeito nenhum. Sua reputação não está trabalhando por você.</p>
+      </div>
+    </div>
+    <p class="pain-close">O problema não é a sua competência. <strong>É que o Google não sabe que você existe.</strong></p>
+  </div>
+</section>
+
+<style>
+  .pain-section { padding: 0 0 5rem; }
+  .pain-title { text-align: center; font-size: clamp(1.75rem, 4vw, 2.5rem); margin-bottom: 3rem; }
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+  .pain-card { display: flex; flex-direction: column; gap: 1rem; }
+  .pain-icon {
+    width: 2.75rem; height: 2.75rem;
+    background: rgba(200,164,75,0.1);
+    border-radius: 0.5rem;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--brand-primary);
+    flex-shrink: 0;
+  }
+  .pain-card blockquote {
+    font-family: var(--brand-font-display);
+    font-size: 1.0625rem;
+    color: var(--brand-ink);
+    line-height: 1.4;
+    margin: 0;
+    border: none; padding: 0;
+  }
+  .pain-card p { font-size: 0.9375rem; color: var(--brand-ink-muted); line-height: 1.7; margin: 0; }
+  .pain-close {
+    text-align: center;
+    font-size: 1.0625rem;
+    color: var(--brand-ink-muted);
+    max-width: 540px;
+    margin-inline: auto;
+  }
+  .pain-close strong { color: var(--brand-ink); }
+</style>

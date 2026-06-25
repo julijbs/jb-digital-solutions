@@ -1,0 +1,35 @@
+---
+// HomeGuarantee.astro — Ethics & quality pillars
+---
+<section class="guarantee-section">
+  <div class="section-wrap">
+    <div class="section-divider" style="margin-bottom:4rem"></div>
+    <h2 class="guarantee-title">Compromisso com ética e qualidade</h2>
+    <div class="guarantee-grid">
+      <div class="card guarantee-card">
+        <div class="g-icon" aria-hidden="true">⚖️</div>
+        <h3>Ética Profissional</h3>
+        <p>Total respeito às diretrizes do seu conselho profissional e às políticas do Google.</p>
+      </div>
+      <div class="card guarantee-card">
+        <div class="g-icon" aria-hidden="true">👁️</div>
+        <h3>Transparência</h3>
+        <p>Sem promessas mirabolantes. Entregamos base técnica sólida, não milagres de tráfego.</p>
+      </div>
+      <div class="card guarantee-card">
+        <div class="g-icon" aria-hidden="true">🤝</div>
+        <h3>Suporte Humanizado</h3>
+        <p>Atendimento próximo, claro e sem robotização. Você não é só mais um número.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .guarantee-section { padding: 0 0 5rem; }
+  .guarantee-title { text-align:center; font-size:clamp(1.6rem,3.5vw,2.25rem); margin-bottom:2.5rem; }
+  .guarantee-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.25rem; max-width:800px; margin-inline:auto; }
+  .guarantee-card { text-align:center; }
+  .g-icon { font-size:1.75rem; margin-bottom:0.75rem; }
+  .guarantee-card h3 { font-size:1.125rem; margin-bottom:0.5rem; }
+  .guarantee-card p { font-size:0.9375rem; color:var(--brand-ink-muted); line-height:1.65; margin:0; }
+</style>

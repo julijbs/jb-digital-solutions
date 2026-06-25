@@ -1,0 +1,28 @@
+---
+export interface Props {
+  faqs: { q: string; a: string }[];
+}
+const { faqs } = Astro.props;
+---
+<section class="section-faq" id="faq">
+  <div class="section-wrap">
+    <div class="section-divider" style="margin-bottom:4rem"></div>
+    <div class="faq-header">
+      <h2>Perguntas frequentes</h2>
+    </div>
+    <div class="faq-list" style="max-width:680px;margin:0 auto">
+      {faqs.map(f => (
+        <details>
+          <summary>{f.q}</summary>
+          <div class="faq-answer">{f.a}</div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-faq { padding: 5rem 0; }
+  .faq-header { text-align: center; margin-bottom: 2.5rem; }
+  .faq-header h2 { font-size: clamp(1.8rem,4vw,2.75rem); }
+</style>

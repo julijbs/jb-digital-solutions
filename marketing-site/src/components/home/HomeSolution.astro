@@ -1,0 +1,68 @@
+---
+// HomeSolution.astro — "O Sistema Completo de Posicionamento" section
+---
+<section class="solution-section" id="solucao">
+  <div class="section-wrap">
+    <div class="section-divider" style="margin-bottom:4rem"></div>
+    <div class="solution-header">
+      <h2><span class="gold-text">O Sistema Completo de Posicionamento</span></h2>
+      <p>
+        Não vendemos apenas um site. Construímos toda a infraestrutura que faz pacientes
+        encontrarem você organicamente — e mantemos ela funcionando, todo mês.
+      </p>
+    </div>
+
+    <div class="solution-grid">
+      <div class="card-hover solution-card">
+        <div class="sol-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h3>Presença nos Buscadores</h3>
+        <p class="sol-sub">Site + páginas estratégicas por serviço</p>
+        <p>Construímos páginas específicas para cada serviço que você oferece e cada região que você atende. Assim, quando alguém busca sua especialidade no seu bairro, você aparece — não o concorrente.</p>
+      </div>
+
+      <div class="card-hover solution-card">
+        <div class="sol-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3>Perfil Google Completo</h3>
+        <p class="sol-sub">Visibilidade no mapa e nas buscas locais</p>
+        <p>Seu Perfil da Empresa no Google configurado e otimizado — com avaliações visíveis, dados corretos e tudo integrado ao seu site. O paciente te encontra e te confia antes mesmo de ligar.</p>
+      </div>
+
+      <div class="card-hover solution-card">
+        <div class="sol-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <h3>Acompanhamento Contínuo</h3>
+        <p class="sol-sub">Seu posicionamento monitorado todo mês</p>
+        <p>O posicionamento orgânico precisa de cuidado constante. Monitoramos sua presença, ajustamos o que precisa e garantimos que você continue crescendo — sem você precisar entender de tecnologia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .solution-section { padding: 0 0 5rem; }
+  .solution-header { text-align: center; margin-bottom: 3rem; max-width: 680px; margin-inline: auto; margin-bottom: 3rem; }
+  .solution-header h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); margin-bottom: 1rem; }
+  .solution-header p { color: var(--brand-ink-muted); font-size: 1.0625rem; line-height: 1.7; }
+
+  .solution-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .solution-card { display: flex; flex-direction: column; gap: 0.75rem; }
+  .sol-icon {
+    width: 3rem; height: 3rem;
+    background: rgba(200,164,75,0.1);
+    border-radius: 0.625rem;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--brand-primary);
+  }
+  .solution-card h3 { font-size: 1.25rem; margin: 0; }
+  .sol-sub { font-size: 0.875rem; color: var(--brand-primary); margin: 0; font-weight: 500; }
+  .solution-card p:last-child { font-size: 0.9375rem; color: var(--brand-ink-muted); line-height: 1.7; margin: 0; }
+</style>

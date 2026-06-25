@@ -1,0 +1,98 @@
+---
+// HomeHero.astro — Homepage hero section
+---
+<section class="home-hero">
+  <div class="section-wrap hero-inner">
+    <div class="hero-content">
+      <h1>
+        Você é excelente no que faz.<br />
+        <span class="gold-text">Mas quem precisa de você ainda não te encontra online.</span>
+      </h1>
+      <p class="hero-sub">
+        O JB Digital System constrói seu posicionamento online completo — site, Perfil Google
+        e presença nas IAs — tudo integrado, para que novos pacientes te encontrem
+        organicamente, todo dia, sem depender de indicação.
+      </p>
+      <div class="hero-cta">
+        <a href="https://jbdigitalsystem.com/signup" class="btn btn-primary hero-btn">
+          Quero atrair mais pacientes
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <ul class="hero-badges" role="list">
+        <li>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Setup em até 7 dias
+        </li>
+        <li>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Site + Google + IA integrados
+        </li>
+        <li>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Acompanhamento mensal incluso
+        </li>
+        <li>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Sem depender de redes sociais
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-hero {
+    padding: 7rem 0 5rem;
+    background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(200,164,75,0.07) 0%, transparent 70%);
+  }
+
+  .hero-inner { max-width: 760px; margin-inline: auto; }
+  .hero-content { text-align: center; }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.12;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    color: var(--brand-ink-muted);
+    line-height: 1.75;
+    max-width: 620px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .hero-cta { margin-bottom: 2rem; }
+
+  .hero-btn {
+    font-size: 1.0625rem;
+    padding: 0.875rem 2.25rem;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .hero-badges li {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    color: var(--brand-ink-muted);
+  }
+
+  .hero-badges li svg { color: var(--brand-primary); flex-shrink: 0; }
+
+  @media (max-width: 640px) {
+    .home-hero { padding: 5rem 0 3.5rem; }
+    h1 { font-size: 1.875rem; }
+  }
+</style>
