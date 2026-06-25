@@ -10,6 +10,7 @@
     { "src": "^/_astro/(.+)",           "dest": "https://jbds-marketing.vercel.app/_astro/$1" },
     { "src": "^/sitemap-index\\.xml$",  "dest": "https://jbds-marketing.vercel.app/sitemap-index.xml" },
     { "src": "^/sitemap-0\\.xml$",      "dest": "https://jbds-marketing.vercel.app/sitemap-0.xml" },
+    { "src": "^/rss\\.xml$",            "dest": "https://jbds-marketing.vercel.app/rss.xml" },
     { "handle": "filesystem" },
     { "src": "/.*",                     "dest": "/index.html" }
   ]
