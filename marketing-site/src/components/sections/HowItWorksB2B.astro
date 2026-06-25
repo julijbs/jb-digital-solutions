@@ -1,0 +1,68 @@
+---
+export interface Props {
+  steps: { step: number; title: string; body: string }[];
+}
+const { steps } = Astro.props;
+const notes = ['Setup: até 7 dias após o onboarding','Comunicação: via WhatsApp e painel','Revisões: incluídas no processo'];
+---
+<section class="section-hiw" id="como-funciona">
+  <div class="section-wrap">
+    <div class="section-divider" style="margin-bottom:4rem"></div>
+    <div class="hiw-header">
+      <h2>Como funciona na prática?</h2>
+    </div>
+    <div class="hiw-steps">
+      {steps.map(s => (
+        <div class="hiw-step">
+          <div class="step-num">{s.step}</div>
+          <div class="step-body">
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="hiw-notes">
+      {notes.map(n => (
+        <span class="note-item">
+          <span class="note-dot" aria-hidden="true"></span>
+          {n}
+        </span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-hiw { padding: 5rem 0; }
+  .hiw-header { text-align: center; margin-bottom: 3rem; }
+  .hiw-header h2 { font-size: clamp(1.8rem,4vw,2.75rem); }
+  .hiw-steps { max-width: 680px; margin: 0 auto 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+  .hiw-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    background: var(--brand-surface-alt);
+    border: 1px solid var(--brand-border);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+  }
+  .step-num {
+    width: 2.25rem; height: 2.25rem; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #C8A44B, #D4B06A);
+    color: #0B1D2E;
+    font-family: var(--brand-font-body);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .step-body h3 { font-family: var(--brand-font-display); font-size: 1.0625rem; margin-bottom: 0.375rem; }
+  .step-body p  { font-size: 0.9375rem; color: var(--brand-ink-muted); margin: 0; line-height: 1.6; }
+  .hiw-notes {
+    max-width: 680px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; justify-content: center;
+  }
+  .note-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; color: var(--brand-ink-muted); }
+  .note-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--brand-primary); flex-shrink: 0; }
+</style>

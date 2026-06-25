@@ -1,0 +1,116 @@
+---
+import { plans, whatsappUrl, signupUrl } from '../../data/pricing.ts';
+export interface Props { whatsappText: string; }
+const { whatsappText } = Astro.props;
+const wUrl = `${whatsappUrl}?text=${encodeURIComponent(whatsappText)}`;
+---
+<section class="section-pricing" id="planos">
+  <div class="section-wrap">
+    <div class="section-divider" style="margin-bottom:4rem"></div>
+    <div class="pricing-header">
+      <h2>O sistema completo em dois tamanhos</h2>
+      <p>Cada plano inclui setup inicial e acompanhamento mensal contínuo.</p>
+    </div>
+    <div class="pricing-grid">
+      {plans.map(plan => (
+        <div class={`pricing-card${plan.featured ? ' pricing-card--featured' : ''}`}>
+          {plan.featured && <div class="featured-badge">★ Mais completo</div>}
+          <h3>{plan.name}</h3>
+          <div class="pricing-values">
+            <div class="pricing-row">
+              <span class="pricing-label">Setup único</span>
+              <span class="pricing-value">{plan.setupPrice}</span>
+            </div>
+            <div class="pricing-row pricing-row--monthly">
+              <span class="pricing-label">Acompanhamento mensal</span>
+              <span class="pricing-value">{plan.monthlyPrice}</span>
+            </div>
+          </div>
+          <ul class="features-list" role="list">
+            {plan.features.map(f => (
+              <li>
+                <span class="feat-dot" aria-hidden="true"></span>
+                {f}
+              </li>
+            ))}
+          </ul>
+          <a
+            href={plan.featured ? wUrl : signupUrl}
+            class={`btn ${plan.featured ? 'btn-primary' : 'btn-outline'}`}
+            target={plan.featured ? '_blank' : undefined}
+            rel={plan.featured ? 'noopener' : undefined}
+          >
+            {plan.cta}
+          </a>
+        </div>
+      ))}
+    </div>
+    <div class="pricing-badges">
+      <span>💳 PIX ou Cartão (até 12x)</span>
+      <span>⚡ Setup em até 7 dias</span>
+      <span>✅ Aprovação em etapas</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-pricing { padding: 5rem 0; }
+  .pricing-header { text-align: center; margin-bottom: 3rem; }
+  .pricing-header h2 { font-size: clamp(1.8rem,4vw,2.75rem); margin-bottom: 0.75rem; }
+  .pricing-header p { color: var(--brand-ink-muted); }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    max-width: 760px;
+    margin: 0 auto 2rem;
+  }
+  .pricing-card {
+    position: relative;
+    background: var(--brand-surface-alt);
+    border: 1px solid var(--brand-border);
+    border-radius: 0.75rem;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .pricing-card--featured {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 1px var(--brand-primary), 0 16px 48px rgba(200,164,75,0.12);
+  }
+  .featured-badge {
+    position: absolute;
+    top: -0.875rem;
+    left: 1.5rem;
+    background: linear-gradient(135deg,#C8A44B,#D4B06A);
+    color: #0B1D2E;
+    font-family: var(--brand-font-body);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    border-radius: 2rem;
+    padding: 0.2rem 0.75rem;
+  }
+  .pricing-card h3 { font-size: 1.5rem; }
+  .pricing-values {
+    background: rgba(255,255,255,0.04);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+  .pricing-row { display: flex; justify-content: space-between; align-items: baseline; }
+  .pricing-row--monthly { border-top: 1px solid var(--brand-border); padding-top: 0.625rem; }
+  .pricing-label { font-size: 0.8125rem; color: var(--brand-ink-muted); }
+  .pricing-value { font-family: var(--brand-font-display); font-size: 1.25rem; color: var(--brand-primary); }
+  .features-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.625rem; flex: 1; }
+  .features-list li { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.9375rem; color: var(--brand-ink-muted); }
+  .feat-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand-primary); flex-shrink: 0; margin-top: 0.5rem; }
+  .pricing-card .btn { text-align: center; justify-content: center; }
+  .pricing-badges {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem 2rem;
+    max-width: 760px; margin: 0 auto;
+  }
+  .pricing-badges span { font-size: 0.875rem; color: var(--brand-ink-muted); }
+</style>

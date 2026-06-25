@@ -10,5 +10,20 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+# ── AI Crawlers (AEO) ──
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
 User-agent: *
 Allow: /
+
+Sitemap: https://jbdigitalsystem.com/sitemap-index.xml

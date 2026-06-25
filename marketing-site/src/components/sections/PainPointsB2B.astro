@@ -1,0 +1,46 @@
+---
+export interface Props {
+  painPoints: { icon: string; title: string; body: string }[];
+}
+const { painPoints } = Astro.props;
+---
+<section class="section-pain" id="para-quem">
+  <div class="section-wrap">
+    <div class="section-divider" style="margin-bottom:4rem"></div>
+    <div class="section-header">
+      <h2>Isso soa familiar?</h2>
+    </div>
+    <div class="pain-grid">
+      {painPoints.map(p => (
+        <div class="pain-card">
+          <span class="pain-icon" aria-hidden="true">{p.icon}</span>
+          <h3>{p.title}</h3>
+          <p>{p.body}</p>
+        </div>
+      ))}
+    </div>
+    <p class="pain-conclusion">O problema não é a sua competência. É que o Google não sabe que você existe.</p>
+  </div>
+</section>
+
+<style>
+  .section-pain { padding: 5rem 0; }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-header h2 { font-size: clamp(1.8rem,4vw,2.75rem); }
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+  .pain-card {
+    background: var(--brand-surface-alt);
+    border: 1px solid var(--brand-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+  }
+  .pain-icon { font-size: 1.75rem; display: block; margin-bottom: 1rem; }
+  .pain-card h3 { font-family: var(--brand-font-display); font-size: 1.0625rem; margin-bottom: 0.75rem; line-height: 1.4; }
+  .pain-card p { font-size: 0.9375rem; color: var(--brand-ink-muted); line-height: 1.7; margin: 0; }
+  .pain-conclusion { text-align: center; color: var(--brand-primary); font-size: 1.0625rem; font-weight: 500; max-width: 520px; margin: 0 auto; }
+</style>

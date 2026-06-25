@@ -1,0 +1,73 @@
+---
+export interface Props {
+  professionPlural: string;
+  whatsappText: string;
+}
+const { professionPlural, whatsappText } = Astro.props;
+const wUrl = `https://wa.me/5511966549407?text=${encodeURIComponent(whatsappText)}`;
+---
+<section class="section-cta">
+  <div class="section-wrap cta-inner">
+    <div class="cta-glow" aria-hidden="true"></div>
+    <h2>
+      Seu próximo paciente está pesquisando agora.<br/>
+      <span class="gold-text">Você vai aparecer?</span>
+    </h2>
+    <p>
+      Em até 7 dias, toda a infraestrutura do seu posicionamento online está no ar —
+      site, Perfil Google e presença nas IAs trabalhando juntos para atrair {professionPlural.toLowerCase()} pacientes de forma orgânica, todo dia.
+    </p>
+    <div class="cta-actions">
+      <a href={wUrl} target="_blank" rel="noopener" class="btn-whatsapp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.13.558 4.13 1.532 5.867L.057 23.09a.75.75 0 00.906.905l5.29-1.476A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.886 0-3.663-.497-5.197-1.368l-.373-.218-3.135.875.877-3.069-.237-.388A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Conversar no WhatsApp
+      </a>
+      <a href="https://jbdigitalsystem.com/signup" class="btn btn-outline">
+        Criar conta e começar
+      </a>
+    </div>
+    <div class="cta-trust">
+      <span>✓ Setup em até 7 dias</span>
+      <span>✓ Processo de aprovação em etapas</span>
+      <span>✓ Acompanhamento mensal incluso</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-cta {
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-inner { text-align: center; position: relative; }
+  .cta-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(200,164,75,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .section-cta h2 {
+    font-size: clamp(2rem,5vw,3.5rem);
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
+  }
+  .section-cta > .section-wrap > p {
+    max-width: 580px;
+    margin: 0 auto 2.5rem;
+    color: var(--brand-ink-muted);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+  .cta-actions {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;
+  }
+  .cta-trust {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 0.5rem 1.75rem;
+  }
+  .cta-trust span { font-size: 0.875rem; color: var(--brand-ink-muted); }
+</style>
