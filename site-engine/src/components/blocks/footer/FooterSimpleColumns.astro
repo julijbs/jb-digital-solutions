@@ -9,10 +9,16 @@ export interface Props {
   email?:       string;
   instagram?:   string;
   year:         number;
+  /**
+   * Caminho do logotipo (relativo a /public). Quando presente,
+   * exibe a imagem acima do nome; útil para logos claros sobre o fundo escuro do footer.
+   * Convenção: /public/<slug>/logo.svg
+   */
+  logoSrc?:     string;
 }
 const {
   businessName, credential, city, state,
-  address, phone, email, instagram, year,
+  address, phone, email, instagram, year, logoSrc,
 } = Astro.props;
 ---
 
@@ -20,6 +26,9 @@ const {
   <div class="section-wrap footer-inner">
 
     <div class="footer-brand">
+      {logoSrc && (
+        <img src={logoSrc} alt={businessName} class="footer-logo-img" />
+      )}
       <p class="footer-name">{businessName}</p>
       <p class="footer-credential">{credential}</p>
       <address class="footer-nap" aria-label="Informações de contato">
@@ -52,7 +61,7 @@ const {
 <style>
   .site-footer {
     padding-block: 3rem;
-    background: #1E2733;
+    background: var(--brand-break);
     color: rgba(255,255,255,0.55);
   }
 
@@ -63,8 +72,16 @@ const {
     align-items: start;
   }
 
+  .footer-logo-img {
+    display: block;
+    height: 2.5rem;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    margin-bottom: 0.75rem;
+  }
   .footer-name {
-    font-family: 'Fraunces', serif;
+    font-family: var(--brand-font-display);
     font-size: 1.0625rem;
     font-weight: 600;
     color: rgba(255,255,255,0.9);
@@ -95,7 +112,7 @@ const {
     text-decoration: none;
     transition: color 0.15s;
   }
-  .footer-nap a:hover { color: #C08552; }
+  .footer-nap a:hover { color: var(--brand-accent); }
 
   .footer-meta { align-self: end; text-align: right; }
 

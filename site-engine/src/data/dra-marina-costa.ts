@@ -15,6 +15,29 @@ export const draMarinaCostaData: ClientData = {
   siteUrl: 'https://marinacosta.jbdigitalsystem.com',
   mood: 'fresh-clinical',
 
+  // ── Marca visual ─────────────────────────────────────────────────
+  brand: {
+    primary:       '#2D6A4F',
+    primaryDark:   '#1B4332',
+    primaryLight:  '#3ea06a',
+    accent:        '#52B788',
+    accentDark:    '#3ea06a',
+    accentLight:   '#81c9a4',
+    surface:       '#F7F9F7',
+    surfaceMuted:  '#EAF2EE',
+    surfaceDark:   '#C8DDD1',
+    surfaceAlt:    '#EAF2EE',
+    ink:           '#1A2318',
+    inkMuted:      '#4A6358',
+    inkFaint:      '#7a9d8f',
+    border:        '#C8DDD1',
+    breakBg:       '#1B4332',
+    white:         '#FFFFFF',
+    fontDisplayFamily: "'DM Serif Display', Georgia, serif",
+    fontBodyFamily:    "'DM Sans', system-ui, sans-serif",
+    googleFontsUrl: 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap',
+  },
+
   // ── Endereço ─────────────────────────────────────────────────────
   streetAddress: 'Rua dos Pinheiros, 820',
   postalCode: '05422-001',

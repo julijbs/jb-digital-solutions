@@ -34,8 +34,8 @@ const { headline, steps } = Astro.props;
 <style>
   .process-section {
     padding-block: 6rem;
-    background: #EAE7E0;
-    border-top: 1px solid #DDD9D0;
+    background: var(--brand-surface-muted);
+    border-top: 1px solid var(--brand-surface-dark);
   }
 
   .process-header {
@@ -44,11 +44,11 @@ const { headline, steps } = Astro.props;
   }
 
   .process-title {
-    font-family: 'Fraunces', serif;
+    font-family: var(--brand-font-display);
     font-size: clamp(1.75rem, 3vw, 2.5rem);
     font-weight: 600;
     line-height: 1.2;
-    color: #1E2733;
+    color: var(--brand-ink);
     margin: 0;
   }
 
@@ -70,7 +70,7 @@ const { headline, steps } = Astro.props;
     left: calc(100% / 6);
     right: calc(100% / 6);
     height: 1px;
-    background: linear-gradient(to right, #C08552 0%, #3E5C76 100%);
+    background: linear-gradient(to right, var(--brand-accent) 0%, var(--brand-primary) 100%);
     opacity: 0.35;
     pointer-events: none;
   }
@@ -86,36 +86,36 @@ const { headline, steps } = Astro.props;
   .step-marker {
     width: 2.75rem;
     height: 2.75rem;
-    border: 1.5px solid #3E5C76;
+    border: 1.5px solid var(--brand-primary);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #F4F2ED;
+    background: var(--brand-surface);
     flex-shrink: 0;
     position: relative;
     z-index: 1;
   }
 
   .step-number {
-    font-family: 'Fraunces', serif;
+    font-family: var(--brand-font-display);
     font-size: 1rem;
     font-weight: 600;
-    color: #3E5C76;
+    color: var(--brand-primary);
   }
 
   .step-name {
-    font-family: 'Fraunces', serif;
+    font-family: var(--brand-font-display);
     font-size: 1.125rem;
     font-weight: 600;
-    color: #1E2733;
+    color: var(--brand-ink);
     margin: 0;
   }
 
   .step-desc {
     font-size: 0.9375rem;
     line-height: 1.7;
-    color: #5A6475;
+    color: var(--brand-ink-muted);
     margin: 0;
   }
 

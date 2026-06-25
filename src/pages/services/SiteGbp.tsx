@@ -21,8 +21,8 @@ const faqSchema = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "Preciso pagar hospedagem todo mês?",
-      acceptedAnswer: { "@type": "Answer", text: "Não! A hospedagem já está inclusa no serviço e é gratuita para sempre. Zero mensalidade." },
+      name: "Como funciona o pagamento?",
+      acceptedAnswer: { "@type": "Answer", text: "Existem dois valores: a taxa de setup (única, para implementar todo o sistema) e a mensalidade de acompanhamento contínuo. Os valores variam conforme o plano — Essencial ou Premium. Aceitamos PIX e cartão em até 12x." },
     },
     {
       "@type": "Question",
@@ -32,7 +32,7 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "O que é AEO e por que isso importa?",
-      acceptedAnswer: { "@type": "Answer", text: "AEO (Answer Engine Optimization) é a técnica que prepara sua presença digital para ser recomendada por IAs como ChatGPT, Gemini e Perplexity — além do Google tradicional." },
+      acceptedAnswer: { "@type": "Answer", text: "AEO (Answer Engine Optimization) é a técnica que prepara sua presença digital para ser recomendada por IAs como ChatGPT, Gemini e Perplexity — além do Google tradicional. Quando alguém pede uma indicação de dentista, médico ou psicólogo para uma IA, você precisa aparecer como resposta." },
     },
     {
       "@type": "Question",
@@ -41,13 +41,13 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      name: "O site vai aparecer no Google automaticamente?",
-      acceptedAnswer: { "@type": "Answer", text: "O site é otimizado tecnicamente com SEO e AEO, mas o ranqueamento depende de fatores como concorrência local, conteúdo e avaliações. Entregamos a base técnica completa." },
+      name: "Minha clínica vai aparecer no Google após o setup?",
+      acceptedAnswer: { "@type": "Answer", text: "O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica completa e acompanhamos seu crescimento mensalmente." },
     },
     {
       "@type": "Question",
       name: "Posso usar meu próprio domínio?",
-      acceptedAnswer: { "@type": "Answer", text: "Sim! Você pode comprar seu domínio personalizado e nós configuramos. Custo adicional de R$ 100 (setup único)." },
+      acceptedAnswer: { "@type": "Answer", text: "Sim! Você pode adquirir seu domínio personalizado (ex: draanacardoso.com.br) e nós configuramos. Custo adicional de R$ 100 (taxa única de configuração)." },
     },
   ],
 };
@@ -68,8 +68,8 @@ const orgSchema = {
 };
 
 const navItems = [
-  { label: "Solução", href: "#solucao" },
-  { label: "AEO + IA", href: "#aeo" },
+  { label: "O Sistema", href: "#solucao" },
+  { label: "Presença em IA", href: "#aeo" },
   { label: "Como funciona", href: "#como-funciona" },
   { label: "Planos", href: "#planos" },
   { label: "FAQ", href: "#faq" },
@@ -78,10 +78,10 @@ const navItems = [
 const SiteGbp = () => (
   <div className="min-h-screen bg-background">
     <Helmet>
-      <title>Apareça no Google — Site + Perfil Google para Profissionais de Saúde</title>
+      <title>Sistema de Posicionamento Online para Profissionais de Saúde | JB Digital System</title>
       <meta
         name="description"
-        content="Site profissional + Perfil Google completo para nutricionistas, psicólogos, fisioterapeutas e profissionais de saúde. Seja encontrado por pacientes da sua cidade. Entrega em 7 dias, sem mensalidade."
+        content="Site + Perfil Google + Presença em IA para dentistas, médicos, psicólogos, nutricionistas e profissionais de saúde. Sistema completo que atrai pacientes de forma orgânica. Setup em até 7 dias."
       />
       <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       <script type="application/ld+json">{JSON.stringify(orgSchema)}</script>
@@ -90,7 +90,7 @@ const SiteGbp = () => (
     <SiteHeader
       navItems={navItems}
       ctaSecondary={{ label: "Ver planos", href: "#planos" }}
-      ctaPrimary={{ label: "Começar agora", href: "/signup" }}
+      ctaPrimary={{ label: "Quero atrair mais pacientes", href: "/signup" }}
     />
 
     <main>
@@ -109,7 +109,7 @@ const SiteGbp = () => (
     </main>
 
     <SiteFooter
-      tagline="Site profissional + Perfil Google para nutricionistas, psicólogos, fisioterapeutas e profissionais de saúde."
+      tagline="Sistema completo de posicionamento online para profissionais de saúde — site, Perfil Google e IA trabalhando juntos para atrair mais pacientes organicamente."
     />
     <MobileCTA />
   </div>

@@ -76,6 +76,8 @@ const schemaObj = {
   schemaType={client.schemaType}
   schemaJson={JSON.stringify(schemaObj)}
   mood={client.mood}
+  brand={client.brand}
+  logoSrc={client.logoSrc}
 >
   <main id="main">
 
@@ -83,6 +85,7 @@ const schemaObj = {
       businessName={client.businessName}
       phone={client.phone}
       phoneClean={client.phoneClean}
+      logoSrc={client.logoSrc}
     />
 
     <B.hero
@@ -125,8 +128,8 @@ const schemaObj = {
     <B.testimonials
       quote1={client.copy.testimonials[0].quote}
       author1={client.copy.testimonials[0].author}
-      quote2={client.copy.testimonials[1].quote}
-      author2={client.copy.testimonials[1].author}
+      quote2={client.copy.testimonials[1]?.quote}
+      author2={client.copy.testimonials[1]?.author}
     />
 
     <B.faq
@@ -154,6 +157,7 @@ const schemaObj = {
       email={client.email}
       instagram={client.instagram}
       year={new Date().getFullYear()}
+      logoSrc={client.logoSrc}
     />
 
   </main>

@@ -119,6 +119,8 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
   schemaType={client.schemaType}
   schemaJson={JSON.stringify(schemaObj)}
   mood={client.mood}
+  brand={client.brand}
+  logoSrc={client.logoSrc}
 >
   <main id="main">
 
@@ -126,12 +128,13 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
       businessName={client.businessName}
       phone={client.phone}
       phoneClean={client.phoneClean}
+      logoSrc={client.logoSrc}
     />
 
     <!-- Hero minimalista (sem foto, texto em 2 colunas — variante C para ambos os moods) -->
     <B.hero
       headline={h1}
-      subheadline={`${svc.description} Atendo ${nbh.prep} ${nbh.name}, São Paulo — presencialmente e online para todo o Brasil.`}
+      subheadline={`${svc.description} Atendo ${nbh.prep} ${nbh.name}, ${client.city} — presencialmente e online para todo o Brasil.`}
       credential={client.credential}
       phone={client.phone}
       phoneClean={client.phoneClean}
@@ -151,8 +154,10 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
           <h2 class="local-h2">{svc.name} {nbh.prep} {nbh.name}</h2>
           <p class="local-body">
             Se você está buscando uma {client.specialtyNoun} {nbh.prep} {nbh.name} para {svc.name.toLowerCase()},
-            o consultório da {client.businessName} fica a poucos minutos — na {client.streetAddress}, {client.district}.
-            Também ofereço atendimento online com a mesma qualidade, sem necessidade de deslocamento.
+            {client.streetAddress
+              ? `o consultório da ${client.businessName} fica a poucos minutos — na ${client.streetAddress}, ${client.district}. Também ofereço atendimento online com a mesma qualidade, sem necessidade de deslocamento.`
+              : `a ${client.businessName} atende toda a região de ${client.city} — presencialmente, com hora marcada, e online para todo o Brasil.`
+            }
           </p>
           <p class="local-body">
             <strong>Próximos passos:</strong> ligue ou envie uma mensagem para agendar sua primeira conversa.
@@ -208,33 +213,23 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
       email={client.email}
       instagram={client.instagram}
       year={new Date().getFullYear()}
+      logoSrc={client.logoSrc}
     />
 
   </main>
 </Layout>
 
 <style>
-  /* ── Tokens mood-aware ───────────────────────────────────────── */
-  [data-mood="calm-trust"] {
-    --lc-primary:     #3E5C76;
-    --lc-accent:      #C08552;
-    --lc-surface-alt: #EAE6DE;
-    --lc-text:        #1A1A1A;
-    --lc-text-muted:  #5A6475;
-    --lc-border:      #D4CFC8;
-    --lc-font-serif:  'Fraunces', Georgia, serif;
-    --lc-font-sans:   'Inter', system-ui, sans-serif;
-  }
-
-  [data-mood="fresh-clinical"] {
-    --lc-primary:     #2D6A4F;
-    --lc-accent:      #52B788;
-    --lc-surface-alt: #EAF2EE;
-    --lc-text:        #1A2318;
-    --lc-text-muted:  #4A6358;
-    --lc-border:      #C8DDD1;
-    --lc-font-serif:  'DM Serif Display', Georgia, serif;
-    --lc-font-sans:   'DM Sans', system-ui, sans-serif;
+  /* ── Tokens mood-aware — bridge para --brand-* global ─────────── */
+  [data-mood] {
+    --lc-primary:     var(--brand-primary);
+    --lc-accent:      var(--brand-accent);
+    --lc-surface-alt: var(--brand-surface-alt);
+    --lc-text:        var(--brand-ink);
+    --lc-text-muted:  var(--brand-ink-muted);
+    --lc-border:      var(--brand-border);
+    --lc-font-serif:  var(--brand-font-display);
+    --lc-font-sans:   var(--brand-font-body);
   }
 
   /* ── Local context section ───────────────────────────────────── */

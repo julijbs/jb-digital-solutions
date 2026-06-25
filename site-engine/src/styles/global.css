@@ -3,6 +3,28 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Brand tokens — defaults: Calm Trust palette (dra-ana-mello baseline) */
+    --brand-primary:        #3E5C76;
+    --brand-primary-dark:   #2F4A60;
+    --brand-primary-light:  #5A7A9A;
+    --brand-accent:         #C08552;
+    --brand-accent-dark:    #8A5A33;
+    --brand-accent-light:   #D4A070;
+    --brand-surface:        #F4F2ED;
+    --brand-surface-muted:  #EAE7E0;
+    --brand-surface-dark:   #DDD9D0;
+    --brand-surface-alt:    #EAE6DE;
+    --brand-ink:            #1E2733;
+    --brand-ink-muted:      #5A6475;
+    --brand-ink-faint:      #8A919E;
+    --brand-border:         #D4CFC8;
+    --brand-break:          #2A3F52;
+    --brand-white:          #FFFFFF;
+    --brand-font-display:   'Fraunces', Georgia, serif;
+    --brand-font-body:      'Inter', system-ui, sans-serif;
+  }
+
   /* ── Reset & base ── */
   *, *::before, *::after { box-sizing: border-box; }
 
@@ -15,14 +37,14 @@
   body {
     background-color: theme('colors.surface.DEFAULT');
     color: theme('colors.ink.DEFAULT');
-    font-family: theme('fontFamily.sans');
+    font-family: var(--brand-font-body);
     font-size: theme('fontSize.body[0]');
     line-height: theme('fontSize.body[1].lineHeight');
   }
 
   /* ── Heading defaults ── */
   h1, h2, h3, h4 {
-    font-family: theme('fontFamily.serif');
+    font-family: var(--brand-font-display);
     color: theme('colors.ink.DEFAULT');
   }
 
@@ -61,7 +83,7 @@
   /* ── Label chip (small-caps above headlines) ── */
   .section-label {
     display: inline-block;
-    font-family: theme('fontFamily.sans');
+    font-family: var(--brand-font-body);
     font-size: theme('fontSize.label[0]');
     font-weight: 500;
     letter-spacing: 0.1em;
@@ -81,7 +103,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.125rem 0;
-    font-family: theme('fontFamily.sans');
+    font-family: var(--brand-font-body);
     font-size: theme('fontSize.body[0]');
     font-weight: 500;
     color: theme('colors.ink.DEFAULT');
@@ -113,7 +135,7 @@
     gap: 0.5rem;
     padding: 0.75rem 1.75rem;
     border-radius: theme('borderRadius.btn');
-    font-family: theme('fontFamily.sans');
+    font-family: var(--brand-font-body);
     font-size: 0.9375rem;
     font-weight: 500;
     text-decoration: none;

@@ -38,8 +38,8 @@ const { headline, services } = Astro.props;
 <style>
   .services-section {
     padding-block: 6rem;
-    background: #F4F2ED;
-    border-top: 1px solid #DDD9D0;
+    background: var(--brand-surface);
+    border-top: 1px solid var(--brand-surface-dark);
   }
 
   .services-header {
@@ -51,11 +51,11 @@ const { headline, services } = Astro.props;
   }
 
   .services-title {
-    font-family: 'Fraunces', serif;
+    font-family: var(--brand-font-display);
     font-size: clamp(1.875rem, 3.5vw, 2.75rem);
     font-weight: 600;
     line-height: 1.2;
-    color: #1E2733;
+    color: var(--brand-ink);
     margin: 0;
     /* Title lands on right column, visually offset */
     grid-column: 2;
@@ -80,16 +80,16 @@ const { headline, services } = Astro.props;
     grid-template-columns: 3.5rem 1fr;
     gap: 0 2rem;
     padding-block: 2rem;
-    border-bottom: 1px solid #DDD9D0;
+    border-bottom: 1px solid var(--brand-surface-dark);
     align-items: start;
   }
-  .service-item:first-child { border-top: 1px solid #DDD9D0; }
+  .service-item:first-child { border-top: 1px solid var(--brand-surface-dark); }
 
   .service-num {
-    font-family: 'Fraunces', serif;
+    font-family: var(--brand-font-display);
     font-size: 1rem;
     font-weight: 700;
-    color: #C08552;
+    color: var(--brand-accent);
     padding-top: 0.25rem;
   }
 
@@ -102,10 +102,10 @@ const { headline, services } = Astro.props;
   }
 
   .service-name {
-    font-family: 'Fraunces', serif;
+    font-family: var(--brand-font-display);
     font-size: 1.25rem;
     font-weight: 600;
-    color: #1E2733;
+    color: var(--brand-ink);
     margin: 0;
   }
 
@@ -114,8 +114,8 @@ const { headline, services } = Astro.props;
     font-weight: 500;
     letter-spacing: 0.07em;
     text-transform: uppercase;
-    color: #3E5C76;
-    background: rgba(62, 92, 118, 0.1);
+    color: var(--brand-primary);
+    background: color-mix(in srgb, var(--brand-primary) 10%, transparent);
     padding: 0.2rem 0.5rem;
     border-radius: 2rem;
   }
@@ -123,7 +123,7 @@ const { headline, services } = Astro.props;
   .service-desc {
     font-size: 0.9375rem;
     line-height: 1.7;
-    color: #5A6475;
+    color: var(--brand-ink-muted);
     margin: 0;
     max-width: 600px;
   }

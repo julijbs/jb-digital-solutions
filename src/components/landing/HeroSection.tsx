@@ -4,10 +4,10 @@ import { ArrowRight, Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const trustBadges = [
-  "Entrega em até 7 dias",
-  "Hospedagem inclusa para sempre",
-  "Sem mensalidades",
-  "Visível no Google Maps",
+  "Setup em até 7 dias",
+  "Site + Google + IA integrados",
+  "Acompanhamento mensal incluso",
+  "Sem depender de redes sociais",
 ];
 
 export const HeroSection = () => {
@@ -24,17 +24,18 @@ export const HeroSection = () => {
           className="mx-auto max-w-3xl text-center"
         >
           <h1 className="font-serif text-4xl leading-tight md:text-5xl lg:text-6xl">
-            Seu consultório aparece no Google quando{" "}
-            <span className="gold-gradient-text">o paciente está procurando por você</span>
+            Você é excelente no que faz.{" "}
+            <span className="gold-gradient-text">Mas quem precisa de você ainda não te encontra online.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            Para nutricionistas, psicólogos, fisioterapeutas e profissionais de saúde que
-            atendem presencialmente — e ainda dependem de indicação para lotar a agenda.
+            O JB Digital System constrói seu posicionamento online completo — site, Perfil Google
+            e presença nas IAs — tudo integrado, para que novos pacientes te encontrem
+            organicamente, todo dia, sem depender de indicação.
           </p>
 
           <div className="mt-10">
             <Button variant="hero" size="default" className="gap-2 text-sm md:text-base md:px-8 md:py-6" onClick={() => navigate("/signup")}>
-              Quero aparecer no Google agora <ArrowRight size={16} />
+              Quero atrair mais pacientes <ArrowRight size={16} />
             </Button>
           </div>
 

@@ -42,7 +42,7 @@ export const AEOSection = () => {
           <p className="mt-4 text-muted-foreground">
             O mundo mudou. Hoje, seus pacientes não buscam apenas no Google — eles{" "}
             <strong className="text-foreground">perguntam para a Inteligência Artificial</strong>.
-            Nós preparamos sua presença digital para ser encontrada e recomendada pelos dois.
+            Nós estruturamos sua presença digital para ser encontrada e recomendada pelos dois.
           </p>
         </motion.div>
 
@@ -55,10 +55,11 @@ export const AEOSection = () => {
         >
           <p className="text-center text-sm leading-relaxed text-muted-foreground">
             <strong className="text-foreground">O que é AEO?</strong>{" "}
-            É a Otimização para Respostas de IA — a técnica avançada que utilizamos para que o
-            seu nome seja citado como referência quando alguém pergunta ao ChatGPT, Gemini ou
-            Perplexity:{" "}
-            <em className="text-primary">"Indique um bom psicólogo em São Paulo"</em>.
+            É a Otimização para Respostas de IA — a técnica que usamos para que você seja
+            recomendado quando alguém perguntar ao ChatGPT, Gemini ou Perplexity:{" "}
+            <em className="text-primary">"Indique um bom dentista em São Paulo"</em>,{" "}
+            <em className="text-primary">"Qual nutricionista atende em Pinheiros?"</em>,{" "}
+            <em className="text-primary">"Preciso de um bom psicólogo perto de mim"</em>.
           </p>
         </motion.div>
 

@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 
 const badges = [
-  "Entrega em 7 dias",
-  "Hospedagem grátis para sempre",
-  "Garantia de 7 dias",
+  "Setup em até 7 dias",
+  "Processo de aprovação em etapas",
+  "Acompanhamento mensal incluso",
 ];
 
 export const FinalCTA = () => {
@@ -26,12 +26,14 @@ export const FinalCTA = () => {
             <span className="gold-gradient-text">Você vai aparecer?</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            Em 7 dias você tem um site profissional e um Perfil Google completo — visível para quem procura pelo seu serviço na sua cidade, sem mensalidade e sem depender de redes sociais.
+            Em até 7 dias, toda a infraestrutura do seu posicionamento online está no ar —
+            site, Perfil Google e presença nas IAs trabalhando juntos para atrair pacientes
+            de forma orgânica, todo dia.
           </p>
 
           <div className="mt-8">
             <Button variant="hero" size="default" className="gap-2 text-sm md:text-base md:px-8 md:py-6" onClick={() => navigate("/signup")}>
-              Quero aparecer no Google agora <ArrowRight size={16} />
+              Quero atrair mais pacientes <ArrowRight size={16} />
             </Button>
           </div>
 

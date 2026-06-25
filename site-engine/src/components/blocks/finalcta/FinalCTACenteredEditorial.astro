@@ -56,8 +56,8 @@ const { headline, subtext, buttonText, phone, phoneClean, email, address } = Ast
 <style>
   .cta-section {
     padding-block: 6rem;
-    background: #EAE7E0;
-    border-top: 1px solid #DDD9D0;
+    background: var(--brand-surface-muted);
+    border-top: 1px solid var(--brand-surface-dark);
   }
 
   .cta-inner {
@@ -68,18 +68,18 @@ const { headline, subtext, buttonText, phone, phoneClean, email, address } = Ast
   }
 
   .cta-headline {
-    font-family: 'Fraunces', serif;
+    font-family: var(--brand-font-display);
     font-size: clamp(2rem, 3.5vw, 3rem);
     font-weight: 700;
     line-height: 1.15;
-    color: #1E2733;
+    color: var(--brand-ink);
     margin: 0 0 1rem;
   }
 
   .cta-subtext {
     font-size: 1rem;
     line-height: 1.7;
-    color: #5A6475;
+    color: var(--brand-ink-muted);
     margin: 0;
   }
 
@@ -107,16 +107,16 @@ const { headline, subtext, buttonText, phone, phoneClean, email, address } = Ast
 
   .cta-contacts a {
     font-size: 0.9375rem;
-    color: #3E5C76;
+    color: var(--brand-primary);
     text-decoration: none;
-    border-bottom: 1px solid rgba(192, 133, 82, 0.4);
+    border-bottom: 1px solid color-mix(in srgb, var(--brand-accent) 40%, transparent);
     padding-bottom: 1px;
   }
-  .cta-contacts a:hover { color: #2F4A60; }
+  .cta-contacts a:hover { color: var(--brand-primary-dark); }
 
   .cta-address {
     font-size: 0.875rem;
-    color: #8A919E;
+    color: var(--brand-ink-faint);
   }
 
   @media (max-width: 768px) {

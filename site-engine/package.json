@@ -8,7 +8,8 @@
     "build:client": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "publish": "tsx scripts/publish-site.ts"
+    "publish": "tsx scripts/publish-site.ts",
+    "extract-brand": "tsx scripts/extract-brand.ts"
   },
   "dependencies": {
     "astro": "^5.0.0",

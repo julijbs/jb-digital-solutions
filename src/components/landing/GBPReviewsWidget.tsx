@@ -46,11 +46,13 @@ export const GBPReviewsWidget = () => {
           className="mx-auto mb-12 max-w-2xl text-center"
         >
           <h2 className="font-serif text-3xl md:text-4xl">
-            <span className="gold-gradient-text">Avaliações reais</span> no Google
+            Sua reputação{" "}
+            <span className="gold-gradient-text">trabalhando por você</span>
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Veja como seus clientes são encontrados e avaliados no Perfil da Empresa no Google
-            — a prova social que a IA e o Google confiam.
+            Seus pacientes já te recomendam. Configuramos seu Perfil Google para que essas
+            avaliações apareçam com destaque nas buscas — a prova social que converte antes
+            mesmo do paciente entrar em contato.
           </p>
         </motion.div>
 
@@ -114,8 +116,8 @@ export const GBPReviewsWidget = () => {
           transition={{ delay: 0.2 }}
           className="mx-auto mt-8 max-w-lg text-center text-sm text-muted-foreground"
         >
-          Cada site que criamos inclui integração com o widget de avaliações do Google — prova
-          social automática que gera confiança e melhora seu posicionamento.
+          Integramos suas avaliações reais do Google diretamente ao seu site — para que o
+          paciente veja sua reputação no momento em que está decidindo a quem confiar sua saúde.
         </motion.p>
       </div>
     </section>

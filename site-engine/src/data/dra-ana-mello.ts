@@ -16,6 +16,29 @@ export const draAnaMello: ClientData = {
   siteUrl: 'https://anamello.jbdigitalsystem.com',
   mood: 'calm-trust',
 
+  // ── Marca visual ─────────────────────────────────────────────────
+  brand: {
+    primary:       '#3E5C76',
+    primaryDark:   '#2F4A60',
+    primaryLight:  '#5A7A9A',
+    accent:        '#C08552',
+    accentDark:    '#8A5A33',
+    accentLight:   '#D4A070',
+    surface:       '#F4F2ED',
+    surfaceMuted:  '#EAE7E0',
+    surfaceDark:   '#DDD9D0',
+    surfaceAlt:    '#EAE6DE',
+    ink:           '#1E2733',
+    inkMuted:      '#5A6475',
+    inkFaint:      '#8A919E',
+    border:        '#D4CFC8',
+    breakBg:       '#2A3F52',
+    white:         '#FFFFFF',
+    fontDisplayFamily: "'Fraunces', Georgia, serif",
+    fontBodyFamily:    "'Inter', system-ui, sans-serif",
+    googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600&display=swap',
+  },
+
   // ── Endereço ─────────────────────────────────────────────────────
   streetAddress: 'Rua Haddock Lobo, 595',
   postalCode: '01414-001',

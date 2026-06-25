@@ -9,8 +9,12 @@ import {
 
 const faqs = [
   {
-    q: "Preciso pagar hospedagem todo mês?",
-    a: "Não! A hospedagem já está inclusa no serviço e é gratuita para sempre. Zero mensalidade.",
+    q: "Como funciona o pagamento?",
+    a: "Existem dois valores: a taxa de setup (única, para implementar todo o sistema) e a mensalidade de acompanhamento contínuo. Os valores variam conforme o plano — Essencial ou Premium. Aceitamos PIX e cartão em até 12x.",
+  },
+  {
+    q: "Preciso ter site para contratar?",
+    a: "Não. O plano Essencial foca na otimização do seu Perfil Google — sem necessidade de site. O plano Premium inclui um site programático completo, construído do zero.",
   },
   {
     q: "Quanto tempo leva para ficar pronto?",
@@ -22,15 +26,15 @@ const faqs = [
   },
   {
     q: "Vocês fazem gestão de redes sociais?",
-    a: "Não. Nosso foco é construir sua base técnica no Google, não gestão de conteúdo ou tráfego pago.",
+    a: "Não. Nosso foco é construir e manter seu posicionamento orgânico no Google e nas IAs. Gestão de conteúdo ou tráfego pago não fazem parte do serviço.",
   },
   {
-    q: "O site vai aparecer no Google automaticamente?",
-    a: "O site é otimizado tecnicamente, mas o ranqueamento depende de fatores como concorrência local, conteúdo e avaliações. Entregamos a base, o crescimento é orgânico.",
+    q: "Minha clínica vai aparecer no Google automaticamente após o setup?",
+    a: "O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica completa e acompanhamos seu crescimento mensalmente.",
   },
   {
     q: "Posso usar meu próprio domínio?",
-    a: "Sim! Você pode comprar seu domínio personalizado (ex: psicologamaria.com.br) e nós configuramos. Custo adicional de R$ 100 (setup único).",
+    a: "Sim! Você pode adquirir seu domínio personalizado (ex: draanacardoso.com.br) e nós configuramos. Custo adicional de R$ 100 (taxa única de configuração).",
   },
   {
     q: "E se eu não gostar do resultado?",

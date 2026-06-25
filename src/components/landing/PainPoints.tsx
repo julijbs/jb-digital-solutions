@@ -4,18 +4,18 @@ import { Search, Smartphone, DollarSign } from "lucide-react";
 const pains = [
   {
     icon: Search,
-    title: '"Alguém procurou nutricionista aqui perto — e não me achou"',
-    text: "Você estudou anos para isso. Tem resultado real com seus pacientes. Mas quando alguém abre o Google e digita 'nutricionista em [sua cidade]', aparece o consultório do lado — não o seu.",
+    title: '"Alguém procurou minha especialidade aqui perto — e não me achou"',
+    text: "Você estudou anos para isso. Tem resultado real com seus pacientes. Mas quando alguém abre o Google e digita sua especialidade e sua cidade, aparece o concorrente — não você.",
   },
   {
     icon: Smartphone,
-    title: '"Minha agenda depende de indicação — e isso me deixa inseguro"',
+    title: '"Minha agenda ainda depende muito de indicação"',
     text: "Indicação é ótima. Mas ela seca quando você menos espera. E aí você volta a postar nas redes, fazer stories, torcer para o algoritmo ajudar — sem previsibilidade nenhuma.",
   },
   {
     icon: DollarSign,
-    title: '"Tenho um site, mas ele não traz nenhum paciente"',
-    text: "O site existe. Está bonito, até. Mas não aparece no Google, não tem seu telefone visível no Maps, não tem avaliações. Para quem pesquisa online, é como se você não tivesse consultório.",
+    title: '"Tenho avaliações incríveis — mas elas ficam escondidas"',
+    text: "Seus pacientes te recomendam. Mas quando alguém pesquisa online, essas avaliações não aparecem com destaque — ou não aparecem de jeito nenhum. Sua reputação não está trabalhando por você.",
   },
 ];
 
