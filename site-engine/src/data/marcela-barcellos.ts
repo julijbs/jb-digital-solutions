@@ -4,29 +4,21 @@
  * Psicóloga · Especialista em Neuropsicologia (Albert Einstein)
  * Pedagoga · Psicopedagoga · Ex-oficial FAB · Mãe de dois filhos
  *
- * ⚠️  PLACEHOLDERS — preencher antes do deploy:
- *   CRP_NUMERO   → número do CRP (ex.: "06/123456")
- *   ✅ CONFIRMADOS via GBP: cidade, estado, telefone, Instagram, lat/lng
- *   ⚠️  PENDENTES (preencher antes do deploy):
- *   CRP_NUMERO        → número do CRP
- *   RUA               → endereço da rua
- *   BAIRRO_CLI        → bairro do consultório
- *   CEP               → código postal
- *   EMAIL             → email de contato
- *   ENDERECO_COMPLETO → "Rua ..., 123 — Bairro, São José dos Campos-SP"
- *   BAIRRO_1..6       → bairros reais para SEO (próximos ao consultório em SJC)
- *   depoimentos reais → substituir os placeholders por depoimentos com autorização
+ * ✅ Todos os dados confirmados e preenchidos (Sessão 11 — 2026-06-25):
+ *   CRP 06/212500 · E-mail · Depoimento Joyce Abreu (GBP 5★)
+ *   Localização: online + presencial sob agendamento (sem rua fixa)
+ *   Bairros SEO: 6 bairros centrais de SJC (área de atuação)
  */
 
 import type { ClientData } from '../lib/types.ts';
 
-export const marcelaBarcells: ClientData = {
+export const marcelaBarcellos: ClientData = {
   // ── Identidade ──────────────────────────────────────────────────
   businessName: 'Marcela Barcellos',
   specialty:    'Psicóloga | Neuropsicologia · TCC',
-  credential:   'CRP CRP_NUMERO · Pós-graduada em Neuropsicologia · Albert Einstein · São José dos Campos, SP',
+  credential:   'CRP 06/212500 · Pós-graduada em Neuropsicologia · Albert Einstein · São José dos Campos, SP',
   slug:         'marcela-barcellos',
-  siteUrl:      'https://marcelabarcells.jbdigitalsystem.com',
+  siteUrl:      'https://marcelabarcellos.jbdigitalsystem.com',
   mood:         'calm-trust',
 
   // ── Marca visual ─────────────────────────────────────────────────
@@ -54,9 +46,10 @@ export const marcelaBarcells: ClientData = {
   },
 
   // ── Endereço ─────────────────────────────────────────────────────
-  streetAddress: 'RUA',
-  postalCode:    'CEP',
-  district:      'BAIRRO_CLI',
+  // Atendimento online + presencial sob agendamento — sem rua fixa publicada
+  streetAddress: '',
+  postalCode:    '',
+  district:      '',
   specialtyNoun: 'psicóloga',
 
   // ── Contato ──────────────────────────────────────────────────────
@@ -64,22 +57,22 @@ export const marcelaBarcells: ClientData = {
   state:        'SP',
   phone:        '(12) 98147-0915',
   phoneClean:   '12981470915',
-  email:        'EMAIL',
+  email:        'marcelafbarcello@hotmail.com',
   instagram:    '@psi.marcelabarcellos',
-  address:      'ENDERECO_COMPLETO',
+  address:      'Atendimento online e presencial · São José dos Campos – SP',
   lat:          '-23.1895062',
   lng:          '-45.8630127',
 
   // ── Copy ─────────────────────────────────────────────────────────
   copy: {
     homeTitle:
-      'Marcela Barcellos — Psicóloga e Neuropsicóloga em CIDADE',
+      'Marcela Barcellos — Psicóloga e Neuropsicóloga em São José dos Campos',
     homeMetaDescription:
-      'Psicóloga especialista em Neuropsicologia em CIDADE. Avaliação neuropsicológica, TCC e suporte a transtornos de aprendizagem para crianças, adolescentes e adultos. Agende com Marcela Barcellos.',
+      'Psicóloga especialista em Neuropsicologia em São José dos Campos. Avaliação neuropsicológica, TCC e suporte a transtornos de aprendizagem para crianças, adolescentes e adultos. Agende com Marcela Barcellos.',
     businessDescription:
       'Psicóloga e neuropsicóloga dedicada ao desenvolvimento humano em todas as fases da vida, com foco em avaliação neuropsicológica e Terapia Cognitivo-Comportamental baseada em evidências.',
     llmsSummary:
-      'Marcela Barcellos é psicóloga (CRP CRP_NUMERO) especializada em Neuropsicologia (pós-graduação Albert Einstein). Atende crianças, adolescentes e adultos com avaliação neuropsicológica, TCC, transtornos de aprendizagem e neurodivergências. Formação integrada: Pedagogia + Psicopedagogia + 8 anos como oficial da FAB + Psicologia + Neuropsicologia.',
+      'Marcela Barcellos é psicóloga (CRP 06/212500) especializada em Neuropsicologia (pós-graduação Albert Einstein). Atende crianças, adolescentes e adultos com avaliação neuropsicológica, TCC, transtornos de aprendizagem e neurodivergências. Formação integrada: Pedagogia + Psicopedagogia + 8 anos como oficial da FAB + Psicologia + Neuropsicologia.',
 
     heroHeadline:   'Cuidar do desenvolvimento humano em todas as fases da vida.',
     heroSubheadline:
@@ -88,18 +81,9 @@ export const marcelaBarcells: ClientData = {
     heroPhotoSrc:   '/marcela-barcellos/marcela-perfil.jpg',
 
     painPoints: [
-      {
-        title:       'Meu filho tem dificuldade na escola e ninguém sabe o porquê',
-        description: 'Laudos inconclusivos, orientações genéricas e a sensação de que algo mais profundo está sendo ignorado. A avaliação neuropsicológica revela o que está por trás das dificuldades.',
-      },
-      {
-        title:       'Sinto que minha mente não funciona como deveria — mas nunca investiguei',
-        description: 'Foco instável, memória falhando, aprendizagem mais lenta que o esperado. Sem um mapeamento preciso, qualquer terapia é um chute no escuro.',
-      },
-      {
-        title:       'Quero uma terapia com base científica, não achismos',
-        description: 'Protocolos validados, diagnóstico fundamentado e plano terapêutico personalizado — não uma abordagem genérica que serve para qualquer pessoa.',
-      },
+      'Meu filho tem dificuldade na escola e ninguém sabe o porquê — laudos inconclusivos, orientações genéricas, e a sensação de que algo mais profundo está sendo ignorado. A avaliação neuropsicológica revela o que está por trás.',
+      'Sinto que minha mente não funciona como deveria, mas nunca investiguei — foco instável, memória falhando, aprendizagem mais lenta que o esperado. Sem um mapeamento preciso, qualquer terapia é um chute no escuro.',
+      'Quero uma terapia com base científica, não achismos — protocolos validados, diagnóstico fundamentado e plano personalizado, não uma abordagem genérica que serve para qualquer um.',
     ],
 
     aboutHeadline:   'Ciência, acolhimento e um olhar completo sobre o ser humano.',
@@ -108,7 +92,7 @@ export const marcelaBarcells: ClientData = {
     pullQuote:
       '"Avaliar para compreender. Compreender para evoluir."',
     aboutCredential:
-      'Pedagoga · Psicopedagoga · Psicóloga CRP CRP_NUMERO · Pós-graduada em Neuropsicologia — Albert Einstein (2025) · Ex-Oficial Temporária da FAB',
+      'Pedagoga · Psicopedagoga · Psicóloga CRP 06/212500 · Pós-graduada em Neuropsicologia — Albert Einstein (2025) · Ex-Oficial Temporária da FAB',
     aboutPhotoAlt:  'Marcela Barcellos, psicóloga, em pose profissional e acolhedora',
     aboutPhotoSrc:  '/marcela-barcellos/marcela-perfil.jpg',
 
@@ -117,31 +101,27 @@ export const marcelaBarcells: ClientData = {
     processHeadline: 'O caminho do autoconhecimento ao desenvolvimento',
     processSteps: [
       {
-        title:       'Conversa inicial',
+        name:        'Conversa inicial',
         description: 'Entendemos juntos o que te trouxe até aqui — queixas, histórico e o que você espera do processo.',
       },
       {
-        title:       'Avaliação neuropsicológica',
+        name:        'Avaliação neuropsicológica',
         description: 'Aplicação de testes validados que mapeiam memória, atenção, linguagem, funções executivas e aprendizagem.',
       },
       {
-        title:       'Devolutiva e relatório',
+        name:        'Devolutiva e relatório',
         description: 'Você recebe uma explicação detalhada dos resultados e um relatório técnico completo — útil para escola, médicos e outros profissionais.',
       },
       {
-        title:       'Plano terapêutico',
+        name:        'Plano terapêutico',
         description: 'Com base no diagnóstico preciso, iniciamos a TCC ou indicamos o melhor caminho para o seu desenvolvimento.',
       },
     ],
 
     testimonials: [
       {
-        quote:  'DEPOIMENTO REAL 1 — substituir por depoimento de paciente (com autorização)',
-        author: 'Nome e contexto — ex.: "Mãe de paciente de 9 anos"',
-      },
-      {
-        quote:  'DEPOIMENTO REAL 2 — substituir por depoimento de paciente (com autorização)',
-        author: 'Nome e contexto — ex.: "Adulto em processo terapêutico"',
+        quote:  'Profissional comprometida com os pacientes, altamente capacitada, além de oferecer um atendimento personalizado, humanizado. Meu filho é paciente e simplesmente ama a Marcela por todo cuidado que ela proporciona.',
+        author: 'Joyce Abreu · mãe de paciente',
       },
     ],
 
@@ -233,15 +213,14 @@ export const marcelaBarcells: ClientData = {
     },
   ],
 
-  // ── Bairros para SEO ─────────────────────────────────────────────
-  // ⚠️  SUBSTITUIR pelos bairros reais próximos ao consultório
+  // ── Bairros para SEO (área de atuação SJC) ───────────────────────
   neighborhoods: [
-    { slug: 'BAIRRO_1_SLUG', name: 'BAIRRO 1',  prep: 'no' },
-    { slug: 'BAIRRO_2_SLUG', name: 'BAIRRO 2',  prep: 'no' },
-    { slug: 'BAIRRO_3_SLUG', name: 'BAIRRO 3',  prep: 'no' },
-    { slug: 'BAIRRO_4_SLUG', name: 'BAIRRO 4',  prep: 'no' },
-    { slug: 'BAIRRO_5_SLUG', name: 'BAIRRO 5',  prep: 'no' },
-    { slug: 'BAIRRO_6_SLUG', name: 'BAIRRO 6',  prep: 'no' },
+    { slug: 'centro',           name: 'Centro',           prep: 'no'  },
+    { slug: 'jardim-aquarius',  name: 'Jardim Aquarius',  prep: 'no'  },
+    { slug: 'jardim-satelite',  name: 'Jardim Satélite',  prep: 'no'  },
+    { slug: 'vila-adyana',      name: 'Vila Adyana',      prep: 'na'  },
+    { slug: 'jardim-esplanada', name: 'Jardim Esplanada', prep: 'no'  },
+    { slug: 'eugenio-de-melo',  name: 'Eugênio de Melo',  prep: 'em'  },
   ],
 
   // ── Schema.org ───────────────────────────────────────────────────

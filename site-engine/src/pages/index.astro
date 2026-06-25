@@ -128,8 +128,8 @@ const schemaObj = {
     <B.testimonials
       quote1={client.copy.testimonials[0].quote}
       author1={client.copy.testimonials[0].author}
-      quote2={client.copy.testimonials[1].quote}
-      author2={client.copy.testimonials[1].author}
+      quote2={client.copy.testimonials[1]?.quote}
+      author2={client.copy.testimonials[1]?.author}
     />
 
     <B.faq

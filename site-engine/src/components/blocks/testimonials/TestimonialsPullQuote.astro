@@ -4,8 +4,8 @@
 export interface Props {
   quote1:   string;  // depoimento principal (50-90 palavras)
   author1:  string;  // nome + contexto, ex: "Marina T. · Paciente há 1 ano"
-  quote2:   string;  // depoimento secundário
-  author2:  string;
+  quote2?:  string;  // depoimento secundário (opcional)
+  author2?: string;
 }
 const { quote1, author1, quote2, author2 } = Astro.props;
 ---
@@ -24,16 +24,18 @@ const { quote1, author1, quote2, author2 } = Astro.props;
       <figcaption class="quote-author">— {author1}</figcaption>
     </figure>
 
-    <!-- Divisor + depoimento secundário -->
-    <div class="secondary-block">
-      <div class="secondary-divider" aria-hidden="true"></div>
-      <figure class="secondary-quote">
-        <blockquote>
-          <p>"{quote2}"</p>
-        </blockquote>
-        <figcaption class="quote-author secondary-author">— {author2}</figcaption>
-      </figure>
-    </div>
+    <!-- Divisor + depoimento secundário (opcional) -->
+    {quote2 && (
+      <div class="secondary-block">
+        <div class="secondary-divider" aria-hidden="true"></div>
+        <figure class="secondary-quote">
+          <blockquote>
+            <p>"{quote2}"</p>
+          </blockquote>
+          <figcaption class="quote-author secondary-author">— {author2}</figcaption>
+        </figure>
+      </div>
+    )}
 
   </div>
 </section>

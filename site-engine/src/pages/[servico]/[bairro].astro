@@ -134,7 +134,7 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
     <!-- Hero minimalista (sem foto, texto em 2 colunas — variante C para ambos os moods) -->
     <B.hero
       headline={h1}
-      subheadline={`${svc.description} Atendo ${nbh.prep} ${nbh.name}, São Paulo — presencialmente e online para todo o Brasil.`}
+      subheadline={`${svc.description} Atendo ${nbh.prep} ${nbh.name}, ${client.city} — presencialmente e online para todo o Brasil.`}
       credential={client.credential}
       phone={client.phone}
       phoneClean={client.phoneClean}
@@ -154,8 +154,10 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
           <h2 class="local-h2">{svc.name} {nbh.prep} {nbh.name}</h2>
           <p class="local-body">
             Se você está buscando uma {client.specialtyNoun} {nbh.prep} {nbh.name} para {svc.name.toLowerCase()},
-            o consultório da {client.businessName} fica a poucos minutos — na {client.streetAddress}, {client.district}.
-            Também ofereço atendimento online com a mesma qualidade, sem necessidade de deslocamento.
+            {client.streetAddress
+              ? `o consultório da ${client.businessName} fica a poucos minutos — na ${client.streetAddress}, ${client.district}. Também ofereço atendimento online com a mesma qualidade, sem necessidade de deslocamento.`
+              : `a ${client.businessName} atende toda a região de ${client.city} — presencialmente, com hora marcada, e online para todo o Brasil.`
+            }
           </p>
           <p class="local-body">
             <strong>Próximos passos:</strong> ligue ou envie uma mensagem para agendar sua primeira conversa.

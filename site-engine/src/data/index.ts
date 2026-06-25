@@ -8,10 +8,10 @@
 import type { ClientData } from '../lib/types.ts';
 import { draAnaMello } from './dra-ana-mello.ts';
 import { draMarinaCostaData } from './dra-marina-costa.ts';
-import { marcelaBarcells } from './marcela-barcellos.ts';
+import { marcelaBarcellos } from './marcela-barcellos.ts';
 
 export const clients: Record<string, ClientData> = {
   'dra-ana-mello':       draAnaMello,
   'dra-marina-costa':    draMarinaCostaData,
-  'marcela-barcellos':   marcelaBarcells,
+  'marcela-barcellos':   marcelaBarcellos,
 };
