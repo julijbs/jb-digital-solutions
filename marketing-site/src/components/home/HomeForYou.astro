@@ -1,0 +1,51 @@
+---
+// HomeForYou.astro — "Este serviço foi feito para você se..." section
+---
+<section class="foryou-section" id="para-quem">
+  <div class="section-wrap">
+    <div class="section-divider" style="margin-bottom:4rem"></div>
+    <h2 class="foryou-title">Este serviço foi feito para você se...</h2>
+    <ul class="foryou-list" role="list">
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Você é dentista, médico(a), psicólogo(a), nutricionista, fisioterapeuta, esteta, terapeuta ou qualquer profissional de saúde que atende pacientes
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Atende presencialmente e quer que novos pacientes da sua cidade te encontrem no Google
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Sua agenda ainda depende muito de indicação e você quer construir uma fonte orgânica, previsível
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Não tem site — ou tem um que não aparece no Google e não traz nenhum paciente
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Quer ter presença digital profissional e completa, sem precisar entender de tecnologia
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Quer parar de depender de stories e algoritmo para atrair pacientes
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .foryou-section { padding: 0 0 5rem; }
+  .foryou-title { text-align: center; font-size: clamp(1.75rem,4vw,2.5rem); margin-bottom: 2.5rem; }
+  .foryou-list {
+    list-style: none; padding: 0; margin: 0 auto;
+    max-width: 640px; display: flex; flex-direction: column; gap: 0;
+  }
+  .foryou-list li {
+    display: flex; align-items: flex-start; gap: 0.875rem;
+    padding: 1.125rem 0; border-bottom: 1px solid var(--brand-border);
+    font-size: 1rem; color: var(--brand-ink-muted); line-height: 1.6;
+  }
+  .foryou-list li:first-child { border-top: 1px solid var(--brand-border); }
+  .foryou-list li svg { color: var(--brand-primary); flex-shrink: 0; margin-top: 0.25rem; }
+</style>

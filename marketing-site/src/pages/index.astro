@@ -1,0 +1,109 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/sections/SiteNav.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import PricingTable from '../components/sections/PricingTable.astro';
+import HomeHero from '../components/home/HomeHero.astro';
+import HomePainPoints from '../components/home/HomePainPoints.astro';
+import HomeSolution from '../components/home/HomeSolution.astro';
+import HomeAEO from '../components/home/HomeAEO.astro';
+import HomeReviews from '../components/home/HomeReviews.astro';
+import HomeHowItWorks from '../components/home/HomeHowItWorks.astro';
+import HomeForYou from '../components/home/HomeForYou.astro';
+import HomeTestimonials from '../components/home/HomeTestimonials.astro';
+import HomeGuarantee from '../components/home/HomeGuarantee.astro';
+import HomeFAQ from '../components/home/HomeFAQ.astro';
+import HomeFinalCTA from '../components/home/HomeFinalCTA.astro';
+import HomeMobileCTA from '../components/home/HomeMobileCTA.astro';
+
+const canonical = 'https://jbdigitalsystem.com/';
+
+const homeNavItems = [
+  { label: 'O Sistema',     href: '#solucao' },
+  { label: 'Presença em IA', href: '#aeo' },
+  { label: 'Como funciona', href: '#como-funciona' },
+  { label: 'Planos',        href: '#planos' },
+  { label: 'FAQ',           href: '#faq' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "JB Digital System",
+      "url": "https://jbdigitalsystem.com/",
+      "description": "Sistema completo de posicionamento online para profissionais de saúde — site, Perfil Google e presença nas IAs.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://jbdigitalsystem.com/blog/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "ProfessionalService",
+      "name": "JB Digital System",
+      "url": "https://jbdigitalsystem.com/",
+      "description": "Sistema completo de posicionamento online para profissionais de saúde: site programático, Perfil Google e presença nas IAs (AEO). Setup em 7 dias.",
+      "areaServed": "Brasil",
+      "serviceType": "Posicionamento Digital para Profissionais de Saúde",
+      "provider": {
+        "@type": "Organization",
+        "name": "JB Digital Consulting",
+        "url": "https://jbdigitalsystem.com/",
+        "email": "contato@jbdigitalsolutions.online"
+      },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Plano Essencial",
+          "price": "150",
+          "priceCurrency": "BRL",
+          "priceSpecification": { "@type": "UnitPriceSpecification", "price": "150", "priceCurrency": "BRL", "unitText": "month" }
+        },
+        {
+          "@type": "Offer",
+          "name": "Plano Premium",
+          "price": "350",
+          "priceCurrency": "BRL",
+          "priceSpecification": { "@type": "UnitPriceSpecification", "price": "350", "priceCurrency": "BRL", "unitText": "month" }
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Como funciona o pagamento?", "acceptedAnswer": { "@type": "Answer", "text": "Existem dois valores: a taxa de setup (única) e a mensalidade de acompanhamento. Aceitamos PIX e cartão em até 12x." } },
+        { "@type": "Question", "name": "Preciso ter site para contratar?", "acceptedAnswer": { "@type": "Answer", "text": "Não. O plano Essencial foca no Perfil Google. O Premium inclui site programático completo." } },
+        { "@type": "Question", "name": "Quanto tempo leva para ficar pronto?", "acceptedAnswer": { "@type": "Answer", "text": "Até 7 dias após o preenchimento do formulário de onboarding." } },
+        { "@type": "Question", "name": "Vocês fazem gestão de redes sociais?", "acceptedAnswer": { "@type": "Answer", "text": "Não. Nosso foco é posicionamento orgânico no Google e nas IAs. Gestão de conteúdo ou tráfego pago não fazem parte do serviço." } },
+        { "@type": "Question", "name": "E se eu não gostar do resultado?", "acceptedAnswer": { "@type": "Answer", "text": "Trabalhamos com processo de aprovação em etapas. Só publicamos quando você estiver 100% satisfeito. Revisões incluídas no processo." } }
+      ]
+    }
+  ]
+};
+---
+<Layout
+  title="JB Digital System — Site + Google + IA para Profissionais de Saúde"
+  description="Sistema completo de posicionamento online para profissionais de saúde: site, Perfil Google e presença nas IAs. Atraia mais pacientes organicamente. Setup em 7 dias."
+  canonical={canonical}
+  schemaJson={JSON.stringify(schema)}
+>
+  <SiteNav navItems={homeNavItems} />
+  <main id="main">
+    <HomeHero />
+    <HomePainPoints />
+    <HomeSolution />
+    <HomeAEO />
+    <HomeReviews />
+    <HomeHowItWorks />
+    <HomeForYou />
+    <PricingTable whatsappText="Olá! Tenho interesse no JB Digital System para profissionais de saúde. Pode me contar mais?" />
+    <HomeTestimonials />
+    <HomeGuarantee />
+    <HomeFAQ />
+    <HomeFinalCTA />
+  </main>
+  <SiteFooter />
+  <HomeMobileCTA />
+</Layout>

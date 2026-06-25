@@ -1,17 +1,22 @@
 ---
+export interface NavItem { label: string; href: string; }
+
 export interface Props {
   currentPath?: string;
+  navItems?: NavItem[];
 }
 
-const { currentPath = '/' } = Astro.props;
+const { currentPath = '/', navItems } = Astro.props;
 
-const navLinks = [
+const defaultNavLinks: NavItem[] = [
   { label: 'Para quem é', href: '#para-quem' },
   { label: 'Como funciona', href: '#como-funciona' },
   { label: 'Planos', href: '#planos' },
   { label: 'Portfólio', href: '#portfolio' },
   { label: 'FAQ', href: '#faq' },
 ];
+
+const navLinks = navItems ?? defaultNavLinks;
 ---
 
 <header class="site-nav" id="site-nav">

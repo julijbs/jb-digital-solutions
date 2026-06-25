@@ -1,0 +1,35 @@
+---
+// HomeTestimonials.astro
+---
+<section class="testimonials-section">
+  <div class="section-wrap">
+    <div class="section-divider" style="margin-bottom:4rem"></div>
+    <h2 class="test-title">Profissionais que já transformaram sua presença digital</h2>
+    <div class="test-grid">
+      <blockquote class="card test-card">
+        <p>"O serviço prestado pela Thaís foi excelente desde o primeiro contato. Como não tenho nenhuma experiência com as ferramentas e o que seria bom pro meu negócio, precisei de muita ajuda — e ela sempre foi muito prestativa e esclarecedora. O site saiu exatamente como pedi e, com a contribuição dela, ficou muito aderente ao meu nicho de trabalho. Além disso, todo o trabalho foi feito em colaboração comigo, num tempo recorde. É uma profissional que indico de olhos fechados!"</p>
+        <footer>
+          <strong>Dra. Ariane Pontes</strong>
+          <span>Psicóloga Clínica — São Paulo/SP</span>
+        </footer>
+      </blockquote>
+      <blockquote class="card test-card">
+        <p>"Fiquei impressionada com a qualidade e a rapidez. Meu site ficou lindo, profissional e exatamente como eu imaginava. E sem pagar mensalidade!"</p>
+        <footer>
+          <strong>Aline E.</strong>
+          <span>Terapeuta Sistêmica — Campinas/SP</span>
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+<style>
+  .testimonials-section { padding: 0 0 5rem; }
+  .test-title { text-align:center; font-size:clamp(1.6rem,3.5vw,2.25rem); margin-bottom:2.5rem; max-width:560px; margin-inline:auto; }
+  .test-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.25rem; }
+  .test-card { display:flex; flex-direction:column; gap:1.25rem; }
+  .test-card p { font-size:0.9375rem; color:var(--brand-ink-muted); line-height:1.75; margin:0; flex:1; }
+  .test-card footer { border-top:1px solid var(--brand-border); padding-top:1rem; }
+  .test-card footer strong { display:block; font-size:0.9375rem; color:var(--brand-ink); }
+  .test-card footer span { font-size:0.8125rem; color:var(--brand-ink-faint); }
+</style>

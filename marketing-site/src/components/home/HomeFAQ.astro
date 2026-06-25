@@ -1,0 +1,64 @@
+---
+// HomeFAQ.astro — FAQ accordion using native <details>/<summary> (zero JS)
+---
+<section class="faq-section" id="faq">
+  <div class="section-wrap">
+    <div class="section-divider" style="margin-bottom:4rem"></div>
+    <h2 class="faq-title">Perguntas frequentes</h2>
+    <div class="faq-list" style="max-width:680px;margin-inline:auto;">
+
+      <details>
+        <summary>Como funciona o pagamento?</summary>
+        <div class="faq-answer">Existem dois valores: a taxa de setup (única, para implementar todo o sistema) e a mensalidade de acompanhamento contínuo. Os valores variam conforme o plano — Essencial ou Premium. Aceitamos PIX e cartão em até 12x.</div>
+      </details>
+
+      <details>
+        <summary>Preciso ter site para contratar?</summary>
+        <div class="faq-answer">Não. O plano Essencial foca na otimização do seu Perfil Google — sem necessidade de site. O plano Premium inclui um site programático completo, construído do zero.</div>
+      </details>
+
+      <details>
+        <summary>Quanto tempo leva para ficar pronto?</summary>
+        <div class="faq-answer">Até 7 dias após você preencher o formulário de onboarding com suas informações.</div>
+      </details>
+
+      <details>
+        <summary>Eu consigo editar o site depois?</summary>
+        <div class="faq-answer">Sim! Você recebe acesso para fazer pequenas atualizações. Para mudanças maiores, podemos ajustar com custo adicional.</div>
+      </details>
+
+      <details>
+        <summary>Vocês fazem gestão de redes sociais?</summary>
+        <div class="faq-answer">Não. Nosso foco é construir e manter seu posicionamento orgânico no Google e nas IAs. Gestão de conteúdo ou tráfego pago não fazem parte do serviço.</div>
+      </details>
+
+      <details>
+        <summary>Minha clínica vai aparecer no Google automaticamente após o setup?</summary>
+        <div class="faq-answer">O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica completa e acompanhamos seu crescimento mensalmente.</div>
+      </details>
+
+      <details>
+        <summary>Posso usar meu próprio domínio?</summary>
+        <div class="faq-answer">Sim! Você pode adquirir seu domínio personalizado (ex: draanacardoso.com.br) e nós configuramos. Custo adicional de R$ 100 (taxa única de configuração).</div>
+      </details>
+
+      <details>
+        <summary>E se eu não gostar do resultado?</summary>
+        <div class="faq-answer">
+          <p>Trabalhamos com processo de aprovação em etapas. Você acompanha e aprova cada fase antes de seguirmos adiante:</p>
+          <p><strong>Etapa 1:</strong> Você aprova o layout e estrutura<br/>
+          <strong>Etapa 2:</strong> Você aprova textos e conteúdo<br/>
+          <strong>Etapa 3:</strong> Você aprova o site final</p>
+          <p>Só publicamos quando você estiver 100% satisfeito. Revisões estão incluídas no processo. Se por algum motivo o trabalho não atender às especificações combinadas, ajustamos até ficar perfeito — sem custo adicional.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+<style>
+  .faq-section { padding: 0 0 5rem; }
+  .faq-title { text-align:center; font-size:clamp(1.6rem,3.5vw,2.25rem); margin-bottom:2.5rem; }
+  .faq-list details { border-bottom:1px solid var(--brand-border); }
+  .faq-list details:first-of-type { border-top:1px solid var(--brand-border); }
+</style>
