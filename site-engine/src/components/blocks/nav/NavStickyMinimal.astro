@@ -3,14 +3,23 @@ export interface Props {
   businessName: string;
   phone:        string;
   phoneClean:   string;
+  /**
+   * Caminho do logotipo (relativo a /public). Quando presente,
+   * exibe a imagem no lugar do nome em texto.
+   * Convenção: /public/<slug>/logo.svg
+   */
+  logoSrc?:     string;
 }
-const { businessName, phone, phoneClean } = Astro.props;
+const { businessName, phone, phoneClean, logoSrc } = Astro.props;
 ---
 
 <header role="banner" class="nav-bar">
   <div class="section-wrap nav-inner">
     <a href="#hero" class="nav-logo" aria-label={`${businessName} — início`}>
-      {businessName}
+      {logoSrc
+        ? <img src={logoSrc} alt={businessName} class="nav-logo-img" />
+        : businessName
+      }
     </a>
     <nav role="navigation" aria-label="Menu principal">
       <ul class="nav-links">
@@ -55,6 +64,13 @@ const { businessName, phone, phoneClean } = Astro.props;
     color: var(--brand-ink);
     white-space: nowrap;
     text-decoration: none;
+  }
+  .nav-logo-img {
+    display: block;
+    height: 2rem;
+    width: auto;
+    max-width: 160px;
+    object-fit: contain;
   }
   .nav-links {
     list-style: none;
