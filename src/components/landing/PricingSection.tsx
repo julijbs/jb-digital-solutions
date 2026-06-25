@@ -6,7 +6,6 @@ import { ArrowRight, Star, CreditCard, ShieldCheck, Clock } from "lucide-react";
 const plans = [
   {
     name: "Essencial",
-    tag: "Para psicólogos, nutris, fisios e terapeutas",
     setupLabel: "Setup único",
     setupPrice: "R$ 600",
     monthlyLabel: "Acompanhamento mensal",
@@ -23,7 +22,6 @@ const plans = [
   },
   {
     name: "Premium",
-    tag: "Para dentistas, médicos, estética e harmonização",
     setupLabel: "Setup único",
     setupPrice: "R$ 1.200",
     monthlyLabel: "Acompanhamento mensal",
@@ -86,9 +84,6 @@ export const PricingSection = () => {
                 </div>
               )}
 
-              <div className="mb-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                {plan.tag}
-              </div>
               <h3 className="font-serif text-2xl text-foreground">{plan.name}</h3>
 
               <div className="mt-4 space-y-2 rounded-xl bg-secondary/30 p-4">

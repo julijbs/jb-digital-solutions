@@ -17,7 +17,7 @@ const { businessName, phone, phoneClean, logoSrc } = Astro.props;
   <div class="section-wrap nav-inner">
     <a href="#hero" class="nav-logo" aria-label={`${businessName} — início`}>
       {logoSrc
-        ? <img src={logoSrc} alt={businessName} class="nav-logo-img" />
+        ? <img src={logoSrc} alt={businessName} class="nav-logo-img" width="160" height="40" decoding="async" />
         : businessName
       }
     </a>

@@ -12,7 +12,6 @@ import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import NewProject from "./pages/NewProject";
 import Onboarding from "./pages/Onboarding";
-import PromptGenerator from "./pages/PromptGenerator";
 import DomainSuccess from "./pages/DomainSuccess";
 import ClientProjects from "./pages/ClientProjects";
 import ClientReports from "./pages/ClientReports";
@@ -21,19 +20,13 @@ import ClientReview from "./pages/ClientReview";
 import AdminClients from "./pages/admin/AdminClients";
 import AdminPipeline from "./pages/admin/AdminPipeline";
 import AdminBilling from "./pages/admin/AdminBilling";
-import AdminReports from "./pages/admin/AdminReports";
-import AdminIntegrations from "./pages/admin/AdminIntegrations";
 import AdminSettings from "./pages/admin/AdminSettings";
-import AdminGBP from "./pages/admin/AdminGBP";
 import AdminProjectDetail from "./pages/admin/AdminProjectDetail";
 import AdminDomains from "./pages/admin/AdminDomains";
-import AdminTemplates from "./pages/admin/AdminTemplates";
-import SiteGenerator from "./pages/admin/SiteGenerator";
 import AdminMaintenance from "./pages/admin/AdminMaintenance";
 import AdminFeedback from "./pages/admin/AdminFeedback";
 import AdminChurnAlerts from "./pages/admin/AdminChurnAlerts";
 import AdminSiteDiagnosis from "./pages/admin/AdminSiteDiagnosis";
-import AdminGBPDiagnosis from "./pages/admin/AdminGBPDiagnosis";
 import ClientFeedback from "./pages/ClientFeedback";
 import SiteGbp from "./pages/services/SiteGbp";
 import NotFound from "./pages/NotFound";
@@ -67,20 +60,13 @@ const App = () => (
             <Route path="/admin/clients" element={<ProtectedRoute requiredRole="admin_jb"><AdminClients /></ProtectedRoute>} />
             <Route path="/admin/pipeline" element={<ProtectedRoute requiredRole="admin_jb"><AdminPipeline /></ProtectedRoute>} />
             <Route path="/admin/projects/:projectId" element={<ProtectedRoute requiredRole="admin_jb"><AdminProjectDetail /></ProtectedRoute>} />
-            <Route path="/admin/gbp" element={<ProtectedRoute requiredRole="admin_jb"><AdminGBP /></ProtectedRoute>} />
-            <Route path="/admin/prompt-generator" element={<ProtectedRoute requiredRole="admin_jb"><PromptGenerator /></ProtectedRoute>} />
             <Route path="/admin/billing" element={<ProtectedRoute requiredRole="admin_jb"><AdminBilling /></ProtectedRoute>} />
-            <Route path="/admin/reports" element={<ProtectedRoute requiredRole="admin_jb"><AdminReports /></ProtectedRoute>} />
-            <Route path="/admin/integrations" element={<ProtectedRoute requiredRole="admin_jb"><AdminIntegrations /></ProtectedRoute>} />
             <Route path="/admin/settings" element={<ProtectedRoute requiredRole="admin_jb"><AdminSettings /></ProtectedRoute>} />
             <Route path="/admin/domains" element={<ProtectedRoute requiredRole="admin_jb"><AdminDomains /></ProtectedRoute>} />
-            <Route path="/admin/templates" element={<ProtectedRoute requiredRole="admin_jb"><AdminTemplates /></ProtectedRoute>} />
-            <Route path="/admin/site-generator" element={<ProtectedRoute requiredRole="admin_jb"><SiteGenerator /></ProtectedRoute>} />
             <Route path="/admin/maintenance" element={<ProtectedRoute requiredRole="admin_jb"><AdminMaintenance /></ProtectedRoute>} />
             <Route path="/admin/feedback" element={<ProtectedRoute requiredRole="admin_jb"><AdminFeedback /></ProtectedRoute>} />
             <Route path="/admin/churn-alerts" element={<ProtectedRoute requiredRole="admin_jb"><AdminChurnAlerts /></ProtectedRoute>} />
             <Route path="/admin/site-diagnosis" element={<ProtectedRoute requiredRole="admin_jb"><AdminSiteDiagnosis /></ProtectedRoute>} />
-            <Route path="/admin/gbp-diagnosis" element={<ProtectedRoute requiredRole="admin_jb"><AdminGBPDiagnosis /></ProtectedRoute>} />
 
             {/* Serviços públicos */}
             <Route path="/servicos/site-gbp" element={<SiteGbp />} />
