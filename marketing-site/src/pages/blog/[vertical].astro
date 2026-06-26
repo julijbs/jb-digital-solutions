@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 }
 
 const { vertical } = Astro.props;
-const canonical = `https://jbdigitalsystem.com/blog/${vertical.slug}/`;
+const canonical = new URL(`/blog/${vertical.slug}/`, Astro.site).href;
 
 const posts = (await getCollection('blog', p =>
   !p.data.draft && p.data.vertical === vertical.slug

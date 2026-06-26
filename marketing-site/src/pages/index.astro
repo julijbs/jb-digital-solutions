@@ -15,8 +15,9 @@ import HomeGuarantee from '../components/home/HomeGuarantee.astro';
 import HomeFAQ from '../components/home/HomeFAQ.astro';
 import HomeFinalCTA from '../components/home/HomeFinalCTA.astro';
 import HomeMobileCTA from '../components/home/HomeMobileCTA.astro';
+import { homeFaqs } from '../data/homeFaqs.ts';
 
-const canonical = 'https://jbdigitalsystem.com/';
+const canonical = new URL('/', Astro.site).href;
 
 const homeNavItems = [
   { label: 'O Sistema',     href: '#solucao' },
@@ -72,13 +73,11 @@ const schema = {
     },
     {
       "@type": "FAQPage",
-      "mainEntity": [
-        { "@type": "Question", "name": "Como funciona o pagamento?", "acceptedAnswer": { "@type": "Answer", "text": "Existem dois valores: a taxa de setup (única) e a mensalidade de acompanhamento. Aceitamos PIX e cartão em até 12x." } },
-        { "@type": "Question", "name": "Preciso ter site para contratar?", "acceptedAnswer": { "@type": "Answer", "text": "Não. O plano Essencial foca no Perfil Google. O Premium inclui site programático completo." } },
-        { "@type": "Question", "name": "Quanto tempo leva para ficar pronto?", "acceptedAnswer": { "@type": "Answer", "text": "Até 7 dias após o preenchimento do formulário de onboarding." } },
-        { "@type": "Question", "name": "Vocês fazem gestão de redes sociais?", "acceptedAnswer": { "@type": "Answer", "text": "Não. Nosso foco é posicionamento orgânico no Google e nas IAs. Gestão de conteúdo ou tráfego pago não fazem parte do serviço." } },
-        { "@type": "Question", "name": "E se eu não gostar do resultado?", "acceptedAnswer": { "@type": "Answer", "text": "Trabalhamos com processo de aprovação em etapas. Só publicamos quando você estiver 100% satisfeito. Revisões incluídas no processo." } }
-      ]
+      "mainEntity": homeFaqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.q,
+        "acceptedAnswer": { "@type": "Answer", "text": faq.a.replace(/<[^>]*>/g, '') },
+      })),
     }
   ]
 };
