@@ -32,7 +32,7 @@ O Perfil da Empresa no Google é um cadastro gratuito que o Google disponibiliza
 - No **painel lateral** do Google quando alguém pesquisa seu nome diretamente
 - No **bloco local** das buscas (as listagens com estrelas que aparecem antes dos resultados orgânicos)
 
-Para psicólogos, é a porta de entrada mais direta para novos pacientes que buscam ativamente por atendimento na sua cidade.
+Para psicólogos, é a porta de entrada mais direta para [novos pacientes que buscam ativamente](/blog/psicologos/como-psicologos-atraem-pacientes-sem-indicacao/) por atendimento na sua cidade.
 
 ## Por que o Perfil Google incompleto prejudica mais do que a ausência
 
@@ -102,6 +102,6 @@ Esses resultados não são instantâneos — mas são cumulativos. Uma vez conqu
 
 ## Perfil Google é o primeiro passo — o sistema completo vai além
 
-O Perfil Google otimizado é a base. Para profissionais que querem crescimento mais expressivo, o próximo nível é um site programático com páginas por especialidade e bairro — o que multiplica suas chances de aparecer em buscas mais específicas como "psicólogo especializado em TDAH em Moema" ou "psicólogo que aceita [convênio] em São Paulo".
+O Perfil Google otimizado é a base. Para profissionais que querem crescimento mais expressivo, o próximo nível é um [site programático](/blog/psicologos/site-para-psicologo/) com páginas por especialidade e bairro — o que multiplica suas chances de aparecer em buscas mais específicas como "psicólogo especializado em TDAH em Moema" ou "psicólogo que aceita [convênio] em São Paulo".
 
-O caminho começa aqui, com o que você já pode fazer agora.
+O caminho começa aqui — e o [marketing orgânico para psicólogos](/blog/psicologos/marketing-para-psicologos/) é o sistema que consolida esses resultados.

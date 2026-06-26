@@ -26,7 +26,7 @@ Se você nunca pensou sobre isso, provavelmente não aparece. E isso não é cul
 
 ## O que mudou na forma como pacientes buscam nutricionistas
 
-Por anos, a jornada do paciente em busca de nutricionista passou pelo Google: pesquisa, comparação de resultados, visita ao site, decisão.
+Por anos, a [jornada do paciente](/blog/nutricionistas/como-atrair-pacientes-nutricionista/) em busca de nutricionista passou pelo Google: pesquisa, comparação de resultados, visita ao site, decisão.
 
 Essa jornada ainda existe — e vai continuar existindo. Mas uma nova etapa entrou na vida de muitas pessoas:
 
@@ -87,13 +87,13 @@ Consistência é o sinal de autoridade que as IAs buscam.
 | **Métricas** | Posição no ranking, cliques | Menções em respostas de IA, autoridade temática |
 | **Complementar?** | Sim — AEO bem feito reforça SEO | Sim — SEO bem feito alimenta AEO |
 
-Os dois trabalham juntos. Um site otimizado para SEO com FAQ estruturado e schema markup serve ao Google **e** às IAs.
+Os dois trabalham juntos. Um [site otimizado para SEO](/blog/nutricionistas/site-para-nutricionista/) com FAQ estruturado e schema markup serve ao Google **e** às IAs.
 
 ## O que você pode fazer agora
 
 Mesmo sem contratar um serviço específico, algumas ações imediatas melhoram seu posicionamento para AEO:
 
-1. **Complete seu Perfil Google** com especialidade, descrição, fotos e CRN visível
+1. **Complete seu [Perfil Google](/blog/nutricionistas/google-meu-negocio-para-nutricionistas/)** com especialidade, descrição, fotos e CRN visível
 2. **Adicione FAQ ao seu site** respondendo as perguntas mais comuns sobre suas especialidades
 3. **Mantenha seus dados consistentes** em todas as plataformas onde aparece
 4. **Produza conteúdo em formato de resposta direta** — não só artigos longos, mas respostas concisas a perguntas específicas

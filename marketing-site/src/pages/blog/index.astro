@@ -4,7 +4,7 @@ import SiteNav from '../../components/sections/SiteNav.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import { getCollection } from 'astro:content';
 
-const canonical = 'https://jbdigitalsystem.com/blog/';
+const canonical = new URL('/blog/', Astro.site).href;
 const posts = (await getCollection('blog', p => !p.data.draft))
   .sort((a,b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 

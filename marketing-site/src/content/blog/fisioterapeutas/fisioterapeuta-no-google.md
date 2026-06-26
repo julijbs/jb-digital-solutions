@@ -20,7 +20,7 @@ faqs:
 
 A dependência de indicação médica é o ponto frágil de muitas clínicas e consultórios de fisioterapia. É uma fonte nobre de pacientes, mas tem limitações claras: você não controla o volume, não alcança quem não conhece ninguém que te conhece e fica vulnerável a mudanças no fluxo de encaminhamentos.
 
-A alternativa não é abandonar as indicações — é construir um canal paralelo que funcione independente delas. E o canal mais eficiente para fisioterapeutas hoje é o Google.
+A alternativa não é abandonar as indicações — é construir um [canal paralelo](/blog/fisioterapeutas/como-fisioterapeutas-atraem-pacientes/) que funcione independente delas. E o canal mais eficiente para fisioterapeutas hoje é o Google.
 
 ## Por que o Google é a plataforma certa para fisioterapeutas
 
@@ -28,7 +28,7 @@ Fisioterapia tem uma característica única: é uma das profissões de saúde ma
 
 Quando alguém busca "fisioterapeuta pós-operatório", geralmente acabou de passar por uma cirurgia e precisa de reabilitação. Quando busca "fisioterapeuta esportivo em [cidade]", está com uma lesão que afeta treinos ou competições. Quando busca "fisioterapeuta neurológica perto de mim", é um cuidador buscando opções para um familiar.
 
-Essa **intenção de compra alta** é o que torna o Google especialmente valioso para fisioterapeutas: você não precisa convencer o paciente de que precisa de fisioterapia — ele já sabe. Você precisa aparecer quando ele está pronto para escolher.
+Essa **intenção de compra alta** é o que torna o Google especialmente valioso para fisioterapeutas: você não precisa convencer o paciente de que precisa de fisioterapia — ele já sabe. Você precisa [aparecer quando ele está pronto](/blog/fisioterapeutas/marketing-para-fisioterapeutas/) para escolher.
 
 ## O Perfil Google como porta de entrada principal
 
@@ -81,7 +81,7 @@ A presença digital não substitui o relacionamento com a rede de saúde — ela
 
 ## O próximo nível: site programático com páginas por especialidade
 
-O Perfil Google é o ponto de entrada. Para fisioterapeutas que querem crescimento mais expressivo, o próximo passo é um site com páginas específicas por especialidade e região:
+O Perfil Google é o ponto de entrada. Para fisioterapeutas que querem crescimento mais expressivo, o próximo passo é um [site com páginas específicas](/blog/fisioterapeutas/site-para-fisioterapeuta/) por especialidade e região:
 
 - `/fisioterapia-esportiva-moema/`
 - `/fisioterapia-pos-operatoria-pinheiros/`

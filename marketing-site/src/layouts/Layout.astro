@@ -16,7 +16,7 @@ const {
   description,
   canonical,
   schemaJson,
-  ogImage = 'https://jbdigitalsystem.com/para/og-default.png',
+  ogImage = new URL('/para/og-default.png', Astro.site).href,
   ogType  = 'website',
   noindex = false,
 } = Astro.props;

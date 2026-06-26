@@ -49,13 +49,13 @@ A captação orgânica não depende de post diário, de stories, de tráfego pag
 
 ### 1. Perfil Google completo e otimizado
 
-O Perfil da Empresa no Google (antes chamado Google Meu Negócio) é o ativo mais subestimado por psicólogos. Quando bem configurado, ele posiciona você no Google Maps e nas buscas locais com estrelas, avaliações, horário de funcionamento, especialidade e link para agendamento.
+O [Perfil da Empresa no Google](/blog/psicologos/google-meu-negocio-para-psicologos/) (antes chamado Google Meu Negócio) é o ativo mais subestimado por psicólogos. Quando bem configurado, ele posiciona você no Google Maps e nas buscas locais com estrelas, avaliações, horário de funcionamento, especialidade e link para agendamento.
 
 Um Perfil Google mal configurado — sem foto, sem descrição, com horário errado, sem resposta às avaliações — desperdiça a melhor vitrine que o Google oferece de graça.
 
 ### 2. Site programático com páginas por especialidade e bairro
 
-O ranqueamento orgânico no Google funciona por relevância. Um site genérico com "Psicóloga Clínica — atendo em São Paulo" compete com todos os psicólogos da cidade. Um site com páginas específicas — "Psicóloga especializada em TCC em Pinheiros", "Psicólogo para terapia de casal em Moema" — compete com muito menos profissionais e responde com precisão a que o paciente está buscando.
+O ranqueamento orgânico no Google funciona por relevância. Um site genérico com "Psicóloga Clínica — atendo em São Paulo" compete com todos os psicólogos da cidade. Um [site com páginas específicas](/blog/psicologos/site-para-psicologo/) — "Psicóloga especializada em TCC em Pinheiros", "Psicólogo para terapia de casal em Moema" — compete com muito menos profissionais e responde com precisão a que o paciente está buscando.
 
 Páginas programáticas por especialidade e por bairro multiplicam sua presença sem multiplicar seu esforço.
 
@@ -63,7 +63,7 @@ Páginas programáticas por especialidade e por bairro multiplicam sua presença
 
 AEO — Answer Engine Optimization — é a técnica que estrutura seus dados para que IAs como ChatGPT, Gemini e Perplexity te reconheçam e recomendem. Isso inclui schema markup (dados estruturados), FAQ estratégico e informações consistentes em toda a web.
 
-Enquanto a maioria dos psicólogos ainda está pensando em SEO, os pacientes já estão perguntando para as IAs. Quem estruturar esse posicionamento agora sairá na frente.
+Enquanto a maioria dos psicólogos ainda está pensando em SEO, os pacientes já estão perguntando para as IAs. Quem estruturar esse [posicionamento](/blog/psicologos/marketing-para-psicologos/) agora sairá na frente.
 
 ## O que respeitar nas normas do CFP
 

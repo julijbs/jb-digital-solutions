@@ -4,12 +4,12 @@ import SiteNav from '../../components/sections/SiteNav.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import { verticals } from '../../data/verticals.ts';
 
-const canonical = 'https://jbdigitalsystem.com/para/';
+const canonical = new URL('/para/', Astro.site).href;
 const schema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "JB Digital System", "item": "https://jbdigitalsystem.com/" },
+    { "@type": "ListItem", "position": 1, "name": "JB Digital System", "item": new URL('/', Astro.site).href },
     { "@type": "ListItem", "position": 2, "name": "Para profissionais de saúde", "item": canonical },
   ],
 });
