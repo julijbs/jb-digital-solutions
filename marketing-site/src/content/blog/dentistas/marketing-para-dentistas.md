@@ -43,7 +43,7 @@ Dentro desses limites, há amplo espaço para construir uma presença digital s�
 
 ## Como o paciente escolhe um dentista hoje
 
-Antes de ligar para uma clínica, o paciente percorre uma jornada previsível:
+Antes de ligar para uma clínica, o paciente percorre [uma jornada previsível](/blog/dentistas/como-dentistas-conseguem-mais-pacientes/):
 
 1. **Pesquisa no Google**: "dentista em [bairro]", "dentista que aceita [convênio]", "implante dentário em [cidade]"
 2. **Verifica o Google Maps**: lê avaliações, confere endereço, vê fotos da clínica
@@ -57,7 +57,7 @@ Em cada uma dessas etapas, você tem uma oportunidade de aparecer ou uma oportun
 
 ### 1. Perfil Google otimizado para odontologia
 
-O Perfil da Empresa no Google é o ativo mais imediato. Para clínicas odontológicas, a otimização inclui:
+O [Perfil da Empresa no Google](/blog/dentistas/google-meu-negocio-para-dentistas/) é o ativo mais imediato. Para clínicas odontológicas, a otimização inclui:
 
 - Categoria principal: "Dentista" (não "Clínica médica" ou "Serviço de saúde")
 - Categorias secundárias: especialidades que você oferece (ortodontista, implantologista etc.)
@@ -69,7 +69,7 @@ O Perfil Google bem configurado posiciona você no Google Maps e no bloco local 
 
 ### 2. Site programático com páginas por procedimento e bairro
 
-Um site genérico para dentista compete com todos. Um site com páginas específicas compete com muito menos:
+Um site genérico para dentista compete com todos. Um [site com páginas específicas](/blog/dentistas/site-para-dentista-7-elementos/) compete com muito menos:
 
 - "Implante dentário em Moema"
 - "Clareamento dental em Pinheiros"

@@ -86,12 +86,12 @@ Pacientes que buscam "fisioterapeuta que aceita [convênio] em [cidade]" têm in
 
 Um site isolado tem resultado limitado. O que multiplica os resultados é um **sistema integrado**:
 
-- **Perfil Google** → captura buscas locais imediatas, Google Maps, gera resultados mais rápidos
+- **[Perfil Google](/blog/fisioterapeutas/fisioterapeuta-no-google/)** → captura buscas locais imediatas, Google Maps, gera resultados mais rápidos
 - **Site programático** → captura buscas específicas por especialidade + bairro, gera autoridade a médio prazo
-- **AEO** → estrutura dados para que as IAs (ChatGPT, Gemini, Perplexity) recomendem você quando consultadas
+- **[AEO](/blog/fisioterapeutas/marketing-para-fisioterapeutas/)** → estrutura dados para que as IAs (ChatGPT, Gemini, Perplexity) recomendem você quando consultadas
 
 Os três elementos se reforçam: o Perfil Google direciona para o site, o site converte com mais credibilidade, o schema markup no site alimenta tanto o Google quanto as IAs.
 
 Setup de até 7 dias. Primeiros resultados orgânicos entre 60 e 90 dias. Crescimento contínuo com acompanhamento mensal.
 
-Esse é o modelo que diferencia fisioterapeutas que esperam indicação dos que constroem captação orgânica independente.
+Esse é o modelo que diferencia fisioterapeutas que esperam indicação dos que constroem [captação orgânica](/blog/fisioterapeutas/como-fisioterapeutas-atraem-pacientes/) independente.

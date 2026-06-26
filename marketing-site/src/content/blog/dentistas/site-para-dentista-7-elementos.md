@@ -45,11 +45,11 @@ Exemplos de URLs que ranqueiam para buscas reais:
 - `/clareamento-dental-pinheiros/`
 - `/dentista-que-aceita-unimed-sao-paulo/`
 
-Cada combinação responde a uma busca com intenção muito clara — o paciente já sabe o que quer e onde quer. Esse é o perfil de paciente mais fácil de converter.
+Cada combinação responde a uma busca com intenção muito clara — o paciente já sabe o que quer e onde quer. Esse é o perfil de [paciente mais fácil de converter](/blog/dentistas/como-dentistas-conseguem-mais-pacientes/).
 
 ## 3. Perfil Google integrado e avaliações visíveis
 
-O site e o Perfil Google devem ser tratados como um sistema único. No site:
+O site e o [Perfil Google](/blog/dentistas/google-meu-negocio-para-dentistas/) devem ser tratados como um sistema único. No site:
 
 - Embed ou link para suas avaliações do Google (estrelas, depoimentos reais)
 - Schema markup de avaliações (`aggregateRating`) para que as estrelas apareçam nos resultados de busca
@@ -110,6 +110,6 @@ Um site estático (sem banco de dados, sem WordPress) carrega em uma fração do
 
 Um site bem construído com esses 7 elementos vai além de "ter presença online". Ele funciona como o centro de um sistema de captação que inclui Perfil Google, presença nas IAs e monitoramento mensal de posicionamento.
 
-Nenhum elemento funciona isolado. O Perfil Google direciona para o site. O site converte. O schema markup alimenta as IAs. As avaliações constroem autoridade para o próximo ciclo.
+Nenhum elemento funciona isolado. O Perfil Google direciona para o site. O site converte. O schema markup alimenta as IAs e reforça o [marketing orgânico](/blog/dentistas/marketing-para-dentistas/). As avaliações constroem autoridade para o próximo ciclo.
 
 Isso é o que diferencia um site que existe de um site que trabalha por você.

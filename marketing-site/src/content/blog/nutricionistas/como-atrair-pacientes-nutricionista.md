@@ -41,7 +41,7 @@ A nutrição tem uma vantagem competitiva em relação a outras profissões de s
 
 Pacientes que buscam nutricionista esportiva têm perfil diferente de quem busca nutricionista materno-infantil. Tratá-los como o mesmo público é a diferença entre uma página genérica (que ranqueia para nada) e páginas específicas por especialidade (que ranqueiam para quem você realmente quer atender).
 
-Para uma nutricionista com múltiplas especialidades, o posicionamento digital ideal cria rotas de entrada separadas:
+Para uma nutricionista com múltiplas especialidades, o posicionamento digital ideal cria [rotas de entrada separadas](/blog/nutricionistas/site-para-nutricionista/):
 - Página de nutrição esportiva → captura atletas e ativos
 - Página de nutrição materno-infantil → captura gestantes e mães
 - Página de nutrição clínica para emagrecimento → captura quem busca reeducação alimentar
@@ -51,7 +51,7 @@ Cada página responde à intenção específica e compete em um universo menor d
 
 ## O papel do Perfil Google para nutricionistas
 
-O Perfil da Empresa no Google posiciona você no Google Maps e nas buscas locais — o ponto de entrada mais imediato para novos pacientes.
+O [Perfil da Empresa no Google](/blog/nutricionistas/google-meu-negocio-para-nutricionistas/) posiciona você no Google Maps e nas buscas locais — o ponto de entrada mais imediato para novos pacientes.
 
 Uma nutricionista com Perfil Google bem configurado aparece quando alguém pesquisa no mapa da sua região. Isso inclui:
 - Nome completo e CRN (gera credibilidade)
@@ -71,7 +71,7 @@ Uma mudança silenciosa está acontecendo na forma como pacientes buscam profiss
 
 As IAs respondem com base em fontes estruturadas disponíveis na web. Profissionais que têm schema markup, FAQs estratégicas e dados consistentes têm mais chance de ser recomendados. Quem não tem esse trabalho feito fica invisível para esse novo canal de descoberta.
 
-Isso é o que chamamos de AEO — Answer Engine Optimization. E é o diferencial que a maioria das nutricionistas ainda não está explorando.
+Isso é o que chamamos de [AEO — Answer Engine Optimization](/blog/nutricionistas/aeo-para-nutricionistas-chatgpt-gemini/). E é o diferencial que a maioria das nutricionistas ainda não está explorando.
 
 ## Quanto tempo leva para o sistema começar a funcionar
 
