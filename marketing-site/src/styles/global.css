@@ -17,7 +17,7 @@
     --brand-surface-alt:   #112236;   /* Card bg */
     --brand-ink:           #F5F0E8;   /* Cream — texto principal */
     --brand-ink-muted:     #8FA3B5;   /* Texto secundário */
-    --brand-ink-faint:     #5A7080;   /* Texto muito muted */
+    --brand-ink-faint:     #7A8F9F;   /* Texto muito muted — mínimo 4.5:1 contra navy */
     --brand-border:        #1E3147;   /* Bordas */
     --brand-break:         #263545;   /* Bg separador/muted */
     --brand-white:         #FFFFFF;
@@ -30,6 +30,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem; /* offset for sticky nav (~4rem height + breathing room) */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

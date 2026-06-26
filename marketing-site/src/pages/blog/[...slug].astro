@@ -2,6 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import SiteNav from '../../components/sections/SiteNav.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
+import FaqB2B from '../../components/sections/FaqB2B.astro';
+import RelatedPosts from '../../components/sections/RelatedPosts.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -12,6 +14,14 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const canonical = `https://jbdigitalsystem.com/blog/${post.id}/`;
+
+// Related posts: same vertical first, then same cluster — max 3
+const allPosts = await getCollection('blog', p => !p.data.draft && p.id !== post.id);
+const sameVertical = allPosts.filter(p => p.data.vertical === post.data.vertical);
+const sameCluster  = allPosts.filter(p => p.data.cluster === post.data.cluster && p.data.vertical !== post.data.vertical);
+const related = [...sameVertical, ...sameCluster]
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
 
 const verticalLabels: Record<string,string> = {
   psicologos: 'Psicólogos', dentistas: 'Dentistas',
@@ -79,6 +89,12 @@ const schema = {
         </a>
       </div>
     </article>
+    {post.data.faqs && post.data.faqs.length > 0 && (
+      <FaqB2B faqs={post.data.faqs} />
+    )}
+    {related.length > 0 && (
+      <RelatedPosts posts={related} />
+    )}
   </main>
   <SiteFooter />
 </Layout>

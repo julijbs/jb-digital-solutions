@@ -9,11 +9,11 @@ export interface Props {
 const { currentPath = '/', navItems } = Astro.props;
 
 const defaultNavLinks: NavItem[] = [
-  { label: 'Para quem é', href: '#para-quem' },
-  { label: 'Como funciona', href: '#como-funciona' },
-  { label: 'Planos', href: '#planos' },
-  { label: 'Portfólio', href: '#portfolio' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Para quem é', href: '/#para-quem' },
+  { label: 'Como funciona', href: '/#como-funciona' },
+  { label: 'Planos', href: '/#planos' },
+  { label: 'Portfólio', href: '/#portfolio' },
+  { label: 'FAQ', href: '/#faq' },
 ];
 
 const navLinks = navItems ?? defaultNavLinks;
@@ -22,8 +22,7 @@ const navLinks = navItems ?? defaultNavLinks;
 <header class="site-nav" id="site-nav">
   <div class="section-wrap nav-inner">
     <a href="/" class="nav-logo" aria-label="JB Digital System — Página inicial">
-      <span class="logo-jb">JB</span>
-      <span class="logo-name">Digital System</span>
+      <img src="/logo-jb-digital.png" alt="JB Digital" class="nav-logo-img" />
     </a>
 
     <nav aria-label="Navegação principal">
@@ -70,25 +69,10 @@ const navLinks = navItems ?? defaultNavLinks;
     flex-shrink: 0;
   }
 
-  .logo-jb {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 0.375rem;
-    background: linear-gradient(135deg, #C8A44B, #D4B06A);
-    color: #0B1D2E;
-    font-family: var(--brand-font-body);
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-
-  .logo-name {
-    font-family: var(--brand-font-body);
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--brand-ink);
+  .nav-logo-img {
+    height: 2.25rem;
+    width: auto;
+    display: block;
   }
 
   .nav-links {
