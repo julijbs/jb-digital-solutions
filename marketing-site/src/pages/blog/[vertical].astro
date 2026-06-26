@@ -14,6 +14,8 @@ export async function getStaticPaths() {
 
 const { vertical } = Astro.props;
 const canonical = new URL(`/blog/${vertical.slug}/`, Astro.site).href;
+const siteRoot  = new URL('/', Astro.site).href;
+const blogRoot  = new URL('/blog/', Astro.site).href;
 
 const posts = (await getCollection('blog', p =>
   !p.data.draft && p.data.vertical === vertical.slug
@@ -31,8 +33,8 @@ const schema = {
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "JB Digital", "item": "https://jbdigitalsystem.com/" },
-        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://jbdigitalsystem.com/blog/" },
+        { "@type": "ListItem", "position": 1, "name": "JB Digital", "item": siteRoot },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": blogRoot },
         { "@type": "ListItem", "position": 3, "name": `Para ${vertical.professionPlural}`, "item": canonical },
       ],
     },

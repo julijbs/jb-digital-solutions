@@ -18,6 +18,7 @@ import HomeMobileCTA from '../components/home/HomeMobileCTA.astro';
 import { homeFaqs } from '../data/homeFaqs.ts';
 
 const canonical = new URL('/', Astro.site).href;
+const blogUrl   = new URL('/blog/', Astro.site).href;
 
 const homeNavItems = [
   { label: 'O Sistema',     href: '#solucao' },
@@ -33,25 +34,25 @@ const schema = {
     {
       "@type": "WebSite",
       "name": "JB Digital System",
-      "url": "https://jbdigitalsystem.com/",
+      "url": canonical,
       "description": "Sistema completo de posicionamento online para profissionais de saúde — site, Perfil Google e presença nas IAs.",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://jbdigitalsystem.com/blog/?q={search_term_string}",
+        "target": blogUrl + "?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "ProfessionalService",
       "name": "JB Digital System",
-      "url": "https://jbdigitalsystem.com/",
+      "url": canonical,
       "description": "Sistema completo de posicionamento online para profissionais de saúde: site programático, Perfil Google e presença nas IAs (AEO). Setup em 7 dias.",
       "areaServed": "Brasil",
       "serviceType": "Posicionamento Digital para Profissionais de Saúde",
       "provider": {
         "@type": "Organization",
         "name": "JB Digital Consulting",
-        "url": "https://jbdigitalsystem.com/",
+        "url": canonical,
         "email": "contato@jbdigitalconsulting.com"
       },
       "offers": [
