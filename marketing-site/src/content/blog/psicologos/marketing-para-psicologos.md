@@ -18,7 +18,7 @@ faqs:
 
 *"Quero divulgar meu trabalho, mas tenho medo de infringir o CFP. Então não faço nada — e fico esperando que alguém me indique."*
 
-Esse pensamento é mais comum do que parece entre psicólogos. O resultado é sempre o mesmo: uma agenda que oscila entre cheia e vazia, dependente de ciclos de indicação que estão completamente fora do seu controle.
+Esse pensamento é mais comum do que parece entre psicólogos. O resultado é sempre o mesmo: uma agenda que oscila entre cheia e vazia, [dependente de ciclos de indicação](/blog/psicologos/como-psicologos-atraem-pacientes-sem-indicacao/) que estão completamente fora do seu controle.
 
 O medo não é infundado. O CFP tem normas claras para a comunicação profissional — e qualquer psicólogo que já pesquisou sobre marketing provavelmente esbarrou na Resolução CFP 10/2000 e saiu com mais dúvidas do que respostas.
 
@@ -49,11 +49,11 @@ Um sistema de marketing para psicólogos não depende de post diário, de storie
 
 ### 1. Perfil Google completo e otimizado
 
-O Perfil da Empresa no Google é o ativo mais subestimado por psicólogos. Quando bem configurado, ele posiciona você no Google Maps e nas buscas locais com avaliações, especialidade, horário e link para agendamento. Um perfil incompleto — sem foto, sem descrição da abordagem, sem resposta às avaliações — desperdiça a melhor vitrine que o Google oferece gratuitamente.
+O [Perfil da Empresa no Google](/blog/psicologos/google-meu-negocio-para-psicologos/) é o ativo mais subestimado por psicólogos. Quando bem configurado, ele posiciona você no Google Maps e nas buscas locais com avaliações, especialidade, horário e link para agendamento. Um perfil incompleto — sem foto, sem descrição da abordagem, sem resposta às avaliações — desperdiça a melhor vitrine que o Google oferece gratuitamente.
 
 ### 2. Site programático com páginas por especialidade e bairro
 
-Um site genérico compete com todos os psicólogos de uma cidade. Páginas específicas — "Psicóloga especializada em TCC em Pinheiros", "Psicólogo para terapia de casal em Moema" — competem com muito menos profissionais e respondem com precisão ao que o paciente está buscando. Páginas programáticas por especialidade e por bairro multiplicam sua presença sem multiplicar seu esforço.
+Um [site para psicólogo](/blog/psicologos/site-para-psicologo/) genérico compete com todos os psicólogos de uma cidade. Páginas específicas — "Psicóloga especializada em TCC em Pinheiros", "Psicólogo para terapia de casal em Moema" — competem com muito menos profissionais e respondem com precisão ao que o paciente está buscando. Páginas programáticas por especialidade e por bairro multiplicam sua presença sem multiplicar seu esforço.
 
 ### 3. Presença nas IAs (AEO)
 

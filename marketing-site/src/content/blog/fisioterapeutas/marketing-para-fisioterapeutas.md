@@ -34,7 +34,7 @@ Fisioterapia tem ainda uma vantagem raramente explorada: a diversidade de especi
 
 ## A jornada do paciente antes de contratar um fisioterapeuta
 
-A decisão de agendar uma consulta raramente é impulsiva. Antes de ligar ou enviar mensagem, o paciente percorre algumas etapas:
+A decisão de agendar uma consulta raramente é impulsiva. Antes de ligar ou enviar mensagem, o paciente percorre [algumas etapas](/blog/fisioterapeutas/como-fisioterapeutas-atraem-pacientes/):
 
 1. **Pesquisa no Google** — "fisioterapeuta em [bairro]", "fisioterapeuta especializado em ortopedia em [cidade]", "fisioterapeuta pélvico perto de mim"
 2. **Consulta ao Google Maps** — ver estrelas, ler avaliações, conferir localização, horário e forma de contato
@@ -49,13 +49,13 @@ Captação orgânica não depende de post diário, de algoritmo ou de verba de a
 
 ### 1. Perfil Google completo e otimizado
 
-O Perfil da Empresa no Google é a ferramenta mais subestimada por fisioterapeutas. Quando bem configurado, posiciona você no Google Maps e nas buscas locais com suas especialidades, avaliações, horário de atendimento e link para agendamento.
+O [Perfil da Empresa no Google](/blog/fisioterapeutas/fisioterapeuta-no-google/) é a ferramenta mais subestimada por fisioterapeutas. Quando bem configurado, posiciona você no Google Maps e nas buscas locais com suas especialidades, avaliações, horário de atendimento e link para agendamento.
 
 Especialidades como fisioterapia pélvica, neurológica ou respiratória podem ser destacadas diretamente na descrição do Perfil — criando diferenciação imediata frente a clínicas generalistas. Avaliações bem respondidas funcionam como sinal de confiança para o paciente e de relevância para o Google.
 
 ### 2. Site programático com páginas por especialidade e bairro
 
-Fisioterapeutas têm uma vantagem que poucos exploram: a diversidade de especialidades cria oportunidades de ranqueamento muito específicas. Um site genérico com "Fisioterapeuta em São Paulo" compete com centenas de profissionais. Páginas específicas — "Fisioterapia ortopédica em Santana", "Fisioterapia pélvica em Moema", "Fisioterapeuta respiratório em Santo André" — competem com muito menos e respondem exatamente ao que o paciente está buscando.
+Fisioterapeutas têm uma vantagem que poucos exploram: a diversidade de especialidades cria oportunidades de ranqueamento muito específicas. Um [site para fisioterapeuta](/blog/fisioterapeutas/site-para-fisioterapeuta/) genérico com "Fisioterapeuta em São Paulo" compete com centenas de profissionais. Páginas específicas — "Fisioterapia ortopédica em Santana", "Fisioterapia pélvica em Moema", "Fisioterapeuta respiratório em Santo André" — competem com muito menos e respondem exatamente ao que o paciente está buscando.
 
 Cada especialidade, em cada bairro de atuação, é uma porta de entrada potencial para um novo paciente. Páginas programáticas multiplicam essa presença sem multiplicar o esforço.
 

@@ -18,7 +18,7 @@ faqs:
 
 *"Tenho mais de mil seguidores no Instagram, posto receitas toda semana — mas não chega nenhum paciente novo pelo Google."*
 
-Se esse cenário parece familiar, você não está sozinho. A maioria das nutricionistas que atende de forma independente investe tempo e energia nas redes sociais — e pouco ou nada no canal que mais conecta profissionais a pacientes que estão ativamente buscando atendimento: o Google.
+Se esse cenário parece familiar, você não está sozinho. A maioria das nutricionistas que atende de forma independente investe tempo e energia nas redes sociais — e pouco ou nada no [canal que mais conecta profissionais a pacientes](/blog/nutricionistas/como-atrair-pacientes-nutricionista/) que estão ativamente buscando atendimento: o Google.
 
 O Instagram tem sua importância. Mas ele funciona para um público que já te conhece ou foi exposto ao seu conteúdo. O Google funciona para quem ainda não te conhece — e está, neste momento, digitando "nutricionista perto de mim" ou "nutricionista especialista em nutrição esportiva em [cidade]".
 
@@ -49,7 +49,7 @@ A captação orgânica não exige presença diária nas redes, tráfego pago ou 
 
 ### 1. Perfil Google completo e otimizado
 
-O Perfil da Empresa no Google é a vitrine mais subestimada por nutricionistas. Quando configurado corretamente — com especialidade clara, foto profissional, horário atualizado, descrição objetiva e respostas às avaliações — ele posiciona você nas buscas locais e no Google Maps sem custo de mídia.
+O [Perfil da Empresa no Google](/blog/nutricionistas/google-meu-negocio-para-nutricionistas/) é a vitrine mais subestimada por nutricionistas. Quando configurado corretamente — com especialidade clara, foto profissional, horário atualizado, descrição objetiva e respostas às avaliações — ele posiciona você nas buscas locais e no Google Maps sem custo de mídia.
 
 Um perfil incompleto ou desatualizado perde a disputa imediatamente para concorrentes que priorizaram esse canal.
 
@@ -63,7 +63,7 @@ Páginas programáticas por especialidade (clínica, esportiva, oncológica, ped
 
 AEO — Answer Engine Optimization — é a técnica que estrutura seus dados para que IAs como ChatGPT, Gemini e Perplexity te reconheçam e recomendem. Isso inclui schema markup (dados estruturados no código do site), FAQ estratégico e consistência de informações em toda a web.
 
-Enquanto a maioria das nutricionistas ainda está focada apenas em SEO, os pacientes já estão consultando IAs para receber indicações. Quem estruturar esse posicionamento agora sai na frente.
+Enquanto a maioria das nutricionistas ainda está focada apenas em SEO, os pacientes já estão consultando IAs para receber indicações. Quem estruturar esse [posicionamento](/blog/nutricionistas/aeo-para-nutricionistas-chatgpt-gemini/) agora sai na frente.
 
 ## O que respeitar nas normas do CFN
 

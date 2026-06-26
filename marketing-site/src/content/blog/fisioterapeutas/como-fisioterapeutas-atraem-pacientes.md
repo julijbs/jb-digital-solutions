@@ -49,13 +49,13 @@ Captação orgânica não exige post diário, tráfego pago ou presença constan
 
 ### 1. Perfil Google completo e otimizado
 
-O Perfil da Empresa no Google é o ativo mais subestimado por fisioterapeutas. Quando bem configurado, ele posiciona você no Google Maps e nas buscas locais — com estrelas, avaliações, especialidades, horário de atendimento e link para agendamento.
+O [Perfil da Empresa no Google](/blog/fisioterapeutas/fisioterapeuta-no-google/) é o ativo mais subestimado por fisioterapeutas. Quando bem configurado, ele posiciona você no Google Maps e nas buscas locais — com estrelas, avaliações, especialidades, horário de atendimento e link para agendamento.
 
 Um perfil com informações incompletas, sem fotos, sem resposta às avaliações ou com categoria genérica desperdiça a melhor vitrine gratuita que o Google oferece a profissionais de saúde.
 
 ### 2. Site programático com páginas por especialidade e bairro
 
-Um site com apenas "Fisioterapeuta — atendo em [cidade]" compete com todos os fisioterapeutas da região. Um site com páginas específicas — "Fisioterapia pélvica em Pinheiros", "Fisioterapeuta ortopédico em Moema", "Reabilitação neurológica em Vila Mariana" — compete com um conjunto muito menor de profissionais e responde com precisão ao que o paciente está buscando.
+Um [site para fisioterapeuta](/blog/fisioterapeutas/site-para-fisioterapeuta/) com apenas "Fisioterapeuta — atendo em [cidade]" compete com todos os fisioterapeutas da região. Um site com páginas específicas — "Fisioterapia pélvica em Pinheiros", "Fisioterapeuta ortopédico em Moema", "Reabilitação neurológica em Vila Mariana" — compete com um conjunto muito menor de profissionais e responde com precisão ao que o paciente está buscando.
 
 Páginas programáticas por especialidade e por bairro multiplicam sua presença nas buscas sem multiplicar o esforço de produção de conteúdo.
 
@@ -63,7 +63,7 @@ Páginas programáticas por especialidade e por bairro multiplicam sua presença
 
 AEO — Answer Engine Optimization — é a estrutura que permite que IAs como ChatGPT, Gemini e Perplexity te reconheçam e recomendem quando um usuário faz uma pergunta sobre fisioterapia na sua cidade. Isso inclui schema markup, FAQ estratégico e consistência de informações em toda a web.
 
-A maioria dos fisioterapeutas ainda não está pensando nesse canal. O momento de estruturar é agora, antes que a concorrência torne isso obrigatório.
+A maioria dos fisioterapeutas ainda não está pensando [nesse canal](/blog/fisioterapeutas/marketing-para-fisioterapeutas/). O momento de estruturar é agora, antes que a concorrência torne isso obrigatório.
 
 ## O que respeitar nas normas do COFFITO
 

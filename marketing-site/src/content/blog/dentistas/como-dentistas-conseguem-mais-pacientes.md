@@ -49,13 +49,13 @@ A captação orgânica não exige dedicação diária nem investimento em anúnc
 
 ### 1. Perfil Google completo e otimizado
 
-O Perfil da Empresa no Google é o ativo mais subestimado por dentistas. Quando bem configurado, ele posiciona você no Google Maps e nas buscas locais com estrelas, avaliações, fotos do consultório, especialidades, horário de funcionamento e link para agendamento.
+O [Perfil da Empresa no Google](/blog/dentistas/google-meu-negocio-para-dentistas/) é o ativo mais subestimado por dentistas. Quando bem configurado, ele posiciona você no Google Maps e nas buscas locais com estrelas, avaliações, fotos do consultório, especialidades, horário de funcionamento e link para agendamento.
 
 Um Perfil com foto de má qualidade, sem descrição das especialidades, com horário desatualizado ou sem respostas às avaliações desperdiça a vitrine mais visível que o Google oferece — sem custo adicional.
 
 ### 2. Site programático com páginas por procedimento e bairro
 
-Um site genérico — "Clínica Odontológica em São Paulo" — compete com todos os dentistas da cidade. Um site com páginas específicas — "Implante dentário em Moema", "Facetas de porcelana no Itaim Bibi", "Dentista especialista em clareamento em Pinheiros" — compete com muito menos profissionais e responde com precisão ao que o paciente está buscando.
+Um [site para dentista](/blog/dentistas/site-para-dentista-7-elementos/) genérico — "Clínica Odontológica em São Paulo" — compete com todos os dentistas da cidade. Um site com páginas específicas — "Implante dentário em Moema", "Facetas de porcelana no Itaim Bibi", "Dentista especialista em clareamento em Pinheiros" — compete com muito menos profissionais e responde com precisão ao que o paciente está buscando.
 
 Páginas programáticas por procedimento e por bairro multiplicam sua presença sem multiplicar seu esforço.
 
@@ -63,7 +63,7 @@ Páginas programáticas por procedimento e por bairro multiplicam sua presença 
 
 AEO — Answer Engine Optimization — é a técnica que estrutura seus dados para que IAs como ChatGPT, Gemini e Perplexity te reconheçam e recomendem. Isso inclui schema markup (dados estruturados), FAQ estratégico e informações consistentes em toda a web.
 
-A maioria dos dentistas ainda está pensando em redes sociais. Os pacientes já estão perguntando para as IAs. Quem estruturar esse posicionamento agora sairá na frente quando essa busca se tornar o padrão.
+A maioria dos dentistas ainda está pensando em redes sociais. Os pacientes já estão perguntando para as IAs. Quem estruturar esse [posicionamento](/blog/dentistas/marketing-para-dentistas/) agora sairá na frente quando essa busca se tornar o padrão.
 
 ## O que respeitar nas normas do CFO
 

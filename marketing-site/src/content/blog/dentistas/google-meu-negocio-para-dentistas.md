@@ -20,7 +20,7 @@ faqs:
 
 Se esse cenário é familiar, o problema não é a qualidade do seu atendimento. É um problema de presença digital — e a raiz quase sempre é a mesma: um Google Meu Negócio dentista mal configurado ou completamente negligenciado.
 
-A busca local mudou o comportamento do paciente odontológico. Antes de pedir indicação a alguém, antes mesmo de ligar, ele abre o celular e digita. Esse momento de pesquisa é a janela mais valiosa para captar um novo paciente — e quem não aparece nele perde para quem aparece, independentemente de anos de experiência ou qualidade de atendimento.
+A busca local mudou o comportamento do paciente odontológico. Antes de [pedir indicação](/blog/dentistas/como-dentistas-conseguem-mais-pacientes/) a alguém, antes mesmo de ligar, ele abre o celular e digita. Esse momento de pesquisa é a janela mais valiosa para captar um novo paciente — e quem não aparece nele perde para quem aparece, independentemente de anos de experiência ou qualidade de atendimento.
 
 A boa notícia é que o Perfil da Empresa no Google — o que muitos ainda chamam de Google Meu Negócio — é um ativo que você controla, pode otimizar e que trabalha por você continuamente, sem custo por clique ou visualização.
 
@@ -61,7 +61,7 @@ O Perfil da Empresa no Google é a peça central da visibilidade local de qualqu
 
 ### 2. Site programático com páginas por especialidade e bairro
 
-Um site genérico com "Clínica Odontológica — atendemos em [cidade]" compete com centenas de clínicas ao mesmo tempo. Um site com páginas específicas — "Implante dentário em [bairro]", "Ortodontia para adultos em [cidade]", "Dentista de emergência próximo a [ponto de referência]" — compete com muito menos e responde com precisão ao que o paciente digitou.
+Um [site para dentista](/blog/dentistas/site-para-dentista-7-elementos/) genérico com "Clínica Odontológica — atendemos em [cidade]" compete com centenas de clínicas ao mesmo tempo. Um site com páginas específicas — "Implante dentário em [bairro]", "Ortodontia para adultos em [cidade]", "Dentista de emergência próximo a [ponto de referência]" — compete com muito menos e responde com precisão ao que o paciente digitou.
 
 Páginas programáticas por especialidade e localização criam múltiplas portas de entrada para sua clínica sem que você precise atualizar o site manualmente a cada nova busca.
 
@@ -69,7 +69,7 @@ Páginas programáticas por especialidade e localização criam múltiplas porta
 
 AEO — Answer Engine Optimization — é a estruturação dos seus dados para que sistemas de inteligência artificial te reconheçam e recomendem. Isso inclui schema markup de clínica odontológica, FAQ estratégico e consistência de informações em toda a web — Perfil Google, site e diretórios de saúde.
 
-Enquanto a maioria dos dentistas ainda está pensando em SEO tradicional, os pacientes já estão perguntando para as IAs. Quem estruturar esse posicionamento agora terá vantagem sobre concorrentes que chegarem depois.
+Enquanto a maioria dos dentistas ainda está pensando em SEO tradicional, os pacientes já estão perguntando para as IAs. Quem estruturar esse [posicionamento](/blog/dentistas/marketing-para-dentistas/) agora terá vantagem sobre concorrentes que chegarem depois.
 
 ## O que respeitar nas normas do CFO
 

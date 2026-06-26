@@ -34,7 +34,7 @@ O segundo erro é o site que exige esforço do visitante. Informação de contat
 
 ## O que o paciente busca antes de agendar a primeira consulta
 
-Antes de mandar a primeira mensagem, o paciente percorre uma jornada que você precisa entender para estruturar seu site:
+Antes de mandar a primeira mensagem, o paciente percorre uma [jornada](/blog/psicologos/como-psicologos-atraem-pacientes-sem-indicacao/) que você precisa entender para estruturar seu site:
 
 1. **Pesquisa no Google** — "psicólogo especializado em [problema] em [cidade]", "psicólogo que aceita [convênio]", buscas por abordagem terapêutica específica
 2. **Consulta ao Google Maps** — avaliações, estrelas, fotos, horário de atendimento, localização
@@ -65,9 +65,9 @@ Três elementos técnicos que a maioria ignora:
 
 **Formulário de contato acessível** — visível na página principal, funcional no celular, com campos mínimos (nome, telefone, mensagem). Cada clique extra que o paciente precisa dar é uma desistência potencial.
 
-**Avaliações integradas** — um widget com avaliações do Google ou depoimentos voluntários dentro das normas do CFP reduz a hesitação de quem chegou ao site sem referência prévia.
+**Avaliações integradas** — um widget com avaliações do [Perfil Google](/blog/psicologos/google-meu-negocio-para-psicologos/) ou depoimentos voluntários dentro das normas do CFP reduz a hesitação de quem chegou ao site sem referência prévia.
 
-**Schema markup de saúde** — o código invisível que informa ao Google e às IAs que você é um profissional de saúde, com especialidade, localização e área de atuação definidas. Sem esse marcador técnico (HealthcareProfessional), as IAs não sabem como te recomendar quando alguém pergunta por um psicólogo.
+**[Schema markup de saúde](/blog/psicologos/marketing-para-psicologos/)** — o código invisível que informa ao Google e às IAs que você é um profissional de saúde, com especialidade, localização e área de atuação definidas. Sem esse marcador técnico (HealthcareProfessional), as IAs não sabem como te recomendar quando alguém pergunta por um psicólogo.
 
 ## O que o CFP permite e o que é vedado no site
 

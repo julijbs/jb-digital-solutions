@@ -32,7 +32,7 @@ Um perfil mal configurado é tão prejudicial quanto não tê-lo. Sem foto, sem 
 
 ## Como o paciente busca uma nutricionista hoje
 
-A jornada de quem procura atendimento nutricional segue um padrão consistente. Entender cada etapa mostra onde você precisa estar presente:
+A [jornada de quem procura atendimento nutricional](/blog/nutricionistas/como-atrair-pacientes-nutricionista/) segue um padrão consistente. Entender cada etapa mostra onde você precisa estar presente:
 
 1. **Pesquisa no Google** — "nutricionista em [cidade]", "nutricionista especializada em emagrecimento em [bairro]", "nutricionista que aceita [convênio]", "consulta nutricional presencial [região]"
 2. **Consulta ao Google Maps** — ver avaliações e estrelas, conferir endereço, horário de funcionamento e fotos do consultório
@@ -53,7 +53,7 @@ Além da categoria, o que faz um perfil ranquear bem é: descrição com suas es
 
 ### 2. Site programático com páginas por especialidade e bairro
 
-Um site genérico com "Nutricionista em São Paulo" compete com todos os profissionais da cidade. Um site com páginas específicas — "Nutricionista especializada em emagrecimento em Pinheiros", "Consulta nutricional para atletas em Moema" — responde com exatidão ao que o paciente está buscando e compete com muito menos profissionais.
+Um [site para nutricionista](/blog/nutricionistas/site-para-nutricionista/) genérico com "Nutricionista em São Paulo" compete com todos os profissionais da cidade. Um site com páginas específicas — "Nutricionista especializada em emagrecimento em Pinheiros", "Consulta nutricional para atletas em Moema" — responde com exatidão ao que o paciente está buscando e compete com muito menos profissionais.
 
 Páginas programáticas por especialidade e por bairro ampliam sua presença local sem ampliar seu esforço. Cada página ranqueia de forma independente e atrai pacientes com intenção de busca definida.
 
@@ -61,7 +61,7 @@ Páginas programáticas por especialidade e por bairro ampliam sua presença loc
 
 AEO — Answer Engine Optimization — é a técnica que estrutura seus dados para que IAs como ChatGPT, Gemini e Perplexity te reconheçam quando um paciente faz uma pergunta direta. Isso é feito por meio de schema markup (dados estruturados no site), FAQ estratégico e consistência de informações em toda a web.
 
-Enquanto a maioria das nutricionistas ainda está centrada em redes sociais, os pacientes já estão perguntando para as IAs. Quem estruturar esse posicionamento agora aparece como recomendação nessa busca.
+Enquanto a maioria das nutricionistas ainda está centrada em redes sociais, os pacientes já estão perguntando para as IAs. Quem estruturar esse [posicionamento nas IAs](/blog/nutricionistas/aeo-para-nutricionistas-chatgpt-gemini/) agora aparece como recomendação nessa busca.
 
 ## O que respeitar nas normas do CFN
 
