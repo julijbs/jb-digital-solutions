@@ -72,7 +72,7 @@ export const marcelaBarcellos: ClientData = {
     businessDescription:
       'Psicóloga e neuropsicóloga dedicada ao desenvolvimento humano em todas as fases da vida, com foco em avaliação neuropsicológica e Terapia Cognitivo-Comportamental baseada em evidências.',
     llmsSummary:
-      'Marcela Barcellos é psicóloga (CRP 06/212500) especializada em Neuropsicologia (pós-graduação Albert Einstein). Atende crianças, adolescentes e adultos com avaliação neuropsicológica, TCC, transtornos de aprendizagem e neurodivergências. Formação integrada: Pedagogia + Psicopedagogia + 8 anos como oficial da FAB + Psicologia + Neuropsicologia. Também atende públicos específicos: crianças e adolescentes artistas e estudantes/candidatos da área médica (Medicina).',
+      'Marcela Barcellos é psicóloga (CRP 06/212500) especializada em Neuropsicologia (pós-graduação Albert Einstein). Atende crianças, adolescentes e adultos com avaliação neuropsicológica, TCC, transtornos de aprendizagem e neurodivergências. Formação integrada: Pedagogia + Psicopedagogia + 8 anos como oficial da FAB + Psicologia + Neuropsicologia. Também atende públicos específicos: crianças e adolescentes autistas (TEA) e estudantes/candidatos da área médica (Medicina).',
 
     heroHeadline:   'Cuidar do desenvolvimento humano em todas as fases da vida.',
     heroSubheadline:
@@ -149,9 +149,9 @@ export const marcelaBarcellos: ClientData = {
           'Sim. Quando necessário, realizo visitas escolares para observar o comportamento da criança no ambiente real e alinhar com a equipe pedagógica. Isso enriquece o diagnóstico e fortalece o processo terapêutico.',
       },
       {
-        question: 'Você atende públicos específicos, como jovens artistas ou estudantes de Medicina?',
+        question: 'Você atende crianças e adolescentes autistas ou estudantes de Medicina?',
         answer:
-          'Sim. Tenho um olhar dedicado a crianças e adolescentes artistas — cuidando da pressão por performance e do equilíbrio com a rotina — e a estudantes e candidatos da área médica, trabalhando ansiedade, foco e organização dos estudos sob alta pressão.',
+          'Sim. Realizo avaliação neuropsicológica e acompanhamento para crianças e adolescentes autistas — com orientação familiar e relatório técnico para a escola e equipe multiprofissional. Também atendo estudantes e candidatos da área médica, trabalhando ansiedade, foco e organização dos estudos sob alta pressão.',
       },
       {
         question: 'Atende online?',
@@ -218,14 +218,14 @@ export const marcelaBarcellos: ClientData = {
         'Especialista em neurodivergência e TDAH {{PREP}} {{BAIRRO}}. Avaliação neuropsicológica e TCC com Marcela Barcellos, pós-graduada em Neuropsicologia Albert Einstein.',
     },
     {
-      slug:        'criancas-adolescentes-artistas',
-      name:        'Crianças e Adolescentes Artistas',
-      tag:         'Palco · Performance · Equilíbrio',
-      description: 'Acompanhamento psicológico para crianças e adolescentes que atuam como artistas — música, dança, teatro, audiovisual. Cuido da regulação emocional, da pressão por performance e do equilíbrio entre rotina artística, escola e desenvolvimento saudável.',
+      slug:        'criancas-adolescentes-autistas',
+      name:        'Crianças e Adolescentes Autistas',
+      tag:         'TEA · Autismo · Neurodivergência',
+      description: 'Avaliação neuropsicológica e acompanhamento psicológico para crianças e adolescentes autistas. Identificamos o perfil cognitivo e de desenvolvimento de cada pessoa, orientamos famílias e elaboramos relatórios técnicos para suporte escolar e multiprofissional.',
       schemaType:  'PsychologicalTreatment',
-      h1Template:  'Psicóloga para Crianças e Adolescentes Artistas {{PREP}} {{BAIRRO}}',
+      h1Template:  'Psicóloga para Crianças e Adolescentes Autistas {{PREP}} {{BAIRRO}}',
       metaDescTemplate:
-        'Psicóloga para crianças e adolescentes artistas {{PREP}} {{BAIRRO}}. Apoio à performance, regulação emocional e desenvolvimento. Marcela Barcellos, Neuropsicologia · Albert Einstein. Agende.',
+        'Psicóloga para crianças e adolescentes autistas {{PREP}} {{BAIRRO}}. Avaliação neuropsicológica TEA, orientação familiar e relatório técnico. Marcela Barcellos, Neuropsicologia · Albert Einstein. Agende.',
     },
     {
       slug:        'estudantes-medicina',
