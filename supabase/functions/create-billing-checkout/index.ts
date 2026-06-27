@@ -70,8 +70,8 @@ serve(async (req) => {
         { price: tierConfig.monthly_price_id, quantity: 1 },
       ],
       mode: "subscription",
-      success_url: `${req.headers.get("origin")}/billing?success=true&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.get("origin")}/billing?canceled=true`,
+      success_url: `${req.headers.get("origin")}/dashboard/billing?success=true&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.get("origin")}/dashboard/billing?canceled=true`,
       metadata: {
         project_id,
         client_id,
