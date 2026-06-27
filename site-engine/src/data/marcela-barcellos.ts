@@ -22,7 +22,9 @@ export const marcelaBarcellos: ClientData = {
   mood:         'calm-trust',
 
   // ── Marca visual ─────────────────────────────────────────────────
-  logoSrc: '/marcela-barcellos/logo.png',
+  logoSrc:    '/marcela-barcellos/logo.png',
+  ogImageSrc: '/marcela-barcellos/og-image.jpg',
+  gbpUrl:     'https://www.google.com/maps/place/Marcela+Barcellos+Psicologia/data=!4m2!3m1!1s0x0:0x719f9ba8027de60f',
   brand: {
     primary:       '#9A6862',
     primaryDark:   '#835854',
@@ -78,7 +80,7 @@ export const marcelaBarcellos: ClientData = {
     heroSubheadline:
       'Avaliação neuropsicológica e Terapia Cognitivo-Comportamental baseadas em evidências científicas — para crianças, adolescentes e adultos.',
     heroPhotoAlt:   'Marcela Barcellos, psicóloga e neuropsicóloga, sorrindo com postura acolhedora',
-    heroPhotoSrc:   '/marcela-barcellos/marcela-perfil.jpg',
+    heroPhotoSrc:   '/marcela-barcellos/marcela-hero.webp',
     heroEyebrow:    'Neuropsicologia · Psicologia Clínica',
 
     painPoints: [
@@ -95,7 +97,7 @@ export const marcelaBarcellos: ClientData = {
     aboutCredential:
       'Pedagoga · Psicopedagoga · Psicóloga CRP 06/212500 · Pós-graduada em Neuropsicologia — Albert Einstein (2025) · Ex-Oficial Temporária da FAB',
     aboutPhotoAlt:  'Marcela Barcellos, psicóloga, em pose profissional e acolhedora',
-    aboutPhotoSrc:  '/marcela-barcellos/marcela-perfil.jpg',
+    aboutPhotoSrc:  '/marcela-barcellos/marcela-sobre.webp',
 
     servicesHeadline: 'Como posso te ajudar',
 

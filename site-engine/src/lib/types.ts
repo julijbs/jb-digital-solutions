@@ -113,6 +113,10 @@ export interface ClientData {
    * Quando ausente: nav/footer mostram businessName como texto.
    */
   logoSrc?: string;
+  /** og:image customizada (caminho relativo a public/, ex: "/slug/og-image.jpg"). Se ausente, usa logoSrc. */
+  ogImageSrc?: string;
+  /** URL do perfil no Google Business Profile (Google Maps). Usado no widget de avaliações e no schema sameAs. */
+  gbpUrl?: string;
   /**
    * Tokens de cor e tipografia derivados do logotipo.
    * Quando ausente, o site usa os defaults do Calm Trust (`:root` em global.css).

@@ -84,7 +84,10 @@ const schemaObj = {
         "closes": oh.closes,
       })),
       "priceRange": client.priceRange,
-      "sameAs": [`https://www.instagram.com/${client.instagram.replace('@', '')}`],
+      "sameAs": [
+        `https://www.instagram.com/${client.instagram.replace('@', '')}`,
+        ...(client.gbpUrl ? [client.gbpUrl] : []),
+      ],
     },
     {
       "@type": "BreadcrumbList",

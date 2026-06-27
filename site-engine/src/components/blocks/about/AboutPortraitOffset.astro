@@ -21,7 +21,7 @@ const { name, headline, body, pullQuote, credential, photoSrc, photoAlt } = Astr
     <div class="about-photo-wrap">
       <div class="photo-frame about-photo" role="img" aria-label={photoAlt}>
         {photoSrc
-          ? <img src={photoSrc} alt={photoAlt} width="400" height="530" loading="lazy" />
+          ? <img src={photoSrc} alt={photoAlt} width="400" height="530" loading="lazy" style="object-position: top center;" />
           : <div class="photo-hint">
               Foto de {name}<br /><span style="opacity:.55;font-size:.75rem">3:4 — retrato</span>
             </div>
@@ -63,7 +63,7 @@ const { name, headline, body, pullQuote, credential, photoSrc, photoAlt } = Astr
   .about-photo-wrap { position: relative; }
   .about-photo {
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 5;
     /* Slight offset shadow for depth — não glassmorphism */
     box-shadow: 8px 12px 32px rgba(0,0,0,.08);
   }

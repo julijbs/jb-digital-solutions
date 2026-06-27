@@ -45,7 +45,10 @@ const schemaObj = {
         "closes": oh.closes,
       })),
       "priceRange": client.priceRange,
-      "sameAs": [`https://www.instagram.com/${client.instagram.replace('@', '')}`],
+      "sameAs": [
+        `https://www.instagram.com/${client.instagram.replace('@', '')}`,
+        ...(client.gbpUrl ? [client.gbpUrl] : []),
+      ],
     },
     {
       "@type": "FAQPage",
@@ -78,6 +81,7 @@ const schemaObj = {
   mood={client.mood}
   brand={client.brand}
   logoSrc={client.logoSrc}
+  ogImage={client.ogImageSrc ? `${client.siteUrl}${client.ogImageSrc}` : undefined}
 >
   <main id="main">
 
@@ -131,6 +135,7 @@ const schemaObj = {
       author1={client.copy.testimonials[0].author}
       quote2={client.copy.testimonials[1]?.quote}
       author2={client.copy.testimonials[1]?.author}
+      gbpUrl={client.gbpUrl}
     />
 
     <B.faq

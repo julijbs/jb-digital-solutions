@@ -56,7 +56,7 @@ const { headline, subheadline, credential, phone, phoneClean, photoAlt, photoSrc
     <div class="hero-photo-wrap" aria-hidden={!photoSrc}>
       <div class="photo-frame hero-photo">
         {photoSrc
-          ? <img src={photoSrc} alt={photoAlt} width="480" height="640" loading="eager" fetchpriority="high" />
+          ? <img src={photoSrc} alt={photoAlt} width="480" height="640" loading="eager" fetchpriority="high" style="object-position: top center;" />
           : <div class="photo-hint" role="img" aria-label={`Foto de ${photoAlt}`}>
               Foto da profissional<br /><span style="opacity:.55;font-size:.75rem">3:4 — retrato</span>
             </div>
@@ -127,7 +127,7 @@ const { headline, subheadline, credential, phone, phoneClean, photoAlt, photoSrc
   .hero-photo {
     width: 100%;
     max-width: 420px;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 5;
   }
 
   /* ── Mobile ── */
