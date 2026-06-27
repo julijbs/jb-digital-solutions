@@ -34,3 +34,8 @@ supabase/.temp/
 # marketing-site build artifacts
 marketing-site/dist
 marketing-site/.astro
+.vercel
+.env*.local
+
+# Bun lockfile (projeto usa npm/package-lock.json)
+bun.lock
