@@ -2,21 +2,20 @@
 /**
  * onboard-client.ts — Orquestrador de onboarding
  *
- * Lê intake do Supabase, gera ClientData via Claude, escreve src/data/<slug>.ts
+ * Lê intake do Supabase, gera estrutura ClientData, escreve src/data/<slug>.ts
  * e registra o cliente em src/data/index.ts.
+ * Imprime _copyPrompt no console para geração de copy via Claude Code.
  *
  * Uso:
  *   npm run onboard <project_id>
  *   tsx scripts/onboard-client.ts <project_id>
  *
- * Variáveis de ambiente necessárias em .env.local:
+ * Variáveis de ambiente necessárias em .env.local (raiz do repo):
  *   SUPABASE_URL ou VITE_SUPABASE_URL
  *   SUPABASE_SERVICE_ROLE_KEY
- *   ANTHROPIC_API_KEY
  */
 
 import { createClient } from "@supabase/supabase-js";
-import Anthropic from "@anthropic-ai/sdk";
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
@@ -44,19 +43,13 @@ if (!projectId) {
 
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "";
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
-const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY || "";
 
 if (!SUPABASE_URL || !SUPABASE_KEY) {
-  console.error("Defina SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY em site-engine/.env.local");
-  process.exit(1);
-}
-if (!ANTHROPIC_KEY) {
-  console.error("Defina ANTHROPIC_API_KEY em site-engine/.env.local");
+  console.error("Defina SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY em .env.local (raiz do repo)");
   process.exit(1);
 }
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-const anthropic = new Anthropic({ apiKey: ANTHROPIC_KEY });
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -106,14 +99,15 @@ async function main() {
   if (!intake.completed) console.warn("⚠️  Onboarding não concluído. Gerando assim mesmo...");
 
   // 2. Generate ClientData
-  console.log("2/5  Gerando ClientData com Claude Sonnet 4.6...");
-  const clientData = await intakeToClientData(intake, project, anthropic);
-  const { slug } = clientData;
+  console.log("2/5  Gerando estrutura + prompt de copy...");
+  const clientData = await intakeToClientData(intake, project);
+  const { _copyPrompt, ...dataToWrite } = clientData as any;
+  const { slug } = dataToWrite;
   console.log(`     slug: ${slug}`);
 
   // 3. Write data file
   console.log(`3/5  Escrevendo src/data/${slug}.ts...`);
-  const filePath = writeDataFile(slug, clientData);
+  const filePath = writeDataFile(slug, dataToWrite);
   console.log(`     ✓ ${filePath}`);
 
   // 4. Update index
@@ -133,6 +127,14 @@ async function main() {
   console.log(`\n✅ Concluído! Arquivo: site-engine/src/data/${slug}.ts`);
   console.log(`   Preview: cd site-engine && CLIENT=${slug} npm run dev\n`);
   console.log(`   ⚠️  Revise lat/lng (vazio) e ajuste prep dos bairros se necessário.\n`);
+
+  const bar = "─".repeat(70);
+  console.log(`\n${bar}`);
+  console.log(`PROMPT DE COPY — use no Claude Code para gerar o copy`);
+  console.log(`Arquivo alvo: site-engine/src/data/${slug}.ts`);
+  console.log(bar);
+  console.log(_copyPrompt);
+  console.log(`${bar}\n`);
 }
 
 main().catch((err) => {

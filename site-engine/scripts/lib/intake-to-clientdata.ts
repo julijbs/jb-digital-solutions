@@ -1,9 +1,8 @@
 /**
  * intake-to-clientdata.ts — Mapeia intake Supabase → ClientData completo
- * Chama Claude Sonnet para gerar o copy e os serviços.
+ * Gera estrutura + _copyPrompt para uso no Claude Code (sem chamada à API).
  */
 
-import Anthropic from "@anthropic-ai/sdk";
 import { expandBrandTokens } from "../../src/lib/brand.ts";
 import type { ClientData, ClientService, ClientNeighborhood } from "../../src/lib/types.ts";
 
@@ -63,14 +62,14 @@ function inferSchemaType(cat: string): string {
   return "LocalBusiness";
 }
 
-// ── Copy generation via Claude ────────────────────────────────────────────────
+// ── Copy generation (estrutura + prompt para Claude Code) ────────────────────
 
-async function generateCopy(ctx: {
+function generateCopy(ctx: {
   businessName: string; mainCategory: string; city: string; state: string;
   description: string; servicesTags: string; targetAudience: string;
   painPoints: string; differentials: string; approach: string;
   credentials: string; commonQuestions: string;
-}, anthropic: Anthropic): Promise<{ copy: ClientData["copy"]; services: ClientService[] }> {
+}): { copy: ClientData["copy"]; services: ClientService[]; copyPrompt: string } {
 
   const prompt = `Você é um copywriter especialista em sites para profissionais de saúde e negócios locais no Brasil.
 
@@ -119,64 +118,48 @@ Retorne SOMENTE JSON válido (sem markdown) com esta estrutura:
   ]
 }`;
 
-  const resp = await anthropic.messages.create({
-    model: "claude-sonnet-4-6",
-    max_tokens: 4096,
-    messages: [{ role: "user", content: prompt }],
-  });
-
-  let raw = resp.content[0].type === "text" ? resp.content[0].text.trim() : "{}";
-  if (raw.includes("```json")) raw = raw.split("```json")[1].split("```")[0].trim();
-  else if (raw.includes("```")) raw = raw.split("```")[1].split("```")[0].trim();
-
-  try {
-    const parsed = JSON.parse(raw);
-    return { copy: parsed.copy, services: parsed.services || [] };
-  } catch {
-    console.error("Falha ao parsear resposta Claude. Usando fallback.");
-    return {
-      copy: {
-        homeTitle: `${ctx.businessName} | ${ctx.mainCategory} em ${ctx.city}`,
-        homeMetaDescription: `${ctx.mainCategory} em ${ctx.city}. ${ctx.description}`.slice(0, 155),
-        businessDescription: ctx.description.slice(0, 200),
-        llmsSummary: `${ctx.businessName} é ${ctx.mainCategory.toLowerCase()} em ${ctx.city}. ${ctx.description}`,
-        heroHeadline: ctx.description.slice(0, 60),
-        heroSubheadline: `Atendimento em ${ctx.city}`,
-        heroEyebrow: ctx.mainCategory,
-        heroPhotoAlt: `Foto de ${ctx.businessName}`,
-        painPoints: ["Precisando de ajuda?", "Buscando mudanças reais?", "Pronto para evoluir?"],
-        aboutHeadline: `Sobre ${ctx.businessName.split(" ")[0]}`,
-        aboutBody: ctx.credentials || "Profissional dedicado(a) ao seu bem-estar.",
-        pullQuote: ctx.differentials.split(",")[0]?.trim() || "Comprometido(a) com o seu sucesso.",
-        aboutCredential: ctx.credentials,
-        aboutPhotoAlt: `${ctx.businessName}`,
-        servicesHeadline: "Como posso te ajudar",
-        processHeadline: "Como funciona",
-        processSteps: [
-          { name: "Primeiro contato", description: "Entre em contato para agendar" },
-          { name: "Avaliação inicial", description: "Entendemos a sua situação" },
-          { name: "Plano personalizado", description: "Criamos um plano para você" },
-          { name: "Acompanhamento", description: "Evoluímos juntos no seu ritmo" },
-        ],
-        testimonials: [{ quote: "Profissional incrível, mudou minha vida!", author: "Cliente satisfeito" }],
-        faqHeadline: "Perguntas frequentes",
-        faqs: [{ question: "Como faço para agendar?", answer: "Entre em contato pelo WhatsApp ou e-mail." }],
-        ctaHeadline: "Pronto para começar?",
-        ctaSubtext: "Agende uma sessão hoje mesmo.",
-        ctaButtonText: "Agendar agora",
-      },
-      services: [],
-    };
-  }
+  return {
+    copy: {
+      homeTitle: `${ctx.businessName} | ${ctx.mainCategory} em ${ctx.city}`,
+      homeMetaDescription: `${ctx.mainCategory} em ${ctx.city}. ${ctx.description}`.slice(0, 155),
+      businessDescription: ctx.description.slice(0, 200),
+      llmsSummary: `${ctx.businessName} é ${ctx.mainCategory.toLowerCase()} em ${ctx.city}. ${ctx.description}`,
+      heroHeadline: ctx.description.slice(0, 60),
+      heroSubheadline: `Atendimento em ${ctx.city}`,
+      heroEyebrow: ctx.mainCategory,
+      heroPhotoAlt: `Foto de ${ctx.businessName}`,
+      painPoints: ["Precisando de ajuda?", "Buscando mudanças reais?", "Pronto para evoluir?"],
+      aboutHeadline: `Sobre ${ctx.businessName.split(" ")[0]}`,
+      aboutBody: ctx.credentials || "Profissional dedicado(a) ao seu bem-estar.",
+      pullQuote: ctx.differentials.split(",")[0]?.trim() || "Comprometido(a) com o seu sucesso.",
+      aboutCredential: ctx.credentials,
+      aboutPhotoAlt: `${ctx.businessName}`,
+      servicesHeadline: "Como posso te ajudar",
+      processHeadline: "Como funciona",
+      processSteps: [
+        { name: "Primeiro contato", description: "Entre em contato para agendar" },
+        { name: "Avaliação inicial", description: "Entendemos a sua situação" },
+        { name: "Plano personalizado", description: "Criamos um plano para você" },
+        { name: "Acompanhamento", description: "Evoluímos juntos no seu ritmo" },
+      ],
+      testimonials: [{ quote: "Profissional incrível, mudou minha vida!", author: "Cliente satisfeito" }],
+      faqHeadline: "Perguntas frequentes",
+      faqs: [{ question: "Como faço para agendar?", answer: "Entre em contato pelo WhatsApp ou e-mail." }],
+      ctaHeadline: "Pronto para começar?",
+      ctaSubtext: "Agende uma sessão hoje mesmo.",
+      ctaButtonText: "Agendar agora",
+    },
+    services: [],
+    copyPrompt: prompt,
+  };
 }
 
 // ── Export principal ──────────────────────────────────────────────────────────
 
 export async function intakeToClientData(
   intake: any,
-  project: any,
-  anthropic: Anthropic
-): Promise<ClientData> {
+  project: any
+): Promise<ClientData & { _copyPrompt: string }> {
   const bd = (intake.business_data || {}) as any;
   const sd = (intake.schedule_data || {}) as any;
   const svd = (intake.services_data || {}) as any;
@@ -209,7 +192,7 @@ export async function intakeToClientData(
 
   // Generate copy via Claude
   const mainCategory = svd.main_category || "";
-  const { copy, services } = await generateCopy({
+  const { copy, services, copyPrompt } = generateCopy({
     businessName, mainCategory, city, state,
     description: bd.description || "",
     servicesTags: svd.services_tags || "",
@@ -219,7 +202,7 @@ export async function intakeToClientData(
     approach: svd.approach || "",
     credentials: svd.credentials_summary || "",
     commonQuestions: svd.common_questions || "",
-  }, anthropic);
+  });
 
   return {
     businessName,
@@ -255,5 +238,6 @@ export async function intakeToClientData(
       ? openingHours
       : [{ days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "18:00" }],
     priceRange: "$$",
-  } as ClientData;
+    _copyPrompt: copyPrompt,
+  } as ClientData & { _copyPrompt: string };
 }
