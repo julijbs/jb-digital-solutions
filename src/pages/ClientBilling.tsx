@@ -19,56 +19,43 @@ interface BillingRecord {
 }
 
 const PRODUCT_LABELS: Record<string, string> = {
-  site: "Site Profissional",
-  gbp: "Perfil no Google",
-  pacote_completo: "Pacote Completo",
+  essencial: "JB Digital Essencial",
+  premium: "JB Digital Premium",
 };
 
 const PLANS = [
   {
-    key: "site",
-    name: "Site Profissional",
-    tag: "Site Otimizado para Google",
-    price: "R$ 597",
-    priceValue: 59700,
+    key: "essencial",
+    name: "Essencial",
+    tag: "Site + Perfil Google otimizado",
+    setupPrice: "R$ 600",
+    monthlyPrice: "R$ 150/mês",
+    setupValue: 60000,
+    monthlyValue: 15000,
     featured: false,
     features: [
-      "Site institucional one-page",
-      "Otimização básica para SEO",
-      "Hospedagem inclusa (sem mensalidade)",
-      "Mobile-first e carregamento rápido",
-      "Entrega em até 7 dias",
+      "Site one-page otimizado para Google",
+      "Perfil Google Business completo",
+      "Schema de avaliações (estrelas visíveis)",
+      "Presença estruturada para IAs (ChatGPT, Gemini)",
+      "Monitoramento e relatório mensal",
     ],
   },
   {
-    key: "gbp",
-    name: "Perfil da Empresa no Google",
-    tag: "Perfil no Google",
-    price: "R$ 597",
-    priceValue: 59700,
-    featured: false,
-    features: [
-      "Criação/otimização do Perfil no Google",
-      "Categorização estratégica",
-      "Integração de dados (NAP)",
-      "Configuração de horários e serviços",
-      "Entrega em até 7 dias",
-    ],
-  },
-  {
-    key: "pacote_completo",
-    name: "Presença Google Essencial",
-    tag: "Pacote Completo — Site + Perfil no Google",
-    price: "R$ 997",
-    priceValue: 99700,
-    savings: "economize R$ 197",
+    key: "premium",
+    name: "Premium",
+    tag: "Site programático com páginas por bairro",
+    setupPrice: "R$ 1.200",
+    monthlyPrice: "R$ 350/mês",
+    setupValue: 120000,
+    monthlyValue: 35000,
     featured: true,
     features: [
-      "Tudo do Site Profissional",
-      "Tudo do Perfil no Google",
-      "Conexão técnica entre site e perfil",
-      "Dados sincronizados e consistentes",
-      "Presença digital completa e profissional",
+      "Tudo do plano Essencial",
+      "Dezenas de páginas por serviço e bairro",
+      "SEO local avançado e AEO",
+      "Conexão técnica site ↔ Perfil Google",
+      "Relatório mensal de posições",
     ],
   },
 ];
@@ -149,7 +136,7 @@ const ClientBilling = () => {
     try {
       const { data, error } = await supabase.functions.invoke("create-billing-checkout", {
         body: {
-          product_type: productType,
+          tier: productType,
           project_id: clientData.project_id,
           client_id: clientData.id,
         },
@@ -200,7 +187,7 @@ const ClientBilling = () => {
       {/* Plan selection */}
       <div className="mb-10">
         <h2 className="mb-4 font-serif text-xl text-foreground">Escolha seu plano</h2>
-        <div className="grid gap-4 lg:grid-cols-3">
+        <div className="grid gap-4 lg:grid-cols-2">
           {PLANS.map((plan) => {
             const isPaid = paidProductTypes.includes(plan.key);
             return (
@@ -222,13 +209,11 @@ const ClientBilling = () => {
                   {plan.tag}
                 </div>
                 <h3 className="font-serif text-xl text-foreground">{plan.name}</h3>
-                <div className="mt-2 flex items-baseline gap-2">
-                  <span className="font-serif text-2xl text-primary">{plan.price}</span>
-                  {plan.savings && (
-                    <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-                      {plan.savings}
-                    </span>
-                  )}
+                <div className="mt-2">
+                  <span className="font-serif text-2xl text-primary">{plan.setupPrice}</span>
+                  <span className="ml-1 text-sm text-muted-foreground">setup</span>
+                  <span className="mx-2 text-muted-foreground">+</span>
+                  <span className="font-serif text-lg text-primary">{plan.monthlyPrice}</span>
                 </div>
 
                 <ul className="mt-4 space-y-2">

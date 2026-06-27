@@ -7,25 +7,21 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Product mapping
-const PRODUCTS = {
-  site: {
-    price_id: "price_1T17AcAtjEQC8UwgRM2cCgam",
-    product_id: "prod_Tz5LDgrTB1PbG5",
-    label: "Site Profissional",
-    amount: 59700,
+// Tier mapping — Essencial (R$600 setup + R$150/mês) | Premium (R$1.200 setup + R$350/mês)
+const TIERS = {
+  essencial: {
+    setup_price_id: "price_1Tn3pZAtjEQC8UwgpNeWkETN",
+    monthly_price_id: "price_1Tn3rJAtjEQC8Uwgd1xFvNDW",
+    label: "JB Digital Essencial",
+    setup_amount: 60000,
+    monthly_amount: 15000,
   },
-  gbp: {
-    price_id: "price_1T17ApAtjEQC8Uwgeoml7G4D",
-    product_id: "prod_Tz5LsTHFuyiCql",
-    label: "Perfil no Google",
-    amount: 59700,
-  },
-  pacote_completo: {
-    price_id: "price_1T17B7AtjEQC8UwgY0INnfDz",
-    product_id: "prod_Tz5LnqlcTmpG6D",
-    label: "Pacote Completo",
-    amount: 99700,
+  premium: {
+    setup_price_id: "price_1Tn3twAtjEQC8UwgH7plWPMp",
+    monthly_price_id: "price_1Tn3wxAtjEQC8UwgC05O2k33",
+    label: "JB Digital Premium",
+    setup_amount: 120000,
+    monthly_amount: 35000,
   },
 };
 
@@ -46,13 +42,13 @@ serve(async (req) => {
     const user = data.user;
     if (!user?.email) throw new Error("User not authenticated");
 
-    const { product_type, project_id, client_id } = await req.json();
-    if (!product_type || !project_id || !client_id) {
-      throw new Error("Missing required fields: product_type, project_id, client_id");
+    const { tier, project_id, client_id } = await req.json();
+    if (!tier || !project_id || !client_id) {
+      throw new Error("Missing required fields: tier, project_id, client_id");
     }
 
-    const product = PRODUCTS[product_type as keyof typeof PRODUCTS];
-    if (!product) throw new Error(`Invalid product_type: ${product_type}`);
+    const tierConfig = TIERS[tier as keyof typeof TIERS];
+    if (!tierConfig) throw new Error(`Invalid tier: ${tier}. Must be 'essencial' or 'premium'`);
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2025-08-27.basil",
@@ -65,17 +61,21 @@ serve(async (req) => {
       customerId = customers.data[0].id;
     }
 
+    // Subscription mode: setup fee (one-time) + monthly recurring on first invoice
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
-      line_items: [{ price: product.price_id, quantity: 1 }],
-      mode: "payment",
+      line_items: [
+        { price: tierConfig.setup_price_id, quantity: 1 },
+        { price: tierConfig.monthly_price_id, quantity: 1 },
+      ],
+      mode: "subscription",
       success_url: `${req.headers.get("origin")}/billing?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}/billing?canceled=true`,
       metadata: {
         project_id,
         client_id,
-        product_type,
+        tier,
       },
     });
 
@@ -89,8 +89,8 @@ serve(async (req) => {
       project_id,
       client_id,
       stripe_checkout_session_id: session.id,
-      product_type,
-      amount: product.amount,
+      product_type: tier,
+      amount: tierConfig.setup_amount + tierConfig.monthly_amount,
       status: "pending",
     });
 
