@@ -155,6 +155,8 @@ export interface ClientData {
     heroSubheadline: string;
     heroPhotoAlt: string;
     heroPhotoSrc?: string;
+    /** Rótulo/eyebrow acima do headline do hero (Calm Trust). Default: "Psicologia Clínica". */
+    heroEyebrow?: string;
 
     /**
      * 3 dores/problemas do cliente.

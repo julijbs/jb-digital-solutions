@@ -30,10 +30,15 @@ const {
   title, description, slug, siteUrl, businessName,
   city, state, phone, address, instagram,
   lat, lng, schemaType, schemaJson,
-  ogImage = `${siteUrl}/og-default.png`,
+  ogImage: ogImageProp,
   mood = 'calm-trust',
   brand, logoSrc,
 } = Astro.props;
+
+// Fallback: logo do cliente (sempre existe), evita og:image 404 quando og-default.png não existe
+// Usa URL().origin para garantir domínio raiz mesmo quando siteUrl é o canonical de uma subpágina
+const rootUrl = new URL(siteUrl).origin;
+const ogImage = ogImageProp ?? (logoSrc ? `${rootUrl}${logoSrc}` : `${rootUrl}/og-default.png`);
 
 const canonical = siteUrl;
 const stateCode = state.toUpperCase().slice(0, 2);

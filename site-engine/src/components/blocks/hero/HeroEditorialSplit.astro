@@ -11,8 +11,9 @@ export interface Props {
   photoAlt:    string;
   photoSrc?:   string;  // URL da foto real; se vazio, mostra placeholder
   city:        string;
+  eyebrow?:    string;  // rótulo acima do headline; default: "Psicologia Clínica"
 }
-const { headline, subheadline, credential, phone, phoneClean, photoAlt, photoSrc, city } = Astro.props;
+const { headline, subheadline, credential, phone, phoneClean, photoAlt, photoSrc, city, eyebrow } = Astro.props;
 ---
 
 <section id="hero" aria-labelledby="hero-headline" class="hero-section">
@@ -21,7 +22,7 @@ const { headline, subheadline, credential, phone, phoneClean, photoAlt, photoSrc
     <!-- ── Coluna esquerda: copy ── -->
     <div class="hero-copy">
 
-      <span class="section-label">Psicologia Clínica · {city}</span>
+      <span class="section-label">{eyebrow ?? 'Psicologia Clínica'} · {city}</span>
 
       <h1 id="hero-headline" class="hero-headline">
         {headline}

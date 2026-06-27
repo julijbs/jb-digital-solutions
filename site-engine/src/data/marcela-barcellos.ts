@@ -57,7 +57,7 @@ export const marcelaBarcellos: ClientData = {
   state:        'SP',
   phone:        '(12) 98147-0915',
   phoneClean:   '12981470915',
-  email:        'marcelafbarcello@hotmail.com',
+  email:        'psi.marcelabarcellos@gmail.com',
   instagram:    '@psi.marcelabarcellos',
   address:      'Atendimento online e presencial · São José dos Campos – SP',
   lat:          '-23.1895062',
@@ -72,13 +72,14 @@ export const marcelaBarcellos: ClientData = {
     businessDescription:
       'Psicóloga e neuropsicóloga dedicada ao desenvolvimento humano em todas as fases da vida, com foco em avaliação neuropsicológica e Terapia Cognitivo-Comportamental baseada em evidências.',
     llmsSummary:
-      'Marcela Barcellos é psicóloga (CRP 06/212500) especializada em Neuropsicologia (pós-graduação Albert Einstein). Atende crianças, adolescentes e adultos com avaliação neuropsicológica, TCC, transtornos de aprendizagem e neurodivergências. Formação integrada: Pedagogia + Psicopedagogia + 8 anos como oficial da FAB + Psicologia + Neuropsicologia.',
+      'Marcela Barcellos é psicóloga (CRP 06/212500) especializada em Neuropsicologia (pós-graduação Albert Einstein). Atende crianças, adolescentes e adultos com avaliação neuropsicológica, TCC, transtornos de aprendizagem e neurodivergências. Formação integrada: Pedagogia + Psicopedagogia + 8 anos como oficial da FAB + Psicologia + Neuropsicologia. Também atende públicos específicos: crianças e adolescentes artistas e estudantes/candidatos da área médica (Medicina).',
 
     heroHeadline:   'Cuidar do desenvolvimento humano em todas as fases da vida.',
     heroSubheadline:
       'Avaliação neuropsicológica e Terapia Cognitivo-Comportamental baseadas em evidências científicas — para crianças, adolescentes e adultos.',
     heroPhotoAlt:   'Marcela Barcellos, psicóloga e neuropsicóloga, sorrindo com postura acolhedora',
     heroPhotoSrc:   '/marcela-barcellos/marcela-perfil.jpg',
+    heroEyebrow:    'Neuropsicologia · Psicologia Clínica',
 
     painPoints: [
       'Meu filho tem dificuldade na escola e ninguém sabe o porquê — laudos inconclusivos, orientações genéricas, e a sensação de que algo mais profundo está sendo ignorado. A avaliação neuropsicológica revela o que está por trás.',
@@ -135,7 +136,7 @@ export const marcelaBarcellos: ClientData = {
       {
         question: 'A partir de que idade é possível fazer a avaliação?',
         answer:
-          'Atendo crianças a partir dos 4 anos, adolescentes e adultos. Cada faixa etária tem protocolos específicos adaptados ao nível de desenvolvimento.',
+          'Atendo crianças a partir dos 3 anos, adolescentes e adultos. Cada faixa etária tem protocolos específicos adaptados ao nível de desenvolvimento.',
       },
       {
         question: 'Qual a diferença entre neuropsicologia e psicologia clínica?',
@@ -146,6 +147,11 @@ export const marcelaBarcellos: ClientData = {
         question: 'Você faz visitas à escola?',
         answer:
           'Sim. Quando necessário, realizo visitas escolares para observar o comportamento da criança no ambiente real e alinhar com a equipe pedagógica. Isso enriquece o diagnóstico e fortalece o processo terapêutico.',
+      },
+      {
+        question: 'Você atende públicos específicos, como jovens artistas ou estudantes de Medicina?',
+        answer:
+          'Sim. Tenho um olhar dedicado a crianças e adolescentes artistas — cuidando da pressão por performance e do equilíbrio com a rotina — e a estudantes e candidatos da área médica, trabalhando ansiedade, foco e organização dos estudos sob alta pressão.',
       },
       {
         question: 'Atende online?',
@@ -210,6 +216,26 @@ export const marcelaBarcellos: ClientData = {
       h1Template:  'Psicóloga para Neurodivergência e TDAH {{PREP}} {{BAIRRO}}',
       metaDescTemplate:
         'Especialista em neurodivergência e TDAH {{PREP}} {{BAIRRO}}. Avaliação neuropsicológica e TCC com Marcela Barcellos, pós-graduada em Neuropsicologia Albert Einstein.',
+    },
+    {
+      slug:        'criancas-adolescentes-artistas',
+      name:        'Crianças e Adolescentes Artistas',
+      tag:         'Palco · Performance · Equilíbrio',
+      description: 'Acompanhamento psicológico para crianças e adolescentes que atuam como artistas — música, dança, teatro, audiovisual. Cuido da regulação emocional, da pressão por performance e do equilíbrio entre rotina artística, escola e desenvolvimento saudável.',
+      schemaType:  'PsychologicalTreatment',
+      h1Template:  'Psicóloga para Crianças e Adolescentes Artistas {{PREP}} {{BAIRRO}}',
+      metaDescTemplate:
+        'Psicóloga para crianças e adolescentes artistas {{PREP}} {{BAIRRO}}. Apoio à performance, regulação emocional e desenvolvimento. Marcela Barcellos, Neuropsicologia · Albert Einstein. Agende.',
+    },
+    {
+      slug:        'estudantes-medicina',
+      name:        'Estudantes e Candidatos de Medicina',
+      tag:         'Vestibular · Residência · Alta Performance',
+      description: 'Apoio psicológico para estudantes e candidatos da área médica — do vestibular à residência. Trabalho ansiedade, foco, organização dos estudos e regulação emocional sob alta pressão, com TCC e estratégias baseadas em evidências.',
+      schemaType:  'PsychologicalTreatment',
+      h1Template:  'Psicóloga para Estudantes de Medicina {{PREP}} {{BAIRRO}}',
+      metaDescTemplate:
+        'Psicóloga para estudantes e candidatos de Medicina {{PREP}} {{BAIRRO}}. Ansiedade, foco e performance nos estudos com TCC. Marcela Barcellos, Neuropsicologia · Albert Einstein. Agende.',
     },
   ],
 
