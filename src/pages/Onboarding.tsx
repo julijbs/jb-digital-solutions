@@ -30,6 +30,8 @@ const Onboarding = () => {
 
   // Form state
   const [hasGbp, setHasGbp] = useState<string>("");
+  const [gbpUrl, setGbpUrl] = useState<string>("");
+  const [projectPlan, setProjectPlan] = useState<string>("essencial");
   const [business, setBusiness] = useState({
     name: "", description: "", phone: "", email: "", instagram: "", has_site: "no", site_url: "",
   });
@@ -63,11 +65,12 @@ const Onboarding = () => {
   useEffect(() => {
     const fetchIntake = async () => {
       if (!projectId) return;
-      const { data } = await supabase
-        .from("client_intake")
-        .select("*")
-        .eq("project_id", projectId)
-        .maybeSingle();
+      const [{ data }, { data: projectData }] = await Promise.all([
+        supabase.from("client_intake").select("*").eq("project_id", projectId).maybeSingle(),
+        supabase.from("projects").select("plan, gbp_url").eq("id", projectId).maybeSingle(),
+      ]);
+
+      if (projectData?.plan) setProjectPlan(projectData.plan);
 
       if (data) {
         setIntake(data);
@@ -78,6 +81,8 @@ const Onboarding = () => {
         const pd = data.photos_data as any;
 
         if (gd?.has_gbp !== undefined) setHasGbp(gd.has_gbp ? "yes" : "no");
+        if (gd?.gbp_url) setGbpUrl(gd.gbp_url);
+        else if (projectData?.gbp_url) setGbpUrl(projectData.gbp_url);
         if (gd?.google_connected) setGoogleConnected(true);
         if (bd) setBusiness((prev) => ({ ...prev, ...bd }));
         if (sd) setLocation((prev) => ({ ...prev, ...sd }));
@@ -106,7 +111,7 @@ const Onboarding = () => {
     await supabase
       .from("client_intake")
       .update({
-        google_data: { has_gbp: hasGbp === "yes", google_connected: googleConnected },
+        google_data: { has_gbp: hasGbp === "yes", gbp_url: gbpUrl, google_connected: googleConnected },
         business_data: business as any,
         schedule_data: location as any,
         services_data: services as any,
@@ -134,7 +139,7 @@ const Onboarding = () => {
     await saveProgress(5);
     await supabase
       .from("projects")
-      .update({ status: "intake" })
+      .update({ status: "intake", ...(gbpUrl ? { gbp_url: gbpUrl } : {}) })
       .eq("id", projectId);
     toast({ title: "Onboarding completo!", description: "Seus dados foram enviados para análise." });
     navigate("/dashboard");
@@ -298,6 +303,18 @@ const Onboarding = () => {
                   </button>
                 ))}
               </div>
+              {hasGbp === "yes" && (
+                <div className="space-y-1 pt-2">
+                  <Label>Link do perfil no Google</Label>
+                  <Input
+                    type="url"
+                    placeholder="https://maps.app.goo.gl/..."
+                    value={gbpUrl}
+                    onChange={(e) => setGbpUrl(e.target.value)}
+                  />
+                  <p className="text-xs text-muted-foreground">Cole o link completo do seu perfil no Google Meu Negócio</p>
+                </div>
+              )}
             </div>
           )}
 
@@ -396,8 +413,17 @@ const Onboarding = () => {
                 <div className="space-y-3 pt-2">
                   <Label className="text-foreground">Área de atendimento</Label>
                   <Input placeholder="Cidade principal" value={location.main_city} onChange={(e) => setLocation({ ...location, main_city: e.target.value })} />
-                  <Input placeholder="Regiões/bairros (separados por vírgula)" value={location.regions} onChange={(e) => setLocation({ ...location, regions: e.target.value })} />
-                  <Input placeholder="Raio em km" value={location.radius_km} onChange={(e) => setLocation({ ...location, radius_km: e.target.value })} />
+                  {projectPlan === "premium" && (
+                    <>
+                      <Input
+                        placeholder="Bairros para SEO (separados por vírgula)"
+                        value={location.regions}
+                        onChange={(e) => setLocation({ ...location, regions: e.target.value })}
+                      />
+                      <p className="text-xs text-amber-400/80">✦ Premium — uma página de SEO será criada para cada bairro</p>
+                      <Input placeholder="Raio em km (opcional)" value={location.radius_km} onChange={(e) => setLocation({ ...location, radius_km: e.target.value })} />
+                    </>
+                  )}
                 </div>
               )}
             </div>

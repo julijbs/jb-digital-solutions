@@ -15,12 +15,18 @@ const verticals = [
   { value: "outro", label: "Outro negócio local", emoji: "🏪" },
 ];
 
+const plans = [
+  { value: "essencial", label: "Essencial", price: "R$ 600 + R$ 150/mês", description: "Site one-page profissional", emoji: "⚡" },
+  { value: "premium", label: "Premium", price: "R$ 1.200 + R$ 350/mês", description: "Multi-página com SEO por bairro", emoji: "🚀" },
+];
+
 const NewProject = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [businessName, setBusinessName] = useState("");
   const [vertical, setVertical] = useState("");
+  const [plan, setPlan] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [loading, setLoading] = useState(false);
@@ -61,6 +67,7 @@ const NewProject = () => {
         client_id: clientId,
         name: businessName,
         status: "intake",
+        plan,
       })
       .select("id")
       .single();
@@ -133,7 +140,30 @@ const NewProject = () => {
             </div>
           </div>
 
-          <Button type="submit" variant="hero" className="w-full" disabled={loading || !vertical}>
+          <div className="space-y-3">
+            <Label>Plano</Label>
+            <div className="grid grid-cols-2 gap-3">
+              {plans.map((p) => (
+                <button
+                  key={p.value}
+                  type="button"
+                  onClick={() => setPlan(p.value)}
+                  className={`flex flex-col gap-1 rounded-lg border p-4 text-left text-sm transition-all ${
+                    plan === p.value
+                      ? "border-primary bg-primary/10 text-foreground"
+                      : "border-border text-muted-foreground hover:border-primary/30"
+                  }`}
+                >
+                  <span className="text-xl">{p.emoji}</span>
+                  <span className="font-medium">{p.label}</span>
+                  <span className="text-xs text-muted-foreground">{p.description}</span>
+                  <span className="mt-1 text-xs font-medium text-primary">{p.price}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <Button type="submit" variant="hero" className="w-full" disabled={loading || !vertical || !plan}>
             {loading ? "Criando…" : "Criar e iniciar onboarding"}
           </Button>
         </form>
