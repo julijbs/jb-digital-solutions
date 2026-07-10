@@ -9,8 +9,10 @@ export interface Props {
    * Convenção: /public/<slug>/logo.svg
    */
   logoSrc?:     string;
+  /** Texto do CTA do menu. Default: "Falar no WhatsApp". */
+  ctaText?:     string;
 }
-const { businessName, phone, phoneClean, logoSrc } = Astro.props;
+const { businessName, phone, phoneClean, logoSrc, ctaText = 'Falar no WhatsApp' } = Astro.props;
 ---
 
 <header role="banner" class="nav-bar">
@@ -31,11 +33,11 @@ const { businessName, phone, phoneClean, logoSrc } = Astro.props;
     <a
       href={`https://wa.me/55${phoneClean}`}
       class="btn btn-primary nav-cta"
-      aria-label={`Agendar conversa via WhatsApp — ${phone}`}
+      aria-label={ctaText.includes('WhatsApp') ? `${ctaText} — ${phone}` : `${ctaText} via WhatsApp — ${phone}`}
       target="_blank"
       rel="noopener noreferrer"
     >
-      Agendar conversa
+      {ctaText}
     </a>
   </div>
 </header>

@@ -159,8 +159,12 @@ export interface ClientData {
     heroSubheadline: string;
     heroPhotoAlt: string;
     heroPhotoSrc?: string;
-    /** Rótulo/eyebrow acima do headline do hero (Calm Trust). Default: "Psicologia Clínica". */
+    /** Rótulo/eyebrow acima do headline do hero. A cidade é anexada pelo componente — não a inclua aqui. */
     heroEyebrow?: string;
+    /** Texto do CTA principal do hero. Default: "Falar agora". */
+    heroCtaText?: string;
+    /** Texto do CTA secundário do hero (âncora #servicos). Default: "Ver como funciona". */
+    heroCtaSecondaryText?: string;
 
     /**
      * 3 dores/problemas do cliente.
@@ -188,6 +192,21 @@ export interface ClientData {
     ctaHeadline: string;
     ctaSubtext: string;
     ctaButtonText: string;
+    /** Texto do CTA do menu (link WhatsApp). Default: "Falar no WhatsApp". */
+    navCtaText?: string;
+    /**
+     * Páginas /servico/bairro. Os defaults foram escritos para profissionais de saúde
+     * no feminino e em 1ª pessoa ("uma psicóloga", "ofereço atendimento online").
+     * Sobrescreva para qualquer outro nicho ou gênero.
+     */
+    /** Abertura da frase, antes do bairro. Default: `Se você está buscando uma ${specialtyNoun}`. */
+    bairroIntroLead?: string;
+    /** Frase de localização/atendimento. Default: varia conforme `streetAddress`. */
+    bairroLocationLine?: string;
+    /** Parágrafo "Próximos passos". Default: frase genérica de contato. */
+    bairroNextSteps?: string;
+    /** Botão da página de bairro. É um link `tel:` — não rotule como WhatsApp. Default: "Falar agora". */
+    bairroCtaText?: string;
   };
 
   // ── Serviços (SEO programático) ──────────────────────────────────

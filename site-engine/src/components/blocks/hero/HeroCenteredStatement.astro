@@ -14,15 +14,24 @@ export interface Props {
   photoAlt: string;
   photoSrc?: string;
   city: string;
+  /** Rótulo acima do headline. A cidade é anexada aqui — não a inclua no valor. */
+  eyebrow?: string;
+  ctaText?: string;
+  ctaSecondaryText?: string;
 }
 
-const { headline, subheadline, credential, phone, phoneClean, photoAlt, photoSrc, city } = Astro.props;
+const {
+  headline, subheadline, credential, phone, phoneClean, photoAlt, photoSrc, city,
+  eyebrow,
+  ctaText = 'Falar agora',
+  ctaSecondaryText = 'Ver como funciona',
+} = Astro.props;
 ---
 
 <section class="hero-cs" aria-label="Apresentação">
   <div class="hero-cs-inner">
 
-    <p class="hero-cs-tag" aria-hidden="true">Nutricionista · {city}</p>
+    <p class="hero-cs-tag" aria-hidden="true">{eyebrow ? `${eyebrow} · ${city}` : city}</p>
 
     <h1 class="hero-cs-headline">{headline}</h1>
 
@@ -32,10 +41,10 @@ const { headline, subheadline, credential, phone, phoneClean, photoAlt, photoSrc
 
     <div class="hero-cs-actions">
       <a href={`tel:${phoneClean}`} class="btn-primary-fc">
-        Agendar consulta
+        {ctaText}
       </a>
       <a href="#servicos" class="btn-ghost-fc">
-        Ver como funciona
+        {ctaSecondaryText}
       </a>
     </div>
 

@@ -149,6 +149,12 @@ export const draAnaMello: ClientData = {
     ctaSubtext:
       'Agende uma primeira conversa. Cinquenta minutos para entendermos o que está acontecendo — sem compromisso de continuidade se não fizer sentido.',
     ctaButtonText: 'Agendar primeira sessão',
+    heroEyebrow: 'Psicologia Clínica',
+    heroCtaText: 'Agendar sessão',
+    navCtaText: 'Agendar conversa',
+    bairroCtaText: 'Agendar conversa',
+    bairroNextSteps:
+      'ligue ou envie uma mensagem para agendar sua primeira conversa. 50 minutos, sem compromisso de continuidade se não fizer sentido.',
   },
 
   // ── Serviços (SEO programático) ───────────────────────────────────

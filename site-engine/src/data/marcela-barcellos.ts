@@ -165,6 +165,11 @@ export const marcelaBarcellos: ClientData = {
     ctaHeadline:   'Dê o primeiro passo no seu desenvolvimento.',
     ctaSubtext:    'Agende uma conversa. Sem compromisso, sem burocracia — só clareza sobre o que o próximo passo pode ser para você ou para o seu filho.',
     ctaButtonText: 'Agendar conversa',
+    heroCtaText:   'Agendar sessão',
+    navCtaText:    'Agendar conversa',
+    bairroCtaText: 'Agendar conversa',
+    bairroNextSteps:
+      'ligue ou envie uma mensagem para agendar sua primeira conversa. 50 minutos, sem compromisso de continuidade se não fizer sentido.',
   },
 
   // ── Serviços (geram páginas SEO /servico/bairro) ─────────────────

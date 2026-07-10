@@ -22,10 +22,13 @@ export interface Props {
   fontDisplay?: string;
   /** Fonte body — ex: 'Inter' ou 'DM Sans' */
   fontBody?: string;
+  /** Texto do CTA principal. Default: "Falar agora". */
+  ctaText?: string;
 }
 
 const {
   headline, subheadline, credential, phone, phoneClean, city,
+  ctaText = 'Falar agora',
   colorPrimary = '#3E5C76',
   colorAccent  = '#C08552',
   colorSurface = '#F4F2ED',
@@ -45,7 +48,7 @@ const {
       <p class="hero-mt-tag">{city}</p>
       <h1 class="hero-mt-headline">{headline}</h1>
       <a href={`tel:${phoneClean}`} class="btn-primary-mt">
-        Agendar consulta
+        {ctaText}
       </a>
     </div>
 

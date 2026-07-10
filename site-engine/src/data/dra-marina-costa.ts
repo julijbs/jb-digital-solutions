@@ -149,6 +149,13 @@ export const draMarinaCostaData: ClientData = {
     ctaSubtext:
       'Agende uma primeira consulta de 60 minutos. Vamos entender o que está acontecendo com o seu corpo e traçar um caminho que faz sentido para a sua rotina.',
     ctaButtonText: 'Agendar primeira consulta',
+    heroEyebrow: 'Nutricionista',
+    heroCtaText: 'Agendar consulta',
+    heroCtaSecondaryText: 'Ver como funciona',
+    navCtaText: 'Agendar conversa',
+    bairroCtaText: 'Agendar conversa',
+    bairroNextSteps:
+      'ligue ou envie uma mensagem para agendar sua primeira conversa. 50 minutos, sem compromisso de continuidade se não fizer sentido.',
   },
 
   // ── Serviços (SEO programático) ───────────────────────────────────

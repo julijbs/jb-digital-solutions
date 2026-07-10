@@ -132,6 +132,7 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
       phone={client.phone}
       phoneClean={client.phoneClean}
       logoSrc={client.logoSrc}
+      ctaText={client.copy.navCtaText}
     />
 
     <!-- Hero minimalista (sem foto, texto em 2 colunas — variante C para ambos os moods) -->
@@ -142,6 +143,9 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
       phone={client.phone}
       phoneClean={client.phoneClean}
       city={`${nbh.name}, ${client.city}`}
+      eyebrow={client.copy.heroEyebrow}
+      ctaText={client.copy.heroCtaText}
+      ctaSecondaryText={client.copy.heroCtaSecondaryText}
     />
 
     <!-- Breadcrumb + contexto local (mood-aware via data-mood) -->
@@ -156,18 +160,17 @@ const otherNeighborhoods = client.neighborhoods.filter(n => n.slug !== nbh.slug)
         <div class="local-intro">
           <h2 class="local-h2">{svc.name} {nbh.prep} {nbh.name}</h2>
           <p class="local-body">
-            Se você está buscando uma {client.specialtyNoun} {nbh.prep} {nbh.name} para {svc.name.toLowerCase()},
-            {client.streetAddress
+            {client.copy.bairroIntroLead ?? `Se você está buscando uma ${client.specialtyNoun}`} {nbh.prep} {nbh.name} para {svc.name.toLowerCase()},
+            {client.copy.bairroLocationLine ?? (client.streetAddress
               ? `o consultório da ${client.businessName} fica a poucos minutos — na ${client.streetAddress}, ${client.district}. Também ofereço atendimento online com a mesma qualidade, sem necessidade de deslocamento.`
-              : `a ${client.businessName} atende toda a região de ${client.city} — presencialmente, com hora marcada, e online para todo o Brasil.`
+              : `a ${client.businessName} atende toda a região de ${client.city} — presencialmente, com hora marcada, e online para todo o Brasil.`)
             }
           </p>
           <p class="local-body">
-            <strong>Próximos passos:</strong> ligue ou envie uma mensagem para agendar sua primeira conversa.
-            50 minutos, sem compromisso de continuidade se não fizer sentido.
+            <strong>Próximos passos:</strong> {client.copy.bairroNextSteps ?? `ligue ou envie uma mensagem para ${client.businessName}. Atendimento com hora marcada.`}
           </p>
           <a href={`tel:${client.phoneClean}`} class="btn-local-cta">
-            Agendar conversa — {client.phone}
+            {client.copy.bairroCtaText ?? 'Falar agora'} — {client.phone}
           </a>
         </div>
 
