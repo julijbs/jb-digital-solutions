@@ -1,10 +1,9 @@
 ---
 export interface Props {
-  professionPlural: string;
   whatsappText: string;
 }
 import { whatsappUrl } from '../../data/pricing.ts';
-const { professionPlural, whatsappText } = Astro.props;
+const { whatsappText } = Astro.props;
 const wUrl = `${whatsappUrl}?text=${encodeURIComponent(whatsappText)}`;
 ---
 <section class="section-cta">
@@ -16,7 +15,7 @@ const wUrl = `${whatsappUrl}?text=${encodeURIComponent(whatsappText)}`;
     </h2>
     <p>
       Em até 7 dias, toda a infraestrutura do seu posicionamento online está no ar —
-      site, Perfil Google e presença nas IAs trabalhando juntos para atrair {professionPlural.toLowerCase()} pacientes de forma orgânica, todo dia.
+      site, Perfil Google e presença nas IAs trabalhando juntos para atrair pacientes de forma orgânica, todo dia.
     </p>
     <div class="cta-actions">
       <a href={wUrl} target="_blank" rel="noopener" class="btn-whatsapp">

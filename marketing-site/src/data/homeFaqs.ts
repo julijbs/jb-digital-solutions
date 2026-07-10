@@ -25,7 +25,7 @@ export const homeFaqs: { q: string; a: string }[] = [
     a: 'Não. Nosso foco é construir e manter seu posicionamento orgânico no Google e nas IAs. Gestão de conteúdo ou tráfego pago não fazem parte do serviço.',
   },
   {
-    q: 'Minha clínica vai aparecer no Google automaticamente após o setup?',
+    q: 'Meu negócio vai aparecer no Google automaticamente após o setup?',
     a: 'O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica completa e acompanhamos seu crescimento mensalmente.',
   },
   {
