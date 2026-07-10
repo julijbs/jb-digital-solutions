@@ -3,7 +3,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 // psi-score — retorna o score de PageSpeed Insights (0-100) + métricas de um site.
 // Segredos (Supabase → Edge Functions → Secrets):
 //   PAGESPEED_API_KEY  (obrigatório) — API key simples do Google (AIza...), restrita à PageSpeed Insights API.
-//   PSI_SHARED_KEY     (opcional)    — se definido, exige header x-psi-key igual, para evitar abuso.
+//   PSI_SHARED_KEY     (obrigatório) — FAIL-CLOSED: exige header x-psi-key igual. Sem o segredo, recusa.
 // Uso: POST { "url": "https://exemplo.com", "strategy": "mobile" }
 
 const cors = {
@@ -18,7 +18,8 @@ Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
 
   const shared = Deno.env.get("PSI_SHARED_KEY");
-  if (shared && req.headers.get("x-psi-key") !== shared) {
+  if (!shared) return json({ ok: false, error: "PSI_SHARED_KEY nao configurada — endpoint bloqueado por seguranca" }, 503);
+  if (req.headers.get("x-psi-key") !== shared) {
     return json({ ok: false, error: "unauthorized" }, 401);
   }
 

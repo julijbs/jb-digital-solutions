@@ -3,13 +3,15 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 
 // psi-enrich — calcula o PageSpeed (mobile) dos leads com domínio próprio e grava psi_score no banco.
 // Espelha o padrão do serp-mapa: disparado via net.http_post; escreve colunas; a rotina só lê.
-// Secrets: PAGESPEED_API_KEY (obrigatório). PSI_SHARED_KEY (opcional).
+// SEGURANÇA: FAIL-CLOSED. Exige PSI_SHARED_KEY setado E header x-psi-key igual. Sem o segredo, recusa.
+// Secrets: PAGESPEED_API_KEY (obrigatório). PSI_SHARED_KEY (obrigatório).
 
 const json = (b: unknown, s = 200) => new Response(JSON.stringify(b), { status: s, headers: { "Content-Type": "application/json" } });
 
 Deno.serve(async (req: Request) => {
   const shared = Deno.env.get("PSI_SHARED_KEY");
-  if (shared && req.headers.get("x-psi-key") !== shared) return json({ ok: false, error: "unauthorized" }, 401);
+  if (!shared) return json({ ok: false, error: "PSI_SHARED_KEY nao configurada — endpoint bloqueado por seguranca" }, 503);
+  if (req.headers.get("x-psi-key") !== shared) return json({ ok: false, error: "unauthorized" }, 401);
 
   const apiKey = Deno.env.get("PAGESPEED_API_KEY");
   if (!apiKey) return json({ ok: false, error: "PAGESPEED_API_KEY nao configurada" }, 500);
