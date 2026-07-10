@@ -7,8 +7,35 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Tier mapping — Essencial (R$600 setup + R$150/mês) | Premium (R$1.200 setup + R$350/mês)
-const TIERS = {
+// Oferta atual (desde 2026-07-10):
+//   site_novo     — R$1.497 setup (uma vez) + Presença Ativa R$149/mês
+//   gestao_google — add-on R$97/mês, sem setup
+//
+// essencial e premium ficam apenas para não quebrar cobranças legadas já em
+// curso. Nenhuma tela oferece esses tiers. Não remova sem antes migrar as
+// assinaturas ativas no Stripe.
+const TIERS: Record<string, {
+  setup_price_id: string | null;
+  monthly_price_id: string;
+  label: string;
+  setup_amount: number;
+  monthly_amount: number;
+}> = {
+  site_novo: {
+    setup_price_id: "price_1TrVQPAtjEQC8UwgB7sIzEa5",
+    monthly_price_id: "price_1TrVQPAtjEQC8UwgT5e74hlu",
+    label: "Site Novo + Presença Ativa",
+    setup_amount: 149700,
+    monthly_amount: 14900,
+  },
+  gestao_google: {
+    setup_price_id: null,
+    monthly_price_id: "price_1TrVQPAtjEQC8UwgIYgb9l4l",
+    label: "Gestão de Google (add-on)",
+    setup_amount: 0,
+    monthly_amount: 9700,
+  },
+  // ── legado ──
   essencial: {
     setup_price_id: "price_1Tn3pZAtjEQC8UwgpNeWkETN",
     monthly_price_id: "price_1Tn3rJAtjEQC8Uwgd1xFvNDW",
@@ -47,8 +74,8 @@ serve(async (req) => {
       throw new Error("Missing required fields: tier, project_id, client_id");
     }
 
-    const tierConfig = TIERS[tier as keyof typeof TIERS];
-    if (!tierConfig) throw new Error(`Invalid tier: ${tier}. Must be 'essencial' or 'premium'`);
+    const tierConfig = TIERS[tier as string];
+    if (!tierConfig) throw new Error(`Invalid tier: ${tier}. Must be one of: ${Object.keys(TIERS).join(", ")}`);
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2025-08-27.basil",
@@ -61,14 +88,17 @@ serve(async (req) => {
       customerId = customers.data[0].id;
     }
 
-    // Subscription mode: setup fee (one-time) + monthly recurring on first invoice
+    // Subscription mode: setup fee (one-time) + monthly recurring on first invoice.
+    // Add-ons não têm setup — mandam só a recorrência.
+    const lineItems = [
+      ...(tierConfig.setup_price_id ? [{ price: tierConfig.setup_price_id, quantity: 1 }] : []),
+      { price: tierConfig.monthly_price_id, quantity: 1 },
+    ];
+
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
-      line_items: [
-        { price: tierConfig.setup_price_id, quantity: 1 },
-        { price: tierConfig.monthly_price_id, quantity: 1 },
-      ],
+      line_items: lineItems,
       mode: "subscription",
       success_url: `${req.headers.get("origin")}/dashboard/billing?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}/dashboard/billing?canceled=true`,

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { SITE_NOVO } from "@/config/pricing";
 
 const verticals = [
   { value: "psicologo", label: "Psicólogo(a)", emoji: "🧠" },
@@ -15,9 +16,16 @@ const verticals = [
   { value: "outro", label: "Outro negócio local", emoji: "🏪" },
 ];
 
+// Só o Site Novo cria projeto. A Gestão de Google é add-on de assinatura,
+// contratada em /dashboard/billing — não gera projeto próprio.
 const plans = [
-  { value: "essencial", label: "Essencial", price: "R$ 600 + R$ 150/mês", description: "Site one-page profissional", emoji: "⚡" },
-  { value: "premium", label: "Premium", price: "R$ 1.200 + R$ 350/mês", description: "Multi-página com SEO por bairro", emoji: "🚀" },
+  {
+    value: SITE_NOVO.key,
+    label: SITE_NOVO.name,
+    price: `${SITE_NOVO.setupPrice} + ${SITE_NOVO.monthlyPrice}`,
+    description: "Site programático com SEO por serviço e bairro",
+    emoji: "🚀",
+  },
 ];
 
 const NewProject = () => {
@@ -26,7 +34,7 @@ const NewProject = () => {
   const { toast } = useToast();
   const [businessName, setBusinessName] = useState("");
   const [vertical, setVertical] = useState("");
-  const [plan, setPlan] = useState("");
+  const [plan, setPlan] = useState(SITE_NOVO.key);
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [loading, setLoading] = useState(false);
@@ -148,7 +156,7 @@ const NewProject = () => {
 
           <div className="space-y-3">
             <Label>Plano</Label>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3">
               {plans.map((p) => (
                 <button
                   key={p.value}

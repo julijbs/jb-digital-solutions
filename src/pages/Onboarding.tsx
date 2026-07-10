@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { SITE_NOVO, hasNeighborhoodSeo } from "@/config/pricing";
 import { Check, ChevronRight, ChevronLeft, Save, Upload, X, Image as ImageIcon } from "lucide-react";
 
 const steps = [
@@ -31,7 +32,7 @@ const Onboarding = () => {
   // Form state
   const [hasGbp, setHasGbp] = useState<string>("");
   const [gbpUrl, setGbpUrl] = useState<string>("");
-  const [projectPlan, setProjectPlan] = useState<string>("essencial");
+  const [projectPlan, setProjectPlan] = useState<string>(SITE_NOVO.key);
   const [business, setBusiness] = useState({
     name: "", description: "", phone: "", email: "", instagram: "", has_site: "no", site_url: "",
   });
@@ -417,14 +418,14 @@ const Onboarding = () => {
                 <div className="space-y-3 pt-2">
                   <Label className="text-foreground">Área de atendimento</Label>
                   <Input placeholder="Cidade principal" value={location.main_city} onChange={(e) => setLocation({ ...location, main_city: e.target.value })} />
-                  {projectPlan === "premium" && (
+                  {hasNeighborhoodSeo(projectPlan) && (
                     <>
                       <Input
                         placeholder="Bairros para SEO (separados por vírgula)"
                         value={location.regions}
                         onChange={(e) => setLocation({ ...location, regions: e.target.value })}
                       />
-                      <p className="text-xs text-amber-400/80">✦ Premium — uma página de SEO será criada para cada bairro</p>
+                      <p className="text-xs text-amber-400/80">✦ Uma página de SEO será criada para cada bairro</p>
                       <Input placeholder="Raio em km (opcional)" value={location.radius_km} onChange={(e) => setLocation({ ...location, radius_km: e.target.value })} />
                     </>
                   )}

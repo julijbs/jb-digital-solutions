@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import { OFFERS, PRODUCT_LABELS } from "@/config/pricing";
 
 interface BillingRecord {
   id: string;
@@ -18,47 +19,7 @@ interface BillingRecord {
   created_at: string;
 }
 
-const PRODUCT_LABELS: Record<string, string> = {
-  essencial: "JB Digital Essencial",
-  premium: "JB Digital Premium",
-};
-
-const PLANS = [
-  {
-    key: "essencial",
-    name: "Essencial",
-    tag: "Site + Perfil Google otimizado",
-    setupPrice: "R$ 600",
-    monthlyPrice: "R$ 150/mês",
-    setupValue: 60000,
-    monthlyValue: 15000,
-    featured: false,
-    features: [
-      "Site one-page otimizado para Google",
-      "Perfil Google Business completo",
-      "Schema de avaliações (estrelas visíveis)",
-      "Presença estruturada para IAs (ChatGPT, Gemini)",
-      "Monitoramento e relatório mensal",
-    ],
-  },
-  {
-    key: "premium",
-    name: "Premium",
-    tag: "Site programático com páginas por bairro",
-    setupPrice: "R$ 1.200",
-    monthlyPrice: "R$ 350/mês",
-    setupValue: 120000,
-    monthlyValue: 35000,
-    featured: true,
-    features: [
-      "Tudo do plano Essencial",
-      "Dezenas de páginas por serviço e bairro",
-      "SEO local avançado e AEO",
-      "Conexão técnica site ↔ Perfil Google",
-      "Relatório mensal de posições",
-    ],
-  },
-];
+const PLANS = OFFERS;
 
 const ClientBilling = () => {
   const { user } = useAuth();
@@ -186,7 +147,7 @@ const ClientBilling = () => {
 
       {/* Plan selection */}
       <div className="mb-10">
-        <h2 className="mb-4 font-serif text-xl text-foreground">Escolha seu plano</h2>
+        <h2 className="mb-4 font-serif text-xl text-foreground">Sua oferta</h2>
         <div className="grid gap-4 lg:grid-cols-2">
           {PLANS.map((plan) => {
             const isPaid = paidProductTypes.includes(plan.key);
@@ -201,7 +162,7 @@ const ClientBilling = () => {
               >
                 {plan.featured && (
                   <div className="absolute -top-3 left-5 flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
-                    <Star size={12} /> Mais escolhido
+                    <Star size={12} /> Nossa oferta
                   </div>
                 )}
 
@@ -210,9 +171,13 @@ const ClientBilling = () => {
                 </div>
                 <h3 className="font-serif text-xl text-foreground">{plan.name}</h3>
                 <div className="mt-2">
-                  <span className="font-serif text-2xl text-primary">{plan.setupPrice}</span>
-                  <span className="ml-1 text-sm text-muted-foreground">setup</span>
-                  <span className="mx-2 text-muted-foreground">+</span>
+                  {plan.setupPrice && (
+                    <>
+                      <span className="font-serif text-2xl text-primary">{plan.setupPrice}</span>
+                      <span className="ml-1 text-sm text-muted-foreground">setup</span>
+                      <span className="mx-2 text-muted-foreground">+</span>
+                    </>
+                  )}
                   <span className="font-serif text-lg text-primary">{plan.monthlyPrice}</span>
                 </div>
 

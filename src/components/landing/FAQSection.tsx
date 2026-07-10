@@ -10,11 +10,11 @@ import {
 const faqs = [
   {
     q: "Como funciona o pagamento?",
-    a: "Existem dois valores: a taxa de setup (única, para implementar todo o sistema) e a mensalidade de acompanhamento contínuo. Os valores variam conforme o plano — Essencial ou Premium. Aceitamos PIX e cartão em até 12x.",
+    a: "Existem dois valores: o setup único do Site Novo, que constrói todo o sistema, e a Presença Ativa, a mensalidade que mantém o site no ar, atualizado e monitorado. A Gestão de Google é um add-on opcional, contratado à parte. Aceitamos PIX e cartão em até 12x.",
   },
   {
     q: "Preciso ter site para contratar?",
-    a: "Não. O plano Essencial foca na otimização do seu Perfil Google — sem necessidade de site. O plano Premium inclui um site programático completo, construído do zero.",
+    a: "Não — o site é justamente o que entregamos. Construímos do zero um site programático, com páginas por serviço e por bairro. Se você já tem site e quer apenas o Perfil da Empresa no Google cuidado de perto, isso é o add-on Gestão de Google.",
   },
   {
     q: "Quanto tempo leva para ficar pronto?",

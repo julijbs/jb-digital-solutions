@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import { PRODUCT_LABELS } from "@/config/pricing";
 
 interface BillingRecord {
   id: string;
@@ -17,12 +18,6 @@ interface BillingRecord {
   created_at: string;
   stripe_checkout_session_id: string | null;
 }
-
-const PRODUCT_LABELS: Record<string, string> = {
-  site: "Site Profissional",
-  gbp: "Perfil no Google",
-  pacote_completo: "Pacote Completo",
-};
 
 const AdminBilling = () => {
   const [records, setRecords] = useState<BillingRecord[]>([]);

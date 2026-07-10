@@ -1,40 +1,29 @@
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star, CreditCard, ShieldCheck, Clock } from "lucide-react";
+import { SITE_NOVO, GESTAO_GOOGLE } from "@/config/pricing";
+import { WHATSAPP_URL } from "@/config/contact";
 
 const plans = [
   {
-    name: "Essencial",
+    name: SITE_NOVO.name,
     setupLabel: "Setup único",
-    setupPrice: "R$ 600",
-    monthlyLabel: "Acompanhamento mensal",
-    monthlyPrice: "R$ 150/mês",
-    featured: false,
-    features: [
-      "Perfil Google completo e otimizado",
-      "Schema de avaliações (estrelas visíveis no Google)",
-      "Presença estruturada para as IAs",
-      "Monitoramento mensal do perfil",
-      "Relatório mensal de posicionamento",
-    ],
-    cta: "Começar com o Essencial",
+    setupPrice: SITE_NOVO.setupPrice,
+    monthlyLabel: "Presença Ativa · mensal",
+    monthlyPrice: SITE_NOVO.monthlyPrice,
+    featured: true,
+    features: SITE_NOVO.features,
+    cta: "Falar agora",
   },
   {
-    name: "Premium",
-    setupLabel: "Setup único",
-    setupPrice: "R$ 1.200",
-    monthlyLabel: "Acompanhamento mensal",
-    monthlyPrice: "R$ 350/mês",
-    featured: true,
-    features: [
-      "Tudo do plano Essencial",
-      "Site programático com páginas por serviço e bairro",
-      "Dezenas de páginas otimizadas para buscas locais",
-      "Otimização avançada para IAs (AEO)",
-      "Relatório mensal de posições no Google",
-    ],
-    cta: "Começar com o Premium",
+    name: GESTAO_GOOGLE.name,
+    setupLabel: null,
+    setupPrice: null,
+    monthlyLabel: "Add-on opcional · mensal",
+    monthlyPrice: GESTAO_GOOGLE.monthlyPrice,
+    featured: false,
+    features: GESTAO_GOOGLE.features,
+    cta: "Quero o add-on",
   },
 ];
 
@@ -45,7 +34,6 @@ const badges = [
 ];
 
 export const PricingSection = () => {
-  const navigate = useNavigate();
   return (
     <section id="planos" className="py-20 md:py-28">
       <div className="section-divider mx-auto mb-20 max-w-xl" />
@@ -57,10 +45,10 @@ export const PricingSection = () => {
           className="mx-auto mb-16 max-w-2xl text-center"
         >
           <h2 className="font-serif text-3xl md:text-4xl">
-            O sistema completo em dois tamanhos
+            Uma oferta, sem letra miúda
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Cada plano inclui setup inicial e acompanhamento mensal contínuo.
+            Um setup para construir o site. Uma mensalidade para mantê-lo vivo e no topo.
           </p>
         </motion.div>
 
@@ -80,18 +68,20 @@ export const PricingSection = () => {
             >
               {plan.featured && (
                 <div className="absolute -top-3 left-6 flex items-center gap-1 rounded-full gold-gradient-bg px-3 py-1 text-xs font-semibold text-primary-foreground">
-                  <Star size={12} /> Mais completo
+                  <Star size={12} /> Nossa oferta
                 </div>
               )}
 
               <h3 className="font-serif text-2xl text-foreground">{plan.name}</h3>
 
               <div className="mt-4 space-y-2 rounded-xl bg-secondary/30 p-4">
-                <div className="flex items-baseline justify-between">
-                  <span className="text-xs text-muted-foreground">{plan.setupLabel}</span>
-                  <span className="font-serif text-xl text-primary">{plan.setupPrice}</span>
-                </div>
-                <div className="flex items-baseline justify-between border-t border-border/40 pt-2">
+                {plan.setupPrice && (
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-xs text-muted-foreground">{plan.setupLabel}</span>
+                    <span className="font-serif text-xl text-primary">{plan.setupPrice}</span>
+                  </div>
+                )}
+                <div className={`flex items-baseline justify-between ${plan.setupPrice ? "border-t border-border/40 pt-2" : ""}`}>
                   <span className="text-xs text-muted-foreground">{plan.monthlyLabel}</span>
                   <span className="font-serif text-xl text-primary">{plan.monthlyPrice}</span>
                 </div>
@@ -109,9 +99,15 @@ export const PricingSection = () => {
               <Button
                 variant={plan.featured ? "hero" : "heroOutline"}
                 className="mt-6 w-full gap-2"
-                onClick={() => navigate("/signup")}
+                asChild
               >
-                {plan.cta} <ArrowRight size={16} />
+                <a
+                  href={`${WHATSAPP_URL}?text=${encodeURIComponent(`Olá! Tenho interesse no ${plan.name}.`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {plan.cta} <ArrowRight size={16} />
+                </a>
               </Button>
             </motion.div>
           ))}
