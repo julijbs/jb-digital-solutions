@@ -108,9 +108,10 @@ const Onboarding = () => {
     setSaving(true);
     const stepNum = (nextStep ?? currentStep) + 1;
 
-    await supabase
+    const { error: saveError } = await supabase
       .from("client_intake")
-      .update({
+      .upsert({
+        project_id: projectId,
         google_data: { has_gbp: hasGbp === "yes", gbp_url: gbpUrl, google_connected: googleConnected },
         business_data: business as any,
         schedule_data: location as any,
@@ -120,11 +121,14 @@ const Onboarding = () => {
         existing_site_url: (business as any).site_url || null,
         step_current: stepNum,
         completed: nextStep === 5,
-      })
-      .eq("project_id", projectId);
+      }, { onConflict: "project_id" });
 
     setSaving(false);
-    toast({ title: "Progresso salvo!" });
+    if (saveError) {
+      toast({ title: "Erro ao salvar", description: saveError.message, variant: "destructive" });
+    } else {
+      toast({ title: "Progresso salvo!" });
+    }
   };
 
   const goNext = async () => {

@@ -79,11 +79,17 @@ const NewProject = () => {
     }
 
     // Create intake record
-    await supabase.from("client_intake").insert({
+    const { error: intakeError } = await supabase.from("client_intake").insert({
       project_id: project.id,
       step_current: 1,
       business_data: { business_name: businessName, vertical, city, state },
     });
+
+    if (intakeError) {
+      toast({ title: "Erro ao criar intake", description: intakeError.message, variant: "destructive" });
+      setLoading(false);
+      return;
+    }
 
     toast({ title: "Projeto criado!", description: "Vamos começar o onboarding." });
     navigate(`/dashboard/onboarding/${project.id}`);
