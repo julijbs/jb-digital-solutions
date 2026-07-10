@@ -1,0 +1,61 @@
+name: Deploy Client Site
+
+# Disparado pela Edge Function trigger-site-build (repository_dispatch: deploy-client)
+# ou manualmente via workflow_dispatch. Builda o site Astro do cliente no site-engine
+# e publica no Cloudflare Pages + DNS via scripts/deploy-client.sh.
+#
+# Secrets necessários (repo → Settings → Secrets and variables → Actions):
+#   CF_API_TOKEN   — Account > Cloudflare Pages: Edit + Zone > DNS: Edit
+#   CF_ACCOUNT_ID  — Account ID da conta Cloudflare
+#   CF_ZONE_ID     — Zone ID de jbdigitalsystem.com
+
+on:
+  repository_dispatch:
+    types: [deploy-client]
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "Slug do cliente (src/data/<slug>.ts)"
+        required: true
+      subdomain:
+        description: "Prefixo do subdomínio (<subdomain>.jbdigitalsystem.com). Padrão: slug"
+        required: false
+
+concurrency:
+  group: deploy-client-${{ github.event.client_payload.slug || inputs.slug }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+      CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: site-engine/package-lock.json
+
+      - name: Instalar dependências
+        working-directory: site-engine
+        run: npm ci
+
+      - name: Build + deploy (Cloudflare Pages + DNS)
+        working-directory: site-engine
+        run: |
+          SLUG="${{ github.event.client_payload.slug || inputs.slug }}"
+          SUBDOMAIN="${{ github.event.client_payload.subdomain || inputs.subdomain }}"
+          bash scripts/deploy-client.sh "$SLUG" "${SUBDOMAIN:-$SLUG}"
+
+      - name: Resumo
+        run: |
+          SLUG="${{ github.event.client_payload.slug || inputs.slug }}"
+          SUBDOMAIN="${{ github.event.client_payload.subdomain || inputs.subdomain }}"
+          echo "### Site publicado :rocket:" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Cliente: \`$SLUG\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- URL: https://${SUBDOMAIN:-$SLUG}.jbdigitalsystem.com" >> "$GITHUB_STEP_SUMMARY"
