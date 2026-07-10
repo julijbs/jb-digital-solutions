@@ -1,9 +1,11 @@
 ---
 // HomeMobileCTA.astro — Sticky mobile-only bottom bar
+import { whatsappUrl } from '../../data/pricing.ts';
+const wUrl = `${whatsappUrl}?text=${encodeURIComponent('Olá! Vim pelo site da JB Digital e quero saber mais.')}`;
 ---
 <div class="mobile-cta" role="complementary" aria-label="CTA mobile">
-  <a href="https://jbdigitalsystem.com/signup" class="btn btn-primary mobile-cta-btn">
-    Quero minha Presença Google
+  <a href={wUrl} class="btn btn-primary mobile-cta-btn" target="_blank" rel="noopener">
+    Falar agora
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
 </div>

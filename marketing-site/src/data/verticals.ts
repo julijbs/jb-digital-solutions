@@ -102,7 +102,7 @@ export const verticals: Vertical[] = [
       },
       {
         q: 'Preciso ter site para contratar?',
-        a: 'Não. O plano Essencial foca na otimização do Perfil Google — sem necessidade de site. O plano Premium inclui um site programático completo, construído do zero com páginas por especialidade e bairro.',
+        a: 'Não — o site é justamente o que entregamos: um site programático completo, construído do zero, com páginas por especialidade e por bairro. Se você já tem site e quer apenas o Perfil da Empresa no Google cuidado de perto, isso é o add-on Gestão de Google.',
       },
       {
         q: 'Quanto tempo leva para aparecer no Google?',
@@ -204,7 +204,7 @@ export const verticals: Vertical[] = [
     professionSingular: 'nutricionista',
     professionArticle: 'a nutricionista',
     metaTitle: 'Site + Google para Nutricionistas | JB Digital System',
-    metaDescription: 'Sistema de posicionamento online para nutricionistas: site, Perfil Google e presença em IA. Atraia mais pacientes organicamente. Setup em 7 dias a partir de R$150/mês.',
+    metaDescription: 'Sistema de posicionamento online para nutricionistas: site, Perfil Google e presença em IA. Atraia mais pacientes organicamente. Setup em 7 dias, R$149/mês.',
     hero: {
       headline: 'Pacientes buscam nutricionista todo dia. Você é encontrado nessas buscas?',
       sub: 'O JB Digital System constrói o posicionamento digital completo para nutricionistas — site com páginas por especialidade e região, Perfil Google e presença nas IAs — para que novos pacientes te encontrem organicamente.',
@@ -273,7 +273,7 @@ export const verticals: Vertical[] = [
     professionSingular: 'fisioterapeuta',
     professionArticle: 'o fisioterapeuta',
     metaTitle: 'Site + Google para Fisioterapeutas | JB Digital System',
-    metaDescription: 'Sistema de posicionamento online para fisioterapeutas: site, Perfil Google e presença em IA. Atraia mais pacientes organicamente. Setup em 7 dias a partir de R$150/mês.',
+    metaDescription: 'Sistema de posicionamento online para fisioterapeutas: site, Perfil Google e presença em IA. Atraia mais pacientes organicamente. Setup em 7 dias, R$149/mês.',
     hero: {
       headline: 'Pacientes buscam fisioterapeuta próximo todos os dias. Você está visível nessas buscas?',
       sub: 'O JB Digital System constrói o posicionamento digital completo para fisioterapeutas — site com páginas por especialidade e região, Perfil Google e presença nas IAs — para que novos pacientes te encontrem organicamente.',

@@ -1,5 +1,7 @@
 ---
 // SiteFooter.astro — Marketing site footer
+import { whatsappUrl, loginUrl } from '../../data/pricing.ts';
+const wUrl = `${whatsappUrl}?text=${encodeURIComponent('Olá! Vim pelo site da JB Digital e quero saber mais.')}`;
 ---
 
 <footer class="site-footer">
@@ -38,9 +40,9 @@
       <div class="footer-col">
         <h3 class="footer-col-title">Conta</h3>
         <ul role="list">
-          <li><a href="https://jbdigitalsystem.com/signup">Começar agora</a></li>
-          <li><a href="https://jbdigitalsystem.com/login">Entrar</a></li>
-          <li><a href="https://wa.me/5511966549407" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href={wUrl} target="_blank" rel="noopener">Falar agora</a></li>
+          <li><a href={loginUrl}>Entrar</a></li>
+          <li><a href={whatsappUrl} target="_blank" rel="noopener">WhatsApp</a></li>
         </ul>
       </div>
     </nav>

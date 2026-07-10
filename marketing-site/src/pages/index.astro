@@ -16,6 +16,7 @@ import HomeFAQ from '../components/home/HomeFAQ.astro';
 import HomeFinalCTA from '../components/home/HomeFinalCTA.astro';
 import HomeMobileCTA from '../components/home/HomeMobileCTA.astro';
 import { homeFaqs } from '../data/homeFaqs.ts';
+import { schemaOffers } from '../data/pricing.ts';
 
 const canonical = new URL('/', Astro.site).href;
 const blogUrl   = new URL('/blog/', Astro.site).href;
@@ -55,22 +56,7 @@ const schema = {
         "url": canonical,
         "email": "contato@jbdigitalconsulting.com"
       },
-      "offers": [
-        {
-          "@type": "Offer",
-          "name": "Plano Essencial",
-          "price": "150",
-          "priceCurrency": "BRL",
-          "priceSpecification": { "@type": "UnitPriceSpecification", "price": "150", "priceCurrency": "BRL", "unitText": "month" }
-        },
-        {
-          "@type": "Offer",
-          "name": "Plano Premium",
-          "price": "350",
-          "priceCurrency": "BRL",
-          "priceSpecification": { "@type": "UnitPriceSpecification", "price": "350", "priceCurrency": "BRL", "unitText": "month" }
-        }
-      ]
+      "offers": schemaOffers
     },
     {
       "@type": "FAQPage",

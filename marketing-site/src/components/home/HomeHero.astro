@@ -1,5 +1,7 @@
 ---
 // HomeHero.astro — Homepage hero section
+import { whatsappUrl } from '../../data/pricing.ts';
+const wUrl = `${whatsappUrl}?text=${encodeURIComponent('Olá! Quero atrair mais pacientes. Pode me contar como funciona?')}`;
 ---
 <section class="home-hero">
   <div class="section-wrap hero-inner">
@@ -14,7 +16,7 @@
         organicamente, todo dia, sem depender de indicação.
       </p>
       <div class="hero-cta">
-        <a href="https://jbdigitalsystem.com/signup" class="btn btn-primary hero-btn">
+        <a href={wUrl} class="btn btn-primary hero-btn" target="_blank" rel="noopener">
           Quero atrair mais pacientes
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>

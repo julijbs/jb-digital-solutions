@@ -15,7 +15,7 @@ import VerticalArticles from '../../components/sections/VerticalArticles.astro';
 import WhatsappCta from '../../components/sections/WhatsappCta.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import { verticals } from '../../data/verticals.ts';
-import { plans, whatsappUrl } from '../../data/pricing.ts';
+import { schemaOffers, salesPhone, whatsappUrl } from '../../data/pricing.ts';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -51,19 +51,13 @@ const schemaObj = {
         "contactPoint": {
           "@type": "ContactPoint",
           "contactType": "sales",
-          "telephone": "+55-11-96654-9407",
+          "telephone": salesPhone,
           "availableLanguage": "Portuguese"
         }
       },
       "areaServed": "BR",
       "serviceType": ["Web Design", "SEO", "AEO", "Google Business Profile Management"],
-      "offers": plans.map(p => ({
-        "@type": "Offer",
-        "name": `Plano ${p.name}`,
-        "price": p.schemaPrice,
-        "priceCurrency": "BRL",
-        "availability": "https://schema.org/InStock",
-      })),
+      "offers": schemaOffers,
     },
     {
       "@type": "FAQPage",

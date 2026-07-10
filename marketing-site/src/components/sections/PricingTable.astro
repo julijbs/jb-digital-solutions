@@ -1,50 +1,69 @@
 ---
-import { plans, whatsappUrl, signupUrl } from '../../data/pricing.ts';
+import { plan, addon, whatsappUrl } from '../../data/pricing.ts';
 export interface Props { whatsappText: string; }
 const { whatsappText } = Astro.props;
 const wUrl = `${whatsappUrl}?text=${encodeURIComponent(whatsappText)}`;
+const addonUrl = `${whatsappUrl}?text=${encodeURIComponent(`Olá! Quero saber sobre o add-on ${addon.name}.`)}`;
 ---
 <section class="section-pricing" id="planos">
   <div class="section-wrap">
     <div class="section-divider" style="margin-bottom:4rem"></div>
     <div class="pricing-header">
-      <h2>O sistema completo em dois tamanhos</h2>
-      <p>Cada plano inclui setup inicial e acompanhamento mensal contínuo.</p>
+      <h2>Uma oferta, sem letra miúda</h2>
+      <p>Um setup para construir o site. Uma mensalidade para mantê-lo vivo e no topo.</p>
     </div>
+
     <div class="pricing-grid">
-      {plans.map(plan => (
-        <div class={`pricing-card${plan.featured ? ' pricing-card--featured' : ''}`}>
-          {plan.featured && <div class="featured-badge">★ Mais completo</div>}
-          <h3>{plan.name}</h3>
-          <div class="pricing-values">
-            <div class="pricing-row">
-              <span class="pricing-label">Setup único</span>
-              <span class="pricing-value">{plan.setupPrice}</span>
-            </div>
-            <div class="pricing-row pricing-row--monthly">
-              <span class="pricing-label">Acompanhamento mensal</span>
-              <span class="pricing-value">{plan.monthlyPrice}</span>
-            </div>
+      <div class="pricing-card pricing-card--featured">
+        <h3>{plan.name}</h3>
+        <p class="pricing-tagline">{plan.tagline}</p>
+        <div class="pricing-values">
+          <div class="pricing-row">
+            <span class="pricing-label">Setup único</span>
+            <span class="pricing-value">{plan.setupPrice}</span>
           </div>
-          <ul class="features-list" role="list">
-            {plan.features.map(f => (
-              <li>
-                <span class="feat-dot" aria-hidden="true"></span>
-                {f}
-              </li>
-            ))}
-          </ul>
-          <a
-            href={plan.featured ? wUrl : signupUrl}
-            class={`btn ${plan.featured ? 'btn-primary' : 'btn-outline'}`}
-            target={plan.featured ? '_blank' : undefined}
-            rel={plan.featured ? 'noopener' : undefined}
-          >
-            {plan.cta}
-          </a>
+          <div class="pricing-row pricing-row--monthly">
+            <span class="pricing-label">Presença Ativa · mensal</span>
+            <span class="pricing-value">{plan.monthlyPrice}</span>
+          </div>
         </div>
-      ))}
+        <ul class="features-list" role="list">
+          {plan.features.map(f => (
+            <li>
+              <span class="feat-dot" aria-hidden="true"></span>
+              {f}
+            </li>
+          ))}
+        </ul>
+        <a href={wUrl} class="btn btn-primary" target="_blank" rel="noopener">
+          {plan.cta}
+        </a>
+      </div>
+
+      <div class="pricing-card pricing-card--addon">
+        <div class="addon-badge">add-on opcional</div>
+        <h3>{addon.name}</h3>
+        <p class="pricing-tagline">{addon.tagline}</p>
+        <div class="pricing-values">
+          <div class="pricing-row">
+            <span class="pricing-label">Mensal</span>
+            <span class="pricing-value">{addon.monthlyPrice}</span>
+          </div>
+        </div>
+        <ul class="features-list" role="list">
+          {addon.features.map(f => (
+            <li>
+              <span class="feat-dot" aria-hidden="true"></span>
+              {f}
+            </li>
+          ))}
+        </ul>
+        <a href={addonUrl} class="btn btn-outline" target="_blank" rel="noopener">
+          {addon.cta}
+        </a>
+      </div>
     </div>
+
     <div class="pricing-badges">
       <span>💳 PIX ou Cartão (até 12x)</span>
       <span>⚡ Setup em até 7 dias</span>
@@ -60,9 +79,9 @@ const wUrl = `${whatsappUrl}?text=${encodeURIComponent(whatsappText)}`;
   .pricing-header p { color: var(--brand-ink-muted); }
   .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: 1fr;
     gap: 1.25rem;
-    max-width: 760px;
+    max-width: 560px;
     margin: 0 auto 2rem;
   }
   .pricing-card {
@@ -79,19 +98,30 @@ const wUrl = `${whatsappUrl}?text=${encodeURIComponent(whatsappText)}`;
     border-color: var(--brand-primary);
     box-shadow: 0 0 0 1px var(--brand-primary), 0 16px 48px rgba(200,164,75,0.12);
   }
-  .featured-badge {
-    position: absolute;
-    top: -0.875rem;
-    left: 1.5rem;
-    background: linear-gradient(135deg,#C8A44B,#D4B06A);
-    color: #0B1D2E;
+  .pricing-card--addon {
+    background: transparent;
+    gap: 1rem;
+    padding: 1.5rem 1.75rem;
+  }
+  .addon-badge {
+    align-self: flex-start;
+    border: 1px solid var(--brand-border);
+    color: var(--brand-ink-muted);
     font-family: var(--brand-font-body);
     font-size: 0.6875rem;
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     border-radius: 2rem;
     padding: 0.2rem 0.75rem;
   }
   .pricing-card h3 { font-size: 1.5rem; }
+  .pricing-card--addon h3 { font-size: 1.25rem; }
+  .pricing-tagline {
+    font-size: 0.9375rem;
+    color: var(--brand-ink-muted);
+    margin: -0.5rem 0 0;
+  }
   .pricing-values {
     background: rgba(255,255,255,0.04);
     border-radius: 0.5rem;
