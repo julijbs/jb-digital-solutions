@@ -8,6 +8,7 @@
     { "src": "^/blog$",                 "dest": "https://jbds-marketing.vercel.app/blog" },
     { "src": "^/blog(/.*)",             "dest": "https://jbds-marketing.vercel.app/blog$1" },
     { "src": "^/_astro/(.+)",           "dest": "https://jbds-marketing.vercel.app/_astro/$1" },
+    { "src": "^/logo-jb-digital\\.png$", "dest": "https://jbds-marketing.vercel.app/logo-jb-digital.png" },
     { "src": "^/sitemap-index\\.xml$",  "dest": "https://jbds-marketing.vercel.app/sitemap-index.xml" },
     { "src": "^/sitemap-0\\.xml$",      "dest": "https://jbds-marketing.vercel.app/sitemap-0.xml" },
     { "src": "^/rss\\.xml$",            "dest": "https://jbds-marketing.vercel.app/rss.xml" },
