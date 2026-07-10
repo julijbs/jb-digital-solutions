@@ -53,3 +53,18 @@ verify_jwt = false
 
 [functions.domain-renewal-alerts]
 verify_jwt = false
+
+# Pipeline de publicação. Sem JWT porque são chamadas de máquina
+# (net.http_post, triggers). O controle de acesso é o header de segredo
+# compartilhado: x-build-key nas de escrita, x-psi-key nas de PSI.
+[functions.publish-client]
+verify_jwt = false
+
+[functions.trigger-site-build]
+verify_jwt = false
+
+[functions.psi-enrich]
+verify_jwt = false
+
+[functions.psi-score]
+verify_jwt = false
