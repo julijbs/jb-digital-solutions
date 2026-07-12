@@ -86,13 +86,13 @@ export const cvpTijuca: ClientData = {
     testimonials: [
       {
         quote:
-          'Meu cachorro passou mal de madrugada e foi o único lugar aberto com estrutura completa e preço honesto. Fizeram exame na hora e internaram. Salvaram a vida dele naquela noite.',
-        author: 'Tutora de paciente · Tijuca',
+          'Excelente atendimento, profissionais gentis e preparados, ótima estrutura de internação, valores justos.',
+        author: 'Carla Alves · Rio de Janeiro',
       },
       {
         quote:
-          'Sempre achei que atendimento 24h com especialista fosse caro demais pra mim. Na CVP consegui cuidar da minha gata direito, sem me endividar. Equipe atenciosa do começo ao fim.',
-        author: 'Tutor de paciente · Rio de Janeiro',
+          'Ótimo atendimento e melhor preço! Minha família só tem a agradecer pelos cuidados com nosso filho de quatro patas!',
+        author: 'João Pedro · Rio de Janeiro',
       },
     ],
     faqHeadline: 'Perguntas que todo tutor faz antes de precisar.',
