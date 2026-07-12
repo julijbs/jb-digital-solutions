@@ -48,9 +48,11 @@ const {
       <p class="cta-sa-phone">
         <a href={`tel:${phoneClean}`}>{phone}</a>
       </p>
+      {email && (
       <p class="cta-sa-email">
         <a href={`mailto:${email}`}>{email}</a>
       </p>
+      )}
       <address class="cta-sa-address">{address}</address>
     </div>
 
