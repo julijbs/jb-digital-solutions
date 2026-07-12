@@ -13,7 +13,10 @@ import { marcelaBarcellos } from './marcela-barcellos.ts';
 
 import { cvpTijuca } from './cvp-tijuca.ts';
 
+import { animalClinicBatel } from './animal-clinic-batel.ts';
+
 export const clients: Record<string, ClientData> = {
+  'animal-clinic-batel': animalClinicBatel,
   'cvp-tijuca': cvpTijuca,
   'animal-clinic-bacacheri': animalClinicBacacheri,
   'dra-ana-mello':       draAnaMello,
