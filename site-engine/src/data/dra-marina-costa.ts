@@ -6,7 +6,7 @@
  */
 import type { ClientData } from '../lib/types.ts';
 
-export const draMarinaCostaData: ClientData = {
+export const draMarinaCosta: ClientData = {
   // ── Identidade ──────────────────────────────────────────────────
   businessName: 'Dra. Marina Costa',
   specialty: 'Nutricionista | Nutrição Clínica e Esportiva',
