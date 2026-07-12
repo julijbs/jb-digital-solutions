@@ -149,7 +149,7 @@ export const animalClinicBacacheri: ClientData = {
     ctaHeadline: 'Salve nosso contato antes de precisar dele.',
     ctaSubtext:
       'Emergência não avisa. Ter um hospital 24h de confiança já salvo no celular é o que faz diferença na hora certa. Fale com a gente ou venha conhecer a estrutura.',
-    ctaButtonText: 'Falar no WhatsApp',
+    ctaButtonText: 'Falar agora',
     heroCtaText: 'Falar agora',
     heroCtaSecondaryText: 'Ver especialidades',
     navCtaText: 'Falar no WhatsApp',
