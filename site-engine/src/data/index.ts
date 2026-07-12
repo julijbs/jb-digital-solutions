@@ -11,7 +11,10 @@ import { draAnaMello } from './dra-ana-mello.ts';
 import { draMarinaCosta } from './dra-marina-costa.ts';
 import { marcelaBarcellos } from './marcela-barcellos.ts';
 
+import { cvpTijuca } from './cvp-tijuca.ts';
+
 export const clients: Record<string, ClientData> = {
+  'cvp-tijuca': cvpTijuca,
   'animal-clinic-bacacheri': animalClinicBacacheri,
   'dra-ana-mello':       draAnaMello,
   'dra-marina-costa':    draMarinaCosta,
