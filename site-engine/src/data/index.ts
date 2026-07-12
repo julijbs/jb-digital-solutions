@@ -17,7 +17,10 @@ import { animalClinicBatel } from './animal-clinic-batel.ts';
 
 import { petCareMorumbi } from './pet-care-morumbi.ts';
 
+import { petCareTatuape } from './pet-care-tatuape.ts';
+
 export const clients: Record<string, ClientData> = {
+  'pet-care-tatuape': petCareTatuape,
   'pet-care-morumbi': petCareMorumbi,
   'animal-clinic-batel': animalClinicBatel,
   'cvp-tijuca': cvpTijuca,
