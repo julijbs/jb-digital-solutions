@@ -15,7 +15,10 @@ import { cvpTijuca } from './cvp-tijuca.ts';
 
 import { animalClinicBatel } from './animal-clinic-batel.ts';
 
+import { petCareMorumbi } from './pet-care-morumbi.ts';
+
 export const clients: Record<string, ClientData> = {
+  'pet-care-morumbi': petCareMorumbi,
   'animal-clinic-batel': animalClinicBatel,
   'cvp-tijuca': cvpTijuca,
   'animal-clinic-bacacheri': animalClinicBacacheri,
