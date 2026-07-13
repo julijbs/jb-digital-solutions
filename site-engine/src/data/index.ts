@@ -25,7 +25,10 @@ import { birdsECia } from './birds-e-cia.ts';
 
 import { espacoVetMk } from './espaco-vet-mk.ts';
 
+import { grupoEstimacaoTelespark } from './grupo-estimacao-telespark.ts';
+
 export const clients: Record<string, ClientData> = {
+  'grupo-estimacao-telespark': grupoEstimacaoTelespark,
   'espaco-vet-mk': espacoVetMk,
   'birds-e-cia': birdsECia,
   'mi-e-au-petcare': miEAuPetcare,
