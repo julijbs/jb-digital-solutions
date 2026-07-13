@@ -23,7 +23,10 @@ import { miEAuPetcare } from './mi-e-au-petcare.ts';
 
 import { birdsECia } from './birds-e-cia.ts';
 
+import { espacoVetMk } from './espaco-vet-mk.ts';
+
 export const clients: Record<string, ClientData> = {
+  'espaco-vet-mk': espacoVetMk,
   'birds-e-cia': birdsECia,
   'mi-e-au-petcare': miEAuPetcare,
   'pet-care-tatuape': petCareTatuape,
