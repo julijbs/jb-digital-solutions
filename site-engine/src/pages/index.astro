@@ -46,7 +46,7 @@ const schemaObj = {
       })),
       "priceRange": client.priceRange,
       "sameAs": [
-        `https://www.instagram.com/${client.instagram.replace('@', '')}`,
+        ...(client.instagram ? [`https://www.instagram.com/${client.instagram.replace('@', '')}`] : []),
         ...(client.gbpUrl ? [client.gbpUrl] : []),
       ],
     },
