@@ -118,6 +118,7 @@ export const draMarinaCosta: ClientData = {
       },
     ],
     faqHeadline: 'O que você talvez queira saber antes de agendar.',
+    faqNote: 'Respondemos as dúvidas mais comuns sobre como funciona o acompanhamento nutricional.',
     faqs: [
       {
         question: 'Quanto custa uma consulta de nutrição em São Paulo?',

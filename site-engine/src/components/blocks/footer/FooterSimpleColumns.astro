@@ -15,10 +15,16 @@ export interface Props {
    * Convenção: /public/<slug>/logo.svg
    */
   logoSrc?:     string;
+  /**
+   * Disclaimer do rodapé. Default genérico; verticais específicas
+   * (ex.: psicologia com CVV 188) passam o texto via copy.footerDisclaimer.
+   */
+  disclaimer?:  string;
 }
 const {
   businessName, credential, city, state,
   address, phone, email, instagram, year, logoSrc,
+  disclaimer = 'Este site é apenas informativo e não substitui atendimento profissional.',
 } = Astro.props;
 ---
 
@@ -49,10 +55,7 @@ const {
       <p class="footer-copyright">
         © {year} {businessName} · {city}, {state}
       </p>
-      <p class="footer-disclaimer">
-        Este site é apenas informativo. Em caso de emergência, ligue <strong>188</strong> (CVV)
-        ou procure o CAPS mais próximo.
-      </p>
+      <p class="footer-disclaimer">{disclaimer}</p>
     </div>
 
   </div>

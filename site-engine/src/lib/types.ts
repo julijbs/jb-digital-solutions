@@ -188,7 +188,11 @@ export interface ClientData {
     processSteps: { name: string; description: string }[];
     testimonials: { quote: string; author: string }[];
     faqHeadline: string;
+    /** Nota curta sob o headline do FAQ. Se omitido, o bloco usa default genérico. */
+    faqNote?: string;
     faqs: { question: string; answer: string }[];
+    /** Disclaimer do rodapé. Se omitido, o bloco usa default genérico. */
+    footerDisclaimer?: string;
     ctaHeadline: string;
     ctaSubtext: string;
     ctaButtonText: string;

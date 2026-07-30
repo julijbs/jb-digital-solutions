@@ -5,8 +5,13 @@
 export interface Props {
   headline: string;
   faqs: Array<{ question: string; answer: string }>;
+  /** Nota sob o headline. Default genérico; personalizável via copy.faqNote no data do cliente. */
+  note?: string;
 }
-const { headline, faqs } = Astro.props;
+const {
+  headline, faqs,
+  note = 'Respondemos as dúvidas mais comuns sobre nosso atendimento e serviços.',
+} = Astro.props;
 ---
 
 <section id="faq" aria-labelledby="faq-headline" class="faq-section">
@@ -16,9 +21,7 @@ const { headline, faqs } = Astro.props;
     <header class="faq-header">
       <span class="section-label">Perguntas frequentes</span>
       <h2 id="faq-headline" class="faq-title">{headline}</h2>
-      <p class="faq-note">
-        Respondemos as dúvidas mais comuns sobre como funciona a psicoterapia.
-      </p>
+      <p class="faq-note">{note}</p>
     </header>
 
     <!-- ── Coluna direita: perguntas ── -->

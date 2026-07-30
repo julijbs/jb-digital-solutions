@@ -129,6 +129,8 @@ export const marcelaBarcellos: ClientData = {
     ],
 
     faqHeadline: 'Perguntas frequentes',
+    faqNote: 'Respondemos as dúvidas mais comuns sobre como funciona a psicoterapia.',
+    footerDisclaimer: 'Este site é apenas informativo. Em caso de emergência, ligue 188 (CVV) ou procure o CAPS mais próximo.',
     faqs: [
       {
         question: 'O que é avaliação neuropsicológica?',

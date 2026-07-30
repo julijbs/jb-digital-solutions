@@ -118,6 +118,8 @@ export const draAnaMello: ClientData = {
       },
     ],
     faqHeadline: 'O que você talvez queira saber antes de agendar.',
+    faqNote: 'Respondemos as dúvidas mais comuns sobre como funciona a psicoterapia.',
+    footerDisclaimer: 'Este site é apenas informativo. Em caso de emergência, ligue 188 (CVV) ou procure o CAPS mais próximo.',
     faqs: [
       {
         question: 'Quanto custa uma sessão de psicologia em São Paulo?',
