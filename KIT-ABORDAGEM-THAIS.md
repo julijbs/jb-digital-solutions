@@ -5,7 +5,7 @@
 
 **Site Novo R$ 1.497** (pagamento único) **+ Presença Ativa R$ 149/mês + add-on Google R$ 97/mês.**
 
-⚠️ Atenção: a Central de Objeções no sistema (registros 14 e 15) ainda cita "Pacote Completo R$ 997, sem mensalidade" — é a oferta antiga. Não usar. Juliana precisa decidir se atualiza os registros (está no handoff).
+✅ Atualizado em 30/07/2026: a Central de Objeções (registros 14 e 15) já reflete a oferta vigente — Site Novo R$ 1.497 (parcelável) + Presença Ativa R$ 149/mês, add-on Gestão de Google R$ 97/mês opcional, sem fidelidade. Pode usar.
 
 ---
 
