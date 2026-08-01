@@ -55,6 +55,30 @@ Não é problema de país — a conta é brasileira (estados BR, fuso America/Sa
 **Caminho:** abrir chamado no suporte Stripe pedindo habilitação do PIX.
 **Antes disso:** resolver a **verificação de telefone por SMS**, que está pendente na conta ("Você precisa verificar o número do telefone via SMS para processar pagamentos no Dashboard"). Bate com a nota `Stripe url/phone/branding/PIX` do MEMORY.md.
 
+### Order bump R$ 27 — 80% montado, travou no upload (01/08)
+
+⚠️ **NÃO ativar o bump antes de concluir o passo 1 abaixo.** Hoje o produto existe mas entrega uma pasta vazia.
+
+**O que descobri antes de montar:** a copy do bump promete "Parecer aprofundado + Ata de reunião extraordinária + Portaria comentada" — versões *avançadas* de três documentos que o Kit já entrega (modelos 05, 06 e 10). Essas versões **não existiam** em lugar nenhum. Sem elas o bump venderia nada.
+
+**Criado do zero** em `~/Desktop/JB Digital Consulting 2026/Kit Documentos Oficiais/Pacote-Avancado/` (+ `.zip` irmão):
+- `Modelo-A1-Parecer-Tecnico-Aprofundado.docx` — 5 seções contra as 3 do Kit; acrescenta EMENTA, fundamentação separada da análise e uma seção de riscos/impactos
+- `Modelo-A2-Ata-de-Reuniao-Extraordinaria.docx` — convocação, quórum, justificativa da extraordinariedade e votação nominal por item com declaração de voto
+- `Modelo-A3-Portaria-Comentada.docx` — cada bloco comentado: competência no preâmbulo, quando CONSIDERANDOS são obrigatórios, hierarquia artigo→parágrafo→inciso→alínea, e por que revogação genérica é vedada pela LC 95/1998
+- `LEIA-ME.txt`
+
+Mesmo padrão visual do Kit (Calibri 12, margens 3/1,5/2/2, dicas em cinza com 💡). **Juliana precisa revisar antes da primeira venda** — são documentos que eu escrevi, não que ela escreveu.
+
+**Montado na Kiwify:**
+- Produto `Pacote Avancado - 3 Modelos Aprofundados`, R$ 27, id `726357f0-8dbb-11f1-b50b-0f47f980b6f6`
+- Grupo `Kit + Pacote Avancado` — todos os módulos, vinculado à oferta de R$ 27
+- Módulo `Pacote Avancado (3 Modelos Aprofundados)` na área de membros do Kit — **vazio**
+
+**Falta (nesta ordem):**
+1. **Subir os 4 arquivos no módulo.** O editor da área de membros congelou em 3 tentativas seguidas (renderer sem responder a screenshot e a executeScript). Fazer manualmente ou em outra sessão.
+2. **Restringir o Grupo A.** Ele está em "todos os módulos", então quem comprou só o Kit passa a ver o módulo novo. Enquanto está vazio é só ruído; depois do upload vira o produto de graça. Editar Grupo A para excluir o módulo do Pacote.
+3. **Configurar o order bump** no checkout do Kit apontando para a oferta de R$ 27. Copy pronta em `CALENDARIO-REELS-SERVIDORSEMTRAVA.md`.
+
 ### ianapratica.net — construído e testado, esperando 1 URL
 
 As duas seções (captura de newsletter + ponte B2B para o Decision Sprint) estão **prontas e verificadas no Chrome**: renderiza certo, zero erro de console, os 6 CTAs do Eduzz intactos. Falta só a URL de inscrição do Beehiiv.
