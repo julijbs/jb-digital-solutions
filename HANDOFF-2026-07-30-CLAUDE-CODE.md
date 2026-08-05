@@ -106,5 +106,5 @@ As duas seções (captura de newsletter + ponte B2B para o Decision Sprint) est�
 ## Notas técnicas
 
 - **Supabase CLI local não enxerga o projeto JB** (`rqiacrclsmixmaqhgicc`) — a conta logada só lista LucidIA. `supabase secrets set` vai falhar; usar o dashboard.
-- **Newsletter:** o handoff do Cowork diz "IA sem Hype", mas o doc-mestre e a Juliana dizem **"IA na Prática"**. Vale o doc-mestre.
+- **Newsletter:** o handoff do Cowork diz "IA na Prática", mas o doc-mestre e a Juliana dizem **"IA na Prática"**. Vale o doc-mestre.
 - **Parcelamento do Kit:** 8x de R$ 5,38 = R$ 43,04 num produto de R$ 37. 8x é a parcela default exibida. Decisão da Juliana, não alterado.

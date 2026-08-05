@@ -43,7 +43,7 @@ Rodar o fluxo completo em Stripe test mode: signup → NewProject → billing (c
 
 ### 4. ianapratica.net — plugar no funil
 O `index.html` é bundle compilado (7,5 MB, conteúdo comprimido — editar via fonte Dyad/Lovable ou cirurgicamente). Duas inserções:
-- Bloco pós-CTA: convite à newsletter **"IA sem Hype"** (captura de e-mail).
+- Bloco pós-CTA: convite à newsletter **"IA na Prática"** (captura de e-mail).
 - Rodapé/seção final: ponte B2B — "Sua empresa precisa decidir onde usar IA? Conheça o JB AI Decision Sprint™ → decision.jbdigitalconsulting.com".
 Commit + push na main = deploy automático Vercel.
 
