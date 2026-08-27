@@ -4,9 +4,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import {
-  ChevronRight, ChevronLeft, Eye, FolderKanban,
+  ChevronRight, ChevronLeft, Eye, FolderKanban, Wand2, Star, Settings, ExternalLink,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const pipelineStages = [
   { key: "intake", label: "Intake", color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" },
@@ -145,7 +145,37 @@ const AdminPipeline = () => {
                         </div>
 
                         {/* Actions */}
-                        <div className="flex flex-wrap gap-1">
+                        <div className="flex flex-wrap gap-1 pt-1">
+                          <Link to={`/admin/projects/${p.id}?tab=gerar-site`}>
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              className="h-7 text-[11px] px-2 gap-1 bg-primary/10 text-primary hover:bg-primary/20"
+                            >
+                              <Wand2 size={11} /> Gerar Site
+                            </Button>
+                          </Link>
+
+                          <Link to={`/admin/projects/${p.id}?tab=gbp`}>
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              className="h-7 text-[11px] px-2 gap-1 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20"
+                            >
+                              <Star size={11} className="fill-amber-400" /> GBP
+                            </Button>
+                          </Link>
+
+                          <Link to={`/admin/projects/${p.id}`}>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 text-[11px] px-1.5 text-muted-foreground hover:text-foreground"
+                            >
+                              <Settings size={11} />
+                            </Button>
+                          </Link>
+
                           {prev && (
                             <Button
                               variant="ghost"
@@ -153,7 +183,7 @@ const AdminPipeline = () => {
                               className="h-7 text-xs px-2"
                               onClick={() => moveProject(p.id, prev)}
                             >
-                              <ChevronLeft size={12} /> Voltar
+                              <ChevronLeft size={12} />
                             </Button>
                           )}
                           {next && (
@@ -163,7 +193,7 @@ const AdminPipeline = () => {
                               className="h-7 text-xs px-2"
                               onClick={() => moveProject(p.id, next)}
                             >
-                              Avançar <ChevronRight size={12} />
+                              <ChevronRight size={12} />
                             </Button>
                           )}
                           <Button

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { Users, FolderKanban, AlertTriangle, TrendingUp, Clock, ArrowRight } from "lucide-react";
+import { Users, FolderKanban, AlertTriangle, TrendingUp, Clock, ArrowRight, Wand2, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -230,11 +230,23 @@ const AdminDashboard = () => {
                     </span>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <Link to={`/admin/projects/${p.id}`}>
-                      <Button variant="ghost" size="sm" className="h-7 text-xs px-2">
-                        Detalhes <ArrowRight size={12} />
-                      </Button>
-                    </Link>
+                    <div className="flex items-center justify-end gap-1.5">
+                      <Link to={`/admin/projects/${p.id}?tab=gerar-site`}>
+                        <Button variant="secondary" size="sm" className="h-7 text-xs px-2 gap-1 bg-primary/10 text-primary hover:bg-primary/20">
+                          <Wand2 size={11} /> Gerar Site
+                        </Button>
+                      </Link>
+                      <Link to={`/admin/projects/${p.id}?tab=gbp`}>
+                        <Button variant="secondary" size="sm" className="h-7 text-xs px-2 gap-1 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20">
+                          <Star size={11} className="fill-amber-400" /> GBP
+                        </Button>
+                      </Link>
+                      <Link to={`/admin/projects/${p.id}`}>
+                        <Button variant="ghost" size="sm" className="h-7 text-xs px-2">
+                          Detalhes <ArrowRight size={12} />
+                        </Button>
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               ))}

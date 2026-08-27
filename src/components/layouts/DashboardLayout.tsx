@@ -19,6 +19,7 @@ import {
   Star,
   Brain,
   Search,
+  Wand2,
 } from "lucide-react";
 import { NotificationBell } from "@/components/NotificationBell";
 import jbLogo from "@/assets/jb-logo.jpg";
@@ -41,8 +42,9 @@ const adminSections = [
   {
     label: "Produção",
     items: [
+      { href: "/admin/gbp", label: "Google Meu Negócio (GBP)", icon: Star },
+      { href: "/admin/pipeline", label: "Pipeline & Gerador", icon: Wand2 },
       { href: "/admin/site-diagnosis", label: "Diagnóstico de Site", icon: Search },
-      { href: "/admin/pipeline", label: "Pipeline", icon: FolderKanban },
     ],
   },
   {

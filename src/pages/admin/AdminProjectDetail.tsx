@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -46,13 +46,23 @@ const TABS: { id: Tab; label: string; icon: typeof LayoutList }[] = [
 const AdminProjectDetail = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
+
+  const tabParam = searchParams.get("tab") as Tab;
+  const [activeTab, setActiveTabState] = useState<Tab>(
+    ["resumo", "gerar-site", "gbp", "revisao"].includes(tabParam) ? tabParam : "resumo"
+  );
+
+  const setActiveTab = (tab: Tab) => {
+    setActiveTabState(tab);
+    setSearchParams({ tab });
+  };
 
   const [project, setProject] = useState<Record<string, unknown> | null>(null);
   const [intake, setIntake] = useState<Record<string, unknown> | null>(null);
   const [review, setReview] = useState<Record<string, unknown> | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<Tab>("resumo");
 
   const fetchAll = async () => {
     if (!projectId) return;

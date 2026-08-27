@@ -27,6 +27,7 @@ import AdminMaintenance from "./pages/admin/AdminMaintenance";
 import AdminFeedback from "./pages/admin/AdminFeedback";
 import AdminChurnAlerts from "./pages/admin/AdminChurnAlerts";
 import AdminSiteDiagnosis from "./pages/admin/AdminSiteDiagnosis";
+import AdminGbp from "./pages/admin/AdminGbp";
 import ClientFeedback from "./pages/ClientFeedback";
 import SiteGbp from "./pages/services/SiteGbp";
 import NotFound from "./pages/NotFound";
@@ -57,6 +58,7 @@ const App = () => (
 
             {/* Admin routes */}
             <Route path="/admin" element={<ProtectedRoute requiredRole="admin_jb"><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin/gbp" element={<ProtectedRoute requiredRole="admin_jb"><AdminGbp /></ProtectedRoute>} />
             <Route path="/admin/clients" element={<ProtectedRoute requiredRole="admin_jb"><AdminClients /></ProtectedRoute>} />
             <Route path="/admin/pipeline" element={<ProtectedRoute requiredRole="admin_jb"><AdminPipeline /></ProtectedRoute>} />
             <Route path="/admin/projects/:projectId" element={<ProtectedRoute requiredRole="admin_jb"><AdminProjectDetail /></ProtectedRoute>} />
