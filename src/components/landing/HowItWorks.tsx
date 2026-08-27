@@ -4,35 +4,35 @@ import { ClipboardList, Paintbrush, ThumbsUp, Rocket, Check } from "lucide-react
 const steps = [
   {
     icon: ClipboardList,
-    title: "Você responde um formulário simples",
-    text: "Nos conta sobre você, sua especialidade, onde atende e como prefere ser encontrado. Sem complicação.",
+    title: "1. Você preenche o onboarding no seu tempo",
+    text: "Sem reuniões ou formulários confusos. Você insere seus dados, serviços, fotos e horários direto no painel.",
   },
   {
     icon: Paintbrush,
-    title: "Construímos todo o seu sistema (até 7 dias)",
-    text: "Site, Perfil Google completo, páginas por serviço e bairro, estrutura para as IAs — tudo configurado e integrado.",
+    title: "2. Orquestramos todo o seu ecossistema (até 7 dias)",
+    text: "Site one-page, Perfil Google otimizado, páginas programáticas por serviço/bairro e dados estruturados para as IAs.",
   },
   {
     icon: ThumbsUp,
-    title: "Você aprova antes de publicar",
-    text: "Revisamos juntos em etapas. Só publicamos quando você estiver 100% satisfeito.",
+    title: "3. Você revisa e aprova no seu painel",
+    text: "Você visualiza o preview interativo e solicita ajustes pontuais se quiser. O site só vai ao ar após sua aprovação total.",
   },
   {
     icon: Rocket,
-    title: "Seu sistema entra no ar e começa a trabalhar",
-    text: "Site publicado, Google ativo, presença nas IAs estruturada — tudo rodando para atrair pacientes.",
+    title: "4. Seu sistema entra no ar e atrai pacientes",
+    text: "Publicação instantânea, Google ativo e presença nas IAs pronta para recomendar seu consultório.",
   },
   {
     icon: Check,
-    title: "Acompanhamento mensal para manter o crescimento",
-    text: "Monitoramos sua posição todo mês, ajustamos o que precisa e garantimos que você continue crescendo.",
+    title: "5. Acompanhamento contínuo e relatórios ao vivo",
+    text: "Monitore visualizações, ligações e cliques no seu painel em tempo real, com otimizações mensais.",
   },
 ];
 
 const notes = [
-  "Setup: até 7 dias após o onboarding",
-  "Comunicação: via WhatsApp e painel do cliente",
-  "Revisões: incluídas no processo",
+  "100% Assíncrono · Sem reuniões de alinhamento",
+  "Entrega: em até 7 dias úteis",
+  "Revisões e ajustes inclusos antes do ar",
 ];
 
 export const HowItWorks = () => {

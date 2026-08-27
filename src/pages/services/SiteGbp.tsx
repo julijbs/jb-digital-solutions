@@ -14,6 +14,7 @@ import { GuaranteeSection } from "@/components/landing/GuaranteeSection";
 import { FAQSection } from "@/components/landing/FAQSection";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { MobileCTA } from "@/components/landing/MobileCTA";
+import { FreeAuditSection } from "@/components/landing/FreeAuditSection";
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -70,6 +71,7 @@ const orgSchema = {
 const navItems = [
   { label: "O Sistema", href: "#solucao" },
   { label: "Presença em IA", href: "#aeo" },
+  { label: "Auditoria Grátis", href: "#auditoria" },
   { label: "Como funciona", href: "#como-funciona" },
   { label: "Planos", href: "#planos" },
   { label: "FAQ", href: "#faq" },
@@ -90,7 +92,7 @@ const SiteGbp = () => (
     <SiteHeader
       navItems={navItems}
       ctaSecondary={{ label: "Ver planos", href: "#planos" }}
-      ctaPrimary={{ label: "Quero atrair mais pacientes", href: "/signup" }}
+      ctaPrimary={{ label: "Iniciar Meu Projeto", href: "/signup?plan=site_novo" }}
     />
 
     <main>
@@ -99,6 +101,7 @@ const SiteGbp = () => (
       <SolutionSection />
       <AEOSection />
       <GBPReviewsWidget />
+      <FreeAuditSection />
       <HowItWorks />
       <ForYouSection />
       <PricingSection />

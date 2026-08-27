@@ -1,21 +1,21 @@
 import { motion } from "framer-motion";
-import { Scale, Eye, HeartHandshake } from "lucide-react";
+import { Scale, Shield, HeartHandshake } from "lucide-react";
 
 const pillars = [
   {
-    icon: Scale,
-    title: "Ética Profissional",
-    text: "Total respeito às diretrizes do seu conselho profissional e às políticas do Google.",
+    icon: Shield,
+    title: "Garantia de 100% de Aprovação",
+    text: "Risco zero: seu site só é publicado após sua aprovação final na área do cliente. Fazemos todos os ajustes necessários.",
   },
   {
-    icon: Eye,
-    title: "Transparência",
-    text: "Sem promessas mirabolantes. Entregamos base técnica sólida, não milagres de tráfego.",
+    icon: Scale,
+    title: "Ética e Conformidade",
+    text: "Total respeito às diretrizes do seu conselho profissional (CFP, CFO, CRM, etc.) e às políticas do Google.",
   },
   {
     icon: HeartHandshake,
-    title: "Suporte Humanizado",
-    text: "Atendimento próximo, claro e sem robotização. Você não é só mais um número.",
+    title: "100% no Seu Tempo",
+    text: "Sem calls ou reuniões que travam sua agenda. Você responde pelo painel e nós entregamos em até 7 dias úteis.",
   },
 ];
 

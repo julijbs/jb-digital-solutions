@@ -32,6 +32,9 @@ const Onboarding = () => {
   // Form state
   const [hasGbp, setHasGbp] = useState<string>("");
   const [gbpUrl, setGbpUrl] = useState<string>("");
+  const [gbpManagerInvite, setGbpManagerInvite] = useState(false);
+  const [gbpPeakHours, setGbpPeakHours] = useState("");
+  const [gbpKeywords, setGbpKeywords] = useState("");
   const [projectPlan, setProjectPlan] = useState<string>(SITE_NOVO.key);
   const [business, setBusiness] = useState({
     name: "", description: "", phone: "", email: "", instagram: "", has_site: "no", site_url: "",
@@ -85,6 +88,9 @@ const Onboarding = () => {
         if (gd?.gbp_url) setGbpUrl(gd.gbp_url);
         else if (projectData?.gbp_url) setGbpUrl(projectData.gbp_url);
         if (gd?.google_connected) setGoogleConnected(true);
+        if (gd?.manager_invited) setGbpManagerInvite(true);
+        if (gd?.peak_hours) setGbpPeakHours(gd.peak_hours);
+        if (gd?.search_terms) setGbpKeywords(gd.search_terms);
         if (bd) setBusiness((prev) => ({ ...prev, ...bd }));
         if (sd) setLocation((prev) => ({ ...prev, ...sd }));
         if (svd) setServices((prev) => ({ ...prev, ...svd }));
@@ -113,7 +119,14 @@ const Onboarding = () => {
       .from("client_intake")
       .upsert({
         project_id: projectId,
-        google_data: { has_gbp: hasGbp === "yes", gbp_url: gbpUrl, google_connected: googleConnected },
+        google_data: {
+          has_gbp: hasGbp === "yes",
+          gbp_url: gbpUrl,
+          google_connected: googleConnected,
+          manager_invited: gbpManagerInvite,
+          peak_hours: gbpPeakHours,
+          search_terms: gbpKeywords,
+        },
         business_data: business as any,
         schedule_data: location as any,
         services_data: services as any,
@@ -141,12 +154,39 @@ const Onboarding = () => {
   const goBack = () => setCurrentStep(Math.max(currentStep - 1, 0));
 
   const handleComplete = async () => {
+    setSaving(true);
     await saveProgress(5);
+
+    // Update project status to content_ready
     await supabase
       .from("projects")
-      .update({ status: "intake", ...(gbpUrl ? { gbp_url: gbpUrl } : {}) })
+      .update({
+        status: "content_ready",
+        ...(gbpUrl ? { gbp_url: gbpUrl } : {}),
+      })
       .eq("id", projectId);
-    toast({ title: "Onboarding completo!", description: "Seus dados foram enviados para análise." });
+
+    // Trigger AI orchestration in the background to pre-generate copy, schema & HTML
+    supabase.functions
+      .invoke("generate-site-ai", {
+        body: {
+          projectId,
+          template: "elegant-minimal",
+          colorScheme: "blue-professional",
+        },
+      })
+      .then(({ error }) => {
+        if (error) console.warn("Background AI site generation note:", error.message);
+      })
+      .catch((err) => console.warn("Background generation error:", err));
+
+    // Notify client
+    toast({
+      title: "Onboarding concluído com sucesso! 🎉",
+      description: "Nossos agentes de IA já estão estruturando seu site e presença no Google.",
+    });
+
+    setSaving(false);
     navigate("/dashboard");
   };
 
@@ -309,15 +349,55 @@ const Onboarding = () => {
                 ))}
               </div>
               {hasGbp === "yes" && (
-                <div className="space-y-1 pt-2">
-                  <Label>Link do perfil no Google</Label>
-                  <Input
-                    type="url"
-                    placeholder="https://maps.app.goo.gl/..."
-                    value={gbpUrl}
-                    onChange={(e) => setGbpUrl(e.target.value)}
-                  />
-                  <p className="text-xs text-muted-foreground">Cole o link completo do seu perfil no Google Meu Negócio</p>
+                <div className="space-y-4 pt-2 border-t border-border/50">
+                  <div className="space-y-1.5">
+                    <Label>Link do perfil no Google Maps</Label>
+                    <Input
+                      type="url"
+                      placeholder="https://maps.app.goo.gl/..."
+                      value={gbpUrl}
+                      onChange={(e) => setGbpUrl(e.target.value)}
+                    />
+                    <p className="text-xs text-muted-foreground">Cole o link de compartilhamento do seu perfil no Google Maps</p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label>Horários de maior movimento / Pico</Label>
+                    <Input
+                      placeholder="Ex.: Terças e quintas das 14h às 19h, sábados de manhã"
+                      value={gbpPeakHours}
+                      onChange={(e) => setGbpPeakHours(e.target.value)}
+                    />
+                    <p className="text-xs text-muted-foreground">Usamos para configurar os horários de pico e otimizar a atração de pacientes</p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label>Principais buscas dos seus pacientes</Label>
+                    <Input
+                      placeholder="Ex.: Dentista especialista em implante, tratamento de canal perto de mim"
+                      value={gbpKeywords}
+                      onChange={(e) => setGbpKeywords(e.target.value)}
+                    />
+                    <p className="text-xs text-muted-foreground">Termos ou dúvidas que as pessoas pesquisam antes de marcar com você</p>
+                  </div>
+
+                  <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        id="manager-invite"
+                        checked={gbpManagerInvite}
+                        onChange={(e) => setGbpManagerInvite(e.target.checked)}
+                        className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                      />
+                      <label htmlFor="manager-invite" className="text-xs font-semibold text-foreground cursor-pointer">
+                        Convite de Administrador (Opcional - Recomendado)
+                      </label>
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed pl-6">
+                      Para otimizarmos seu perfil diretamente, adicione nosso e-mail <strong className="text-foreground">contato@jbdigitalconsulting.com</strong> como Administrador no seu Google Meu Negócio (Gerenciar perfil &gt; Usuários &gt; Adicionar).
+                    </p>
+                  </div>
                 </div>
               )}
             </div>

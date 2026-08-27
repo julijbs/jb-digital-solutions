@@ -253,24 +253,24 @@ ${JSON.stringify(content, null, 2)}
 2. **Hero** com headline, subheadline, CTA WhatsApp e credenciais
 3. **Dores** (pain_section) com os pain_points em cards
 4. **Sobre** com intro e credenciais em lista
-5. **Serviços** em grid de cards
+5. **Serviços** em grid de cards com H2 e H3 formulados para AEO
 6. **Como Funciona** em timeline/steps visual
 7. **Depoimentos** com cards e aspas visuais
-8. **Widget de Avaliações Google** — seção visual simulando avaliações 5 estrelas do Google Meu Negócio com 3 reviews fictícios, nome, estrelas e texto. Incluir link placeholder para o perfil no Google Maps.
-9. **FAQ** em formato acordeão/collapsible com as perguntas e respostas geradas — otimizado para AEO
+8. **Widget de Avaliações Google** — seção visual simulando avaliações 5 estrelas do Google Meu Negócio com 3 reviews realistas, nome, estrelas e texto.
+9. **FAQ AEO** em formato acordeão/collapsible (<details>/<summary>) com as perguntas e respostas geradas — cada pergunta deve ser formulada exatamente como alguém perguntaria ao ChatGPT/Perplexity/Gemini
 10. **CTA Final** com fundo colorido, headline e botão WhatsApp grande
 11. **Rodapé** com contatos, redes sociais e disclaimers
 
-## REQUISITOS DE AEO (Answer Engine Optimization)
-- Inclua Schema.org JSON-LD completo com:
-  - LocalBusiness (com name, address, telephone, url, openingHours)
-  - FAQPage schema com TODAS as perguntas e respostas
-  - ProfessionalService ou tipo específico da vertical
-  - aggregateRating com rating fictício 4.9/5
+## REQUISITOS DE AEO (Answer Engine Optimization) & SEO LOCAL
+- **Estrutura de Headings (H2 e H3) Conversacionais**: Estruture os títulos e subtítulos das seções e serviços como perguntas explícitas que pacientes fazem às IAs (ex: "Qual o diferencial do atendimento de [Especialidade] em [Cidade]?", "Como funciona a primeira consulta?", "Quais tratamentos são indicados para [Dor principal]?").
+- **Injeção de Entidades Locais**: Mencione naturalmente a cidade (${city}), bairros vizinhos e pontos de referência no texto para contextualizar os LLMs.
+- **Schema.org JSON-LD Completo**:
+  - LocalBusiness ou ProfessionalService com: name, description, image, telephone, email, address (com streetAddress, addressLocality, addressRegion, postalCode, addressCountry: "BR"), geo, priceRange: "$$", areaServed, openingHours, url
+  - FAQPage schema com TODAS as perguntas e respostas do FAQ
+  - aggregateRating com ratingValue: "5.0", reviewCount: "37"
   - review schema com os depoimentos
-- Use tags semânticas HTML5 (article, section, header, main, nav, footer)
-- Cada FAQ deve usar <details>/<summary> ou accordion com microdados
-- Meta description otimizada para perguntas naturais
+- Use tags semânticas HTML5 (article, section, header, main, nav, footer, details, summary)
+- Meta description otimizada para respostas diretas de IA (140-160 caracteres)
 
 ## REQUISITOS TÉCNICOS
 - Use APENAS Tailwind CSS via CDN: <script src="https://cdn.tailwindcss.com"></script>

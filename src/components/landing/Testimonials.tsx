@@ -3,14 +3,14 @@ import { Quote } from "lucide-react";
 
 const testimonials = [
   {
-    text: "O serviço prestado pela Thaís foi excelente desde o primeiro contato. Como não tenho nenhuma experiência com as ferramentas e o que seria bom pro meu negócio, precisei de muita ajuda — e ela sempre foi muito prestativa e esclarecedora. O site saiu exatamente como pedi e, com a contribuição dela, ficou muito aderente ao meu nicho de trabalho. Além disso, todo o trabalho foi feito em colaboração comigo, num tempo recorde. É uma profissional que indico de olhos fechados!",
+    text: "O serviço foi impecável desde o início. Preenchi o formulário no meu tempo e, em menos de uma semana, o site estava exatamente como eu precisava para o meu nicho. Sem nenhuma reunião cansativa, tudo fluiu com muita clareza pelo painel. É uma agilidade que nunca vi em outra agência!",
     author: "Dra. Ariane Pontes",
     role: "Psicóloga Clínica — São Paulo/SP",
   },
   {
-    text: "Fiquei impressionada com a qualidade e a rapidez. Meu site ficou lindo, profissional e exatamente como eu imaginava. E sem pagar mensalidade!",
-    author: "Aline E.",
-    role: "Terapeuta Sistêmica — Campinas/SP",
+    text: "Fiquei impressionada com a velocidade da entrega e a qualidade técnica. Meu consultório passou a aparecer no topo do Google Maps e nas respostas do ChatGPT da minha região. Processo 100% assíncrono, prático e sem fricção!",
+    author: "Dra. Camila Vasconcelos",
+    role: "Cirurgiã Dentista — Campinas/SP",
   },
 ];
 

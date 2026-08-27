@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 
 const badges = [
-  "Setup em até 7 dias",
-  "Processo de aprovação em etapas",
-  "Acompanhamento mensal incluso",
+  "Setup em até 7 dias úteis",
+  "100% Assíncrono · Sem reuniões",
+  "Aprovação total antes de ir ao ar",
 ];
 
 export const FinalCTA = () => {
@@ -25,21 +25,21 @@ export const FinalCTA = () => {
             Seu próximo paciente está pesquisando agora.{" "}
             <span className="gold-gradient-text">Você vai aparecer?</span>
           </h2>
-          <p className="mt-6 text-lg text-muted-foreground">
-            Em até 7 dias, toda a infraestrutura do seu posicionamento online está no ar —
+          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+            Em até 7 dias úteis, toda a infraestrutura do seu posicionamento online está no ar —
             site, Perfil Google e presença nas IAs trabalhando juntos para atrair pacientes
-            de forma orgânica, todo dia.
+            de forma orgânica, sem que você precise perder tempo em reuniões.
           </p>
 
           <div className="mt-8">
-            <Button variant="hero" size="default" className="gap-2 text-sm md:text-base md:px-8 md:py-6" onClick={() => navigate("/signup")}>
-              Quero atrair mais pacientes <ArrowRight size={16} />
+            <Button variant="hero" size="default" className="gap-2 text-sm md:text-base md:px-8 md:py-6" onClick={() => navigate("/signup?plan=site_novo")}>
+              Iniciar Meu Projeto Agora <ArrowRight size={16} />
             </Button>
           </div>
 
           <div className="mt-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-x-6">
             {badges.map((badge) => (
-              <span key={badge} className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <span key={badge} className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground">
                 <Check size={14} className="shrink-0 text-primary" />
                 {badge}
               </span>
