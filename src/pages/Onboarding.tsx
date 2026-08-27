@@ -226,8 +226,8 @@ const Onboarding = () => {
   const handleGoogleConnect = async () => {
     setGoogleConnecting(true);
     try {
-      const { lovable } = await import("@/integrations/lovable/index");
-      const { error } = await lovable.auth.signInWithOAuth("google", {
+      const { auth } = await import("@/integrations/auth/index");
+      const { error } = await auth.signInWithOAuth("google", {
         redirect_uri: window.location.origin,
         extraParams: { prompt: "select_account" },
       });

@@ -4,7 +4,7 @@ import { ServiceTimeline, type TimelineStage } from "./ServiceTimeline";
 const clientStages: TimelineStage[] = [
   { key: "intake|onboarding_in_progress",                                               label: "Onboarding",     description: "Dados do negócio coletados" },
   { key: "content_ready",                                                                label: "Conteúdo pronto", description: "Textos e informações prontos" },
-  { key: "lovable_prompt_ready|lovable_site_generated|repo_created|vercel_deployed_preview|qa_passed", label: "Criando seu site", description: "Nosso time está construindo seu site" },
+  { key: "ai_prompt_ready|ai_site_generated|repo_created|vercel_deployed_preview|qa_passed", label: "Criando seu site", description: "Nosso time está construindo seu site" },
   { key: "client_review",                                                                label: "Sua revisão",    description: "Revise e aprove seu site" },
   { key: "vercel_deployed_prod|handoff_ready|handoff_done",                             label: "Publicado",      description: "Seu site está no ar!" },
   { key: "monthly_active",                                                               label: "Acompanhamento", description: "Manutenção e otimização contínua" },

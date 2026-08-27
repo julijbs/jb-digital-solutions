@@ -7,8 +7,8 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY")!;
-const AI_GATEWAY = "https://ai.gateway.lovable.dev/v1/chat/completions";
+const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY")!;
+const AI_GATEWAY = `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions`;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -96,7 +96,7 @@ ${customInstructions ? `\n**INSTRUÇÕES PERSONALIZADAS:**\n${customInstructions
 ${nicheBoost[vertical] || ""}
 
 **TAREFA:**
-Gere textos para uma landing page com nível de direção criativa comparável ao que seria feito manualmente no Lovable.
+Gere textos para uma landing page com nível de direção criativa comparável ao de um copywriter e estrategista digital sênior.
 O resultado NÃO pode soar genérico, corporativo demais, nem como template comum de IA.
 
 A página precisa seguir esta lógica narrativa:
@@ -158,11 +158,11 @@ A página precisa seguir esta lógica narrativa:
     const resp = await fetch(AI_GATEWAY, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        Authorization: `Bearer ${GEMINI_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "gemini-2.5-flash",
         messages: [
           { role: "system", content: "Você é um copywriter expert. Retorne APENAS JSON válido, sem markdown ou explicações." },
           { role: "user", content: prompt },

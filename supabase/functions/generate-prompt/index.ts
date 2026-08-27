@@ -10,8 +10,8 @@ serve(async (req) => {
 
   try {
     const { intake_data, vertical, action } = await req.json();
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+    const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
+    if (!GEMINI_API_KEY) throw new Error("GEMINI_API_KEY is not configured");
 
     let systemPrompt = "";
     let userPrompt = "";
@@ -25,9 +25,7 @@ serve(async (req) => {
 
       const bd = intake_data.business_data || {};
       const sd = intake_data.schedule_data || {};
-      const svd = intake_data.services_data || {};
-
-      systemPrompt = `Você é um especialista em criação de prompts ultra-detalhados para gerar projetos Astro completos. Seu objetivo é gerar um prompt COMPLETO e EXTENSO que, ao ser colado em um editor de código IA (como Lovable ou Cursor), produza TODOS os arquivos de um projeto Astro funcional com landing page profissional e visualmente impactante.
+      systemPrompt = `Você é um especialista em criação de prompts ultra-detalhados para gerar projetos Astro completos. Seu objetivo é gerar um prompt COMPLETO e EXTENSO que, ao ser colado em um editor de código IA (como Cursor ou Antigravity), produza TODOS os arquivos de um projeto Astro funcional com landing page profissional e visualmente impactante.
 
 O prompt gerado DEVE seguir EXATAMENTE este formato e nível de detalhe:
 
@@ -323,14 +321,14 @@ Gere o prompt completo com TODAS as seções detalhadas, pronto para colar em um
       userPrompt = `Gere o content pack para: ${bd.name || "Profissional"}, ${svd.main_category || vertical}, em ${sd.city || "cidade não informada"}. Serviços: ${svd.services_tags || "não informado"}. Descrição: ${bd.description || "não informado"}.`;
     }
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/openai/chat/completions`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        Authorization: `Bearer ${GEMINI_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "gemini-2.5-flash",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },

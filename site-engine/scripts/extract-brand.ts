@@ -6,7 +6,7 @@
  *     --primary "#3E5C76" --accent "#C08552" \
  *     --font-display Fraunces --font-body Inter
  *
- * MODO VISÃO (requer LOVABLE_API_KEY no ambiente):
+ * MODO VISÃO (requer GEMINI_API_KEY no ambiente):
  *   tsx scripts/extract-brand.ts --logo https://example.com/logo.png \
  *     [--font-display Fraunces --font-body Inter]
  *   (--font-display/body são opcionais no modo visão; o modelo sugere fontes se omitidos)
@@ -37,7 +37,7 @@ const accentArg   = getArg('accent');
 const fontDisplay = getArg('font-display');
 const fontBody    = getArg('font-body');
 
-// ── Vision mode: Lovable AI Gateway (Gemini 2.5 Flash) ──────────────────────
+// ── Vision mode: Gemini API (Gemini 2.5 Flash) ─────────────────────────────
 
 interface VisionResult {
   primary:     string;
@@ -47,11 +47,11 @@ interface VisionResult {
 }
 
 async function visionExtract(logoUrl: string): Promise<VisionResult> {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    console.error('\n⚠️  LOVABLE_API_KEY não encontrada no ambiente.');
+    console.error('\n⚠️  GEMINI_API_KEY não encontrada no ambiente.');
     console.error('   Defina a variável e re-execute:');
-    console.error('     LOVABLE_API_KEY=xxx tsx scripts/extract-brand.ts --logo <url>');
+    console.error('     GEMINI_API_KEY=xxx tsx scripts/extract-brand.ts --logo <url>');
     console.error('   Ou use o modo manual (sem rede):');
     console.error('     tsx scripts/extract-brand.ts --primary "#hex" --accent "#hex"');
     process.exit(1);
@@ -59,14 +59,14 @@ async function visionExtract(logoUrl: string): Promise<VisionResult> {
 
   console.error('🔍 Analisando logo via Gemini 2.5 Flash...\n');
 
-  const resp = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+  const resp = await fetch('https://generativelanguage.googleapis.com/v1beta/openai/chat/completions', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'google/gemini-2.5-flash',
+      model: 'gemini-2.5-flash',
       messages: [
         {
           role: 'system',

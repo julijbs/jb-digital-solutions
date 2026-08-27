@@ -9,7 +9,7 @@ const corsHeaders = {
 // Map project status to email template
 const STATUS_EMAIL_MAP: Record<string, string> = {
   content_ready: "onboarding_complete",
-  lovable_site_generated: "site_ready_review",
+  ai_site_generated: "site_ready_review",
   client_review: "site_ready_review",
   vercel_deployed_prod: "site_published",
   handoff_done: "handoff_delivery",
@@ -18,7 +18,7 @@ const STATUS_EMAIL_MAP: Record<string, string> = {
 // Statuses that create a notification for the client
 const NOTIFICATION_MAP: Record<string, { title: string; message: string }> = {
   content_ready: { title: "Conteúdo pronto!", message: "O conteúdo do seu projeto está pronto. Estamos criando seu site." },
-  lovable_site_generated: { title: "Site gerado!", message: "Seu site foi gerado com sucesso. Em breve estará disponível para revisão." },
+  ai_site_generated: { title: "Site gerado!", message: "Seu site foi gerado com sucesso. Em breve estará disponível para revisão." },
   client_review: { title: "Site pronto para revisão!", message: "Seu site está pronto! Acesse a página de Revisão para aprovar ou solicitar ajustes." },
   vercel_deployed_prod: { title: "Site publicado! 🎉", message: "Seu site foi publicado e está no ar!" },
   handoff_done: { title: "Projeto entregue! 🎉", message: "Seu projeto foi entregue com sucesso. Obrigado pela confiança!" },
@@ -122,7 +122,7 @@ serve(async (req) => {
     const clientName = profile?.full_name || client.business_name;
     
     // Use the origin URL from the request, or the preview URL, or production URL
-    const dashboardUrl = origin_url || Deno.env.get("APP_URL") || "https://id-preview--b1bbd5ec-f6d3-4448-a1bf-92ebf61c21db.lovable.app";
+    const dashboardUrl = origin_url || Deno.env.get("APP_URL") || "https://id-preview--b1bbd5ec-f6d3-4448-a1bf-92ebf61c21db.jbdigitalsystem.com";
 
     // Send email
     const sendRes = await fetch(`${baseUrl}/functions/v1/send-lifecycle-email`, {
