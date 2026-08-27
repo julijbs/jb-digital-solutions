@@ -18,6 +18,7 @@ export interface ClientProject {
 export function useClientProjects() {
   const { user } = useAuth();
   const [projects, setProjects] = useState<ClientProject[]>([]);
+  const [clientId, setClientId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -36,6 +37,8 @@ export function useClientProjects() {
         return;
       }
 
+      setClientId(client.id);
+
       // 2. fetch all projects for this client
       const { data: rows } = await supabase
         .from("projects")
@@ -49,6 +52,43 @@ export function useClientProjects() {
 
     fetchAll();
   }, [user]);
+
+  // Realtime: atualiza quando o admin muda o status do projeto
+  useEffect(() => {
+    if (!clientId) return;
+
+    const channel = supabase
+      .channel(`client-projects-${clientId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "projects",
+          filter: `client_id=eq.${clientId}`,
+        },
+        (payload) => {
+          if (payload.eventType === "UPDATE") {
+            setProjects((prev) =>
+              prev.map((p) =>
+                p.id === payload.new.id
+                  ? ({ ...p, ...payload.new } as ClientProject)
+                  : p
+              )
+            );
+          } else if (payload.eventType === "INSERT") {
+            setProjects((prev) => [payload.new as ClientProject, ...prev]);
+          } else if (payload.eventType === "DELETE") {
+            setProjects((prev) => prev.filter((p) => p.id !== payload.old.id));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [clientId]);
 
   return { projects, loading };
 }
