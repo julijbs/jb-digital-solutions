@@ -2,7 +2,6 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "routes": [
-    { "src": "^/$",                     "dest": "https://jbds-marketing.vercel.app/" },
     { "src": "^/para$",                 "dest": "https://jbds-marketing.vercel.app/para" },
     { "src": "^/para(/.*)",             "dest": "https://jbds-marketing.vercel.app/para$1" },
     { "src": "^/blog$",                 "dest": "https://jbds-marketing.vercel.app/blog" },
