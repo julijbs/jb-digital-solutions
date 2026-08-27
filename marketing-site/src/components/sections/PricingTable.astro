@@ -1,20 +1,20 @@
 ---
-import { plan, addon, whatsappUrl } from '../../data/pricing.ts';
-export interface Props { whatsappText: string; }
-const { whatsappText } = Astro.props;
-const wUrl = `${whatsappUrl}?text=${encodeURIComponent(whatsappText)}`;
-const addonUrl = `${whatsappUrl}?text=${encodeURIComponent(`Olá! Quero saber sobre o add-on ${addon.name}.`)}`;
+import { plan, addon } from '../../data/pricing.ts';
+const siteNovoUrl = "/signup?plan=site_novo";
+const addonUrl = "/signup?plan=gestao_google";
 ---
 <section class="section-pricing" id="planos">
   <div class="section-wrap">
     <div class="section-divider" style="margin-bottom:4rem"></div>
     <div class="pricing-header">
-      <h2>Uma oferta, sem letra miúda</h2>
-      <p>Um setup para construir o site. Uma mensalidade para mantê-lo vivo e no topo.</p>
+      <div class="pricing-pill">Investimento Transparente</div>
+      <h2>Uma oferta clara, sem surpresas</h2>
+      <p>Um setup único para construir seu ecossistema. Uma mensalidade acessível para mantê-lo vivo, seguro e gerando pacientes.</p>
     </div>
 
     <div class="pricing-grid">
       <div class="pricing-card pricing-card--featured">
+        <div class="featured-badge">Mais Escolhido</div>
         <h3>{plan.name}</h3>
         <p class="pricing-tagline">{plan.tagline}</p>
         <div class="pricing-values">
@@ -35,9 +35,10 @@ const addonUrl = `${whatsappUrl}?text=${encodeURIComponent(`Olá! Quero saber so
             </li>
           ))}
         </ul>
-        <a href={wUrl} class="btn btn-primary" target="_blank" rel="noopener">
-          {plan.cta}
+        <a href={siteNovoUrl} class="btn btn-primary">
+          {plan.cta} &rarr;
         </a>
+        <p class="pricing-footnote">Início imediato · Onboarding guiado no painel</p>
       </div>
 
       <div class="pricing-card pricing-card--addon">
@@ -58,16 +59,30 @@ const addonUrl = `${whatsappUrl}?text=${encodeURIComponent(`Olá! Quero saber so
             </li>
           ))}
         </ul>
-        <a href={addonUrl} class="btn btn-outline" target="_blank" rel="noopener">
-          {addon.cta}
+        <a href={addonUrl} class="btn btn-outline">
+          {addon.cta} &rarr;
         </a>
+        <p class="pricing-footnote">Otimização contínua do Perfil Google</p>
       </div>
     </div>
 
-    <div class="pricing-badges">
-      <span>💳 PIX ou Cartão (até 12x)</span>
-      <span>⚡ Setup em até 7 dias</span>
-      <span>✅ Aprovação em etapas</span>
+    <div class="pricing-guarantees-grid">
+      <div class="guarantee-item">
+        <strong>🛡️ Garantia de Aprovação</strong>
+        <p>Seu site só vai ao ar com 100% da sua aprovação na etapa de revisão.</p>
+      </div>
+      <div class="guarantee-item">
+        <strong>⚡ 100% Assíncrono</strong>
+        <p>Sem reuniões de alinhamento. Tudo acompanhado no seu painel.</p>
+      </div>
+      <div class="guarantee-item">
+        <strong>⏱️ Entrega em 7 Dias</strong>
+        <p>Ecossistema no ar em até 7 dias úteis após o onboarding.</p>
+      </div>
+      <div class="guarantee-item">
+        <strong>💳 Pagamento Facilitado</strong>
+        <p>PIX ou Cartão em até 12x com ativação imediata.</p>
+      </div>
     </div>
   </div>
 </section>

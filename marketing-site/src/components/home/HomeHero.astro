@@ -1,30 +1,37 @@
 ---
 // HomeHero.astro — Homepage hero section
-import { whatsappUrl } from '../../data/pricing.ts';
-const wUrl = `${whatsappUrl}?text=${encodeURIComponent('Olá! Quero atrair mais clientes. Pode me contar como funciona?')}`;
+const signupUrl = "/signup?plan=site_novo";
 ---
 <section class="home-hero">
   <div class="section-wrap hero-inner">
     <div class="hero-content">
+      <div class="hero-tag">
+        <span class="pulse-dot"></span>
+        Infraestrutura Completa de Presença Online em 7 Dias
+      </div>
       <h1>
         Você é excelente no que faz.<br />
         <span class="gold-text">Mas quem precisa de você ainda não te encontra online.</span>
       </h1>
       <p class="hero-sub">
-        O JB Digital System constrói seu posicionamento online completo — site, Perfil Google
-        e presença nas IAs — tudo integrado, para que novos clientes te encontrem
-        organicamente, todo dia, sem depender de indicação.
+        O JB Digital System constrói seu ecossistema digital completo — site otimizado, Perfil Google
+        e presença nas respostas de IAs — tudo integrado de forma <strong>100% assíncrona</strong>, para que novos pacientes te encontrem
+        organicamente, todo dia, sem reuniões e sem perda de tempo.
       </p>
       <div class="hero-cta">
-        <a href={wUrl} class="btn btn-primary hero-btn" target="_blank" rel="noopener">
-          Quero atrair mais clientes
+        <a href={signupUrl} class="btn btn-primary hero-btn">
+          Iniciar Meu Projeto
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
       <ul class="hero-badges" role="list">
         <li>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          Setup em até 7 dias
+          Setup em até 7 dias úteis
+        </li>
+        <li>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          100% Assíncrono · Sem reuniões
         </li>
         <li>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
@@ -32,11 +39,7 @@ const wUrl = `${whatsappUrl}?text=${encodeURIComponent('Olá! Quero atrair mais 
         </li>
         <li>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          Acompanhamento mensal incluso
-        </li>
-        <li>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          Sem depender de redes sociais
+          Aprovação total antes de ir ao ar
         </li>
       </ul>
     </div>

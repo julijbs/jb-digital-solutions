@@ -42,7 +42,7 @@ export const plan: Plan = {
     'Hospedagem e manutenção inclusas na Presença Ativa',
     'Relatório mensal de posições no Google',
   ],
-  cta: 'Falar agora',
+  cta: 'Contratar Sistema Completo',
   schemaSetup: '1497',
   schemaMonthly: '149',
 };
@@ -56,7 +56,7 @@ export const addon: Addon = {
     'Monitoramento e postagens mensais',
     'Relatório mensal de posicionamento local',
   ],
-  cta: 'Quero o add-on',
+  cta: 'Adicionar Gestão Google',
   schemaMonthly: '97',
 };
 

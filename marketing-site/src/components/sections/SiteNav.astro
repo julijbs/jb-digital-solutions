@@ -9,7 +9,7 @@ export interface Props {
 }
 
 const { currentPath = '/', navItems } = Astro.props;
-const wUrl = `${whatsappUrl}?text=${encodeURIComponent('Olá! Vim pelo site da JB Digital e quero saber mais.')}`;
+const signupUrl = "/signup?plan=site_novo";
 
 const defaultNavLinks: NavItem[] = [
   { label: 'Para quem é', href: '/#para-quem' },
@@ -39,8 +39,8 @@ const navLinks = navItems ?? defaultNavLinks;
     </nav>
 
     <div class="nav-cta">
-      <a href={wUrl} class="btn btn-primary" target="_blank" rel="noopener">
-        Falar agora
+      <a href={signupUrl} class="btn btn-primary">
+        Iniciar Projeto
       </a>
     </div>
   </div>
