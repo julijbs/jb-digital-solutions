@@ -1,3 +1,5 @@
+import Checkout from "./pages/Checkout";
+import { PaidOnboardingGate } from "@/components/PaidOnboardingGate";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -45,12 +47,13 @@ const App = () => (
             <Route path="/" element={<SiteGbp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/checkout" element={<Checkout />} />
 
             {/* Client routes */}
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/dashboard/projects" element={<ProtectedRoute><ClientProjects /></ProtectedRoute>} />
             <Route path="/dashboard/new-project" element={<ProtectedRoute><NewProject /></ProtectedRoute>} />
-            <Route path="/dashboard/onboarding/:projectId" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
+            <Route path="/dashboard/onboarding/:projectId" element={<ProtectedRoute><PaidOnboardingGate><Onboarding /></PaidOnboardingGate></ProtectedRoute>} />
             <Route path="/dashboard/reports" element={<ProtectedRoute><ClientReports /></ProtectedRoute>} />
             <Route path="/dashboard/billing" element={<ProtectedRoute><ClientBilling /></ProtectedRoute>} />
             <Route path="/dashboard/review" element={<ProtectedRoute><ClientReview /></ProtectedRoute>} />

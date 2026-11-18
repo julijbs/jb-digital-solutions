@@ -102,13 +102,13 @@ const ClientBilling = () => {
       const { data, error } = await supabase.functions.invoke("create-mercadopago-checkout", {
         body: {
           tier: productType,
-          project_id: clientData.project_id,
-          client_id: clientData.id,
         },
       });
 
       if (error) throw error;
-      if (data?.url) {
+      if (data?.paid && data?.project_id) {
+        window.location.assign(`/dashboard/onboarding/${data.project_id}`);
+      } else if (data?.url) {
         window.location.assign(data.url);
       }
     } catch (err) {

@@ -15,14 +15,14 @@ Deno.serve(async req => {
     const response = await fetch(`https://api.mercadopago.com/v1/payments/${payment_id}`, { headers: { Authorization: `Bearer ${Deno.env.get('MERCADOPAGO_ACCESS_TOKEN')}` } });
     if (!response.ok) throw new Error('Payment lookup failed');
     const payment: MercadoPayment = await response.json();
-    const { data: billing } = await userDb.from('billing').select('id, amount, status, client_id').eq('id', payment.external_reference).eq('payment_provider', 'mercadopago').maybeSingle();
+    const { data: billing } = await userDb.from('billing').select('id, amount, status, client_id, project_id').eq('id', payment.external_reference).eq('payment_provider', 'mercadopago').maybeSingle();
     const { data: client } = await userDb.from('clients').select('id').eq('user_id', user.id).eq('id', billing?.client_id ?? '').maybeSingle();
     if (!billing || !client) return respond({ error: 'Pagamento não autorizado' }, 403);
     if (matchesApprovedPayment(payment, billing)) {
       const db = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
       const { error } = await db.from('billing').update({ status: 'paid', mercadopago_payment_id: String(payment.id), paid_at: payment.date_approved || new Date().toISOString() }).eq('id', billing.id).eq('status', 'pending');
       if (error) throw new Error('Payment persistence failed');
-      return respond({ status: billing.status === 'refunded' ? 'refunded' : 'paid' });
+      return respond({ status: billing.status === 'refunded' ? 'refunded' : 'paid', project_id: billing.project_id });
     }
     return respond({ status: 'pending' });
   } catch {

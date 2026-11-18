@@ -69,8 +69,8 @@ export function SiteGbpProjectCard({ project, onDomainComplete }: Props) {
             </a>
           )}
           {project.status === "intake" && (
-            <Link to={`/dashboard/onboarding/${project.id}`}>
-              <Button variant="hero" size="sm">Continuar onboarding</Button>
+            <Link to={`/checkout?plan=${project.plan}&project_id=${project.id}`}>
+              <Button variant="hero" size="sm">Continuar contratação</Button>
             </Link>
           )}
           {project.status === "client_review" && (

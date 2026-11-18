@@ -18,7 +18,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const tier = searchParams.get("plan");
-  const destination = ["site_novo", "gbp_avulso"].includes(tier ?? "") ? `/dashboard/new-project?plan=${tier}` : "/dashboard";
+  const destination = ["site_novo", "gbp_avulso"].includes(tier ?? "") ? `/checkout?plan=${tier}` : "/dashboard";
   const { toast } = useToast();
   const { user, loading: authLoading } = useAuth();
 

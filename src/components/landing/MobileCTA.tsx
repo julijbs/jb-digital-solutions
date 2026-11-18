@@ -7,7 +7,7 @@ export const MobileCTA = () => {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/50 bg-background/90 px-4 py-2.5 backdrop-blur-xl md:hidden">
       <div className="container">
-        <Button variant="hero" size="sm" className="w-full gap-2 text-sm" onClick={() => navigate("/signup?plan=site_novo")}>
+        <Button variant="hero" size="sm" className="w-full gap-2 text-sm" onClick={() => navigate("/checkout?plan=site_novo")}>
           Iniciar Meu Projeto <ArrowRight size={14} />
         </Button>
       </div>

@@ -27,7 +27,7 @@ export function BlackFridayOffer() {
     <ul className="service-features">
       {['Site profissional adaptado a celulares', 'Criação ou otimização do Perfil Google', 'Integração do GBP ao site', 'Contato pelo WhatsApp', 'Revisão e aprovação antes da entrega'].map(f => <li key={f}><Check size={15} />{f}</li>)}
     </ul>
-    <Link className="elegant-primary service-buy" to="/signup?plan=site_novo">Contratar Sistema Completo <ArrowUpRight size={17} /></Link>
+    <Link className="elegant-primary service-buy" to="/checkout?plan=site_novo">Contratar Sistema Completo <ArrowUpRight size={17} /></Link>
     {offer.active && <div className="campaign-deadline"><div><span>Condição até 30/11</span><small>23h59 · horário de Brasília</small></div><div className="campaign-clock" role="timer" aria-label="Tempo restante para o fim da promoção">{units.map((value, i) => <span key={i}><b>{String(value).padStart(2, '0')}</b><small>{['d', 'h', 'm', 's'][i]}</small></span>)}</div></div>}
   </article>;
 }

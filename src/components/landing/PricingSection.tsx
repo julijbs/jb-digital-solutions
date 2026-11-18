@@ -14,7 +14,7 @@ export const PricingSection = () => (
           <p className="service-description">Criação ou otimização do Perfil da Empresa no Google, em uma entrega pontual.</p>
           <div className="service-price-block"><span className="service-original">Serviço independente</span><div className="service-price-row"><strong>R$ 297</strong><span>pagamento único<br />sem mensalidade</span></div><p className="service-saving">Foco na sua presença no Google</p></div>
           <ul className="service-features">{['Criação ou otimização do Perfil Google', 'Informações e categorias do negócio', 'Serviços e dados de contato organizados', 'Sem criação de site neste serviço'].map(f => <li key={f}><Check size={15} />{f}</li>)}</ul>
-          <Link to="/signup?plan=gbp_avulso" className="elegant-secondary service-buy">Contratar GBP avulso <ArrowUpRight size={17} /></Link>
+          <Link to="/checkout?plan=gbp_avulso" className="elegant-secondary service-buy">Contratar GBP avulso <ArrowUpRight size={17} /></Link>
           <p className="service-footnote">A verificação e aprovação do perfil dependem do Google.</p>
         </article>
       </div>

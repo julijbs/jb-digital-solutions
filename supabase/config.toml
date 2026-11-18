@@ -74,7 +74,9 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.create-mercadopago-checkout]
+# The gateway and handler both authenticate the user.
 verify_jwt = true
 
 [functions.verify-mercadopago-payment]
+# The gateway and handler both authenticate the user.
 verify_jwt = true

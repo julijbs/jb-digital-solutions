@@ -30,7 +30,7 @@ export const FinalCTA = () => {
           </p>
 
           <div className="mt-8">
-            <Button variant="hero" size="default" className="gap-2 text-sm md:text-base md:px-8 md:py-6" onClick={() => navigate("/signup?plan=site_novo")}>
+            <Button variant="hero" size="default" className="gap-2 text-sm md:text-base md:px-8 md:py-6" onClick={() => navigate("/checkout?plan=site_novo")}>
               Iniciar Meu Projeto Agora <ArrowRight size={16} />
             </Button>
           </div>
