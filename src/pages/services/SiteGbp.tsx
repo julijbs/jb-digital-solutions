@@ -4,55 +4,30 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { PricingSection } from "@/components/landing/PricingSection";
-import { FAQSection } from "@/components/landing/FAQSection";
+import { FAQSection, faqs } from "@/components/landing/FAQSection";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { MobileCTA } from "@/components/landing/MobileCTA";
 
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Como funciona o pagamento?",
-      acceptedAnswer: { "@type": "Answer", text: "Pagamento único pelo serviço contratado: página, Perfil Google ou ambos. Sem assinatura ou mensalidade." },
-    },
-    {
-      "@type": "Question",
-      name: "Quanto tempo leva para ficar pronto?",
-      acceptedAnswer: { "@type": "Answer", text: "Até 7 dias após você preencher o formulário de onboarding com suas informações." },
-    },
-    {
-      "@type": "Question",
-      name: "O que é AEO e por que isso importa?",
-      acceptedAnswer: { "@type": "Answer", text: "AEO (Answer Engine Optimization) é a técnica que prepara sua presença digital para ser recomendada por IAs como ChatGPT, Gemini e Perplexity — além do Google tradicional. Quando alguém pede uma indicação de dentista, médico ou psicólogo para uma IA, você precisa aparecer como resposta." },
-    },
-    {
-      "@type": "Question",
-      name: "Eu consigo editar o site depois?",
-      acceptedAnswer: { "@type": "Answer", text: "Sim! Você recebe acesso para fazer pequenas atualizações. Para mudanças maiores, podemos ajustar com custo adicional." },
-    },
-    {
-      "@type": "Question",
-      name: "Meu negócio vai aparecer no Google após o setup?",
-      acceptedAnswer: { "@type": "Answer", text: "O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica. O serviço não inclui acompanhamento mensal." },
-    },
-    {
-      "@type": "Question",
-      name: "Posso usar meu próprio domínio?",
-      acceptedAnswer: { "@type": "Answer", text: "Sim! Você pode adquirir seu domínio personalizado (ex: draanacardoso.com.br) e nós configuramos. Custo adicional de R$ 100 (taxa única de configuração)." },
-    },
-  ],
+  mainEntity: faqs.map(faq => ({
+    "@type": "Question",
+    name: faq.q,
+    acceptedAnswer: { "@type": "Answer", text: faq.a === "guarantee"
+      ? "Você acompanha e aprova layout, textos e site final antes da publicação. Revisões estão incluídas no processo."
+      : faq.a },
+  })),
 };
 
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: "JB Digital Consulting",
-  description: "Presença digital profissional para profissionais liberais — sites otimizados para Google e IA (AEO), Perfil da Empresa no Google e estruturação de dados.",
+  description: "Site profissional e criação ou otimização do Perfil Google para negócios locais brasileiros. Pagamento único, sem mensalidade.",
   url: "https://jbdigitalsystem.com",
   areaServed: "BR",
-  serviceType: ["Web Design", "SEO", "AEO", "Google Business Profile Management"],
+  serviceType: ["Criação de sites", "Criação ou otimização do Perfil Google"],
 };
 
 const navItems = [
@@ -64,6 +39,7 @@ const navItems = [
 const SiteGbp = () => (
   <div className="min-h-screen bg-background elegant-landing">
     <Helmet>
+      <link rel="canonical" href="https://jbdigitalsystem.com/" />
       <title>Site e Perfil Google para Negócios Locais | JB Digital System</title>
       <meta
         name="description"
