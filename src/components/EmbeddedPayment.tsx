@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { initMercadoPago, Payment, StatusScreen } from '@mercadopago/sdk-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
@@ -14,11 +14,11 @@ export default function EmbeddedPayment({ session, email, onPayment, onRetry }: 
   const initialization = useMemo(() => ({ amount: session.amount, payer: { email } }), [session.amount, email]);
   const customization = useMemo(() => ({ paymentMethods: { creditCard: 'all' as const, debitCard: 'all' as const, bankTransfer: ['pix'], maxInstallments: 12 }, visual: { style: { theme: 'dark' as const } } }), []);
   const statusInitialization = useMemo(() => result ? ({ paymentId: result.payment_id, ...(result.three_ds_info ? { additionalInfo: { externalResourceURL: result.three_ds_info.external_resource_url, creq: result.three_ds_info.creq } } : {}) }) : null, [result]);
-  return <div className="mt-6 border-t border-border pt-6">
-    <h2 className="mb-2 text-lg font-medium">Escolha como pagar</h2>
-    <p className="mb-4 text-sm text-muted-foreground">Pix ou cartão, sem precisar entrar ou criar conta no Mercado Pago.</p>
-    {error && <p role="alert" className="mb-4 text-sm text-destructive">{error}</p>}
-    {statusInitialization ? <><StatusScreen initialization={statusInitialization} onError={() => setError('Não foi possível mostrar os detalhes. Use “Verificar confirmação” antes de tentar pagar novamente.')} />{['rejected', 'cancelled'].includes(result?.status ?? '') && <p className="mt-3 text-sm text-muted-foreground">Pagamento não aprovado.</p>}</> : <Payment initialization={initialization} customization={customization} onSubmit={async ({ formData }) => {
+  const onPaymentRef = useRef(onPayment);
+  onPaymentRef.current = onPayment;
+  const handleError = useCallback(() => { setError('Não foi possível carregar o formulário. Confira sua conexão e tente novamente.'); setCanRetry(true); }, []);
+  const handleStatusError = useCallback(() => setError('Não foi possível mostrar os detalhes. Use “Verificar confirmação” antes de tentar pagar novamente.'), []);
+  const handleSubmit = useCallback(async ({ formData }: { formData: unknown }) => {
       setError(''); setCanRetry(false);
       const { data, error: paymentError } = await supabase.functions.invoke('process-mercadopago-payment', { body: { billing_id: session.billing_id, form_data: formData } });
       if (paymentError || data?.error) {
@@ -27,8 +27,14 @@ export default function EmbeddedPayment({ session, email, onPayment, onRetry }: 
         setCanRetry([400, 422].includes(paymentError?.context instanceof Response ? paymentError.context.status : 0));
         setError(detail); throw new Error(detail);
       }
-      setResult(data); onPayment(data);
-    }} onError={() => { setError('Não foi possível carregar o formulário. Confira sua conexão e tente novamente.'); setCanRetry(true); }} />}
+      setResult(data); onPaymentRef.current(data);
+    
+  }, [session.billing_id]);
+  return <div className="mt-6 border-t border-border pt-6">
+    <h2 className="mb-2 text-lg font-medium">Escolha como pagar</h2>
+    <p className="mb-4 text-sm text-muted-foreground">Pix ou cartão, sem precisar entrar ou criar conta no Mercado Pago.</p>
+    {error && <p role="alert" className="mb-4 text-sm text-destructive">{error}</p>}
+    {statusInitialization ? <><StatusScreen initialization={statusInitialization} onError={handleStatusError} />{['rejected', 'cancelled'].includes(result?.status ?? '') && <p className="mt-3 text-sm text-muted-foreground">Pagamento não aprovado.</p>}</> : <Payment initialization={initialization} customization={customization} onSubmit={handleSubmit} onError={handleError} />}
     {(canRetry || ['rejected', 'cancelled'].includes(result?.status ?? '')) && <Button variant="outline" className="mt-4 w-full" onClick={onRetry}>Escolher outra forma de pagamento</Button>}
   </div>;
 }

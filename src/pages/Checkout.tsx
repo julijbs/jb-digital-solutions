@@ -21,7 +21,7 @@ export default function Checkout() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [price, setPrice] = useState(getSiteOffer());
-  useEffect(() => { const t = setInterval(() => setPrice(getSiteOffer()), 1000); return () => clearInterval(t); }, []);
+  useEffect(() => { const t = setInterval(() => setPrice(previous => { const next = getSiteOffer(); return previous.setupPrice === next.setupPrice ? previous : next; }), 1000); return () => clearInterval(t); }, []);
 
   const confirmPayment = useCallback(async () => {
     if (!user || !projectId) return;
