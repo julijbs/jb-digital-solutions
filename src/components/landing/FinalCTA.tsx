@@ -26,7 +26,7 @@ export const FinalCTA = () => {
             <span className="gold-gradient-text">Você vai aparecer?</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-            Escolha a criação da página, do Perfil Google ou de ambos. Uma contratação, uma entrega e nenhum compromisso de mensalidade.
+            Escolha o Sistema Completo (site + criação ou otimização e integração do GBP) ou o GBP avulso. Uma contratação, uma entrega e nenhum compromisso de mensalidade.
           </p>
 
           <div className="mt-8">

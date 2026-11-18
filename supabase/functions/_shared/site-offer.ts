@@ -12,9 +12,8 @@ export function getSiteOffer(now = Date.now()) {
 }
 
 export const ONE_TIME_SERVICES = {
-  site_novo: { name: 'Site Novo', cents: 149700 },
-  gbp_avulso: { name: 'Criação do Perfil Google', cents: 29700 },
-  site_gbp: { name: 'Site + Perfil Google', cents: 75000 },
+  site_novo: { name: 'Sistema Completo (Site + GBP)' , cents: 149700 },
+  gbp_avulso: { name: 'GBP avulso — criação ou otimização', cents: 29700 },
 } as const;
 export function getOneTimeService(tier: string, now = Date.now()) {
   if (!Object.prototype.hasOwnProperty.call(ONE_TIME_SERVICES, tier)) return null;

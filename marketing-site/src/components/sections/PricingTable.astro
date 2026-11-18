@@ -7,23 +7,18 @@ const offer = getSiteOffer();
   <div class="pricing-grid">
     <article class="pricing-card campaign">
       <p data-promo hidden={!offer.active}>Black Friday • só até 30/11</p>
-      <h3>Site Novo</h3>
+      <h3>Sistema Completo</h3>
       <p data-promo hidden={!offer.active}>De <s>R$ 1.497</s> por</p>
       <strong data-site-price>{offer.setupPrice}</strong>
-      <p>Pagamento único pela criação da página.</p>
+      <p>Site + criação ou otimização do GBP e integração ao site. Pagamento único.</p>
       <p data-promo hidden={!offer.active}>Economize R$ 1.000. Até 30/11/2026, às 23h59 (Brasília).</p>
-      <a href="/signup?plan=site_novo" class="btn btn-primary">Quero minha página</a>
+      <a href="/signup?plan=site_novo" class="btn btn-primary">Quero o Sistema Completo</a>
     </article>
     <article class="pricing-card">
-      <h3>Perfil Google</h3><strong>R$ 297</strong>
-      <p>Criação e configuração do Perfil da Empresa no Google. Pagamento único.</p>
+      <h3>GBP avulso</h3><strong>R$ 297</strong>
+      <p>Criação ou otimização do Perfil da Empresa no Google. Pagamento único.</p>
       <p>A verificação e aprovação dependem do Google.</p>
       <a href="/signup?plan=gbp_avulso" class="btn btn-outline">Contratar Perfil Google</a>
-    </article>
-    <article class="pricing-card">
-      <h3>Site + Perfil Google</h3><strong>R$ 750</strong>
-      <p>Criação da página e do Perfil Google. As duas entregas, sem assinatura.</p>
-      <a href="/signup?plan=site_gbp" class="btn btn-outline">Contratar os dois</a>
     </article>
   </div>
 </section>
@@ -40,7 +35,7 @@ const offer = getSiteOffer();
 <style>
 .section-pricing { padding-block:5rem; }
 h2 { text-align:center; font-size:clamp(1.8rem,4vw,2.7rem); margin-bottom:2rem; }
-.pricing-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.25rem; }
+.pricing-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.25rem; }
 .pricing-card { border:1px solid var(--brand-border); border-radius:.75rem; padding:1.75rem; display:flex; flex-direction:column; gap:1rem; }
 .pricing-card h3 { font-size:1.5rem; }
 .pricing-card strong { font-size:2.8rem; }

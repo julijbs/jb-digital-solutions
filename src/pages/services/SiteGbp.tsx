@@ -62,7 +62,7 @@ const navItems = [
 ];
 
 const SiteGbp = () => (
-  <div className="min-h-screen bg-background">
+  <div className="min-h-screen bg-background elegant-landing">
     <Helmet>
       <title>Sistema de Posicionamento Online para Profissionais de Saúde | JB Digital System</title>
       <meta
@@ -75,8 +75,7 @@ const SiteGbp = () => (
 
     <SiteHeader
       navItems={navItems}
-      ctaSecondary={{ label: "Ver serviços", href: "#planos" }}
-      ctaPrimary={{ label: "Iniciar Meu Projeto", href: "/signup?plan=site_novo" }}
+      ctaPrimary={{ label: "Ver investimento", href: "#planos" }}
     />
 
     <main>
@@ -88,7 +87,7 @@ const SiteGbp = () => (
     </main>
 
     <SiteFooter
-      tagline="Criação de página profissional e Perfil da Empresa no Google. Entregas avulsas, sem mensalidade."
+      tagline="Sistema Completo: site + criação ou otimização e integração do GBP. Também disponível: GBP avulso. Sem mensalidade."
     />
     <MobileCTA />
   </div>

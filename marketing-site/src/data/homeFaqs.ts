@@ -6,7 +6,7 @@
 export const homeFaqs: { q: string; a: string }[] = [
   {
     q: 'Como funciona o pagamento?',
-    a: 'Pagamento único pela entrega contratada. Site: R$ 497 na Black Friday até 30/11/2026, depois R$ 1.497. Perfil Google: R$ 297. Site + Perfil Google: R$ 750. Sem mensalidade.',
+    a: 'Pagamento único pela entrega contratada. Sistema Completo (site + criação ou otimização e integração do GBP): R$ 497 na Black Friday até 30/11/2026, depois R$ 1.497. GBP avulso: R$ 297. Sem mensalidade.',
   },
   {
     q: 'Preciso ter site para contratar?',

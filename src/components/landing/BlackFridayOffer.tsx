@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Check, ArrowUpRight } from 'lucide-react';
 import { getSiteOffer } from '../../../supabase/functions/_shared/site-offer';
 
 export function useSiteOffer() {
@@ -10,26 +11,23 @@ export function useSiteOffer() {
   }, []);
   return offer;
 }
-
 export function BlackFridayOffer() {
   const offer = useSiteOffer();
   const seconds = Math.floor(offer.remainingMs / 1000);
   const units = [Math.floor(seconds / 86400), Math.floor(seconds / 3600) % 24, Math.floor(seconds / 60) % 60, seconds % 60];
-  return <aside className={`bf-offer ${offer.active ? 'bf-offer--active' : ''}`} aria-label="Oferta Site Novo">
-    <p className="bf-label">{offer.active ? 'Black Friday • até 30/11' : 'Seu novo site começa aqui'}</p>
-    <h2>Site Novo</h2>
-    <p className="bf-description">Uma página profissional para apresentar seu negócio e facilitar o contato.</p>
-    {offer.active && <p className="bf-was">De <s>R$ 1.497</s> por</p>}
-    <p className="bf-price">{offer.setupPrice}</p>
-    <p>Pagamento único. Sem mensalidade.</p>
-    {offer.active && <>
-      <p className="bf-saving">Economize R$ 1.000 na criação da página</p>
-      <div className="bf-countdown" role="timer" aria-label="Tempo restante para o fim da promoção">
-        {units.map((value, i) => <div key={i}><strong>{String(value).padStart(2, '0')}</strong><span>{['dias', 'horas', 'min', 'seg'][i]}</span></div>)}
-      </div>
-      <p className="bf-deadline">Termina em 30/11/2026, às 23h59 (Brasília).</p>
-    </>}
-    <Link className="bf-button" to="/signup?plan=site_novo">{offer.active ? 'Quero minha página por R$ 497' : 'Iniciar meu projeto'}</Link>
-    <p className="bf-note">Criação e entrega da página. Perfil Google contratado à parte.</p>
-  </aside>;
+  return <article className="service-offer service-offer--complete" aria-label="Oferta Sistema Completo">
+    <div className="service-offer-heading"><span className="service-offer-type">Sua presença conectada</span>{offer.active && <span className="campaign-tag">Black Friday</span>}</div>
+    <h3>Sistema Completo</h3>
+    <p className="service-description">Site + criação ou otimização do Perfil Google, com integração ao site.</p>
+    <div className="service-price-block">
+      {offer.active && <span className="service-original">De <s>R$ 1.497</s> por</span>}
+      <div className="service-price-row"><strong className={offer.active ? 'campaign-price' : ''}>{offer.setupPrice}</strong><span>pagamento único<br />sem mensalidade</span></div>
+      <p className="service-saving">{offer.active ? 'R$ 1.000 de economia até 30/11' : 'Criação, integração e entrega pontual'}</p>
+    </div>
+    <ul className="service-features">
+      {['Site profissional adaptado a celulares', 'Criação ou otimização do Perfil Google', 'Integração do GBP ao site', 'Contato pelo WhatsApp', 'Revisão e aprovação antes da entrega'].map(f => <li key={f}><Check size={15} />{f}</li>)}
+    </ul>
+    <Link className="elegant-primary service-buy" to="/signup?plan=site_novo">Contratar Sistema Completo <ArrowUpRight size={17} /></Link>
+    {offer.active && <div className="campaign-deadline"><div><span>Condição até 30/11</span><small>23h59 · horário de Brasília</small></div><div className="campaign-clock" role="timer" aria-label="Tempo restante para o fim da promoção">{units.map((value, i) => <span key={i}><b>{String(value).padStart(2, '0')}</b><small>{['d', 'h', 'm', 's'][i]}</small></span>)}</div></div>}
+  </article>;
 }

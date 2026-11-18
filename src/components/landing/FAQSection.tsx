@@ -10,11 +10,11 @@ import {
 const faqs = [
   {
     q: "Como funciona o pagamento?",
-    a: "Você paga uma única vez pelo serviço contratado: criação da página, criação do Perfil Google ou ambos. Sem assinatura, mensalidade ou gestão contínua.",
+    a: "Você paga uma única vez pelo serviço contratado: Sistema Completo (site + criação ou otimização e integração do GBP) ou GBP avulso. Sem assinatura, mensalidade ou gestão contínua.",
   },
   {
     q: "Preciso ter site para contratar?",
-    a: "Não. Podemos criar sua página do zero ou criar apenas seu Perfil da Empresa no Google. Os serviços podem ser contratados separadamente ou juntos.",
+    a: "Não. O Sistema Completo inclui a criação do site e a criação ou otimização do Perfil Google, com integração entre eles. Se você precisa apenas do perfil, escolha o GBP avulso.",
   },
   {
     q: "Quanto tempo leva para ficar pronto?",
@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "Vocês fazem gestão de redes sociais?",
-    a: "Não. Nosso foco é criar e entregar sua página e seu Perfil Google. Gestão de conteúdo ou tráfego pago não fazem parte do serviço.",
+    a: "Não. Nosso foco é criar e entregar seu Sistema Completo ou GBP avulso. Gestão de conteúdo ou tráfego pago não fazem parte do serviço.",
   },
   {
     q: "Minha clínica vai aparecer no Google automaticamente após o setup?",

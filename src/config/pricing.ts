@@ -26,11 +26,11 @@ export interface Offer {
   featured: boolean;
 }
 
-/** Oferta principal: um setup + uma mensalidade. */
+/** Sistema Completo: site + criação/otimização do GBP e integração. */
 export const SITE_NOVO: Offer = {
   key: "site_novo",
-  name: "Site Novo",
-  tag: "Criação e entrega da página · pagamento único",
+  name: "Sistema Completo",
+  tag: "Site + criação ou otimização do GBP + integração",
   get setupPrice() { return getSiteOffer().setupPrice; },
   monthlyPrice: "Sem mensalidade",
   get setupValue() { return getSiteOffer().setupCents; },
@@ -41,6 +41,8 @@ export const SITE_NOVO: Offer = {
     "Layout adaptado a celulares e computadores",
     "Botão de contato pelo WhatsApp",
     "Estrutura preparada para buscas locais",
+    "Criação ou otimização do Perfil da Empresa no Google",
+    "Integração do Perfil Google ao site",
     "Revisão e aprovação antes da entrega",
   ],
 };
@@ -63,18 +65,13 @@ export const GESTAO_GOOGLE: Offer = {
 };
 
 export const GBP_AVULSO: Offer = {
-  key: "gbp_avulso", name: "Criação do Perfil Google", tag: "Criação e configuração · entrega pontual",
+  key: "gbp_avulso", name: "GBP avulso", tag: "Criação ou otimização · entrega pontual",
   setupPrice: "R$ 297", monthlyPrice: "Sem mensalidade", setupValue: 29700, monthlyValue: 0,
-  features: ["Criação e configuração do Perfil da Empresa", "Informações, categorias e serviços do negócio", "Verificação e aprovação sujeitas ao Google"], featured: false,
-};
-export const SITE_GBP: Offer = {
-  key: "site_gbp", name: "Site + Perfil Google", tag: "As duas entregas · pagamento único",
-  setupPrice: "R$ 750", monthlyPrice: "Sem mensalidade", setupValue: 75000, monthlyValue: 0,
-  features: [...SITE_NOVO.features, ...GBP_AVULSO.features], featured: false,
+  features: ["Criação ou otimização do Perfil da Empresa", "Informações, categorias e serviços do negócio", "Verificação e aprovação sujeitas ao Google"], featured: false,
 };
 
 /** O que é oferecido hoje. */
-export const OFFERS: Offer[] = [SITE_NOVO, GBP_AVULSO, SITE_GBP];
+export const OFFERS: Offer[] = [SITE_NOVO, GBP_AVULSO];
 
 /**
  * Rótulos para exibição. Inclui os planos aposentados em 2026-07-10,
@@ -83,7 +80,7 @@ export const OFFERS: Offer[] = [SITE_NOVO, GBP_AVULSO, SITE_GBP];
  * clientes legados apareceriam com a string crua.
  */
 export const PRODUCT_LABELS: Record<string, string> = {
-  site_novo: "Site Novo (pagamento único)",
+  site_novo: "Sistema Completo (Site + GBP)",
   gbp_avulso: "Criação do Perfil Google",
   site_gbp: "Site + Perfil Google",
   gestao_google: "Gestão de Google (add-on)",

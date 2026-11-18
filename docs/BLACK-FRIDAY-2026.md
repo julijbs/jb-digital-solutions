@@ -1,6 +1,6 @@
 # Venda avulsa e Black Friday — 18/11/2026
 
-Oferta aprovada: Site Novo R$ 497 até 30/11/2026, 23h59 de Brasília (de R$ 1.497); criação do Perfil Google R$ 297; site + Perfil Google R$ 750. Sem recorrência. Apenas o site tem promoção. Valores calculados no servidor, sem aceitar preço vindo do navegador.
+Oferta aprovada: Sistema Completo (site + criação ou otimização do GBP e integração ao site) R$ 497 até 30/11/2026, 23h59 de Brasília (de R$ 1.497); GBP avulso R$ 297. Sem recorrência. A promoção é do Sistema Completo. Valores calculados no servidor, sem aceitar preço vindo do navegador.
 
 ## Ativação Mercado Pago
 
@@ -19,7 +19,7 @@ O frontend usa Mercado Pago para novas cobranças. O verificador Stripe continua
 
 - O fluxo atual exige cadastro e criação de projeto antes de pagar. Os links preservam a escolha do serviço no cadastro/login. Ainda não é compra anônima direto da landing.
 - O webhook consulta o pagamento na API do Mercado Pago e só marca como pago após validar referência, moeda e valor; não aceita o status da URL de retorno como comprovante.
-- A preferência do site promocional vence no encerramento da oferta. O combo continua a R$ 750 após essa data, conforme os preços aprovados.
+- A preferência do site promocional vence no encerramento da oferta. Após essa data, o Sistema Completo volta a R$ 1.497 e o GBP avulso permanece R$ 297.
 - React e Astro recalculam o preço na página aberta. Para atualizar também o HTML e JSON-LD estáticos do Astro após o fim da promoção, reconstruir/publicar o marketing-site em 01/12. O JSON-LD promocional informa priceValidUntil.
 - Hospedagem, domínio, transferência de acessos e suporte após entrega precisam de definição comercial antes de publicar a nova oferta; não foi prometida manutenção gratuita vitalícia.
 - O engine agora permite `npm run publish -- slug-do-cliente` (vários slugs aceitos); sem argumentos mantém build de todos. Build não faz deploy. Não executamos publicação de sites reais.
