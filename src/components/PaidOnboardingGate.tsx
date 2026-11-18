@@ -23,7 +23,7 @@ export function PaidOnboardingGate({ children }: { children: ReactNode }) {
       ]);
       if (!active) return;
       if (billingError || projectError || !project) { setError('Não foi possível verificar a liberação deste projeto. Atualize a página para tentar novamente.'); return; }
-      if (billing?.some(b => b.product_type === project.plan || ['site', 'gbp', 'pacote_completo'].includes(b.product_type))) setAllowed(true);
+      if (billing?.some(b => b.product_type === project.plan || (!['site_novo', 'gbp_avulso'].includes(project.plan) && ['site', 'gbp', 'pacote_completo'].includes(b.product_type)))) setAllowed(true);
       else navigate(`/checkout?plan=${encodeURIComponent(project.plan)}&project_id=${projectId}`, { replace: true });
     }
     void check();

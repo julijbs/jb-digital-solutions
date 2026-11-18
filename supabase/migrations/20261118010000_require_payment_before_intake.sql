@@ -8,7 +8,7 @@ as $$
     join public.clients c on c.id = p.client_id
     join public.billing b on b.project_id = p.id and b.client_id = c.id
     where p.id = target_project and c.user_id = auth.uid() and b.status = 'paid'
-      and (b.product_type = p.plan or b.product_type in ('site','gbp','pacote_completo'))
+      and (b.product_type = p.plan or (p.plan not in ('site_novo','gbp_avulso') and b.product_type in ('site','gbp','pacote_completo')))
   );
 $$;
 revoke all on function public.has_paid_project_access(uuid) from public;
