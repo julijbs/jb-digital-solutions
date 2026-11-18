@@ -174,8 +174,8 @@ const ClientBilling = () => {
                   {plan.setupPrice && (
                     <>
                       <span className="font-serif text-2xl text-primary">{plan.setupPrice}</span>
-                      <span className="ml-1 text-sm text-muted-foreground">setup</span>
-                      <span className="mx-2 text-muted-foreground">+</span>
+                      <span className="ml-1 text-sm text-muted-foreground">pagamento único</span>
+                      <br />
                     </>
                   )}
                   <span className="font-serif text-lg text-primary">{plan.monthlyPrice}</span>

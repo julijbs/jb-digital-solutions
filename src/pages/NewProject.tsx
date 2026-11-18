@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { SITE_NOVO } from "@/config/pricing";
+import { SITE_NOVO, OFFERS } from "@/config/pricing";
 
 const verticals = [
   { value: "psicologo", label: "Psicólogo(a)", emoji: "🧠" },
@@ -16,17 +16,7 @@ const verticals = [
   { value: "outro", label: "Outro negócio local", emoji: "🏪" },
 ];
 
-// Só o Site Novo cria projeto. A Gestão de Google é add-on de assinatura,
-// contratada em /dashboard/billing — não gera projeto próprio.
-const plans = [
-  {
-    value: SITE_NOVO.key,
-    label: SITE_NOVO.name,
-    price: `${SITE_NOVO.setupPrice} + ${SITE_NOVO.monthlyPrice}`,
-    description: "Site programático com SEO por serviço e bairro",
-    emoji: "🚀",
-  },
-];
+const plans = OFFERS.map(offer => ({ value: offer.key, label: offer.name, price: `${offer.setupPrice} · pagamento único`, description: offer.tag, emoji: "✓" }));
 
 const NewProject = () => {
   const { user } = useAuth();
@@ -34,7 +24,9 @@ const NewProject = () => {
   const { toast } = useToast();
   const [businessName, setBusinessName] = useState("");
   const [vertical, setVertical] = useState("");
-  const [plan, setPlan] = useState(SITE_NOVO.key);
+  const [searchParams] = useSearchParams();
+  const requestedPlan = searchParams.get("plan");
+  const [plan, setPlan] = useState(OFFERS.some(o => o.key === requestedPlan) ? requestedPlan! : SITE_NOVO.key);
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [loading, setLoading] = useState(false);

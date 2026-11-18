@@ -6,7 +6,7 @@
  *
  * Requer tsx como devDependency para executar TypeScript direto.
  */
-import { execSync } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -19,7 +19,10 @@ const root = path.resolve(__dirname, '..');
 // @ts-ignore — tsx resolve o alias de path em runtime
 const { clients } = await import('../src/data/index.ts') as { clients: Record<string, { siteUrl: string; businessName: string }> };
 
-const entries = Object.entries(clients);
+const requested = process.argv.slice(2);
+const unknown = requested.filter(slug => !Object.hasOwn(clients, slug));
+if (unknown.length) throw new Error(`Clientes não encontrados: ${unknown.join(', ')}`);
+const entries = Object.entries(clients).filter(([slug]) => !requested.length || requested.includes(slug));
 console.log(`\n🏗️  JB Digital System — publish-site`);
 console.log(`   Clientes: ${entries.length} (${entries.map(([s]) => s).join(', ')})\n`);
 
@@ -33,9 +36,9 @@ for (const [slug, clientData] of entries) {
 
   console.log(`→ Construindo ${label}...`);
   try {
-    execSync(
-      `CLIENT=${slug} SITE_URL=${siteUrl} npx astro build --outDir ${outDir}`,
-      { stdio: 'inherit', cwd: root }
+    execFileSync(process.execPath,
+      [path.join(root, 'node_modules/astro/astro.js'), 'build', '--outDir', outDir],
+      { stdio: 'inherit', cwd: root, env: { ...process.env, CLIENT: slug, SITE_URL: siteUrl } }
     );
     console.log(`✅ ${label} → dist/${slug}/\n`);
     ok++;

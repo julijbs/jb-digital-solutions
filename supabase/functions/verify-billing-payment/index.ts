@@ -37,6 +37,9 @@ serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
+    const { data: client } = await supabaseAdmin.from("clients").select("id").eq("id", session.metadata?.client_id ?? "").eq("user_id", data.user.id).maybeSingle();
+    if (!client) throw new Error("Checkout não pertence ao usuário autenticado.");
+
     if (session.payment_status === "paid") {
       await supabaseAdmin
         .from("billing")

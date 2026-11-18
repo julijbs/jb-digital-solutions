@@ -1,3 +1,4 @@
+import { getOneTimeService } from "../_shared/site-offer.ts";
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@18.5.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
@@ -7,51 +8,6 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Oferta atual (desde 2026-07-10):
-//   site_novo     — R$1.497 setup (uma vez) + Presença Ativa R$149/mês
-//   gestao_google — add-on R$97/mês, sem setup
-//
-// essencial e premium ficam apenas para não quebrar cobranças legadas já em
-// curso. Nenhuma tela oferece esses tiers. Não remova sem antes migrar as
-// assinaturas ativas no Stripe.
-const TIERS: Record<string, {
-  setup_price_id: string | null;
-  monthly_price_id: string;
-  label: string;
-  setup_amount: number;
-  monthly_amount: number;
-}> = {
-  site_novo: {
-    setup_price_id: "price_1TrVQPAtjEQC8UwgB7sIzEa5",
-    monthly_price_id: "price_1TrVQPAtjEQC8UwgT5e74hlu",
-    label: "Site Novo + Presença Ativa",
-    setup_amount: 149700,
-    monthly_amount: 14900,
-  },
-  gestao_google: {
-    setup_price_id: null,
-    monthly_price_id: "price_1TrVQPAtjEQC8UwgIYgb9l4l",
-    label: "Gestão de Google (add-on)",
-    setup_amount: 0,
-    monthly_amount: 9700,
-  },
-  // ── legado ──
-  essencial: {
-    setup_price_id: "price_1Tn3pZAtjEQC8UwgpNeWkETN",
-    monthly_price_id: "price_1Tn3rJAtjEQC8Uwgd1xFvNDW",
-    label: "JB Digital Essencial",
-    setup_amount: 60000,
-    monthly_amount: 15000,
-  },
-  premium: {
-    setup_price_id: "price_1Tn3twAtjEQC8UwgH7plWPMp",
-    monthly_price_id: "price_1Tn3wxAtjEQC8UwgC05O2k33",
-    label: "JB Digital Premium",
-    setup_amount: 120000,
-    monthly_amount: 35000,
-  },
-};
-
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -59,7 +15,8 @@ serve(async (req) => {
 
   const supabaseClient = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_ANON_KEY") ?? ""
+    Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+    { global: { headers: { Authorization: req.headers.get("Authorization") ?? "" } } }
   );
 
   try {
@@ -74,8 +31,13 @@ serve(async (req) => {
       throw new Error("Missing required fields: tier, project_id, client_id");
     }
 
-    const tierConfig = TIERS[tier as string];
-    if (!tierConfig) throw new Error(`Invalid tier: ${tier}. Must be one of: ${Object.keys(TIERS).join(", ")}`);
+    const offer = getOneTimeService(tier);
+    if (!offer) throw new Error("Serviço avulso inválido.");
+
+    // Validate ownership before creating a charge with privileged credentials.
+    const { data: client } = await supabaseClient.from("clients").select("id").eq("id", client_id).eq("user_id", user.id).maybeSingle();
+    const { data: project } = await supabaseClient.from("projects").select("id").eq("id", project_id).eq("client_id", client_id).maybeSingle();
+    if (!client || !project) throw new Error("Cliente ou projeto não autorizado.");
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2025-08-27.basil",
@@ -88,18 +50,20 @@ serve(async (req) => {
       customerId = customers.data[0].id;
     }
 
-    // Subscription mode: setup fee (one-time) + monthly recurring on first invoice.
-    // Add-ons não têm setup — mandam só a recorrência.
-    const lineItems = [
-      ...(tierConfig.setup_price_id ? [{ price: tierConfig.setup_price_id, quantity: 1 }] : []),
-      { price: tierConfig.monthly_price_id, quantity: 1 },
-    ];
+    const lineItems = [{
+      price_data: {
+        currency: "brl",
+        unit_amount: offer.cents,
+        product_data: { name: offer.name + " (pagamento único)" },
+      },
+      quantity: 1,
+    }];
 
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
       line_items: lineItems,
-      mode: "subscription",
+      mode: "payment",
       success_url: `${req.headers.get("origin")}/dashboard/billing?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}/dashboard/billing?canceled=true`,
       metadata: {
@@ -115,14 +79,19 @@ serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
-    await supabaseAdmin.from("billing").insert({
+    const { error: billingError } = await supabaseAdmin.from("billing").insert({
       project_id,
       client_id,
       stripe_checkout_session_id: session.id,
       product_type: tier,
-      amount: tierConfig.setup_amount + tierConfig.monthly_amount,
+      amount: offer.cents,
       status: "pending",
     });
+
+    if (billingError) {
+      await stripe.checkout.sessions.expire(session.id);
+      throw new Error("Não foi possível registrar a cobrança. Tente novamente.");
+    }
 
     return new Response(JSON.stringify({ url: session.url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

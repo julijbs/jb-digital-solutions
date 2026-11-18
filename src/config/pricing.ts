@@ -1,3 +1,4 @@
+import { getSiteOffer } from "../../supabase/functions/_shared/site-offer";
 /**
  * pricing.ts — fonte única da oferta no app logado.
  *
@@ -29,19 +30,18 @@ export interface Offer {
 export const SITE_NOVO: Offer = {
   key: "site_novo",
   name: "Site Novo",
-  tag: "Site programático + Presença Ativa mensal",
-  setupPrice: "R$ 1.497",
-  monthlyPrice: "R$ 149/mês",
-  setupValue: 149700,
-  monthlyValue: 14900,
+  tag: "Criação e entrega da página · pagamento único",
+  get setupPrice() { return getSiteOffer().setupPrice; },
+  monthlyPrice: "Sem mensalidade",
+  get setupValue() { return getSiteOffer().setupCents; },
+  monthlyValue: 0,
   featured: true,
   features: [
-    "Site programático com páginas por serviço e bairro",
-    "Dezenas de páginas otimizadas para buscas locais",
-    "Schema de avaliações — estrelas visíveis no Google",
-    "Presença estruturada para as IAs (ChatGPT, Gemini, Perplexity)",
-    "Hospedagem e manutenção inclusas na Presença Ativa",
-    "Relatório mensal de posições no Google",
+    "Página profissional com seus serviços e informações",
+    "Layout adaptado a celulares e computadores",
+    "Botão de contato pelo WhatsApp",
+    "Estrutura preparada para buscas locais",
+    "Revisão e aprovação antes da entrega",
   ],
 };
 
@@ -62,8 +62,19 @@ export const GESTAO_GOOGLE: Offer = {
   ],
 };
 
+export const GBP_AVULSO: Offer = {
+  key: "gbp_avulso", name: "Criação do Perfil Google", tag: "Criação e configuração · entrega pontual",
+  setupPrice: "R$ 297", monthlyPrice: "Sem mensalidade", setupValue: 29700, monthlyValue: 0,
+  features: ["Criação e configuração do Perfil da Empresa", "Informações, categorias e serviços do negócio", "Verificação e aprovação sujeitas ao Google"], featured: false,
+};
+export const SITE_GBP: Offer = {
+  key: "site_gbp", name: "Site + Perfil Google", tag: "As duas entregas · pagamento único",
+  setupPrice: "R$ 750", monthlyPrice: "Sem mensalidade", setupValue: 75000, monthlyValue: 0,
+  features: [...SITE_NOVO.features, ...GBP_AVULSO.features], featured: false,
+};
+
 /** O que é oferecido hoje. */
-export const OFFERS: Offer[] = [SITE_NOVO, GESTAO_GOOGLE];
+export const OFFERS: Offer[] = [SITE_NOVO, GBP_AVULSO, SITE_GBP];
 
 /**
  * Rótulos para exibição. Inclui os planos aposentados em 2026-07-10,
@@ -72,7 +83,9 @@ export const OFFERS: Offer[] = [SITE_NOVO, GESTAO_GOOGLE];
  * clientes legados apareceriam com a string crua.
  */
 export const PRODUCT_LABELS: Record<string, string> = {
-  site_novo: "Site Novo + Presença Ativa",
+  site_novo: "Site Novo (pagamento único)",
+  gbp_avulso: "Criação do Perfil Google",
+  site_gbp: "Site + Perfil Google",
   gestao_google: "Gestão de Google (add-on)",
   // legado — não oferecer, apenas rotular
   essencial: "JB Digital Essencial (legado)",
@@ -84,4 +97,4 @@ export const LEGACY_PLAN_KEYS = ["essencial", "premium"] as const;
 
 /** Um projeto ganha páginas de SEO por bairro? Premium legado também ganhava. */
 export const hasNeighborhoodSeo = (plan: string): boolean =>
-  plan === SITE_NOVO.key || plan === "premium";
+  plan === SITE_NOVO.key || plan === "site_gbp" || plan === "premium";

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -16,14 +16,17 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const tier = searchParams.get("plan");
+  const destination = ["site_novo", "gbp_avulso", "site_gbp"].includes(tier ?? "") ? `/dashboard/new-project?plan=${tier}` : "/dashboard";
   const { toast } = useToast();
   const { user, loading: authLoading } = useAuth();
 
   useEffect(() => {
     if (!authLoading && user) {
-      navigate("/dashboard", { replace: true });
+      navigate(destination, { replace: true });
     }
-  }, [user, authLoading, navigate]);
+  }, [user, authLoading, navigate, destination]);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +36,7 @@ const Signup = () => {
       email,
       password,
       options: {
-        emailRedirectTo: window.location.origin,
+        emailRedirectTo: window.location.origin + destination,
         data: { full_name: fullName },
       },
     });
@@ -47,7 +50,7 @@ const Signup = () => {
         title: "Conta criada!",
         description: "Verifique seu e-mail para confirmar o cadastro.",
       });
-      navigate("/login");
+      navigate(`/login${tier ? `?plan=${encodeURIComponent(tier)}` : ""}`);
     }
   };
 
@@ -126,7 +129,7 @@ const Signup = () => {
             const { error } = await supabase.auth.signInWithOAuth({
               provider: "google",
               options: {
-                redirectTo: `${window.location.origin}/dashboard`,
+                redirectTo: `${window.location.origin}${destination}`,
                 scopes: "https://www.googleapis.com/auth/business.manage email profile",
               },
             });
@@ -145,7 +148,7 @@ const Signup = () => {
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Já tem conta?{" "}
-          <Link to="/login" className="text-primary hover:underline">
+          <Link to={`/login${tier ? `?plan=${encodeURIComponent(tier)}` : ""}`} className="text-primary hover:underline">
             Entrar
           </Link>
         </p>

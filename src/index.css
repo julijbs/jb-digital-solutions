@@ -99,3 +99,27 @@
     background: linear-gradient(90deg, transparent, hsl(43 53% 54% / 0.2), transparent);
   }
 }
+
+/* Black Friday campaign: navy/gold remains the brand; red highlights this offer. */
+:root { --campaign-red: 0 84% 72%; --campaign-button: 0 74% 42%; }
+.bf-hero-grid { display:grid; grid-template-columns: minmax(0,1.2fr) minmax(0,0.8fr); gap:4rem; align-items:center; }
+.bf-offer { border:1px solid hsl(var(--border)); border-radius:1.5rem; background:hsl(var(--card)); padding:clamp(1.5rem,4vw,2.5rem); }
+.bf-offer--active { border-color:hsl(var(--campaign-red)); }
+.bf-offer h2 { font-size:1.7rem; margin:.5rem 0; }
+.bf-label,.bf-saving { color:hsl(var(--campaign-red)); font-weight:600; }
+.bf-description,.bf-was,.bf-note,.bf-deadline { color:hsl(var(--muted-foreground)); }
+.bf-was { margin-top:1.75rem; }
+.bf-price { font-size:clamp(3.5rem,7vw,5.5rem); line-height:1.1; font-weight:800; letter-spacing:-.05em; margin:.3rem 0; }
+.bf-offer--active .bf-price { color:hsl(var(--campaign-red)); }
+.bf-saving { margin-top:1rem; font-size:.875rem; }
+.bf-countdown { display:grid; grid-template-columns:repeat(4,1fr); gap:.5rem; margin:1.5rem 0 .75rem; }
+.bf-countdown div { text-align:center; border:1px solid hsl(var(--border)); padding:.6rem .25rem; border-radius:.5rem; }
+.bf-countdown strong { display:block; font-size:1.6rem; font-variant-numeric:tabular-nums; }
+.bf-countdown span,.bf-deadline,.bf-note { font-size:.75rem; }
+.bf-button { display:block; text-align:center; background:hsl(var(--campaign-button)); color:hsl(var(--foreground)); border-radius:.6rem; padding:1rem; margin:1.5rem 0 .75rem; font-weight:700; }
+.bf-button:hover { filter:brightness(1.15); }
+.bf-button:focus-visible { outline:3px solid hsl(var(--foreground)); outline-offset:4px; }
+@media(max-width:850px) { .bf-hero-grid { grid-template-columns:1fr; gap:2rem; } }
+@media(max-width:850px) {
+  .bf-hero-grid > .bf-offer { order:-1; }
+}

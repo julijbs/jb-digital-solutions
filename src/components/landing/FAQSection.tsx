@@ -10,11 +10,11 @@ import {
 const faqs = [
   {
     q: "Como funciona o pagamento?",
-    a: "Existem dois valores: o setup único do Site Novo, que constrói todo o sistema, e a Presença Ativa, a mensalidade que mantém o site no ar, atualizado e monitorado. A Gestão de Google é um add-on opcional, contratado à parte. Aceitamos PIX e cartão em até 12x.",
+    a: "Você paga uma única vez pelo serviço contratado: criação da página, criação do Perfil Google ou ambos. Sem assinatura, mensalidade ou gestão contínua.",
   },
   {
     q: "Preciso ter site para contratar?",
-    a: "Não — o site é justamente o que entregamos. Construímos do zero um site programático, com páginas por serviço e por bairro. Se você já tem site e quer apenas o Perfil da Empresa no Google cuidado de perto, isso é o add-on Gestão de Google.",
+    a: "Não. Podemos criar sua página do zero ou criar apenas seu Perfil da Empresa no Google. Os serviços podem ser contratados separadamente ou juntos.",
   },
   {
     q: "Quanto tempo leva para ficar pronto?",
@@ -26,11 +26,11 @@ const faqs = [
   },
   {
     q: "Vocês fazem gestão de redes sociais?",
-    a: "Não. Nosso foco é construir e manter seu posicionamento orgânico no Google e nas IAs. Gestão de conteúdo ou tráfego pago não fazem parte do serviço.",
+    a: "Não. Nosso foco é criar e entregar sua página e seu Perfil Google. Gestão de conteúdo ou tráfego pago não fazem parte do serviço.",
   },
   {
     q: "Minha clínica vai aparecer no Google automaticamente após o setup?",
-    a: "O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica completa e acompanhamos seu crescimento mensalmente.",
+    a: "O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica. O serviço não inclui acompanhamento mensal.",
   },
   {
     q: "Posso usar meu próprio domínio?",
