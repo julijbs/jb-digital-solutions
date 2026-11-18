@@ -65,16 +65,20 @@ const ClientBilling = () => {
   // Verify payment on success redirect
   useEffect(() => {
     const sessionId = searchParams.get("session_id");
+    const paymentId = searchParams.get("payment_id") || searchParams.get("collection_id");
+    const isMercadoPago = searchParams.get("provider") === "mercadopago";
     const success = searchParams.get("success");
-    if (success === "true" && sessionId) {
+    if ((isMercadoPago && paymentId) || (success === "true" && sessionId)) {
       setVerifying(true);
       supabase.functions
-        .invoke("verify-billing-payment", { body: { session_id: sessionId } })
+        .invoke(isMercadoPago ? "verify-mercadopago-payment" : "verify-billing-payment", { body: isMercadoPago ? { payment_id: paymentId } : { session_id: sessionId } })
         .then(({ data, error }) => {
           if (error) {
             toast.error("Erro ao verificar pagamento");
           } else if (data?.status === "paid") {
             toast.success("Pagamento confirmado! 🎉");
+          } else {
+            toast.info("Pagamento aguardando confirmação. O status será atualizado após a aprovação.");
           }
           setVerifying(false);
           fetchBilling();
@@ -95,7 +99,7 @@ const ClientBilling = () => {
 
     setCheckoutLoading(productType);
     try {
-      const { data, error } = await supabase.functions.invoke("create-billing-checkout", {
+      const { data, error } = await supabase.functions.invoke("create-mercadopago-checkout", {
         body: {
           tier: productType,
           project_id: clientData.project_id,
@@ -105,7 +109,7 @@ const ClientBilling = () => {
 
       if (error) throw error;
       if (data?.url) {
-        window.open(data.url, "_blank");
+        window.location.assign(data.url);
       }
     } catch (err) {
       toast.error("Erro ao iniciar checkout. Tente novamente.");
@@ -174,8 +178,8 @@ const ClientBilling = () => {
                   {plan.setupPrice && (
                     <>
                       <span className="font-serif text-2xl text-primary">{plan.setupPrice}</span>
-                      <span className="ml-1 text-sm text-muted-foreground">setup</span>
-                      <span className="mx-2 text-muted-foreground">+</span>
+                      <span className="ml-1 text-sm text-muted-foreground">pagamento único</span>
+                      <br />
                     </>
                   )}
                   <span className="font-serif text-lg text-primary">{plan.monthlyPrice}</span>

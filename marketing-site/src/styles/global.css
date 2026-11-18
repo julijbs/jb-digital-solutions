@@ -210,3 +210,5 @@
     color: #fff;
   }
 }
+:root { --campaign-red: hsl(0 84% 72%); }
+[hidden] { display:none !important; }

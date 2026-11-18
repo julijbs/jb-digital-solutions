@@ -19,7 +19,7 @@ import { createClient } from "@supabase/supabase-js";
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
-import { intakeToClientData, slugify } from "./lib/intake-to-clientdata.ts";
+import { intakeToClientData } from "./lib/intake-to-clientdata.ts";
 
 // Load .env.local
 const envPath = new URL("../../.env.local", import.meta.url).pathname;
@@ -96,13 +96,18 @@ async function main() {
 
   if (ie || !intake) { console.error("Erro ao buscar intake:", ie?.message); process.exit(1); }
   if (pe || !project) { console.error("Erro ao buscar projeto:", pe?.message); process.exit(1); }
-  if (!intake.completed) console.warn("⚠️  Onboarding não concluído. Gerando assim mesmo...");
+  if (project.plan === "gbp_avulso") throw new Error("Perfil Google avulso não gera site. Siga o fluxo de criação do GBP.");
+  if (!intake.completed) throw new Error("Onboarding incompleto. Conclua o intake antes de gerar arquivos.");
 
   // 2. Generate ClientData
   console.log("2/5  Gerando estrutura + prompt de copy...");
   const clientData = await intakeToClientData(intake, project);
   const { _copyPrompt, ...dataToWrite } = clientData as any;
   const { slug } = dataToWrite;
+  if (!/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(slug)) throw new Error("Slug inválido.");
+  if (fs.existsSync(path.join(ROOT, "src", "data", `${slug}.ts`))) {
+    throw new Error(`Cliente ${slug} já existe. Nenhum conteúdo foi sobrescrito.`);
+  }
   console.log(`     slug: ${slug}`);
 
   // 3. Write data file
@@ -119,10 +124,10 @@ async function main() {
   console.log("5/5  Atualizando status do projeto...");
   const { error: ue } = await supabase
     .from("projects")
-    .update({ status: "content_ready", site_url: clientData.siteUrl })
+    .update({ site_url: clientData.siteUrl })
     .eq("id", projectId);
   if (ue) console.warn("   ⚠️  Erro ao atualizar status:", ue.message);
-  else console.log(`   ✓ status = content_ready · site_url = ${clientData.siteUrl}`);
+  else console.log(`   ✓ estrutura gerada, copy pendente · site_url = ${clientData.siteUrl}`);
 
   console.log(`\n✅ Concluído! Arquivo: site-engine/src/data/${slug}.ts`);
   console.log(`   Preview: cd site-engine && CLIENT=${slug} npm run dev\n`);

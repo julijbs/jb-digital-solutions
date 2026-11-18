@@ -4,16 +4,7 @@ import SiteNav from '../components/sections/SiteNav.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import PricingTable from '../components/sections/PricingTable.astro';
 import HomeHero from '../components/home/HomeHero.astro';
-import HomePainPoints from '../components/home/HomePainPoints.astro';
-import HomeSolution from '../components/home/HomeSolution.astro';
-import HomeAEO from '../components/home/HomeAEO.astro';
-import HomeReviews from '../components/home/HomeReviews.astro';
-import HomeHowItWorks from '../components/home/HomeHowItWorks.astro';
-import HomeForYou from '../components/home/HomeForYou.astro';
-import HomeTestimonials from '../components/home/HomeTestimonials.astro';
-import HomeGuarantee from '../components/home/HomeGuarantee.astro';
 import HomeFAQ from '../components/home/HomeFAQ.astro';
-import HomeFinalCTA from '../components/home/HomeFinalCTA.astro';
 import HomeMobileCTA from '../components/home/HomeMobileCTA.astro';
 import { homeFaqs } from '../data/homeFaqs.ts';
 import { schemaOffers } from '../data/pricing.ts';
@@ -22,9 +13,6 @@ const canonical = new URL('/', Astro.site).href;
 const blogUrl   = new URL('/blog/', Astro.site).href;
 
 const homeNavItems = [
-  { label: 'O Sistema',     href: '#solucao' },
-  { label: 'Presença em IA', href: '#aeo' },
-  { label: 'Como funciona', href: '#como-funciona' },
   { label: 'Planos',        href: '#planos' },
   { label: 'FAQ',           href: '#faq' },
 ];
@@ -78,17 +66,8 @@ const schema = {
   <SiteNav navItems={homeNavItems} />
   <main id="main">
     <HomeHero />
-    <HomePainPoints />
-    <HomeSolution />
-    <HomeAEO />
-    <HomeReviews />
-    <HomeHowItWorks />
-    <HomeForYou />
     <PricingTable whatsappText="Olá! Vim pelo site da JB Digital e tenho interesse no Site Novo. Pode me contar mais?" />
-    <HomeTestimonials />
-    <HomeGuarantee />
     <HomeFAQ />
-    <HomeFinalCTA />
   </main>
   <SiteFooter />
   <HomeMobileCTA />

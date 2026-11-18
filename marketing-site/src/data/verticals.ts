@@ -93,7 +93,6 @@ export const verticals: Vertical[] = [
       { step: 2, title: 'Construímos todo o seu sistema em até 7 dias', body: 'Site, Perfil Google completo, páginas por especialidade e bairro, estrutura para as IAs — tudo configurado e integrado.' },
       { step: 3, title: 'Você aprova antes de publicar', body: 'Revisamos juntos em etapas. Só publicamos quando você estiver 100% satisfeito com o resultado.' },
       { step: 4, title: 'Seu sistema entra no ar e começa a trabalhar', body: 'Site publicado, Google ativo, presença nas IAs estruturada — sua presença digital trabalhando 24h por dia.' },
-      { step: 5, title: 'Acompanhamento mensal para manter o crescimento', body: 'Monitoramos sua posição todo mês, ajustamos o que precisa e reportamos os resultados — sem você precisar entender de tecnologia.' },
     ],
     faqs: [
       {
@@ -106,7 +105,7 @@ export const verticals: Vertical[] = [
       },
       {
         q: 'Quanto tempo leva para aparecer no Google?',
-        a: 'O setup técnico fica pronto em até 7 dias. O ranqueamento orgânico cresce com o tempo — os primeiros resultados aparecem tipicamente entre 60 e 90 dias. Acompanhamos mensalmente e ajustamos a estratégia.',
+        a: 'O setup técnico fica pronto em até 7 dias. O ranqueamento orgânico cresce com o tempo — os primeiros resultados aparecem tipicamente entre 60 e 90 dias. Serviço pontual, sem gestão mensal.',
       },
       {
         q: 'O que é AEO e por que importa para psicólogos?',
@@ -162,7 +161,6 @@ export const verticals: Vertical[] = [
       { step: 2, title: 'Construímos seu sistema em até 7 dias', body: 'Site com páginas por procedimento (implante, clareamento, ortodontia...) e por bairro, Perfil Google completo e estrutura AEO para as IAs.' },
       { step: 3, title: 'Você aprova antes de publicar', body: 'Revisamos juntos em etapas. Só publicamos quando você estiver 100% satisfeito.' },
       { step: 4, title: 'Seu sistema entra no ar', body: 'Site publicado, Google ativo, presença nas IAs estruturada — trabalhando para atrair pacientes 24h por dia.' },
-      { step: 5, title: 'Acompanhamento mensal', body: 'Monitoramos sua posição no Google todo mês, ajustamos o que precisa e enviamos relatório de posicionamento.' },
     ],
     faqs: [
       {
@@ -175,7 +173,7 @@ export const verticals: Vertical[] = [
       },
       {
         q: 'Quanto tempo leva para aparecer no Google?',
-        a: 'Setup técnico: até 7 dias. Primeiros resultados orgânicos: 60–90 dias. O Perfil Google tende a gerar resultados mais rápidos (buscas locais e Google Maps). Acompanhamos mensalmente.',
+        a: 'Setup técnico: até 7 dias. Primeiros resultados orgânicos: 60–90 dias. O Perfil Google tende a gerar resultados mais rápidos (buscas locais e Google Maps). Serviço pontual, sem gestão mensal.',
       },
       {
         q: 'Funciona para clínica com mais de um profissional?',
@@ -231,7 +229,6 @@ export const verticals: Vertical[] = [
       { step: 2, title: 'Construímos seu sistema em até 7 dias', body: 'Site com páginas por especialidade (nutrição esportiva, emagrecimento, nutrição clínica...) e por bairro, Perfil Google e estrutura AEO.' },
       { step: 3, title: 'Você aprova antes de publicar', body: 'Revisamos juntos em etapas. Só publicamos quando você estiver 100% satisfeito.' },
       { step: 4, title: 'Seu sistema entra no ar', body: 'Site publicado, Google ativo, presença nas IAs estruturada — tudo rodando para atrair pacientes organicamente.' },
-      { step: 5, title: 'Acompanhamento mensal', body: 'Monitoramos, ajustamos e reportamos — você foca nos seus pacientes.' },
     ],
     faqs: [
       {
@@ -244,7 +241,7 @@ export const verticals: Vertical[] = [
       },
       {
         q: 'Quanto tempo leva para aparecer no Google?',
-        a: 'Setup técnico: até 7 dias. Primeiros resultados orgânicos: 60–90 dias. O Perfil Google (Google Maps e buscas locais) costuma gerar resultados mais rápidos. Acompanhamos mensalmente.',
+        a: 'Setup técnico: até 7 dias. Primeiros resultados orgânicos: 60–90 dias. O Perfil Google (Google Maps e buscas locais) costuma gerar resultados mais rápidos. Serviço pontual, sem gestão mensal.',
       },
       {
         q: 'Funciona para atendimento online também?',
@@ -300,7 +297,6 @@ export const verticals: Vertical[] = [
       { step: 2, title: 'Construímos seu sistema em até 7 dias', body: 'Site com páginas por especialidade (RPG, pilates, pós-operatório, neurológica...) e por região, Perfil Google e estrutura AEO para as IAs.' },
       { step: 3, title: 'Você aprova antes de publicar', body: 'Revisamos juntos. Só publicamos quando você estiver 100% satisfeito.' },
       { step: 4, title: 'Seu sistema entra no ar', body: 'Site publicado, Google ativo, presença nas IAs estruturada — trabalhando por você enquanto você está em atendimento.' },
-      { step: 5, title: 'Acompanhamento mensal', body: 'Monitoramos sua posição, ajustamos a estratégia e reportamos os resultados mensalmente.' },
     ],
     faqs: [
       {
@@ -313,7 +309,7 @@ export const verticals: Vertical[] = [
       },
       {
         q: 'Quanto tempo leva para aparecer no Google?',
-        a: 'Setup técnico: até 7 dias. Primeiros resultados orgânicos: 60–90 dias. Buscas locais e Google Maps tendem a ser mais rápidas. Acompanhamos mensalmente.',
+        a: 'Setup técnico: até 7 dias. Primeiros resultados orgânicos: 60–90 dias. Buscas locais e Google Maps tendem a ser mais rápidas. Serviço pontual, sem gestão mensal.',
       },
       {
         q: 'O que é AEO e como ajuda fisioterapeutas?',

@@ -26,9 +26,7 @@ export const FinalCTA = () => {
             <span className="gold-gradient-text">Você vai aparecer?</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-            Em até 7 dias úteis, toda a infraestrutura do seu posicionamento online está no ar —
-            site, Perfil Google e presença nas IAs trabalhando juntos para atrair pacientes
-            de forma orgânica, sem que você precise perder tempo em reuniões.
+            Escolha o Sistema Completo (site + criação ou otimização e integração do GBP) ou o GBP avulso. Uma contratação, uma entrega e nenhum compromisso de mensalidade.
           </p>
 
           <div className="mt-8">

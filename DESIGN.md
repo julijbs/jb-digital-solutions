@@ -99,3 +99,11 @@ Todos os 3 serviços compartilham a mesma paleta navy/gold. Diferenciação por 
 | JB Digital System (Site + GBP) | `Globe` / `MapPin` | gold gradient |
 | SEO Local | `Search` / `TrendingUp` | gold gradient |
 | ARC™ Backend | `Mail` / `Zap` | gold gradient |
+
+## Campanha Black Friday 2026
+
+A oferta avulsa usa os tokens `--campaign-red: 0 84% 72%` para preço e `--campaign-button: 0 74% 42%` para CTA, mantendo navy e gold no restante. Preço regular riscado, economia de R$ 1.000 e prazo real até 30/11/2026 (Brasília). Sem contagem reiniciada por visitante.
+
+### Revisão visual da campanha
+
+Promoção integrada à seção de investimento, em dois cards alinhados: Sistema Completo e GBP avulso. Hero sem card promocional, com demonstração ilustrativa de site e perfil conectados. Preço promocional em vermelho suave (`--campaign-red: 0 72% 72%`); botões dourados. Contador compacto junto ao prazo dentro do card, sem caixas grandes ou borda vermelha.

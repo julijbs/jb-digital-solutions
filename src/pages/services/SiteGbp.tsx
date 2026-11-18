@@ -2,19 +2,11 @@ import { Helmet } from "react-helmet-async";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { HeroSection } from "@/components/landing/HeroSection";
-import { PainPoints } from "@/components/landing/PainPoints";
-import { SolutionSection } from "@/components/landing/SolutionSection";
-import { AEOSection } from "@/components/landing/AEOSection";
-import { GBPReviewsWidget } from "@/components/landing/GBPReviewsWidget";
 import { HowItWorks } from "@/components/landing/HowItWorks";
-import { ForYouSection } from "@/components/landing/ForYouSection";
 import { PricingSection } from "@/components/landing/PricingSection";
-import { Testimonials } from "@/components/landing/Testimonials";
-import { GuaranteeSection } from "@/components/landing/GuaranteeSection";
 import { FAQSection } from "@/components/landing/FAQSection";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { MobileCTA } from "@/components/landing/MobileCTA";
-import { FreeAuditSection } from "@/components/landing/FreeAuditSection";
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -23,7 +15,7 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "Como funciona o pagamento?",
-      acceptedAnswer: { "@type": "Answer", text: "Existem dois valores: o setup único do Site Novo, que constrói todo o sistema, e a Presença Ativa, a mensalidade que mantém o site no ar, atualizado e monitorado. A Gestão de Google é um add-on opcional, contratado à parte. Aceitamos PIX e cartão em até 12x." },
+      acceptedAnswer: { "@type": "Answer", text: "Pagamento único pelo serviço contratado: página, Perfil Google ou ambos. Sem assinatura ou mensalidade." },
     },
     {
       "@type": "Question",
@@ -43,7 +35,7 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "Minha clínica vai aparecer no Google após o setup?",
-      acceptedAnswer: { "@type": "Answer", text: "O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica completa e acompanhamos seu crescimento mensalmente." },
+      acceptedAnswer: { "@type": "Answer", text: "O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica. O serviço não inclui acompanhamento mensal." },
     },
     {
       "@type": "Question",
@@ -61,24 +53,16 @@ const orgSchema = {
   url: "https://jbdigitalsystem.com",
   areaServed: "BR",
   serviceType: ["Web Design", "SEO", "AEO", "Google Business Profile Management"],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5.0",
-    reviewCount: "47",
-  },
 };
 
 const navItems = [
-  { label: "O Sistema", href: "#solucao" },
-  { label: "Presença em IA", href: "#aeo" },
-  { label: "Auditoria Grátis", href: "#auditoria" },
   { label: "Como funciona", href: "#como-funciona" },
-  { label: "Planos", href: "#planos" },
+  { label: "Serviços", href: "#planos" },
   { label: "FAQ", href: "#faq" },
 ];
 
 const SiteGbp = () => (
-  <div className="min-h-screen bg-background">
+  <div className="min-h-screen bg-background elegant-landing">
     <Helmet>
       <title>Sistema de Posicionamento Online para Profissionais de Saúde | JB Digital System</title>
       <meta
@@ -91,28 +75,19 @@ const SiteGbp = () => (
 
     <SiteHeader
       navItems={navItems}
-      ctaSecondary={{ label: "Ver planos", href: "#planos" }}
-      ctaPrimary={{ label: "Iniciar Meu Projeto", href: "/signup?plan=site_novo" }}
+      ctaPrimary={{ label: "Ver investimento", href: "#planos" }}
     />
 
     <main>
       <HeroSection />
-      <PainPoints />
-      <SolutionSection />
-      <AEOSection />
-      <GBPReviewsWidget />
-      <FreeAuditSection />
       <HowItWorks />
-      <ForYouSection />
       <PricingSection />
-      <Testimonials />
-      <GuaranteeSection />
       <FAQSection />
       <FinalCTA />
     </main>
 
     <SiteFooter
-      tagline="Sistema completo de posicionamento online para profissionais de saúde — site, Perfil Google e IA trabalhando juntos para atrair mais pacientes organicamente."
+      tagline="Sistema Completo: site + criação ou otimização e integração do GBP. Também disponível: GBP avulso. Sem mensalidade."
     />
     <MobileCTA />
   </div>

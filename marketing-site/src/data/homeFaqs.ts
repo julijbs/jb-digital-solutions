@@ -6,7 +6,7 @@
 export const homeFaqs: { q: string; a: string }[] = [
   {
     q: 'Como funciona o pagamento?',
-    a: 'Existem dois valores: o setup único do Site Novo, que constrói todo o sistema, e a Presença Ativa, a mensalidade que mantém o site no ar, atualizado e monitorado. A Gestão de Google é um add-on opcional, contratado à parte. Aceitamos PIX e cartão em até 12x.',
+    a: 'Pagamento único pela entrega contratada. Sistema Completo (site + criação ou otimização e integração do GBP): R$ 497 na Black Friday até 30/11/2026, depois R$ 1.497. GBP avulso: R$ 297. Sem mensalidade.',
   },
   {
     q: 'Preciso ter site para contratar?',
@@ -26,7 +26,7 @@ export const homeFaqs: { q: string; a: string }[] = [
   },
   {
     q: 'Meu negócio vai aparecer no Google automaticamente após o setup?',
-    a: 'O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica completa e acompanhamos seu crescimento mensalmente.',
+    a: 'O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica. Sem acompanhamento mensal.',
   },
   {
     q: 'Posso usar meu próprio domínio?',
