@@ -22,7 +22,7 @@ export const FinalCTA = () => {
           className="mx-auto max-w-2xl"
         >
           <h2 className="font-serif text-3xl md:text-5xl">
-            Seu próximo paciente está pesquisando agora.{" "}
+            Seu próximo cliente está pesquisando agora.{" "}
             <span className="gold-gradient-text">Você vai aparecer?</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground leading-relaxed">

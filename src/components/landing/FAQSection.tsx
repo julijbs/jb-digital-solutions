@@ -29,7 +29,7 @@ const faqs = [
     a: "Não. Nosso foco é criar e entregar seu Sistema Completo ou GBP avulso. Gestão de conteúdo ou tráfego pago não fazem parte do serviço.",
   },
   {
-    q: "Minha clínica vai aparecer no Google automaticamente após o setup?",
+    q: "Meu negócio vai aparecer no Google automaticamente após o setup?",
     a: "O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica. O serviço não inclui acompanhamento mensal.",
   },
   {

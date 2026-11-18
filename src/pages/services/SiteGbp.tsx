@@ -34,7 +34,7 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      name: "Minha clínica vai aparecer no Google após o setup?",
+      name: "Meu negócio vai aparecer no Google após o setup?",
       acceptedAnswer: { "@type": "Answer", text: "O sistema é otimizado tecnicamente para isso, mas o ranqueamento orgânico cresce com o tempo — depende de fatores como concorrência local e volume de avaliações. Entregamos a base técnica. O serviço não inclui acompanhamento mensal." },
     },
     {
@@ -64,10 +64,10 @@ const navItems = [
 const SiteGbp = () => (
   <div className="min-h-screen bg-background elegant-landing">
     <Helmet>
-      <title>Sistema de Posicionamento Online para Profissionais de Saúde | JB Digital System</title>
+      <title>Site e Perfil Google para Negócios Locais | JB Digital System</title>
       <meta
         name="description"
-        content="Site + Perfil Google + Presença em IA para dentistas, médicos, psicólogos, nutricionistas e profissionais de saúde. Sistema completo que atrai pacientes de forma orgânica. Setup em até 7 dias."
+        content="Site profissional, criação ou otimização do Perfil Google e integração ao site para negócios locais. Sistema Completo ou GBP avulso, com pagamento único e sem mensalidade."
       />
       <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       <script type="application/ld+json">{JSON.stringify(orgSchema)}</script>
