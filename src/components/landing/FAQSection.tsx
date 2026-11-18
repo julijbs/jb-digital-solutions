@@ -10,7 +10,7 @@ import {
 const faqs = [
   {
     q: "Como funciona o pagamento?",
-    a: "Você paga uma única vez pelo serviço contratado: Sistema Completo (site + criação ou otimização e integração do GBP) ou GBP avulso. Sem assinatura, mensalidade ou gestão contínua.",
+    a: "Você paga uma única vez pelo serviço contratado: Sistema Completo (site + criação ou otimização e integração do GBP) ou GBP avulso. Após a confirmação do pagamento, você recebe acesso ao onboarding. Sem assinatura, mensalidade ou gestão contínua.",
   },
   {
     q: "Preciso ter site para contratar?",
