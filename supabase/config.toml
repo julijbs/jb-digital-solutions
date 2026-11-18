@@ -68,3 +68,13 @@ verify_jwt = false
 
 [functions.psi-score]
 verify_jwt = false
+
+# Webhook verifies Mercado Pago HMAC signature in the function body.
+[functions.mercadopago-webhook]
+verify_jwt = false
+
+[functions.create-mercadopago-checkout]
+verify_jwt = true
+
+[functions.verify-mercadopago-payment]
+verify_jwt = true
