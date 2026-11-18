@@ -20,6 +20,9 @@ Deno.serve(async req => {
     const { data: client } = await userDb.from('clients').select('id').eq('user_id', user.id).eq('id', billing?.client_id ?? '').maybeSingle();
     if (!billing || !client) return respond({ error: 'Cobrança não autorizada.' }, 403);
     if (billing.status === 'paid') return respond({ paid: true, project_id: billing.project_id });
+    const { data: existingPaid, error: paidLookupError } = await userDb.from('billing').select('id').eq('project_id', billing.project_id).eq('product_type', billing.product_type).eq('status', 'paid').limit(1).maybeSingle();
+    if (paidLookupError) throw new Error('paid_lookup');
+    if (existingPaid) return respond({ paid: true, project_id: billing.project_id });
     if (billing.status !== 'pending' || billing.mercadopago_preference_id) return respond({ error: 'Abra um novo pagamento para continuar.' }, 409);
     const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
     let payment;
