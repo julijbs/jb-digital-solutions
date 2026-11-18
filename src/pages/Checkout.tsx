@@ -6,10 +6,12 @@ import { useAuth } from '@/contexts/AuthContext';
 import { OFFERS } from '@/config/pricing';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
+import EmbeddedPayment, { RecoveredPaymentStatus, type EmbeddedSession } from '@/components/EmbeddedPayment';
 import { getSiteOffer } from '../../supabase/functions/_shared/site-offer';
 
 export default function Checkout() {
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
+  const [session, setSession] = useState<EmbeddedSession | null>(null);
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const offer = OFFERS.find(o => o.key === params.get('plan'));
@@ -46,15 +48,16 @@ export default function Checkout() {
     if (!offer || !user || busy) return;
     setBusy(true); setError(''); setMessage('');
     try {
-      const { data, error: checkoutError } = await supabase.functions.invoke('create-mercadopago-checkout', { body: { tier: offer.key, ...(projectId ? { project_id: projectId } : {}) } });
+      const { data, error: checkoutError } = await supabase.functions.invoke('create-mercadopago-checkout', { body: { mode: 'embedded', tier: offer.key, ...(projectId ? { project_id: projectId } : {}) } });
       if (checkoutError) {
         let detail = 'Não foi possível abrir o pagamento. Tente novamente.';
         if (checkoutError.context instanceof Response) { const body = await checkoutError.context.json().catch(() => null); if (body?.error) detail = body.error; }
         throw new Error(detail);
       }
       if (data?.paid && data?.project_id) { navigate(`/dashboard/onboarding/${data.project_id}`, { replace: true }); return; }
-      if (!data?.url) throw new Error(data?.error || 'O checkout não retornou um endereço de pagamento.');
-      window.location.assign(data.url);
+      if (!data?.billing_id) throw new Error(data?.error || 'Não foi possível preparar o formulário de pagamento.');
+      setSession(data);
+      setParams({ plan: offer.key, project_id: data.project_id }, { replace: true });
     } catch (e) { setError(e instanceof Error ? e.message : 'Falha ao abrir o pagamento.'); }
     finally { setBusy(false); }
   }
@@ -70,7 +73,12 @@ export default function Checkout() {
       <p className="mb-6 border-t border-border pt-5 text-sm text-muted-foreground">Primeiro você paga. Após a confirmação, liberamos o formulário com as informações do seu negócio.</p>
       {message && <p role="status" className="mb-5 text-sm text-primary">{message}</p>}
       {error && <p role="alert" className="mb-5 text-sm text-destructive">{error}</p>}
-      {authLoading ? <Loader2 className="animate-spin" aria-label="Carregando" /> : !user ? <div className="space-y-3"><Button variant="hero" className="w-full" asChild><Link to={`/signup?plan=${offer.key}`}>Criar conta e continuar para pagamento</Link></Button><p className="text-center text-sm text-muted-foreground">Já tem conta? <Link className="text-primary" to={`/login?plan=${offer.key}`}>Entrar para pagar</Link></p></div> : <div className="space-y-3"><Button variant="hero" className="w-full" disabled={busy} onClick={pay}>{busy ? <><Loader2 size={16} className="mr-2 animate-spin" />Abrindo pagamento…</> : `Pagar ${setupPrice} no Mercado Pago`}</Button>{projectId && <Button variant="outline" className="w-full" onClick={() => { void confirmPayment(); }}>Já paguei: verificar confirmação</Button>}</div>}
+      {authLoading ? <Loader2 className="animate-spin" aria-label="Carregando" /> : !user ? <div className="space-y-3"><Button variant="hero" className="w-full" asChild><Link to={`/signup?plan=${offer.key}`}>Criar conta e continuar para pagamento</Link></Button><p className="text-center text-sm text-muted-foreground">Já tem conta? <Link className="text-primary" to={`/login?plan=${offer.key}`}>Entrar para pagar</Link></p></div> : <div className="space-y-3">{!session && !paymentId && <Button variant="hero" className="w-full" disabled={busy} onClick={pay}>{busy ? <><Loader2 size={16} className="mr-2 animate-spin" />Abrindo pagamento…</> : `Pagar ${setupPrice} com Pix ou cartão`}</Button>}{projectId && <Button variant="outline" className="w-full" onClick={() => { void confirmPayment(); }}>Já paguei: verificar confirmação</Button>}</div>}
+      {user && paymentId && !session && <RecoveredPaymentStatus paymentId={paymentId} retryUrl={`${window.location.origin}/checkout?plan=${offer.key}&project_id=${projectId}`} />}
+      {user && session && <EmbeddedPayment key={session.billing_id} session={session} email={user.email ?? ''} onRetry={() => setSession(null)} onPayment={result => {
+        if (result.paid) { navigate(`/dashboard/onboarding/${result.project_id}`, { replace: true }); return; }
+        setParams({ plan: offer.key, project_id: result.project_id, provider: 'mercadopago', payment_id: result.payment_id }, { replace: true });
+      }} />}
       <p className="mt-5 flex items-center gap-2 text-xs text-muted-foreground"><ShieldCheck size={14} /> Seus dados de pagamento ficam no Mercado Pago.</p>
     </div></div></main>;
 }

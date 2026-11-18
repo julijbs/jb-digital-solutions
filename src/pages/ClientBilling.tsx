@@ -97,26 +97,7 @@ const ClientBilling = () => {
       return;
     }
 
-    setCheckoutLoading(productType);
-    try {
-      const { data, error } = await supabase.functions.invoke("create-mercadopago-checkout", {
-        body: {
-          tier: productType,
-        },
-      });
-
-      if (error) throw error;
-      if (data?.paid && data?.project_id) {
-        window.location.assign(`/dashboard/onboarding/${data.project_id}`);
-      } else if (data?.url) {
-        window.location.assign(data.url);
-      }
-    } catch (err) {
-      toast.error("Erro ao iniciar checkout. Tente novamente.");
-      console.error(err);
-    } finally {
-      setCheckoutLoading(null);
-    }
+    window.location.assign(`/checkout?plan=${encodeURIComponent(productType)}`);
   };
 
   const paidRecords = records.filter((r) => r.status === "paid");

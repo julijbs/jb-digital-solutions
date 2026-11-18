@@ -15,7 +15,7 @@ Deno.serve(async req => {
     const userDb = createClient(url, Deno.env.get('SUPABASE_ANON_KEY')!, { global: { headers: { Authorization: authorization } } });
     const { data: { user } } = await userDb.auth.getUser(authorization.replace(/^Bearer /, ''));
     if (!user?.email) return respond({ error: 'Entre na sua conta para continuar para o pagamento.' }, 401);
-    const { tier, project_id: requestedProjectId } = await req.json();
+    const { tier, project_id: requestedProjectId, mode } = await req.json();
     const now = Date.now();
     const offer = getOneTimeService(tier, now);
     if (!offer) return respond({ error: 'Serviço inválido.' }, 400);
@@ -52,6 +52,7 @@ Deno.serve(async req => {
     const expiresAt = new Date(Math.min(now + 3600000, tier === 'site_novo' && getSiteOffer(now).active ? Date.parse(BLACK_FRIDAY.endsAt) : Infinity)).toISOString();
     const { error: insertError } = await db.from('billing').insert({ id: billingId, project_id: projectId, client_id: client.id, product_type: tier, amount: offer.cents, currency: 'brl', status: 'pending', payment_provider: 'mercadopago' });
     if (insertError) throw new Error('billing_create');
+    if (mode === 'embedded') return respond({ billing_id: billingId, project_id: projectId, amount: offer.cents / 100, expires_at: expiresAt });
     const origin = Deno.env.get('PUBLIC_SITE_URL') || 'https://jbdigitalsystem.com';
     const returnUrl = `${origin}/checkout?provider=mercadopago&plan=${encodeURIComponent(tier)}&project_id=${projectId}`;
     const response = await fetch('https://api.mercadopago.com/checkout/preferences', {

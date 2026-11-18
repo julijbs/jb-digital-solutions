@@ -80,3 +80,6 @@ verify_jwt = true
 [functions.verify-mercadopago-payment]
 # The gateway and handler both authenticate the user.
 verify_jwt = true
+
+[functions.process-mercadopago-payment]
+verify_jwt = true
