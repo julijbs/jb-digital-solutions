@@ -14,9 +14,11 @@ $$;
 revoke all on function public.has_paid_project_access(uuid) from public;
 grant execute on function public.has_paid_project_access(uuid) to authenticated;
 
+drop policy if exists "Payment required before intake insert" on public.client_intake;
 create policy "Payment required before intake insert" on public.client_intake
 as restrictive for insert to authenticated
 with check (public.has_paid_project_access(project_id));
+drop policy if exists "Payment required before intake update" on public.client_intake;
 create policy "Payment required before intake update" on public.client_intake
 as restrictive for update to authenticated
 using (public.has_paid_project_access(project_id))
@@ -35,6 +37,7 @@ begin
 end;
 $$;
 revoke all on function public.prepare_intake_after_payment() from public;
+drop trigger if exists prepare_intake_on_payment on public.billing;
 create trigger prepare_intake_on_payment
   after insert or update of status on public.billing
   for each row execute function public.prepare_intake_after_payment();
