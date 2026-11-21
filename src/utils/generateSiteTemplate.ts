@@ -19,40 +19,46 @@ export interface GenerateSiteParams {
 
 export function generateSiteHtml(params: GenerateSiteParams): { html: string; content: Record<string, unknown> } {
   const {
-    businessName = "Consultório Especializado",
-    vertical = "Saúde e Bem-estar",
-    city = "São Paulo",
-    state = "SP",
-    phone = "(11) 99999-9999",
-    email = "contato@consultorio.com.br",
-    instagram = "@consultorio",
-    description = "Atendimento clínico especializado focado em resultados consistentes, acolhimento e escuta qualificada.",
-    services = "Consulta Inicial, Acompanhamento Personalizado, Avaliação Clínica",
-    credentials = "Especialista com formação continuada e anos de experiência clínica",
+    businessName = "Negócio local",
+    vertical = "Negócio local",
+    city = "",
+    state = "",
+    phone = "",
+    email = "",
+    description = "",
+    services = "",
+    credentials = "",
     template = "elegant-minimal",
     colorScheme = "blue-professional",
   } = params;
 
-  const rawPhone = phone.replace(/\D/g, "") || "5511999999999";
-  const waPhone = rawPhone.startsWith("55") ? rawPhone : `55${rawPhone}`;
+  const rawPhone = phone.replace(/\D/g, "");
+  const waPhone = rawPhone
+    ? rawPhone.startsWith("55") ? rawPhone : `55${rawPhone}`
+    : "";
+  const contactHref = (message: string) => waPhone
+    ? `https://wa.me/${waPhone}?text=${encodeURIComponent(message)}`
+    : email
+    ? `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(`Contato sobre ${businessName}`)}`
+    : "#servicos";
 
   // Color palette definitions
   const colors = {
     "blue-professional": {
-      primary: "#0A1128",
-      primaryLight: "#1C2541",
-      accent: "#C8A882",
-      accentHover: "#b6936a",
-      bg: "#F8F9FA",
+      primary: "#3E5C76",
+      primaryLight: "#2F4A60",
+      accent: "#8A5A33",
+      accentHover: "#714627",
+      bg: "#F4F2ED",
       cardBg: "#FFFFFF",
-      textDark: "#0A1128",
-      textMuted: "#64748B",
+      textDark: "#1E2733",
+      textMuted: "#5A6475",
     },
     "green-therapeutic": {
       primary: "#1B4332",
       primaryLight: "#2D6A4F",
-      accent: "#52B788",
-      accentHover: "#40916C",
+      accent: "#2F6F52",
+      accentHover: "#24573F",
       bg: "#F0FDF4",
       cardBg: "#FFFFFF",
       textDark: "#1B4332",
@@ -61,116 +67,159 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
     "purple-transformer": {
       primary: "#3C096C",
       primaryLight: "#5A189A",
-      accent: "#9D4EDD",
+      accent: "#7B2CBF",
       accentHover: "#7B2CBF",
       bg: "#FAF5FF",
       cardBg: "#FFFFFF",
       textDark: "#240046",
       textMuted: "#6B7280",
     },
+    "rose-editorial": {
+      primary: "#6E3447",
+      primaryLight: "#572738",
+      accent: "#8A4750",
+      accentHover: "#713842",
+      bg: "#FBF5F2",
+      cardBg: "#FFFFFF",
+      textDark: "#2D2023",
+      textMuted: "#6D5B5D",
+    },
+    "terracotta-hospitality": {
+      primary: "#7A3F2B",
+      primaryLight: "#643321",
+      accent: "#843E25",
+      accentHover: "#6C321D",
+      bg: "#FFF7EE",
+      cardBg: "#FFFFFF",
+      textDark: "#30231E",
+      textMuted: "#6C5B52",
+    },
   }[colorScheme] || {
-    primary: "#0A1128",
-    primaryLight: "#1C2541",
-    accent: "#C8A882",
-    accentHover: "#b6936a",
-    bg: "#F8F9FA",
+    primary: "#3E5C76",
+    primaryLight: "#2F4A60",
+    accent: "#8A5A33",
+    accentHover: "#714627",
+    bg: "#F4F2ED",
     cardBg: "#FFFFFF",
-    textDark: "#0A1128",
-    textMuted: "#64748B",
+    textDark: "#1E2733",
+    textMuted: "#5A6475",
   };
 
-  const fontFamilies = {
+  const templateDesigns: Record<string, {
+    fontImport: string;
+    fontHeading: string;
+    fontBody: string;
+    styles: string;
+  }> = {
     "elegant-minimal": {
-      fontImport: "https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap",
-      fontHeading: "'DM Serif Display', Georgia, serif",
+      fontImport: "https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap",
+      fontHeading: "'Fraunces', Georgia, serif",
       fontBody: "'Inter', sans-serif",
+      styles: `
+        .template-elegant-minimal [data-section="hero"] { background: linear-gradient(180deg, #fff 0%, ${colors.bg} 100%); }
+        .template-elegant-minimal .rounded-2xl { border-radius: .65rem; }
+        .template-elegant-minimal [data-section="services"] .rounded-2xl { border-color: ${colors.primary}30; box-shadow: none; }
+        .template-elegant-minimal [data-section="cta"] { background: ${colors.primary}; }
+      `,
     },
     "modern-clean": {
       fontImport: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap",
       fontHeading: "'Poppins', sans-serif",
       fontBody: "'Inter', sans-serif",
+      styles: `
+        .template-modern-clean [data-section="hero"] { background: linear-gradient(135deg, #fff 0%, #eef5f8 100%); }
+        .template-modern-clean .rounded-2xl { border-radius: .8rem; }
+        .template-modern-clean [data-section="services"] .rounded-2xl { box-shadow: 0 8px 24px rgba(30, 55, 75, .06); }
+      `,
     },
     "warm-soft": {
-      fontImport: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Open+Sans:wght@400;500;600&display=swap",
-      fontHeading: "'Playfair Display', serif",
-      fontBody: "'Open Sans', sans-serif",
+      fontImport: "https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap",
+      fontHeading: "'DM Serif Display', Georgia, serif",
+      fontBody: "'Inter', sans-serif",
+      styles: `
+        .template-warm-soft [data-section="hero"] { background: linear-gradient(180deg, #fff 0%, ${colors.bg} 100%); }
+        .template-warm-soft .rounded-2xl { border-radius: 1.15rem; }
+        .template-warm-soft [data-section="about"] { background: ${colors.bg}; }
+        .template-warm-soft [data-section="pain"] { display: none; }
+      `,
     },
-  }[template] || {
-    fontImport: "https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap",
-    fontHeading: "'DM Serif Display', Georgia, serif",
-    fontBody: "'Inter', sans-serif",
+    "beauty-studio": {
+      fontImport: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap",
+      fontHeading: "'Cormorant Garamond', Georgia, serif",
+      fontBody: "'DM Sans', sans-serif",
+      styles: `
+        .template-beauty-studio [data-section="hero"] { background: linear-gradient(135deg, #fff 0%, ${colors.bg} 65%, ${colors.accent}22 100%); }
+        .template-beauty-studio [data-section="hero"] h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+        .template-beauty-studio .rounded-2xl { border-radius: 1rem; }
+        .template-beauty-studio [data-section="services"] .rounded-2xl { border-color: ${colors.accent}40; }
+      `,
+    },
+    "hospitality-warm": {
+      fontImport: "https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap",
+      fontHeading: "'Fraunces', Georgia, serif",
+      fontBody: "'DM Sans', sans-serif",
+      styles: `
+        .template-hospitality-warm [data-section="hero"] { background: linear-gradient(135deg, #fff 0%, ${colors.bg} 60%, ${colors.accent}22 100%); }
+        .template-hospitality-warm [data-section="services"] { background: ${colors.bg}; }
+        .template-hospitality-warm .rounded-2xl { border-radius: .75rem; }
+      `,
+    },
   };
+  const selectedTemplate = templateDesigns[template] ? template : "elegant-minimal";
+  const fontFamilies = templateDesigns[selectedTemplate];
 
   const serviceList = services.split(/[,;\n]/).map(s => s.trim()).filter(Boolean);
-  const mainServices = serviceList.length > 0 ? serviceList : [
-    "Consulta Especializada",
-    "Tratamento Personalizado",
-    "Acompanhamento Contínuo",
-  ];
+  const mainServices = serviceList;
 
   const content = {
     hero: {
-      headline: `Cuidado especializado e acolhimento para sua saúde em ${city}`,
-      subheadline: `${description} Atendimento humanizado e focado no seu bem-estar com horário marcado.`,
-      cta_text: "Agendar Consulta via WhatsApp",
+      headline: vertical && city ? `${vertical} em ${city}` : `Conheça ${businessName}`,
+      subheadline: description || "Confira as informações e serviços disponíveis.",
+      cta_text: waPhone ? "Falar no WhatsApp" : email ? "Enviar e-mail" : "Ver serviços",
     },
     pain_section: {
-      headline: `Você sente que precisa de um acompanhamento realmente personalizado?`,
-      pain_points: [
-        "Dificuldade em encontrar um atendimento que escute suas queixas com calma e atenção.",
-        "Tratamentos genéricos que não atacam a causa real do problema.",
-        "Insegurança sobre os próximos passos para cuidar da sua saúde.",
-      ],
+      headline: "",
+      pain_points: [],
     },
     about: {
-      intro: `Com ampla dedicação à prática clínica em ${city}, meu compromisso é oferecer um espaço seguro, ético e embasado nas melhores práticas científicas para que você alcance sua melhor versão.`,
-      credentials: [
-        credentials,
-        `Atendimento presencial e online em ${city}/${state}`,
-        "Compromisso rigoroso com ética e sigilo profissional",
-      ],
+      intro: description,
+      credentials: credentials ? [credentials] : [],
     },
-    services: mainServices.map((srv, idx) => ({
+    services: mainServices.map((srv) => ({
       name: srv,
-      description: `Atendimento focado em diagnóstico preciso e plano de cuidado individualizado para ${srv.toLowerCase()}.`,
+      description: `Entre em contato para saber mais sobre ${srv}.`,
     })),
-    process: [
-      { title: "1. Primeiro Contato", description: "Envie uma mensagem pelo WhatsApp para tirar dúvidas e verificar os horários disponíveis." },
-      { title: "2. Avaliação Inicial", description: "Uma sessão detalhada para entender seu histórico, rotina e necessidades específicas." },
-      { title: "3. Plano Personalizado", description: "Desenvolvimento de uma estratégia de cuidado sob medida para o seu objetivo." },
-      { title: "4. Acompanhamento Contínuo", description: "Monitoramento constante da sua evolução com suporte acolhedor a cada etapa." },
-    ],
-    testimonials: [
-      { text: "Atendimento humano, acolhedor e com extrema competência. Superou todas as minhas expectativas!", name: "Fernanda Costa", location: city },
-      { text: "Mudou completamente a forma como cuido da minha saúde. Recomendo de olhos fechados!", name: "Rodrigo Almeida", location: city },
-      { text: "Espaço impecável e profissional extremamente pontual e atencioso. Nota 10!", name: "Mariana Souza", location: city },
-    ],
-    faq: [
-      {
-        question: `Como funciona o agendamento de consultas em ${city}?`,
-        answer: `O agendamento é feito de forma simples e rápida diretamente pelo WhatsApp. Basta clicar no botão de contato, informar seu interesse e enviaremos as opções de horários mais convenientes para você.`,
-      },
-      {
-        question: `O atendimento é presencial em ${city} ou online?`,
-        answer: `Oferecemos tanto atendimento presencial no consultório em ${city}/${state} quanto a modalidade online por videochamada segura, dependendo da sua preferência.`,
-      },
-      {
-        question: `Como é estruturada a primeira sessão de ${vertical.toLowerCase()}?`,
-        answer: `Na primeira consulta realizamos uma escuta aprofundada das suas principais necessidades, histórico de saúde e objetivos, alinhando um plano de cuidado personalizado.`,
-      },
-      {
-        question: `Quais convênios ou formas de pagamento são aceitos?`,
-        answer: `Trabalhamos com atendimento particular com emissão de recibo para reembolso em convênios (se aplicável) e opções de pagamento facilitadas via PIX e cartão.`,
-      },
-    ],
+    process: [],
+    faq: [],
   };
+  const businessSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: businessName,
+    ...(description ? { description } : {}),
+    ...(phone ? { telephone: phone } : {}),
+    ...(email ? { email } : {}),
+    ...(city || state
+      ? {
+        address: {
+          "@type": "PostalAddress",
+          ...(city ? { addressLocality: city } : {}),
+          ...(state ? { addressRegion: state } : {}),
+          addressCountry: "BR",
+        },
+      }
+      : {}),
+  }).replace(/</g, "\\u003c");
+  const pageTitle = [businessName, vertical, city, state].filter(Boolean).join(" | ");
+  const locationLabel = [city, state].filter(Boolean).join("/");
+  const businessTypeLabel = [vertical, locationLabel].filter(Boolean).join(" · ");
 
   const html = `<!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${businessName} — ${vertical} em ${city}/${state}</title>
+  <title>${pageTitle}</title>
   <meta name="description" content="${content.hero.subheadline.slice(0, 155)}">
   
   <!-- Fonts -->
@@ -209,49 +258,13 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
     }
     details summary::-webkit-details-marker { display: none; }
     details[open] summary svg { transform: rotate(180deg); }
+    ${fontFamilies.styles}
   </style>
 
   <!-- Schema.org Structured Data (AEO & Local SEO) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "${businessName}",
-    "description": "${description.replace(/"/g, '\\"')}",
-    "telephone": "${phone}",
-    "email": "${email}",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "${city}",
-      "addressRegion": "${state}",
-      "addressCountry": "BR"
-    },
-    "priceRange": "$$",
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5.0",
-      "reviewCount": "48"
-    }
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      ${content.faq.map(f => `{
-        "@type": "Question",
-        "name": "${f.question.replace(/"/g, '\\"')}",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "${f.answer.replace(/"/g, '\\"')}"
-        }
-      }`).join(",\n      ")}
-    ]
-  }
-  </script>
+  <script type="application/ld+json">${businessSchema}</script>
 </head>
-<body class="antialiased selection:bg-brandAccent selection:text-white">
+<body class="antialiased selection:bg-brandAccent selection:text-white template-${selectedTemplate}">
 
   <!-- Navbar -->
   <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all">
@@ -261,17 +274,14 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
       </a>
       <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-brandMuted">
         <a href="#sobre" class="hover:text-brandPrimary transition-colors">Sobre</a>
-        <a href="#servicos" class="hover:text-brandPrimary transition-colors">Serviços</a>
-        <a href="#como-funciona" class="hover:text-brandPrimary transition-colors">Como Funciona</a>
-        <a href="#avaliacoes" class="hover:text-brandPrimary transition-colors">Avaliações</a>
-        <a href="#faq" class="hover:text-brandPrimary transition-colors">Dúvidas</a>
+        ${content.services.length ? '<a href="#servicos" class="hover:text-brandPrimary transition-colors">Serviços</a>' : ""}
       </nav>
-      <a 
-        href="https://wa.me/${waPhone}?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20atendimento" 
+      <a
+        href="${contactHref(`Olá, gostaria de informações sobre ${businessName}`)}"
         target="_blank" 
         class="inline-flex items-center gap-2 bg-brandPrimary hover:bg-brandPrimaryLight text-white px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all shadow-sm hover:shadow-md"
       >
-        <span>Agendar Consulta</span>
+        <span>${waPhone ? "Falar no WhatsApp" : email ? "Enviar e-mail" : "Ver serviços"}</span>
         <svg class="w-4 h-4 text-brandAccent" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.769.814 2.796.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.768-5.768-5.768zm0-2c4.291 0 7.768 3.477 7.768 7.768 0 4.29-3.477 7.767-7.768 7.767-1.341 0-2.6-.345-3.702-.951l-4.33 1.135 1.155-4.22c-.687-1.159-1.074-2.483-1.074-3.731 0-4.291 3.477-7.768 7.951-7.768z"/></svg>
       </a>
     </div>
@@ -280,9 +290,9 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
   <!-- Hero Section -->
   <section class="py-16 sm:py-24 lg:py-28 relative overflow-hidden bg-gradient-to-b from-white to-brandBg" data-section="hero">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brandAccent/15 border border-brandAccent/30 text-xs font-semibold text-brandPrimary mb-6">
-        <span>📍 ${vertical} em ${city}, ${state}</span>
-      </div>
+      ${businessTypeLabel ? `<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brandAccent/15 border border-brandAccent/30 text-xs font-semibold text-brandPrimary mb-6">
+        <span>${businessTypeLabel}</span>
+      </div>` : ""}
       <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-brandPrimary max-w-4xl mx-auto leading-tight sm:leading-tight">
         ${content.hero.headline}
       </h1>
@@ -290,36 +300,19 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
         ${content.hero.subheadline}
       </p>
       <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a 
-          href="https://wa.me/${waPhone}?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta" 
+        <a
+          href="${contactHref(`Olá, gostaria de informações sobre ${businessName}`)}"
           target="_blank"
-          class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-brandAccent hover:bg-brandAccentHover text-white px-8 py-4 rounded-full text-base font-bold transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-brandPrimary hover:bg-brandPrimaryLight text-white px-8 py-4 rounded-full text-base font-bold transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
         >
           <span>${content.hero.cta_text}</span>
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </a>
       </div>
-      
-      <!-- Trust Signals -->
-      <div class="mt-12 pt-8 border-t border-gray-200/60 grid grid-cols-2 md:grid-cols-3 gap-6 max-w-3xl mx-auto text-xs text-brandMuted">
-        <div class="flex items-center justify-center gap-2">
-          <span class="text-amber-500 font-bold">★★★★★</span>
-          <span>5.0 no Google Maps</span>
-        </div>
-        <div class="flex items-center justify-center gap-2">
-          <span>🛡️</span>
-          <span>Atendimento 100% Ético e Sigiloso</span>
-        </div>
-        <div class="col-span-2 md:col-span-1 flex items-center justify-center gap-2">
-          <span>🗓️</span>
-          <span>Horários Flexíveis</span>
-        </div>
-      </div>
     </div>
   </section>
 
-  <!-- Pain Section -->
-  <section class="py-16 sm:py-20 bg-white border-y border-gray-100" data-section="pain">
+  ${content.pain_section.pain_points.length ? `<section class="py-16 sm:py-20 bg-white border-y border-gray-100" data-section="pain">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-3xl mx-auto mb-12">
         <h2 class="font-display text-2xl sm:text-4xl font-bold text-brandPrimary">
@@ -341,19 +334,17 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
         `).join("")}
       </div>
     </div>
-  </section>
+  </section>` : ""}
 
   <!-- About Section -->
-  <section id="sobre" class="py-20 bg-brandBg" data-section="about">
+  ${description || credentials || phone || email || locationLabel ? `<section id="sobre" class="py-20 bg-brandBg" data-section="about">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-12 items-center">
       <div class="space-y-6">
-        <div class="inline-block text-xs font-bold uppercase tracking-wider text-brandAccent">Sobre o Profissional</div>
+        <div class="inline-block text-xs font-bold uppercase tracking-wider text-brandAccent">Sobre o negócio</div>
         <h2 class="font-display text-3xl sm:text-4xl font-bold text-brandPrimary">
           ${businessName}
         </h2>
-        <p class="text-brandMuted leading-relaxed text-sm sm:text-base">
-          ${content.about.intro}
-        </p>
+        ${content.about.intro ? `<p class="text-brandMuted leading-relaxed text-sm sm:text-base">${content.about.intro}</p>` : ""}
         <ul class="space-y-3 pt-2">
           ${content.about.credentials.map(cred => `
             <li class="flex items-start gap-3 text-sm text-brandText">
@@ -363,12 +354,12 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
           `).join("")}
         </ul>
         <div class="pt-4">
-          <a 
-            href="https://wa.me/${waPhone}?text=Ol%C3%A1%2C%20gostaria%20de%20conhecer%20mais%20o%20trabalho" 
+          <a
+            href="${contactHref(`Olá, gostaria de conhecer mais sobre ${businessName}`)}"
             target="_blank"
             class="inline-flex items-center gap-2 text-sm font-bold text-brandPrimary hover:text-brandAccent transition-colors"
           >
-            <span>Falar diretamente com o profissional</span>
+            <span>Solicitar informações</span>
             <span>→</span>
           </a>
         </div>
@@ -380,28 +371,25 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
         <div>
           <h3 class="font-display text-xl font-bold text-brandPrimary">${businessName}</h3>
           <p class="text-xs text-brandAccent font-semibold mt-1">${vertical}</p>
-          <p class="text-xs text-brandMuted mt-0.5">Atendimento em ${city}/${state}</p>
+          ${locationLabel ? `<p class="text-xs text-brandMuted mt-0.5">Atendimento em ${locationLabel}</p>` : ""}
         </div>
         <div class="border-t border-gray-100 pt-4 text-xs text-brandMuted space-y-1">
-          <p>📞 WhatsApp: ${phone}</p>
-          <p>✉️ Email: ${email}</p>
-          <p>📍 Consultório em ${city}</p>
+          ${phone ? `<p>WhatsApp: ${phone}</p>` : ""}
+          ${email ? `<p>Email: ${email}</p>` : ""}
+          ${city ? `<p>Atendimento em ${city}</p>` : ""}
         </div>
       </div>
     </div>
-  </section>
+  </section>` : ""}
 
   <!-- Services Section -->
-  <section id="servicos" class="py-20 bg-white" data-section="services">
+  ${content.services.length ? `<section id="servicos" class="py-20 bg-white" data-section="services">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-14">
         <span class="text-xs font-bold uppercase tracking-wider text-brandAccent">Áreas de Atuação</span>
         <h2 class="font-display text-3xl sm:text-4xl font-bold text-brandPrimary mt-2">
-          Serviços e Tratamentos Especializados
+          Serviços de ${businessName}
         </h2>
-        <p class="mt-3 text-sm text-brandMuted">
-          Soluções clínicas planejadas para atender cada fase da sua jornada de saúde.
-        </p>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         ${content.services.map(srv => `
@@ -418,22 +406,22 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
               </p>
             </div>
             <div class="mt-6 pt-4 border-t border-gray-200/40">
-              <a 
-                href="https://wa.me/${waPhone}?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20${encodeURIComponent(srv.name)}" 
+              <a
+                href="${contactHref(`Olá, gostaria de saber mais sobre ${srv.name}`)}"
                 target="_blank"
                 class="text-xs font-bold text-brandPrimary hover:text-brandAccent inline-flex items-center gap-1"
               >
-                Saber detalhes e valores →
+                Solicitar informações →
               </a>
             </div>
           </div>
         `).join("")}
       </div>
     </div>
-  </section>
+  </section>` : ""}
 
   <!-- Process Section -->
-  <section id="como-funciona" class="py-20 bg-brandBg border-y border-gray-100" data-section="process">
+  ${content.process.length ? `<section id="como-funciona" class="py-20 bg-brandBg border-y border-gray-100" data-section="process">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-14">
         <span class="text-xs font-bold uppercase tracking-wider text-brandAccent">Passo a Passo</span>
@@ -457,54 +445,10 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
         `).join("")}
       </div>
     </div>
-  </section>
-
-  <!-- Google Reviews Widget Section -->
-  <section id="avaliacoes" class="py-20 bg-white" data-section="reviews">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold mb-3">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          Avaliações Verificadas no Google Maps
-        </div>
-        <h2 class="font-display text-3xl sm:text-4xl font-bold text-brandPrimary">
-          O que dizem os pacientes
-        </h2>
-        <div class="flex items-center justify-center gap-2 mt-3 text-amber-500 text-sm font-bold">
-          <span>★★★★★</span>
-          <span class="text-brandText font-semibold">5.0 de 5.0 estrelas</span>
-        </div>
-      </div>
-
-      <div class="grid sm:grid-cols-3 gap-6">
-        ${content.testimonials.map((t, i) => `
-          <div class="p-6 rounded-2xl bg-brandBg border border-gray-200/70 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="text-amber-500 text-sm font-bold">★★★★★</span>
-                <span class="text-[10px] text-brandMuted">Google Review</span>
-              </div>
-              <p class="text-xs sm:text-sm text-brandText italic leading-relaxed">
-                "${t.text}"
-              </p>
-            </div>
-            <div class="mt-6 pt-4 border-t border-gray-200/50 flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-brandAccent text-white font-bold flex items-center justify-center text-xs">
-                ${t.name.charAt(0)}
-              </div>
-              <div>
-                <p class="text-xs font-bold text-brandText">${t.name}</p>
-                <p class="text-[10px] text-brandMuted">${t.location}</p>
-              </div>
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    </div>
-  </section>
+  </section>` : ""}
 
   <!-- FAQ Section (AEO Optimized) -->
-  <section id="faq" class="py-20 bg-brandBg border-t border-gray-100" data-section="faq">
+  ${content.faq.length ? `<section id="faq" class="py-20 bg-brandBg border-t border-gray-100" data-section="faq">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-12">
         <span class="text-xs font-bold uppercase tracking-wider text-brandAccent">Perguntas Frequentes</span>
@@ -532,24 +476,24 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
         `).join("")}
       </div>
     </div>
-  </section>
+  </section>` : ""}
 
   <!-- Final CTA -->
   <section class="py-20 bg-brandPrimary text-white text-center relative overflow-hidden" data-section="cta">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 space-y-6">
       <h2 class="font-display text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
-        Pronto para dar o primeiro passo no seu cuidado?
+        Entre em contato com ${businessName}
       </h2>
       <p class="text-gray-300 text-sm sm:text-base max-w-xl mx-auto">
-        Entre em contato agora pelo WhatsApp para tirar dúvidas e agendar sua sessão em ${city}.
+        ${waPhone || email ? "Use um dos canais de contato para solicitar mais informações." : "Confira os serviços apresentados nesta página."}
       </p>
       <div class="pt-4">
-        <a 
-          href="https://wa.me/${waPhone}?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20um%20hor%C3%A1rio" 
+        <a
+          href="${contactHref(`Olá, gostaria de informações sobre ${businessName}`)}"
           target="_blank"
-          class="inline-flex items-center gap-3 bg-brandAccent hover:bg-brandAccentHover text-white px-9 py-4 rounded-full text-base font-bold transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-0.5"
+          class="inline-flex items-center gap-3 bg-white hover:bg-brandBg text-brandPrimary px-9 py-4 rounded-full text-base font-bold transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-0.5"
         >
-          <span>Falar no WhatsApp Agora</span>
+          <span>${waPhone ? "Falar no WhatsApp" : email ? "Enviar e-mail" : "Ver serviços"}</span>
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.769.814 2.796.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.768-5.768-5.768zm0-2c4.291 0 7.768 3.477 7.768 7.768 0 4.29-3.477 7.767-7.768 7.767-1.341 0-2.6-.345-3.702-.951l-4.33 1.135 1.155-4.22c-.687-1.159-1.074-2.483-1.074-3.731 0-4.291 3.477-7.768 7.951-7.768z"/></svg>
         </a>
       </div>
@@ -561,7 +505,7 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
     <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
       <div>
         <p class="font-bold text-white font-display text-sm">${businessName}</p>
-        <p class="text-[11px] text-gray-400 mt-0.5">${vertical} · Atendimento em ${city}/${state}</p>
+        <p class="text-[11px] text-gray-400 mt-0.5">${businessTypeLabel}</p>
       </div>
       <p class="text-[11px]">
         © ${new Date().getFullYear()} ${businessName}. Todos os direitos reservados.
@@ -569,15 +513,14 @@ export function generateSiteHtml(params: GenerateSiteParams): { html: string; co
     </div>
   </footer>
 
-  <!-- Floating WhatsApp Button -->
-  <a 
-    href="https://wa.me/${waPhone}?text=Ol%C3%A1%2C%20estou%20no%20site%20e%20gostaria%20de%20informa%C3%A7%C3%B5es" 
+  ${waPhone ? `<a
+    href="${contactHref(`Olá, estou no site de ${businessName} e gostaria de informações`)}"
     target="_blank"
     class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl transition-all transform hover:scale-110 flex items-center justify-center"
     aria-label="Falar no WhatsApp"
   >
     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.769.814 2.796.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.768-5.768-5.768zm0-2c4.291 0 7.768 3.477 7.768 7.768 0 4.29-3.477 7.767-7.768 7.767-1.341 0-2.6-.345-3.702-.951l-4.33 1.135 1.155-4.22c-.687-1.159-1.074-2.483-1.074-3.731 0-4.291 3.477-7.768 7.951-7.768z"/></svg>
-  </a>
+  </a>` : ""}
 
 </body>
 </html>`;

@@ -11,4 +11,10 @@ import { clients } from '../data/index.ts';
 import type { ClientData } from './types.ts';
 
 const slug: string = process.env['CLIENT'] ?? 'dra-ana-mello';
-export const client: ClientData = clients[slug] ?? clients['dra-ana-mello'];
+const activeClient = clients[slug];
+
+if (!activeClient) {
+  throw new Error(`Cliente "${slug}" não encontrado em site-engine/src/data/index.ts.`);
+}
+
+export const client: ClientData = activeClient;

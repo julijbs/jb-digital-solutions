@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Wand2, Loader2, Globe, RefreshCcw, Upload, Eye, EyeOff, Palette, Sparkles, CheckCircle2,
+  Wand2, Loader2, Globe, RefreshCcw, Upload, Eye, EyeOff, Palette,
 } from "lucide-react";
 import { generateSiteHtml } from "@/utils/generateSiteTemplate";
 
@@ -36,39 +36,89 @@ interface SiteGeneratorProps {
 const TEMPLATES = [
   {
     id: "elegant-minimal",
-    label: "Elegante Minimalista",
-    desc: "Serif refinado, muito espaço em branco, sofisticado",
-    preview: "bg-gradient-to-br from-slate-900 to-slate-700",
-  },
-  {
-    id: "modern-clean",
-    label: "Moderno Clean",
-    desc: "Poppins, linhas retas, contemporâneo",
-    preview: "bg-gradient-to-br from-emerald-700 to-teal-500",
+    label: "Editorial de confiança",
+    category: "Profissionais",
+    desc: "Tipografia editorial, paleta azul-ardósia e respiro visual.",
+    preview: "bg-gradient-to-br from-[#f4f2ed] to-[#e6e2d9]",
   },
   {
     id: "warm-soft",
-    label: "Acolhedor Suave",
-    desc: "Playfair, formas orgânicas, calma e empatia",
-    preview: "bg-gradient-to-br from-purple-700 to-pink-500",
+    label: "Clínica serena",
+    category: "Saúde e bem-estar",
+    desc: "Composição calma, leitura clara e tons naturais.",
+    preview: "bg-gradient-to-br from-emerald-50 to-[#c7d9cd]",
+  },
+  {
+    id: "beauty-studio",
+    label: "Beleza & estética",
+    category: "Beleza",
+    desc: "Visual sofisticado, tons rosé e destaque para serviços e imagens.",
+    preview: "bg-gradient-to-br from-[#fbf1ed] to-[#d9a7a0]",
+  },
+  {
+    id: "modern-clean",
+    label: "Serviço local",
+    category: "Negócios locais",
+    desc: "Navegação direta, CTA visível e serviços fáceis de encontrar.",
+    preview: "bg-gradient-to-br from-sky-50 to-[#afc8d8]",
+  },
+  {
+    id: "hospitality-warm",
+    label: "Gastronomia acolhedora",
+    category: "Alimentação",
+    desc: "Paleta quente e estrutura para apresentar especialidades.",
+    preview: "bg-gradient-to-br from-[#fff4e5] to-[#d9a174]",
   },
 ];
 
 const COLOR_SCHEMES = [
-  { id: "blue-professional", label: "Azul Profissional", hex: "#0A1128", accent: "#C8A882" },
-  { id: "green-therapeutic", label: "Verde Terapêutico", hex: "#2D6A4F", accent: "#40916C" },
-  { id: "purple-transformer", label: "Roxo Transformador", hex: "#5A189A", accent: "#9D4EDD" },
+  { id: "blue-professional", label: "Azul & areia", hex: "#3E5C76", accent: "#8A5A33" },
+  { id: "green-therapeutic", label: "Verde & sálvia", hex: "#2D6A4F", accent: "#2F6F52" },
+  { id: "rose-editorial", label: "Rosé & vinho", hex: "#6E3447", accent: "#8A4750" },
+  { id: "terracotta-hospitality", label: "Terracota & creme", hex: "#7A3F2B", accent: "#843E25" },
+  { id: "purple-transformer", label: "Roxo Transformador", hex: "#5A189A", accent: "#7B2CBF" },
 ];
 
-const SECTIONS = ["hero", "pain_section", "about", "services", "process", "testimonials", "cta_final"];
+const SECTIONS = ["hero", "pain_section", "about", "services", "process", "cta_final"];
+
+function recommendTemplate(vertical: string): string {
+  const normalized = vertical.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  if (/(beleza|estet|cabelo|salao|maqui|sobrancelha|manicure|unha|spa)/.test(normalized)) {
+    return "beauty-studio";
+  }
+  if (/(restaurante|gastronom|cafe|cafeteria|bar\b|pizzaria|padaria|comida|buffet)/.test(normalized)) {
+    return "hospitality-warm";
+  }
+  if (/(saude|clin|psicol|terap|medic|nutri|dent|vet|fisioter|fono)/.test(normalized)) {
+    return "warm-soft";
+  }
+  return "elegant-minimal";
+}
+
+function recommendColorScheme(vertical: string): string {
+  const normalized = vertical.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  if (/(beleza|estet|cabelo|salao|maqui|sobrancelha|manicure|unha|spa)/.test(normalized)) {
+    return "rose-editorial";
+  }
+  if (/(restaurante|gastronom|cafe|cafeteria|bar\b|pizzaria|padaria|comida|buffet)/.test(normalized)) {
+    return "terracotta-hospitality";
+  }
+  if (/(saude|clin|psicol|terap|medic|nutri|dent|vet|fisioter|fono)/.test(normalized)) {
+    return "green-therapeutic";
+  }
+  return "blue-professional";
+}
 
 // ── Component ────────────────────────────────────────────────────────────────
 
 export function SiteGenerator({ project, intake, onPublished }: SiteGeneratorProps) {
   const { toast } = useToast();
 
-  const [template, setTemplate] = useState("elegant-minimal");
-  const [colorScheme, setColorScheme] = useState("blue-professional");
+  const vertical = project.clients?.vertical || "";
+  const recommendedTemplate = recommendTemplate(vertical);
+  const recommendedColorScheme = recommendColorScheme(vertical);
+  const [template, setTemplate] = useState(recommendedTemplate);
+  const [colorScheme, setColorScheme] = useState(recommendedColorScheme);
   const [generatedHtml, setGeneratedHtml] = useState<string | null>(null);
   const [generatedContent, setGeneratedContent] = useState<Record<string, unknown> | null>(null);
   const [generating, setGenerating] = useState(false);
@@ -80,6 +130,11 @@ export function SiteGenerator({ project, intake, onPublished }: SiteGeneratorPro
   const [regenPrompt, setRegenPrompt] = useState("");
   const [regenLoading, setRegenLoading] = useState(false);
 
+  useEffect(() => {
+    setTemplate(recommendedTemplate);
+    setColorScheme(recommendedColorScheme);
+  }, [project.id, recommendedTemplate, recommendedColorScheme]);
+
   // ── Handlers ─────────────────────────────────────────────────────────────
 
   const handleGenerate = async () => {
@@ -90,16 +145,16 @@ export function SiteGenerator({ project, intake, onPublished }: SiteGeneratorPro
     const svd = (intake?.services_data as Record<string, string>) || {};
     const sd = (intake?.schedule_data as Record<string, string>) || {};
 
-    const businessName = project.clients?.business_name || bd.name || project.name || "Consultório Especializado";
-    const vertical = project.clients?.vertical || svd.main_category || "Profissional de Saúde";
-    const city = project.clients?.city || sd.city || "São Paulo";
-    const state = project.clients?.state || sd.state || "SP";
-    const phone = bd.phone || "(11) 99999-9999";
-    const email = bd.email || "contato@consultorio.com.br";
-    const description = bd.description || "Atendimento clínico e humanizado com foco em excelência e cuidado.";
-    const services = svd.services_tags || "Consulta Inicial, Tratamento Especializado, Acompanhamento";
-    const credentials = svd.credentials_summary || "Especialista qualificado com atendimento de excelência";
-    const differentials = svd.differentials || "Atendimento ético, acolhedor e personalizado";
+    const businessName = project.clients?.business_name || bd.name || project.name || "Negócio local";
+    const vertical = project.clients?.vertical || svd.main_category || "Negócio local";
+    const city = project.clients?.city || sd.city || "";
+    const state = project.clients?.state || sd.state || "";
+    const phone = bd.phone || "";
+    const email = bd.email || "";
+    const description = bd.description || "";
+    const services = svd.services_tags || "";
+    const credentials = svd.credentials_summary || "";
+    const differentials = svd.differentials || "";
 
     try {
       // 1. Try remote Edge Function first
@@ -111,6 +166,7 @@ export function SiteGenerator({ project, intake, onPublished }: SiteGeneratorPro
         setGeneratedHtml(data.html);
         setGeneratedContent(data.content || null);
         await supabase.from("projects").update({ status: "ai_site_generated" }).eq("id", project.id);
+        setGenerating(false);
         toast({ title: "Site gerado com sucesso via IA! ✨", description: "Confira o preview abaixo." });
         return;
       }
@@ -167,36 +223,35 @@ export function SiteGenerator({ project, intake, onPublished }: SiteGeneratorPro
       .replace(/^-|-$/g, "")
       .slice(0, 30);
 
-    let siteUrl = `https://${slug}.jbdigitalsystem.com`;
-
     try {
       const { data, error } = await supabase.functions.invoke("publish-site", {
         body: { projectId: project.id, html: generatedHtml, projectSlug: slug },
       });
 
-      if (!error && (data?.site_url || data?.publishedUrl)) {
-        siteUrl = data.site_url || data.publishedUrl;
+      if (error) {
+        if (error.context instanceof Response) {
+          const responseBody = await error.context.clone().json().catch(() => null) as { error?: unknown } | null;
+          if (typeof responseBody?.error === "string") throw new Error(responseBody.error);
+        }
+        throw new Error(error.message);
       }
-    } catch (pubErr) {
-      console.warn("Remote publish endpoint notice, updating database URL:", pubErr);
-    }
+      if (data?.error) throw new Error(data.error);
+      if (data?.success !== true || typeof data?.publishedUrl !== "string") {
+        throw new Error("O serviço não confirmou a publicação no Cloudflare.");
+      }
 
-    try {
-      // Update project status and site_url
-      await supabase
-        .from("projects")
-        .update({ status: "vercel_deployed_preview", site_url: siteUrl })
-        .eq("id", project.id);
-
+      const siteUrl = data.publishedUrl;
       onPublished(siteUrl);
       toast({
-        title: "Site publicado com sucesso! 🚀",
-        description: `Disponível em: ${siteUrl}`,
+        title: data.domainWarning ? "Site publicado no Cloudflare Pages" : "Site publicado com sucesso! 🚀",
+        description: data.domainWarning
+          ? `URL publicada: ${siteUrl}. O domínio personalizado ainda não foi configurado.`
+          : `Disponível em: ${siteUrl}`,
       });
     } catch (err) {
       toast({
-        title: "Erro ao salvar publicação",
-        description: (err as Error).message,
+        title: "Não foi possível confirmar a publicação",
+        description: err instanceof Error ? err.message : "Erro inesperado ao publicar.",
         variant: "destructive",
       });
     } finally {
@@ -268,10 +323,15 @@ export function SiteGenerator({ project, intake, onPublished }: SiteGeneratorPro
         <h3 className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
           <Wand2 size={14} /> Template
         </h3>
-        <div className="grid grid-cols-3 gap-3">
+        <p className="mb-3 text-xs text-muted-foreground">
+          Templates originais e gratuitos, sem dependência de imagens ou recursos pagos. A sugestão inicial considera a área do negócio.
+        </p>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {TEMPLATES.map((t) => (
             <button
               key={t.id}
+              type="button"
+              aria-pressed={template === t.id}
               onClick={() => setTemplate(t.id)}
               className={`rounded-xl border-2 p-3 text-left transition-all ${
                 template === t.id
@@ -279,9 +339,28 @@ export function SiteGenerator({ project, intake, onPublished }: SiteGeneratorPro
                   : "border-border hover:border-primary/40"
               }`}
             >
-              <div className={`h-12 rounded-lg mb-2 ${t.preview}`} />
-              <p className="text-xs font-medium text-foreground">{t.label}</p>
-              <p className="text-[10px] text-muted-foreground mt-0.5">{t.desc}</p>
+              <div className={`relative mb-3 h-20 overflow-hidden rounded-lg border border-black/5 p-3 ${t.preview}`}>
+                <div className="flex items-center justify-between">
+                  <span className="h-1.5 w-10 rounded-full bg-slate-700/70" />
+                  <span className="h-2 w-8 rounded-full bg-slate-700/20" />
+                </div>
+                <div className="mt-3 flex items-end justify-between gap-2">
+                  <div className="w-2/3 space-y-1.5">
+                    <span className="block h-2.5 w-full rounded-sm bg-slate-800/65" />
+                    <span className="block h-1.5 w-4/5 rounded-sm bg-slate-700/25" />
+                    <span className="mt-2 block h-3.5 w-12 rounded-full bg-slate-700/70" />
+                  </div>
+                  <span className="h-9 w-8 rounded-t-full bg-white/70" />
+                </div>
+                {template === t.id && (
+                  <span className="absolute right-2 top-2 rounded-full bg-background/90 px-2 py-0.5 text-[9px] font-semibold text-primary">
+                    Selecionado
+                  </span>
+                )}
+              </div>
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-primary">{t.category}</p>
+              <p className="mt-0.5 text-sm font-medium text-foreground">{t.label}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{t.desc}</p>
             </button>
           ))}
         </div>
@@ -292,7 +371,7 @@ export function SiteGenerator({ project, intake, onPublished }: SiteGeneratorPro
         <h3 className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
           <Palette size={14} /> Paleta de Cores
         </h3>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           {COLOR_SCHEMES.map((c) => (
             <button
               key={c.id}

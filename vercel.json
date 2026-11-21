@@ -11,6 +11,11 @@
     { "src": "^/sitemap-index\\.xml$",  "dest": "https://jbds-marketing.vercel.app/sitemap-index.xml" },
     { "src": "^/sitemap-0\\.xml$",      "dest": "https://jbds-marketing.vercel.app/sitemap-0.xml" },
     { "src": "^/rss\\.xml$",            "dest": "https://jbds-marketing.vercel.app/rss.xml" },
+    {
+      "src": "^/previa/.*",
+      "dest": "/index.html",
+      "headers": { "X-Robots-Tag": "noindex, nofollow, noarchive" }
+    },
     { "handle": "filesystem" },
     { "src": "/.*",                     "dest": "/index.html" }
   ]
