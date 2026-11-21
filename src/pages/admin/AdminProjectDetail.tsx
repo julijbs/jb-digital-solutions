@@ -373,7 +373,6 @@ const AdminProjectDetail = () => {
           intake={intake as Parameters<typeof SiteGenerator>[0]["intake"]}
           onPublished={(url) => {
             setProject((prev) => prev ? { ...prev, site_url: url, status: "vercel_deployed_preview" } : prev);
-            toast({ title: "Site publicado!", description: url });
           }}
         />
       )}

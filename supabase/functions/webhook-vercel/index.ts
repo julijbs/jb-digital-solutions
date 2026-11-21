@@ -5,18 +5,54 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-vercel-signature, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+function constantTimeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < a.length; i++) {
+    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return mismatch === 0;
+}
+
+async function verifyVercelSignature(rawBody: string, signature: string | null): Promise<boolean> {
+  const secret = Deno.env.get("VERCEL_WEBHOOK_SECRET");
+  if (!secret || !signature) return false;
+
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(secret),
+    { name: "HMAC", hash: "SHA-1" },
+    false,
+    ["sign"],
+  );
+  const signatureBytes = await crypto.subtle.sign("HMAC", key, encoder.encode(rawBody));
+  const expected = Array.from(new Uint8Array(signatureBytes), (byte) =>
+    byte.toString(16).padStart(2, "0")
+  ).join("");
+
+  return constantTimeEqual(signature.toLowerCase(), expected);
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const payload = await req.json();
+    const rawBody = await req.text();
+    const signature = req.headers.get("x-vercel-signature");
+    if (!(await verifyVercelSignature(rawBody, signature))) {
+      console.warn("Rejected Vercel webhook with missing or invalid signature");
+      return new Response(JSON.stringify({ error: "Invalid webhook signature" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const payload = JSON.parse(rawBody);
 
     console.log(`Vercel webhook received: type=${payload.type}`);
-
-    // TODO: Adicionar verificação de assinatura com VERCEL_WEBHOOK_SECRET
-    // const signature = req.headers.get("x-vercel-signature");
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
@@ -69,7 +105,8 @@ Deno.serve(async (req) => {
           .single();
 
         if (projFull) {
-          const clientUserId = (projFull.clients as any)?.user_id;
+          const clients = projFull.clients as { user_id?: string } | null;
+          const clientUserId = clients?.user_id;
           if (clientUserId) {
             await supabase.from("notifications").insert({
               user_id: clientUserId,
